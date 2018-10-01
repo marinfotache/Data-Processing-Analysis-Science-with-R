@@ -11,7 +11,7 @@
 ############################################################################
 ###                         1b. R Main Data Types                        ###
 ### See also the presentation:
-### xxxxxxxxxxx
+### https://github.com/marinfotache/Data-Processing-Analysis-Science-with-R/blob/master/01%20R_Introduction_Data%20Structures/01b_Main%20Data%20Types.pptx
 ############################################################################
 
 ## last update: 28.09.2018
@@ -538,5 +538,4 @@ x + z
 #  we do not know it.
 # For NULL we strongly believe that there is no value at all.
 
-# see further scripts.
 
