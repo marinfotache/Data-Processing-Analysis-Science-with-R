@@ -11,7 +11,7 @@
 ############################################################################
 ###                         1a. Introduction to R                        ###
 ### See also the presentation:
-### xxxxxxxx
+### https://github.com/marinfotache/Data-Processing-Analysis-Science-with-R/blob/master/01%20R_Introduction_Data%20Structures/01a_Introduction_to_R.pptx
 ############################################################################
 ## last update: 01.10.2018
 
@@ -39,10 +39,10 @@ sessionInfo()
 getwd()
 
 # Set/change the current working directory - examples 
-# Mac OS
+# on Mac OS
 setwd("/Users/marinfotache/Google Drive/R(Mac)/DataSets")
 
-# Windows
+# on Windows (notice the `/` instead of `\`)
 setwd("C:/Users/Marin F/Google Drive/R(Mac)/DataSets")
 
 # check the new current working directory
@@ -101,79 +101,25 @@ ls(pattern = '^a.+c+')
 ls(pattern = "var$")
 
 # save the current workspace (all variables) (not run, just for illustration)
+#  in a single .RData file
 save.image(file="session_2018-10-01.RData")
 
-# if you want to save 
-as.Date(now())
+# if you want to save the workspaces if a file containing the current date: 
+file_name <- paste('backup', as.Date(now()), sep = '_')
+save.image(file=file_name)
 
 
 # save the command launched in current session as an R script
-# be careful, because there is a default limitation of number of saved commands
-savehistory(file = "work2018-05-21.R")
+#    (be careful, because there is a default limitation of number of saved commands)
+savehistory(file = "work2018-10-01.R")
 # after saving, the file can be opened as every R script
+
 
 # remove all objects in current workspace
 rm(list=ls()) 
 
 # restore (load) a previously saved workspace (not run, just for illustration)
-load("work2018-05-21.RData")
-
-load("work_2017-12-07.RData")
-
-
-# restore the commands saved as history (not run, just for illustration)
-loadhistory(file = "work2018-05-21.R")
-
-
-????
-     
-####################################################
-###   data frames used in further scripts
-
-
-## data frame for enrollment at internationalized master programmes at FEAA
-program = c(rep("ADL",7), rep("FRM",5), rep("SAAS", 7))
-academicyear = c (2009, 2010, 2011, 2012, rep(c(2010, 2011, 2012), 2), 
-     2011, 2012, 2009, 2010, 2011, 2012, 2010, 2011, 2012)
-studyyear = c(rep("Anul I",4), rep("Anul II",3),rep("Anul I",3), rep("Anul II", 2),
-                rep("Anul I",4), rep("Anul II", 3) )
-nofstuds = c(19, 28, 49, 48, 17, 27, 49, 15, 20, 26, 15, 19, 9, 13, 0, 0, 9, 12, 0)
-
-# the data frame
-mpi <- data.frame(program, academicyear, studyyear, nofstuds, stringsAsFactors=TRUE)
-mpi
-str(mpi)
-head(mpi)
-tail(mpi)
-
-
-
-
-
-# remove the vectors (we'll work only with the data frame)
-rm(program, academicyear, studyyear, nofstuds)
-
-# save the data frame
-save(mpi, file="mpi.RData")
-
-
-## leadership data frame (taken from Kabacoff (R in Action), 2011)
-manager <- c(1, 2, 3, 4, 5)
-date <- c("2010/10/24", "1995/10/28", "1985/10/1", "2000/12/10", "1966/1/9")
-country <- c("US", "US", "UK", "UK", "UK")
-gender <- c("M", "F", "F", "M", "F")
-age <- c(32, 45, 25, 59, 99)
-q1 <- c(5, 3, 3, 3, 2)
-q2 <- c(4, 5, 5, 3, 2)
-q3 <- c(5, 2, 5, 4, 1)
-q4 <- c(5, 5, 5, NA, 2)
-q5 <- c(5, 5, 2, NA, 1)
-leadership <- data.frame(manager, date, country, gender, age, q1, q2, q3, q4, q5, 
-        stringsAsFactors=FALSE)
-leadership
-save(leadership, file="leadership.RData")
-
-???
+load("session_2018-10-01.RData")
 
 
 ############################################################################
