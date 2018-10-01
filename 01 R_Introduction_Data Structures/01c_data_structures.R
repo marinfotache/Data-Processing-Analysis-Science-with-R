@@ -11,7 +11,7 @@
 ############################################################################
 ###                      1c. Data Structures in R                        ###
 ### See also the presentation:
-### xxxxxxxx
+### https://github.com/marinfotache/Data-Processing-Analysis-Science-with-R/blob/master/01%20R_Introduction_Data%20Structures/01c_Data_Structures.pptx
 ############################################################################
 ## last update: 28.09.2018
 
