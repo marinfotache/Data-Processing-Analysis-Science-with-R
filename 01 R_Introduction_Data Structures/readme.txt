@@ -6,5 +6,5 @@ This section covers:
 - presentation and script on main R data types, including popular functions and packages for a specific data type
 - presentation and script on main R data structures (vectors, matrices, data frames, lists etc), 
   including useful base R options and some packages dealing with accessing, filtering and editing the data stucture variables.
-- a list data sets available in some R packages.
+- data sets available in some R packages.
 
