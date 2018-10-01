@@ -693,8 +693,6 @@ str(student_gi)
 # basic statistics about variables in data frame
 summary(student_gi)
 
-# save the data framework for future use
-save(student_gi, file="students/student_gi.RData")
 
 
 # factors and value labels for categorical variables
@@ -718,8 +716,6 @@ patientdata
 
 str(patientdata)
 
-# save the data frame
-save(patientdata, file="other/patientdata.RData")
 
 
 # factors can be of numerical type
@@ -757,31 +753,9 @@ head(mpi)
 tail(mpi)
 
 
-
-
-
 # remove the vectors (we'll work only with the data frame)
 rm(program, academicyear, studyyear, nofstuds)
 
-# save the data frame
-save(mpi, file="mpi.RData")
-
-
-## leadership data frame (taken from Kabacoff (R in Action), 2011)
-manager <- c(1, 2, 3, 4, 5)
-date <- c("2010/10/24", "1995/10/28", "1985/10/1", "2000/12/10", "1966/1/9")
-country <- c("US", "US", "UK", "UK", "UK")
-gender <- c("M", "F", "F", "M", "F")
-age <- c(32, 45, 25, 59, 99)
-q1 <- c(5, 3, 3, 3, 2)
-q2 <- c(4, 5, 5, 3, 2)
-q3 <- c(5, 2, 5, 4, 1)
-q4 <- c(5, 5, 5, NA, 2)
-q5 <- c(5, 5, 2, NA, 1)
-leadership <- data.frame(manager, date, country, gender, age, q1, q2, q3, q4, q5, 
-        stringsAsFactors=FALSE)
-leadership
-save(leadership, file="leadership.RData")
 
 
 ############################################################################
