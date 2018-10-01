@@ -1,6 +1,6 @@
 This section covers:
-- some basic stuff about R 
-- a brief list of some important references on R
+- (very) basic stuff about R 
+- a brief list of important references on R
 - links to tutorials on installing R and RStudio and working with R Studio
 - basic R commands for installing packages, displaying the current session's objects, saving/loading the session objects
 - presentation and script on main R data types, including popular functions and packages for a specific data type
