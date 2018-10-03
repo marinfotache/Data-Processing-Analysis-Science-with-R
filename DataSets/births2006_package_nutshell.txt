@@ -1,0 +1,2001 @@
+id	BirthDay_Month	BirthDay_WeekDay	MAGER	TBO_REC	Mother_WeightGain_Kg	Mother_WeightGain_lb	BabySex	BabyScore	DMEDUC	UPREVIS	Gestation_Weeks	DeliveryMethod	NOfBabiesBorn	BabyWeight
+591430	9	1	25	2	NA	NA	F	NA	NULL	10	99	Natural	1 Single	3800
+1827276	2	6	28	2	11.793	26	M	9	2 years of college	10	37	Natural	1 Single	3625
+1705673	2	2	18	2	11.340	25	F	9	NULL	14	38	Natural	1 Single	3650
+3368269	10	5	21	2	2.722	6	M	9	NULL	22	38	Natural	1 Single	3045
+2990253	7	7	25	1	16.329	36	M	10	2 years of high school	15	40	Natural	1 Single	3827
+966967	3	3	28	3	15.876	35	M	8	NULL	18	39	Natural	1 Single	3090
+3527960	5	2	33	2	11.793	26	M	9	NULL	10	38	cesarean	1 Single	3430
+1204799	4	7	31	3	11.340	25	F	9	2 years of college	19	38	cesarean	1 Single	3204
+3690420	10	3	18	1	20.865	46	F	9	NULL	15	40	cesarean	1 Single	3227
+2016880	4	4	24	2	19.504	43	M	9	2 years of high school	13	40	Natural	1 Single	3459
+1911731	3	3	31	2	13.608	30	M	9	2 years of college	9	38	Natural	1 Single	3856
+1713029	4	3	28	1	25.855	57	M	9	NULL	10	38	cesarean	1 Single	3544
+1733549	7	6	27	2	22.680	50	F	9	NULL	12	36	cesarean	2 Twin	2445
+4255671	11	2	33	6	4.536	10	M	9	2 years of high school	5	35	cesarean	1 Single	2565
+2506570	1	6	30	5	6.350	14	F	9	2 years of high school	10	40	Natural	1 Single	3100
+2966046	1	4	19	1	9.979	22	M	9	2 years of high school	15	38	Natural	1 Single	3629
+2151549	7	7	33	3	11.793	26	M	9	4 years of high school	10	38	cesarean	1 Single	3487
+2175203	11	1	34	2	13.608	30	F	9	3 years of college	13	39	cesarean	1 Single	2750
+3460344	3	5	31	8	35.834	79	M	9	NULL	28	38	cesarean	2 Twin	2892
+714764	10	5	32	1	NA	NA	M	NA	NULL	9	99	Natural	1 Single	3969
+1474645	10	6	35	5	14.515	32	F	10	8 Years of elementary school	10	39	Natural	1 Single	3686
+1427977	5	5	32	2	13.154	29	F	9	2 years of high school	15	38	Natural	1 Single	2807
+1209202	2	6	32	2	9.979	22	M	1	3 years of high school	3	20	cesarean	1 Single	482
+70480	12	3	23	1	31.751	70	M	8	2 years of high school	15	40	Natural	1 Single	3628
+1876218	9	6	19	1	11.793	26	F	9	2 years of high school	15	39	Natural	1 Single	2580
+215880	10	1	16	1	13.608	30	F	9	7 Years of elementary school	6	39	Natural	1 Single	3612
+346747	3	6	28	2	NA	NA	M	NA	NULL	12	99	Natural	1 Single	2013
+2550316	6	3	19	1	11.340	25	M	9	8 Years of elementary school	14	41	Natural	1 Single	4165
+1857961	7	4	21	1	9.979	22	M	9	3 years of high school	13	40	Natural	1 Single	3515
+67600	11	5	24	2	4.536	10	F	9	4 years of high school	10	36	Natural	1 Single	3055
+264883	2	6	35	3	NA	NA	F	NA	NULL	15	99	Natural	1 Single	3525
+1427553	5	3	20	4	9.072	20	F	9	1 year of high school	8	39	Natural	1 Single	2920
+3313220	3	2	28	1	21.772	48	F	9	NULL	9	38	cesarean	1 Single	3118
+562294	8	4	37	2	NA	NA	M	NA	NULL	15	99	cesarean	1 Single	3685
+3905875	7	5	26	3	24.040	53	F	9	2 years of high school	16	39	Natural	1 Single	3260
+4151898	1	7	28	3	4.990	11	F	9	3 years of high school	0	38	cesarean	1 Single	3330
+590813	9	5	34	2	NA	NA	F	NA	NULL	20	99	Natural	1 Single	3232
+310544	1	7	32	6	NA	NA	M	NA	NULL	5	99	Natural	1 Single	4848
+2213313	8	2	25	5	7.257	16	F	9	2 years of high school	10	37	cesarean	1 Single	2325
+952001	2	6	23	6	2.722	6	M	9	NULL	10	36	Natural	1 Single	3544
+1027172	6	2	28	3	13.154	29	M	9	NULL	9	39	cesarean	1 Single	4451
+2610360	12	1	32	4	10.433	23	M	9	2 years of college	12	38	Natural	1 Single	3705
+1127117	11	3	34	2	10.433	23	M	9	NULL	15	41	Natural	1 Single	3714
+3800673	2	1	23	1	13.608	30	F	9	2 years of college	11	39	Natural	1 Single	3634
+1035739	7	4	24	2	15.876	35	M	9	NULL	11	39	cesarean	1 Single	3600
+3682109	9	5	28	2	19.958	44	F	8	NULL	8	40	Natural	1 Single	3856
+1244051	7	7	27	4	9.072	20	M	9	1 year of high school	14	40	Natural	1 Single	3345
+4239003	9	2	44	4	4.990	11	M	9	3 years of college	10	32	cesarean	2 Twin	1365
+2733939	5	2	23	1	5.897	13	M	9	NULL	9	37	Natural	1 Single	2693
+3819443	6	4	24	1	15.876	35	F	9	2 years of college	10	38	Natural	1 Single	3383
+1897459	12	2	29	4	21.772	48	F	10	3 years of high school	9	40	Natural	1 Single	4082
+3298053	11	4	40	3	15.422	34	F	9	NULL	9	38	cesarean	1 Single	4366
+3266724	9	2	36	3	9.072	20	M	9	NULL	7	41	Natural	1 Single	4969
+4152288	1	1	20	2	17.690	39	F	9	2 years of high school	8	39	Natural	1 Single	3095
+1852029	6	2	46	2	14.515	32	F	9	6 Years of elementary school	11	39	cesarean	1 Single	3770
+1477941	11	7	37	2	24.948	55	M	9	2 years of high school	11	39	Natural	1 Single	3762
+3689962	10	3	31	2	15.876	35	F	9	NULL	15	40	Natural	1 Single	3155
+1618257	9	2	32	4	6.804	15	M	9	3 years of high school	13	39	cesarean	1 Single	4508
+436978	4	4	24	1	NA	NA	M	NA	NULL	15	99	Natural	1 Single	3340
+324768	3	7	22	2	NA	NA	M	NA	NULL	11	99	Natural	1 Single	2800
+790414	5	1	33	1	10.886	24	M	9	3 years of college	9	40	cesarean	1 Single	3515
+2387966	7	6	23	2	4.082	9	F	9	4 years of high school	15	39	cesarean	1 Single	3289
+654643	10	6	27	1	NA	NA	M	NA	NULL	14	99	Natural	1 Single	4270
+1092280	9	5	28	2	13.154	29	F	8	NULL	11	37	Natural	1 Single	3430
+439450	5	4	30	2	NA	NA	F	NA	NULL	15	99	Natural	1 Single	3090
+885239	10	1	27	3	4.082	9	F	9	3 Years of elementary school	1	37	Natural	1 Single	3033
+3409147	1	3	31	2	11.340	25	M	9	NULL	9	38	Natural	1 Single	3459
+2536901	5	3	37	3	15.422	34	F	9	3 years of college	12	37	cesarean	2 Twin	3040
+959730	3	4	20	1	5.443	12	F	8	NULL	10	38	Natural	1 Single	2438
+490631	7	5	28	4	NA	NA	F	NA	NULL	14	99	Natural	1 Single	3487
+2323109	10	2	16	1	9.525	21	F	9	8 Years of elementary school	16	40	Natural	1 Single	3062
+2014553	4	3	27	1	12.247	27	M	9	2 years of high school	14	39	Natural	1 Single	3374
+2904162	8	2	21	2	NA	NA	M	9	NULL	10	39	cesarean	1 Single	2937
+1150482	12	6	28	1	18.144	40	F	10	NULL	16	38	Natural	1 Single	3317
+3345549	7	2	22	2	21.319	47	M	7	NULL	3	40	cesarean	1 Single	3642
+723054	11	3	36	7	NA	NA	M	NA	NULL	15	99	cesarean	2 Twin	2665
+1798194	9	3	34	2	9.525	21	M	9	3 years of college	15	36	Natural	1 Single	3147
+3185210	10	6	33	5	14.969	33	M	9	NULL	12	39	cesarean	1 Single	3657
+947692	2	3	22	5	7.257	16	F	9	NULL	8	38	cesarean	1 Single	4338
+1535381	4	5	28	1	9.072	20	F	9	3 years of college	12	38	Natural	1 Single	2550
+956006	2	2	35	3	18.144	40	M	9	NULL	11	37	Natural	1 Single	3119
+2613876	12	4	34	3	6.804	15	F	9	4 years of high school	6	34	Natural	1 Single	1855
+3143444	7	5	31	2	0.907	2	F	9	NULL	7	38	Natural	1 Single	3090
+3626467	8	6	26	2	18.144	40	F	9	NULL	11	37	cesarean	1 Single	3600
+1493878	12	1	17	1	NA	NA	F	9	2 years of high school	12	37	Natural	1 Single	2126
+438554	5	7	36	3	NA	NA	F	NA	NULL	8	99	cesarean	2 Twin	1724
+2692681	1	3	35	3	14.969	33	F	9	NULL	11	39	Natural	1 Single	3770
+1459686	9	3	20	2	20.865	46	M	9	3 years of high school	8	39	Natural	1 Single	3629
+3032233	5	3	30	2	12.701	28	M	9	7 Years of elementary school	9	39	cesarean	1 Single	4025
+295258	2	5	29	1	NA	NA	F	NA	NULL	14	99	Natural	1 Single	1956
+832940	9	4	29	2	18.144	40	F	9	2 years of college	6	40	Natural	1 Single	3493
+3531810	5	6	22	4	15.422	34	M	9	NULL	4	39	Natural	1 Single	3459
+789270	1	2	28	2	10.433	23	M	9	2 years of high school	3	34	Natural	1 Single	2495
+2843663	3	3	20	1	26.308	58	M	9	NULL	9	41	Natural	1 Single	3816
+2158999	8	5	27	3	24.040	53	M	9	NULL	12	39	cesarean	1 Single	2948
+3076237	2	2	35	2	14.515	32	M	9	NULL	11	39	Natural	1 Single	3798
+1516217	8	6	34	2	22.680	50	M	9	2 years of college	13	40	cesarean	1 Single	3827
+992189	4	5	22	1	16.783	37	F	9	NULL	10	37	Natural	1 Single	3147
+1920260	4	5	29	3	8.165	18	F	9	2 years of high school	5	39	Natural	1 Single	2977
+1219692	6	5	28	2	11.793	26	F	9	8 Years of elementary school	12	38	Natural	1 Single	3459
+2134266	4	1	26	2	6.804	15	M	9	2 years of high school	11	40	Natural	1 Single	3629
+2945621	10	1	38	3	19.504	43	M	9	NULL	13	38	Natural	1 Single	3342
+286112	2	1	28	2	NA	NA	F	NA	NULL	12	99	Natural	1 Single	3062
+1926198	5	5	30	2	9.979	22	F	9	3 years of college	10	40	Natural	1 Single	3345
+3870391	3	4	35	3	15.422	34	M	9	2 years of college	12	38	Natural	1 Single	3610
+2089142	10	3	21	3	15.422	34	M	9	4 years of high school	21	40	Natural	1 Single	3374
+2647412	1	4	25	NA	NA	NA	F	9	2 years of college	99	38	Natural	1 Single	2948
+1696991	12	4	28	1	12.247	27	F	9	NULL	11	39	cesarean	1 Single	3811
+1975622	4	4	28	3	8.165	18	F	9	3 years of high school	16	40	cesarean	1 Single	2948
+2373681	5	5	23	2	NA	NA	M	9	4 Years of elementary school	17	40	Natural	1 Single	3033
+2485650	10	5	31	2	NA	NA	F	0	NULL	11	39	cesarean	1 Single	3345
+1898609	1	7	22	2	13.608	30	F	9	2 years of high school	14	41	Natural	1 Single	3062
+749203	12	1	24	2	NA	NA	F	NA	NULL	14	99	Natural	1 Single	3295
+2037966	5	4	26	4	8.165	18	F	9	4 years of high school	16	39	Natural	1 Single	3050
+1974928	4	2	21	1	20.412	45	F	8	4 years of high school	10	39	Natural	1 Single	3033
+2610044	12	7	38	3	13.154	29	M	9	4 years of high school	12	38	Natural	1 Single	2675
+4194703	5	2	31	4	18.144	40	M	9	3 years of college	7	40	Natural	1 Single	3515
+3907037	7	5	21	2	3.629	8	M	2	2 years of high school	2	23	cesarean	1 Single	480
+3691251	10	3	19	1	15.422	34	M	9	NULL	16	40	Natural	1 Single	4769
+3079522	2	4	27	2	15.876	35	M	9	NULL	20	99	Natural	1 Single	4450
+1850141	5	4	35	3	4.536	10	F	9	2 years of college	12	40	cesarean	1 Single	3629
+2068107	8	3	28	4	6.804	15	F	9	2 years of high school	0	40	Natural	1 Single	3410
+875846	8	6	27	1	9.072	20	M	9	2 years of high school	10	40	Natural	1 Single	3345
+932116	1	7	31	3	7.257	16	M	9	NULL	12	37	Natural	1 Single	3119
+1121932	11	7	32	2	13.608	30	F	9	NULL	12	40	Natural	1 Single	3430
+3972857	2	3	26	3	17.690	39	M	9	NULL	10	41	Natural	1 Single	3493
+796254	3	4	27	2	13.608	30	M	9	3 years of high school	8	38	Natural	1 Single	2665
+195263	10	3	19	1	18.144	40	F	9	3 years of high school	7	38	Natural	1 Single	2892
+3677461	9	2	31	2	18.144	40	F	9	NULL	11	40	Natural	1 Single	3629
+1500913	5	1	34	1	14.969	33	F	9	2 years of college	12	41	Natural	1 Single	3585
+1114771	11	6	20	1	NA	NA	M	9	NULL	10	38	Natural	1 Single	3686
+2412401	9	7	23	2	10.886	24	F	8	4 years of high school	12	40	Natural	1 Single	3515
+239148	1	6	27	1	NA	NA	M	NA	NULL	15	99	cesarean	1 Single	3474
+3923028	9	3	27	1	9.072	20	F	9	8 Years of elementary school	14	39	Natural	1 Single	3487
+1910760	3	2	24	2	14.969	33	M	9	2 years of high school	4	39	cesarean	1 Single	2580
+1932122	6	4	33	2	18.144	40	F	9	2 years of college	15	38	cesarean	1 Single	3545
+1355379	9	6	23	1	14.515	32	M	5	2 years of college	14	38	Natural	1 Single	3317
+2474867	6	2	24	4	16.329	36	M	9	NULL	12	37	Natural	1 Single	2637
+3868473	3	5	32	4	9.525	21	M	9	8 Years of elementary school	13	37	cesarean	1 Single	3147
+3863442	2	5	19	2	19.051	42	M	9	2 years of high school	13	39	Natural	1 Single	2466
+335920	3	7	34	2	NA	NA	M	NA	NULL	10	99	Natural	1 Single	4070
+3071356	1	3	35	2	NA	NA	M	10	NULL	99	41	Natural	1 Single	4195
+1890194	12	7	18	2	11.793	26	F	9	2 years of high school	7	38	Natural	1 Single	2977
+345766	3	7	18	1	NA	NA	F	NA	NULL	10	99	cesarean	1 Single	2920
+1808511	11	2	29	3	11.340	25	F	9	4 years of high school	11	39	Natural	1 Single	3714
+1684973	9	1	33	2	15.422	34	M	9	NULL	16	39	Natural	1 Single	4019
+3363024	9	4	26	1	NA	NA	M	8	NULL	18	38	Natural	1 Single	3147
+521836	7	1	16	1	NA	NA	F	NA	NULL	10	99	Natural	1 Single	3120
+3622109	8	7	20	1	19.958	44	F	9	NULL	10	39	Natural	1 Single	2835
+3054895	10	7	26	3	4.536	10	M	9	3 years of high school	9	39	Natural	1 Single	3657
+494440	7	3	32	2	NA	NA	M	NA	NULL	9	99	cesarean	1 Single	3530
+1398042	1	3	16	1	15.876	35	F	9	2 years of high school	15	39	cesarean	1 Single	3005
+2913441	7	7	32	3	6.804	15	F	9	NULL	7	27	Natural	1 Single	1090
+2020936	4	4	24	3	17.690	39	M	9	8 Years of elementary school	12	37	Natural	1 Single	4167
+1168037	2	4	40	1	13.608	30	M	9	3 years of college	12	37	Natural	1 Single	2778
+2873254	6	5	28	2	NA	NA	F	9	NULL	14	39	Natural	1 Single	3600
+2883445	6	1	30	3	22.680	50	F	9	NULL	99	41	Natural	1 Single	3804
+4225928	8	6	31	2	9.525	21	M	9	2 years of high school	9	37	Natural	1 Single	3310
+3613822	8	3	37	8	15.876	35	F	9	NULL	11	39	Natural	1 Single	2693
+3967983	2	6	34	3	NA	NA	F	9	NULL	99	39	Natural	1 Single	4090
+3636188	8	5	24	3	10.433	23	F	9	NULL	11	31	cesarean	2 Twin	1725
+59394	10	1	23	3	6.804	15	F	9	1 Years of elementary school	14	37	Natural	1 Single	2495
+1061190	8	5	36	2	1.361	3	F	9	NULL	19	36	Natural	1 Single	2381
+3966726	1	7	22	5	28.576	63	F	8	NULL	12	39	Natural	1 Single	3430
+497768	6	4	19	3	NA	NA	F	NA	NULL	16	99	Natural	1 Single	2740
+2778882	9	7	30	2	8.618	19	M	9	NULL	23	39	Natural	1 Single	3430
+537328	7	2	30	1	NA	NA	M	NA	NULL	12	99	Natural	1 Single	2884
+2316092	4	1	29	1	9.072	20	F	8	2 years of high school	10	39	cesarean	1 Single	3232
+3961577	1	3	24	2	9.072	20	M	8	NULL	13	40	Natural	1 Single	3657
+3860530	2	6	27	2	9.072	20	F	10	6 Years of elementary school	22	39	cesarean	1 Single	3175
+1705291	2	2	24	3	13.608	30	M	9	NULL	20	38	Natural	1 Single	3941
+3887208	5	6	26	2	18.144	40	M	9	2 years of high school	11	39	Natural	1 Single	3175
+3027685	3	7	25	1	9.979	22	F	9	2 years of college	9	36	Natural	1 Single	3385
+117180	1	2	23	1	13.608	30	M	9	2 years of high school	12	38	cesarean	1 Single	3714
+952779	2	3	22	2	NA	NA	M	9	NULL	9	36	cesarean	1 Single	3714
+3356142	8	1	29	1	6.804	15	M	9	NULL	10	41	cesarean	1 Single	3510
+4260186	11	5	33	1	22.680	50	M	9	3 years of college	7	37	Natural	1 Single	3590
+4021015	9	1	24	1	10.886	24	M	9	NULL	10	36	Natural	1 Single	2268
+1105705	9	6	17	2	13.608	30	M	9	NULL	12	40	Natural	1 Single	3090
+2290035	7	4	26	3	14.515	32	M	10	1 year of college	13	39	Natural	1 Single	3657
+3266577	9	2	27	3	13.154	29	F	9	NULL	17	39	Natural	1 Single	2722
+2861220	5	4	20	1	13.608	30	M	9	NULL	8	39	cesarean	1 Single	2737
+4222447	8	3	22	1	23.133	51	M	9	2 years of high school	13	39	Natural	1 Single	3345
+1147374	12	3	35	4	13.608	30	M	9	NULL	12	40	Natural	1 Single	3884
+2223601	10	3	28	3	NA	NA	M	9	5 Years of elementary school	12	40	Natural	1 Single	3140
+3267491	9	7	37	3	18.597	41	M	9	NULL	14	36	cesarean	1 Single	4054
+3395976	1	4	21	2	4.082	9	F	9	NULL	7	38	Natural	1 Single	1843
+4192172	5	2	32	1	16.329	36	F	9	2 years of college	11	39	Natural	1 Single	3062
+2013595	3	6	25	2	7.257	16	F	9	2 years of high school	10	39	Natural	1 Single	3005
+4036148	11	4	25	1	20.412	45	F	9	NULL	11	40	Natural	1 Single	2807
+1983636	11	2	37	2	6.350	14	F	9	4 years of high school	8	38	cesarean	1 Single	2892
+1691034	10	2	43	5	0.000	0	M	9	NULL	13	39	cesarean	1 Single	3874
+3967778	2	5	37	1	15.876	35	F	9	NULL	99	36	cesarean	1 Single	3459
+3415677	1	2	27	4	16.329	36	M	10	NULL	5	39	Natural	1 Single	2665
+1696341	12	1	22	2	17.690	39	M	9	NULL	14	40	Natural	1 Single	3602
+1720314	5	1	28	1	37.195	82	M	9	NULL	12	35	cesarean	2 Twin	2550
+2738932	6	5	29	1	10.886	24	F	9	NULL	13	40	Unknown	1 Single	2670
+2147469	7	4	31	2	13.608	30	M	8	4 years of high school	10	40	Natural	1 Single	4111
+895583	4	2	18	1	15.422	34	F	9	2 years of high school	13	40	Natural	1 Single	2982
+2836900	3	7	34	2	9.979	22	F	NA	NULL	10	30	Natural	1 Single	1556
+4212854	7	5	34	1	18.144	40	F	9	3 years of college	10	38	cesarean	1 Single	2693
+2583863	9	2	27	4	9.072	20	F	9	3 years of college	9	41	Natural	1 Single	3745
+1910219	3	5	34	5	17.237	38	F	9	2 years of college	13	40	Natural	1 Single	3827
+3484522	3	5	32	2	18.144	40	M	9	NULL	15	39	Natural	1 Single	3771
+4168406	3	2	33	7	13.608	30	M	9	2 years of high school	8	39	Natural	1 Single	3435
+4077279	6	5	20	1	5.443	12	M	9	2 years of high school	15	40	Natural	1 Single	3204
+2057179	8	7	34	1	6.804	15	M	9	NULL	10	31	Natural	1 Single	1729
+2954500	12	5	23	1	1.361	3	M	7	NULL	9	36	cesarean	1 Single	3135
+2695949	2	6	28	6	15.876	35	F	9	NULL	9	40	Natural	1 Single	3799
+2730286	5	1	21	2	9.072	20	M	9	NULL	8	39	Natural	1 Single	3147
+3800697	2	4	24	1	29.030	64	M	9	4 years of high school	13	34	cesarean	2 Twin	2149
+1408356	3	2	25	2	9.072	20	M	10	2 years of college	6	38	cesarean	1 Single	3260
+3456561	3	2	26	2	16.329	36	F	9	NULL	14	38	Natural	1 Single	3100
+2899554	7	3	25	1	8.618	19	F	9	NULL	0	39	Natural	1 Single	3156
+680562	11	2	34	1	NA	NA	F	NA	NULL	10	99	Natural	1 Single	3633
+1168237	1	7	32	2	NA	NA	M	9	3 years of college	99	40	Natural	1 Single	3487
+2388514	7	5	21	1	14.515	32	F	9	1 year of college	12	41	Natural	1 Single	3204
+2101803	11	5	24	4	18.144	40	M	9	2 years of high school	15	39	Natural	1 Single	3572
+644759	9	2	19	1	NA	NA	F	NA	NULL	14	99	Natural	1 Single	3203
+3822850	7	3	25	1	14.061	31	F	9	2 years of college	11	40	Natural	1 Single	3125
+11312	1	1	39	3	4.536	10	F	9	3 years of college	15	40	Natural	1 Single	3686
+823895	2	3	37	1	19.051	42	M	9	3 years of college	8	39	Natural	1 Single	2466
+3506555	4	3	27	4	8.165	18	M	9	NULL	8	39	Natural	1 Single	3941
+3630128	8	3	18	1	4.990	11	M	9	NULL	9	38	Natural	1 Single	2693
+1763469	3	5	20	1	29.484	65	M	9	2 years of high school	14	33	cesarean	1 Single	2268
+1587392	5	3	32	2	13.608	30	M	9	2 years of high school	12	38	cesarean	1 Single	2693
+2331174	1	6	22	3	11.340	25	F	9	1 year of high school	15	34	Natural	1 Single	2580
+2934787	9	6	35	1	2.722	6	M	9	NULL	12	39	Natural	1 Single	3293
+638146	9	4	25	1	NA	NA	F	NA	NULL	15	99	Natural	1 Single	2948
+2528400	4	4	33	2	9.525	21	F	9	2 years of college	7	38	cesarean	1 Single	3237
+3982475	4	3	34	4	10.433	23	M	9	NULL	99	40	Natural	1 Single	4167
+2703666	2	1	26	1	18.144	40	M	9	NULL	8	39	Natural	1 Single	3374
+2540204	3	4	18	1	11.793	26	M	9	2 years of high school	10	40	cesarean	1 Single	3725
+1538552	6	1	26	2	17.237	38	F	9	NULL	13	39	Natural	1 Single	3657
+3849713	1	5	37	1	12.701	28	M	9	2 years of college	14	38	cesarean	1 Single	3800
+999663	5	3	22	1	18.144	40	M	9	NULL	15	39	Natural	1 Single	3742
+701057	11	5	17	1	NA	NA	F	NA	NULL	10	99	Natural	1 Single	2380
+3953390	12	1	24	3	18.144	40	F	9	2 years of high school	13	40	Natural	1 Single	3941
+1829396	2	4	25	3	22.680	50	M	9	2 years of college	12	40	cesarean	1 Single	4366
+2056803	7	3	27	1	10.886	24	F	9	2 years of college	13	38	Natural	1 Single	3430
+2280714	4	3	16	2	13.608	30	M	10	8 Years of elementary school	9	33	cesarean	1 Single	2041
+2074036	9	6	30	3	11.340	25	F	9	2 years of college	13	38	cesarean	1 Single	3232
+1693449	11	4	27	2	15.876	35	M	9	NULL	16	39	Natural	1 Single	3345
+234006	1	3	22	1	NA	NA	F	NA	NULL	5	99	Natural	1 Single	3062
+3148427	7	5	27	2	23.587	52	F	9	NULL	10	38	Natural	1 Single	3513
+393286	4	1	35	2	NA	NA	M	NA	NULL	14	99	Natural	1 Single	3342
+4106581	10	2	25	1	0.000	0	F	9	2 years of high school	13	41	cesarean	1 Single	3915
+3158490	8	5	25	1	6.804	15	M	9	NULL	13	37	Natural	1 Single	3385
+90157	6	3	34	3	9.525	21	F	7	4 years of high school	7	33	cesarean	1 Single	2126
+1200346	4	7	20	2	11.340	25	M	9	2 years of high school	11	39	Natural	1 Single	3771
+2871427	5	3	26	3	10.886	24	M	2	NULL	99	37	Natural	1 Single	3625
+1509416	12	6	26	1	27.216	60	M	9	3 years of high school	12	40	cesarean	1 Single	4678
+3706990	10	4	18	1	6.350	14	M	9	NULL	6	39	Natural	1 Single	2977
+1379134	7	7	27	2	14.061	31	F	8	NULL	12	37	cesarean	1 Single	3385
+844459	1	5	27	2	24.948	55	M	9	3 years of high school	14	40	Natural	1 Single	3544
+170836	8	6	36	5	11.340	25	F	9	2 years of high school	13	39	Natural	1 Single	3317
+3098555	3	2	32	3	0.000	0	F	9	NULL	5	38	Natural	1 Single	2891
+4043534	11	2	40	7	24.494	54	M	NA	NULL	17	41	Natural	1 Single	4678
+738835	11	3	21	1	NA	NA	F	NA	NULL	5	99	Natural	1 Single	2685
+2205862	6	3	24	1	29.937	66	M	9	2 years of high school	12	37	Natural	1 Single	3714
+4094356	8	2	24	5	24.040	53	F	9	6 Years of elementary school	7	39	cesarean	1 Single	3289
+1202962	5	7	31	4	20.412	45	F	9	2 years of high school	15	38	Natural	1 Single	3033
+3987361	4	1	40	2	NA	NA	F	8	NULL	99	40	Natural	1 Single	3502
+1397665	1	2	30	3	11.340	25	F	9	4 years of high school	12	40	Natural	1 Single	2665
+257611	2	6	24	2	NA	NA	F	NA	NULL	10	99	cesarean	1 Single	3085
+424060	5	4	26	1	NA	NA	F	NA	NULL	6	99	Natural	1 Single	843
+2407158	8	5	41	2	11.793	26	F	9	2 years of college	22	38	cesarean	1 Single	2693
+550934	8	2	23	1	NA	NA	M	NA	NULL	12	99	cesarean	1 Single	4286
+3463974	3	3	35	3	15.876	35	M	9	NULL	14	38	Natural	1 Single	3572
+2385866	6	4	28	1	9.525	21	F	9	3 years of college	11	38	Natural	1 Single	3204
+1409732	3	3	19	1	0.907	2	F	9	2 years of high school	9	40	Natural	1 Single	2807
+1206812	5	5	27	5	15.876	35	M	9	4 years of high school	10	39	cesarean	1 Single	3033
+188663	9	6	21	1	9.072	20	M	9	2 years of high school	11	39	cesarean	1 Single	3799
+3578008	6	5	28	1	11.793	26	M	9	NULL	12	39	Natural	1 Single	3799
+1173189	1	6	31	1	11.340	25	M	9	4 years of high school	9	40	cesarean	1 Single	3204
+4075929	5	3	35	3	3.629	8	M	9	4 years of high school	14	34	Natural	1 Single	2495
+3972694	2	3	35	5	7.257	16	M	9	NULL	11	39	Natural	1 Single	3220
+2235783	5	2	36	7	15.876	35	M	10	4 years of high school	6	41	Natural	1 Single	4082
+2911376	9	6	42	3	16.783	37	F	9	NULL	9	39	Natural	1 Single	3449
+1001881	5	3	25	2	19.051	42	M	9	NULL	11	38	cesarean	1 Single	3175
+1322946	10	7	31	2	10.886	24	F	9	2 years of college	12	39	Natural	1 Single	3962
+1905644	2	3	30	1	12.247	27	F	9	2 years of college	15	41	Natural	1 Single	3402
+2271288	2	2	35	6	0.000	0	F	9	2 years of high school	11	41	Natural	1 Single	3402
+2414702	9	5	19	1	14.061	31	F	9	2 years of high school	7	39	Natural	1 Single	2665
+3842405	11	3	25	2	9.525	21	M	9	7 Years of elementary school	9	36	Natural	1 Single	3132
+3511002	4	4	19	1	21.772	48	M	9	NULL	9	39	Natural	1 Single	2980
+1166121	1	6	16	1	25.855	57	F	9	7 Years of elementary school	8	36	Natural	1 Single	2863
+343825	4	5	22	2	NA	NA	M	NA	NULL	12	99	cesarean	1 Single	3062
+1941581	8	4	29	1	10.433	23	F	9	3 years of high school	10	39	Unknown	1 Single	3827
+2842718	3	3	23	NA	17.690	39	F	9	NULL	10	38	Natural	1 Single	3220
+4085930	7	5	31	3	14.515	32	F	9	2 years of college	15	37	Natural	1 Single	2778
+3530992	5	6	26	3	9.072	20	F	9	NULL	13	39	Natural	1 Single	3515
+847743	10	4	22	1	9.072	20	F	8	4 years of high school	11	39	Natural	1 Single	3600
+205590	11	2	17	2	11.340	25	M	9	8 Years of elementary school	9	38	cesarean	1 Single	2155
+1903682	2	6	23	2	7.257	16	F	9	2 years of high school	10	39	Natural	1 Single	3714
+2006011	3	3	22	1	15.876	35	M	9	1 year of college	12	38	Natural	1 Single	2835
+198013	10	7	22	1	14.515	32	M	9	NULL	0	40	Natural	1 Single	4196
+1191181	4	3	24	5	9.979	22	F	9	1 year of high school	4	41	Natural	1 Single	2310
+3940115	11	2	31	2	0.000	0	F	9	4 years of high school	12	39	Natural	1 Single	2930
+309676	3	1	24	1	NA	NA	M	NA	NULL	12	99	Natural	1 Single	3520
+3937302	10	5	30	2	9.072	20	F	9	2 years of college	12	38	Natural	1 Single	3205
+3505049	4	4	16	1	8.165	18	M	9	NULL	15	38	cesarean	1 Single	3884
+2797099	11	5	24	2	23.587	52	M	9	NULL	12	40	Natural	1 Single	3485
+2387013	7	6	23	4	12.247	27	M	10	1 year of high school	4	37	Natural	1 Single	3459
+1462760	9	7	26	6	9.072	20	M	9	8 Years of elementary school	12	37	Natural	1 Single	4309
+2898238	8	5	21	NA	25.855	57	M	9	NULL	7	38	cesarean	1 Single	4188
+825571	9	4	36	2	8.618	19	F	9	2 years of high school	5	35	cesarean	1 Single	2211
+2273175	2	2	18	2	5.443	12	M	9	7 Years of elementary school	14	36	Natural	1 Single	2466
+494854	7	4	20	1	NA	NA	F	NA	NULL	12	99	Natural	1 Single	2760
+952254	2	4	26	3	22.680	50	F	9	NULL	13	38	Natural	1 Single	3374
+1873	3	3	21	1	13.608	30	F	9	6 Years of elementary school	24	39	Natural	1 Single	2835
+2123578	2	6	26	1	11.793	26	M	9	2 years of college	12	40	Natural	1 Single	2948
+1289537	11	3	22	1	19.504	43	F	9	2 years of high school	8	41	cesarean	1 Single	3515
+1542603	6	6	32	2	34.927	77	M	9	3 years of high school	20	38	cesarean	1 Single	2948
+595330	9	1	17	1	NA	NA	F	NA	NULL	12	99	Natural	1 Single	2755
+3288161	2	7	24	2	3.629	8	F	9	NULL	7	40	Natural	1 Single	3600
+4092469	8	4	34	1	8.165	18	F	9	2 years of college	8	34	Natural	1 Single	2525
+4095539	9	7	26	6	9.979	22	F	9	8 Years of elementary school	6	33	Natural	1 Single	1862
+1117291	11	3	30	3	20.412	45	M	9	NULL	13	39	cesarean	1 Single	3232
+2862509	5	6	32	2	22.680	50	M	9	NULL	10	35	Natural	1 Single	2904
+459477	6	5	23	3	NA	NA	M	NA	NULL	10	99	cesarean	1 Single	3487
+4206609	6	4	33	4	17.237	38	M	9	2 years of high school	11	42	Natural	1 Single	4095
+989367	4	6	33	2	10.433	23	M	9	NULL	10	39	Natural	1 Single	2807
+1313160	4	2	42	2	9.525	21	M	9	2 years of college	14	39	Natural	1 Single	3770
+2139056	5	2	20	1	NA	NA	M	9	1 year of high school	14	40	Natural	1 Single	3260
+778017	12	4	19	1	NA	NA	F	NA	NULL	13	99	Natural	1 Single	3041
+2726737	4	3	37	1	13.608	30	M	9	NULL	10	38	cesarean	2 Twin	3033
+5016	6	3	28	3	NA	NA	M	9	2 years of high school	5	40	Natural	1 Single	3990
+1896190	12	6	30	5	12.247	27	M	9	2 years of high school	16	36	Natural	1 Single	3487
+993177	4	6	33	5	19.051	42	M	9	NULL	7	39	Natural	1 Single	3090
+4019387	9	6	36	2	22.226	49	F	9	NULL	12	38	Natural	1 Single	3969
+3230986	1	6	25	6	11.340	25	F	9	NULL	10	39	cesarean	2 Twin	2872
+3089035	3	4	27	2	14.969	33	M	9	NULL	12	39	Natural	1 Single	4410
+1267128	10	5	24	2	5.443	12	F	9	4 years of high school	7	39	Natural	1 Single	3402
+2352963	3	5	36	2	12.701	28	M	9	4 years of high school	12	37	cesarean	1 Single	3175
+2383342	6	5	30	3	27.216	60	M	9	2 years of high school	10	37	cesarean	2 Twin	3033
+862192	4	3	36	6	7.711	17	M	9	3 years of college	34	37	cesarean	1 Single	3459
+484241	7	7	33	2	NA	NA	M	NA	NULL	10	99	cesarean	1 Single	2341
+1509146	12	6	32	2	20.865	46	F	9	3 years of college	10	39	cesarean	1 Single	4440
+2396572	8	4	41	7	13.608	30	F	9	2 years of high school	10	37	Natural	1 Single	2693
+267976	1	6	38	3	NA	NA	M	NA	NULL	11	99	Natural	1 Single	3856
+3319050	3	1	25	3	11.340	25	F	9	NULL	13	39	Natural	1 Single	2835
+1967293	12	7	20	2	14.515	32	M	9	3 years of high school	14	41	Natural	1 Single	3685
+2130098	4	2	35	3	9.979	22	F	9	2 years of college	13	40	cesarean	1 Single	3629
+1994020	2	4	21	1	11.340	25	F	9	2 years of high school	14	38	Natural	1 Single	2948
+2871796	6	1	27	4	0.000	0	M	9	NULL	15	37	Natural	1 Single	2394
+3189575	11	2	30	2	0.907	2	M	6	NULL	10	36	Natural	1 Single	3231
+3259650	7	4	19	1	28.576	63	M	9	NULL	8	39	Natural	1 Single	3175
+3617581	7	4	21	1	15.422	34	M	9	NULL	10	38	Natural	1 Single	2835
+2939838	10	1	25	NA	NA	NA	M	9	NULL	99	39	Natural	1 Single	3355
+4164254	2	5	21	3	9.072	20	M	9	2 years of high school	8	40	Natural	1 Single	2989
+1457088	8	3	28	3	0.000	0	M	9	3 years of high school	16	39	cesarean	1 Single	3941
+3198215	11	4	39	4	7.257	16	M	9	NULL	7	36	cesarean	1 Single	2280
+3307723	2	7	32	5	14.061	31	F	9	NULL	9	39	Natural	1 Single	3280
+1037998	7	1	35	3	11.340	25	F	8	NULL	9	34	Natural	1 Single	2240
+1138873	12	2	41	2	19.051	42	F	9	NULL	12	40	Natural	1 Single	3544
+2435765	11	3	29	3	13.608	30	F	9	1 year of high school	15	39	Natural	1 Single	3515
+951554	2	3	40	2	13.608	30	M	8	NULL	12	39	cesarean	1 Single	3487
+3661504	9	5	23	2	18.597	41	M	8	NULL	12	37	Natural	1 Single	3275
+139150	4	1	26	3	7.711	17	M	9	4 Years of elementary school	0	39	Natural	1 Single	3459
+2224456	11	3	31	3	18.144	40	M	10	2 years of college	12	39	Natural	1 Single	3600
+3812142	4	1	22	3	20.865	46	M	9	1 year of high school	10	39	Natural	1 Single	3635
+4007004	7	7	25	4	9.979	22	F	9	NULL	7	35	cesarean	1 Single	2722
+3664327	9	4	21	1	12.247	27	M	9	NULL	10	39	Natural	1 Single	3544
+4074029	5	3	29	2	13.608	30	F	10	2 years of college	14	38	cesarean	1 Single	3374
+55574	9	6	25	3	13.608	30	F	9	8 Years of elementary school	15	39	cesarean	1 Single	3430
+3299561	12	6	24	3	11.340	25	M	9	NULL	11	39	Natural	1 Single	3204
+657749	10	5	28	2	NA	NA	F	NA	NULL	10	99	Natural	1 Single	3685
+4242335	10	6	19	1	NA	NA	M	9	3 years of high school	10	37	Natural	1 Single	2892
+331337	3	4	35	1	NA	NA	F	NA	NULL	14	99	Natural	1 Single	3035
+2565035	7	5	35	4	18.144	40	F	9	4 years of high school	6	39	cesarean	1 Single	2510
+1128850	11	2	23	2	13.608	30	F	9	NULL	10	40	Natural	1 Single	3686
+1221440	6	3	25	4	NA	NA	M	9	8 Years of elementary school	1	39	Natural	1 Single	2722
+3242265	4	2	34	3	8.165	18	F	9	NULL	16	41	Natural	1 Single	3580
+2815016	1	6	23	4	16.783	37	F	9	NULL	7	39	Natural	1 Single	3062
+2995763	8	2	31	3	13.608	30	F	9	2 years of high school	9	37	Natural	2 Twin	2495
+2491737	1	6	33	2	15.876	35	M	9	NULL	14	38	cesarean	1 Single	3487
+1625304	10	3	30	2	11.340	25	F	9	2 years of high school	14	40	Natural	1 Single	4394
+1446997	7	2	21	2	11.340	25	M	9	7 Years of elementary school	8	38	cesarean	1 Single	4253
+3416327	1	2	29	2	4.990	11	F	9	NULL	10	38	cesarean	1 Single	3005
+4200782	6	5	38	2	9.979	22	F	9	2 years of high school	10	38	Natural	1 Single	3090
+499317	7	6	22	1	NA	NA	F	NA	NULL	10	99	Natural	1 Single	3944
+2702628	2	6	31	2	15.876	35	M	9	NULL	12	38	Natural	1 Single	3630
+731697	12	3	33	1	NA	NA	M	NA	NULL	15	99	Natural	1 Single	3203
+3825957	7	5	23	1	16.783	37	M	8	7 Years of elementary school	11	40	cesarean	1 Single	2670
+2207977	7	1	26	3	0.000	0	F	9	2 years of high school	16	38	Natural	1 Single	2495
+2504217	12	1	27	1	14.061	31	F	9	NULL	12	39	Natural	1 Single	3005
+2511524	1	4	22	1	18.597	41	F	9	2 years of high school	9	39	cesarean	1 Single	3800
+892732	12	2	28	3	12.247	27	F	9	4 Years of elementary school	10	40	Natural	1 Single	3912
+203695	11	7	23	1	22.680	50	F	9	3 years of college	10	33	cesarean	1 Single	1616
+672985	10	7	18	2	NA	NA	M	NA	NULL	3	99	Natural	1 Single	3347
+528272	8	6	33	3	NA	NA	M	NA	NULL	12	99	Natural	1 Single	3086
+26277	4	4	28	3	13.608	30	F	9	4 years of high school	8	40	Natural	1 Single	3260
+1927833	6	1	29	2	7.711	17	M	9	4 years of high school	10	38	Natural	1 Single	3203
+3497842	4	1	34	8	27.669	61	M	8	NULL	7	41	Natural	1 Single	3459
+1157737	1	1	35	1	4.990	11	M	9	4 years of high school	8	38	cesarean	1 Single	2608
+3847160	12	5	23	1	14.969	33	F	9	3 years of college	10	37	Natural	1 Single	3318
+2508145	1	4	21	1	22.680	50	F	9	2 years of college	12	39	Natural	1 Single	2863
+198773	10	1	32	3	17.690	39	F	9	2 years of high school	10	36	Natural	2 Twin	2750
+1779514	3	3	29	3	5.443	12	M	9	8 Years of elementary school	17	39	Natural	1 Single	4110
+395586	5	7	26	1	NA	NA	F	NA	NULL	7	99	cesarean	1 Single	2870
+4205124	6	5	29	4	14.061	31	F	9	2 years of high school	13	40	cesarean	1 Single	2860
+3180491	10	6	24	2	4.536	10	F	9	NULL	6	35	cesarean	1 Single	1905
+2533416	4	7	22	1	16.783	37	F	9	4 Years of elementary school	9	39	Natural	1 Single	3118
+191318	10	6	26	3	9.072	20	M	9	2 years of college	3	30	Natural	1 Single	3720
+942928	1	3	20	4	17.690	39	F	9	NULL	12	38	Natural	1 Single	3487
+368841	4	7	31	2	NA	NA	F	NA	NULL	14	99	cesarean	1 Single	3771
+575579	8	1	35	1	NA	NA	F	NA	NULL	11	99	cesarean	1 Single	3310
+2627065	5	4	29	4	20.412	45	M	4	8 Years of elementary school	9	40	cesarean	1 Single	3386
+3034828	5	7	22	1	14.969	33	F	10	2 years of high school	10	40	Natural	1 Single	3628
+1790053	8	2	18	2	12.701	28	F	9	2 years of high school	12	38	cesarean	1 Single	3260
+1941629	8	3	39	5	15.876	35	F	9	NULL	12	37	cesarean	1 Single	2325
+2433951	10	3	34	4	11.340	25	F	9	3 years of college	12	39	Natural	1 Single	3941
+625177	10	4	24	2	NA	NA	M	NA	NULL	8	99	Natural	1 Single	3657
+1546260	7	7	28	3	4.536	10	M	5	2 years of college	6	23	cesarean	1 Single	454
+3101440	3	4	30	4	NA	NA	M	NA	NULL	8	34	Natural	1 Single	NA
+917965	11	6	28	2	16.783	37	M	9	NULL	8	38	Natural	1 Single	3260
+3000887	9	4	39	1	22.226	49	M	9	2 years of high school	5	34	cesarean	1 Single	1899
+4059694	3	4	17	1	9.979	22	M	9	1 year of high school	10	40	Natural	1 Single	3354
+1693879	11	6	33	4	13.154	29	M	9	NULL	11	36	cesarean	1 Single	2632
+3153079	8	1	36	3	0.000	0	F	10	NULL	11	38	Natural	1 Single	2880
+904209	10	5	28	1	13.608	30	F	9	3 years of college	10	38	cesarean	1 Single	3146
+3851522	1	6	18	1	13.608	30	M	9	2 years of high school	10	38	Natural	1 Single	3116
+358466	4	2	24	1	NA	NA	M	NA	NULL	7	99	Natural	1 Single	2545
+1916824	4	1	33	3	4.536	10	M	9	2 years of high school	7	39	Natural	1 Single	3430
+775338	11	2	19	2	NA	NA	M	NA	NULL	7	99	Natural	1 Single	3090
+1271042	10	5	25	4	12.701	28	M	9	4 Years of elementary school	6	39	Natural	1 Single	3771
+3843741	11	5	30	4	14.969	33	M	8	2 years of high school	11	39	Natural	1 Single	2714
+3856642	1	7	42	3	6.804	15	M	9	2 years of college	3	39	Natural	1 Single	3005
+4211551	7	4	35	8	11.793	26	F	9	2 years of high school	15	39	Natural	1 Single	3765
+2073239	9	5	34	2	11.340	25	M	9	2 years of college	20	40	Natural	1 Single	2920
+906121	12	7	34	1	15.876	35	F	9	2 years of college	16	38	cesarean	1 Single	2863
+2160416	9	6	22	1	11.340	25	F	9	2 years of high school	9	39	Natural	1 Single	3941
+1203491	5	3	20	1	19.958	44	M	9	2 years of high school	9	36	Natural	1 Single	3119
+1067989	8	5	26	2	19.051	42	M	9	NULL	99	40	Natural	1 Single	3515
+1741376	10	2	33	2	7.711	17	F	9	NULL	15	39	Natural	1 Single	2722
+735212	11	5	33	4	NA	NA	M	NA	NULL	15	99	Natural	1 Single	3590
+3885292	5	4	30	2	15.422	34	F	9	4 years of high school	10	39	Natural	1 Single	2615
+3021883	2	1	25	2	29.937	66	F	9	2 years of high school	11	39	Natural	1 Single	3490
+2095739	11	6	21	1	17.690	39	M	9	2 years of high school	11	38	cesarean	1 Single	3260
+3834185	9	6	34	5	10.886	24	M	9	2 years of high school	14	38	Natural	1 Single	3800
+3216098	1	2	27	3	11.340	25	F	9	6 Years of elementary school	11	40	Natural	1 Single	3740
+2425997	10	7	24	3	11.340	25	F	9	3 Years of elementary school	13	38	Natural	1 Single	3175
+2406005	8	5	30	1	15.876	35	M	9	3 years of college	13	40	Natural	1 Single	3402
+2918614	9	3	19	2	23.133	51	F	9	NULL	12	38	Natural	1 Single	3390
+1348562	7	6	29	2	29.484	65	M	9	3 years of high school	14	40	Natural	1 Single	4082
+116658	1	5	23	4	11.340	25	F	9	2 years of high school	10	40	Natural	1 Single	3195
+761295	12	7	20	1	NA	NA	F	NA	NULL	15	99	Natural	1 Single	3491
+3544126	5	1	17	1	25.855	57	M	9	NULL	5	40	Natural	1 Single	3062
+3153506	7	2	19	NA	NA	NA	M	9	NULL	99	39	Natural	1 Single	2268
+3032934	4	5	25	6	5.443	12	F	9	2 years of high school	5	40	Natural	1 Single	2693
+781813	11	1	32	2	18.144	40	M	9	2 years of college	9	41	Natural	1 Single	3629
+726297	12	3	28	2	NA	NA	M	NA	NULL	20	99	Natural	1 Single	4040
+3491595	4	1	32	1	18.144	40	M	9	NULL	8	39	cesarean	1 Single	3033
+1160773	1	7	30	3	22.226	49	M	9	2 years of high school	12	39	Natural	1 Single	3686
+2320934	8	3	34	1	10.886	24	M	9	2 years of college	11	41	Natural	1 Single	2466
+3180271	10	4	30	2	2.268	5	M	9	NULL	11	38	Natural	1 Single	3373
+1221084	6	4	29	1	18.144	40	M	9	2 years of high school	99	40	Natural	1 Single	3884
+2599633	11	5	26	2	9.072	20	M	9	1 year of high school	12	35	Natural	1 Single	2707
+1176761	2	5	37	2	29.484	65	M	9	1 year of college	10	38	cesarean	1 Single	3941
+4223140	8	6	35	5	9.525	21	M	9	3 years of college	10	38	Natural	1 Single	2835
+3431275	2	5	20	2	12.247	27	M	9	NULL	8	42	cesarean	1 Single	3856
+2075737	9	2	23	1	0.000	0	M	5	2 years of high school	10	32	cesarean	1 Single	1843
+922732	1	3	26	5	15.422	34	F	10	NULL	8	39	Natural	1 Single	2892
+1071336	9	7	26	1	5.897	13	M	9	NULL	13	41	Natural	1 Single	3771
+3562935	6	2	22	1	13.608	30	F	9	NULL	15	40	Natural	1 Single	3289
+3866015	2	3	37	4	15.876	35	M	9	2 years of college	9	41	Natural	1 Single	4933
+4222868	8	6	19	4	8.618	19	F	9	7 Years of elementary school	8	39	Natural	1 Single	3210
+1545675	7	6	32	3	9.979	22	M	9	3 years of high school	11	40	Natural	1 Single	3629
+3089405	2	4	30	3	9.072	20	F	9	NULL	12	39	cesarean	1 Single	3572
+3475248	3	1	25	2	9.979	22	F	9	NULL	6	38	Natural	1 Single	3459
+3599185	7	1	32	2	19.051	42	F	7	NULL	12	38	Natural	1 Single	4528
+3411689	1	3	30	2	15.876	35	F	9	NULL	14	40	Natural	1 Single	2807
+930413	1	1	33	3	11.793	26	F	8	NULL	12	36	Natural	1 Single	2608
+2937946	11	5	32	5	17.690	39	M	9	NULL	12	38	Natural	1 Single	4050
+1398944	2	2	29	3	0.000	0	M	8	2 years of high school	14	39	cesarean	1 Single	3515
+4181824	4	5	23	4	19.504	43	M	9	2 years of high school	13	41	cesarean	1 Single	4645
+1365816	12	6	23	2	15.876	35	F	9	8 Years of elementary school	16	39	Natural	1 Single	2835
+3950668	12	1	36	7	11.793	26	F	9	8 Years of elementary school	9	39	cesarean	1 Single	2890
+553808	8	5	18	1	NA	NA	M	NA	NULL	9	99	Natural	1 Single	3033
+745308	12	5	18	1	NA	NA	F	NA	NULL	12	99	Natural	1 Single	3635
+998748	5	5	34	NA	19.958	44	F	9	NULL	99	40	Natural	1 Single	2523
+3020828	1	6	27	1	18.144	40	F	9	2 years of college	11	39	Natural	1 Single	3061
+1171241	2	4	22	1	13.608	30	M	9	2 years of high school	14	41	Natural	1 Single	3289
+3457675	3	3	34	3	0.000	0	F	9	NULL	12	38	Natural	1 Single	3119
+3218878	5	5	32	4	13.608	30	M	9	2 years of high school	11	37	cesarean	1 Single	3033
+1793493	9	4	32	6	20.412	45	F	10	4 years of high school	4	38	cesarean	1 Single	2863
+1885942	11	5	25	4	15.876	35	M	9	2 years of high school	10	39	Natural	1 Single	3980
+3697583	10	3	22	1	15.876	35	F	8	NULL	5	39	Natural	1 Single	3005
+2116368	1	2	26	1	18.144	40	F	9	3 years of college	10	39	Natural	1 Single	3600
+2407713	8	2	35	1	11.340	25	M	9	2 years of high school	18	38	cesarean	1 Single	2637
+693568	9	4	35	2	NA	NA	M	NA	NULL	13	99	Natural	1 Single	3920
+3511103	4	7	29	1	12.701	28	M	9	NULL	3	39	Natural	1 Single	3175
+488400	7	4	19	1	NA	NA	M	NA	NULL	9	99	Natural	1 Single	3630
+3514308	4	4	28	3	NA	NA	M	9	NULL	10	39	cesarean	1 Single	3175
+3979134	3	1	24	1	19.504	43	M	9	NULL	10	39	Natural	1 Single	3402
+1525015	2	2	27	3	14.969	33	F	9	2 years of college	11	39	cesarean	1 Single	3210
+1937762	7	5	19	4	20.865	46	F	9	2 years of high school	7	39	Natural	1 Single	2835
+3705753	10	3	29	2	14.515	32	F	9	NULL	12	37	Natural	1 Single	3260
+1410335	3	7	29	2	5.443	12	M	9	2 years of college	12	38	Natural	1 Single	3147
+1546053	7	7	27	2	13.608	30	F	9	2 years of college	15	39	Natural	1 Single	3345
+2359353	4	1	30	2	19.504	43	M	9	4 years of high school	15	40	cesarean	1 Single	3572
+3987503	5	4	27	4	18.144	40	M	9	NULL	12	39	Natural	1 Single	3771
+3402256	1	1	30	2	21.772	48	M	9	NULL	10	39	Natural	1 Single	3345
+3469337	3	5	18	2	12.701	28	M	9	NULL	15	39	Natural	1 Single	3147
+2063870	8	5	37	5	34.019	75	M	9	1 year of college	10	41	cesarean	1 Single	3663
+2917361	9	6	27	5	10.433	23	M	9	NULL	9	40	Natural	1 Single	3392
+796384	3	7	19	2	15.876	35	F	9	7 Years of elementary school	8	37	cesarean	1 Single	3005
+771139	12	5	30	4	NA	NA	M	NA	NULL	10	99	cesarean	2 Twin	740
+618349	9	4	26	3	NA	NA	M	NA	NULL	14	99	cesarean	1 Single	2977
+1316794	7	4	27	1	23.587	52	F	9	4 years of high school	21	36	Natural	1 Single	2809
+836583	8	1	27	3	5.443	12	F	9	2 years of high school	11	39	cesarean	1 Single	3487
+3287766	1	5	33	3	19.051	42	F	9	NULL	6	39	cesarean	1 Single	4338
+1875754	9	3	30	1	13.608	30	F	9	2 years of college	12	38	Natural	1 Single	3289
+1131431	11	2	23	2	17.690	39	F	9	NULL	15	39	cesarean	1 Single	3232
+468496	6	7	31	1	NA	NA	F	NA	NULL	25	99	cesarean	1 Single	3416
+1125254	11	6	29	4	NA	NA	F	9	NULL	5	39	cesarean	1 Single	3572
+362301	4	5	21	2	NA	NA	F	NA	NULL	14	99	Natural	1 Single	3203
+550780	8	1	21	1	NA	NA	M	NA	NULL	17	99	Natural	1 Single	4455
+2107399	12	5	23	1	12.701	28	F	9	2 years of high school	10	38	Natural	1 Single	3459
+490857	7	7	28	3	NA	NA	M	NA	NULL	15	99	Natural	1 Single	3370
+163270	7	4	19	2	18.144	40	M	10	2 years of high school	11	39	Natural	1 Single	3092
+292900	2	6	20	1	NA	NA	M	NA	NULL	8	99	Natural	1 Single	3232
+3440460	2	5	26	3	14.515	32	F	9	NULL	9	40	cesarean	1 Single	3175
+2641821	11	4	37	8	13.608	30	F	9	7 Years of elementary school	15	39	cesarean	1 Single	3155
+1670326	5	2	21	1	13.608	30	M	9	NULL	8	40	cesarean	1 Single	3235
+2659974	4	7	24	1	13.608	30	M	9	4 years of high school	13	39	cesarean	1 Single	3686
+1944869	8	2	27	2	9.979	22	M	9	2 years of high school	6	38	cesarean	1 Single	3572
+1933137	7	7	45	2	18.144	40	F	9	3 years of college	11	40	cesarean	1 Single	3629
+304504	3	7	16	1	NA	NA	M	NA	NULL	11	99	Natural	1 Single	3799
+2087817	9	4	28	2	2.722	6	F	9	2 years of high school	15	39	Natural	1 Single	3317
+3016432	12	3	15	1	14.061	31	M	9	7 Years of elementary school	11	39	Natural	1 Single	3062
+3892957	6	3	28	2	15.876	35	M	9	3 years of college	14	38	Natural	1 Single	3425
+1916878	4	6	22	1	14.061	31	F	9	2 years of college	21	40	Natural	1 Single	3399
+297454	3	6	31	1	NA	NA	F	NA	NULL	13	99	Natural	1 Single	3175
+1577227	2	7	33	2	8.165	18	F	9	2 years of college	9	40	Natural	1 Single	3941
+3722258	11	4	29	1	23.587	52	M	9	NULL	9	38	cesarean	1 Single	4054
+2584833	9	6	44	5	11.340	25	F	9	3 years of college	18	37	cesarean	1 Single	3029
+1823002	1	7	19	1	22.680	50	M	10	2 years of high school	17	40	Natural	1 Single	3350
+2676694	10	5	35	1	10.433	23	F	9	2 years of college	26	38	cesarean	1 Single	2835
+915682	8	7	18	1	9.072	20	F	9	NULL	6	35	Natural	1 Single	2130
+545822	7	6	28	2	NA	NA	M	NA	NULL	14	99	cesarean	1 Single	3695
+579959	8	7	27	5	NA	NA	F	NA	NULL	10	99	Natural	1 Single	3019
+1859907	7	1	36	1	17.237	38	M	9	4 years of high school	14	42	cesarean	1 Single	3684
+2993955	8	2	24	1	16.783	37	F	9	2 years of high school	0	37	Natural	1 Single	2977
+2242293	3	6	28	1	NA	NA	M	9	3 years of college	20	36	cesarean	1 Single	2900
+3589166	6	1	21	1	9.072	20	F	9	NULL	0	41	Natural	1 Single	2892
+1544429	7	6	32	3	5.443	12	F	9	3 years of college	14	38	Natural	1 Single	2750
+2627689	5	2	25	2	11.340	25	M	9	7 Years of elementary school	6	39	Natural	1 Single	2860
+1025966	6	6	30	4	13.154	29	M	9	NULL	12	38	cesarean	1 Single	2835
+221287	1	2	19	1	NA	NA	M	NA	NULL	16	99	Natural	1 Single	3955
+3529578	4	7	23	1	20.412	45	F	8	NULL	7	33	Natural	1 Single	1705
+1782204	7	5	36	3	22.680	50	M	9	2 years of college	14	39	Natural	1 Single	3997
+679154	11	4	34	6	NA	NA	F	NA	NULL	8	99	cesarean	1 Single	2770
+1222028	5	3	35	4	9.979	22	F	2	2 years of high school	11	39	cesarean	1 Single	2608
+226628	1	1	34	1	NA	NA	F	NA	NULL	14	99	Natural	1 Single	2098
+540201	8	7	29	1	NA	NA	M	NA	NULL	12	99	Natural	1 Single	3315
+3663410	9	6	34	3	24.948	55	M	8	NULL	10	31	cesarean	1 Single	1735
+2948909	12	2	25	2	11.340	25	M	9	NULL	5	35	cesarean	1 Single	1884
+805586	6	2	34	4	27.216	60	M	9	3 years of high school	13	38	Natural	1 Single	3289
+380172	4	4	35	4	NA	NA	F	NA	NULL	15	99	cesarean	1 Single	2636
+2128496	3	4	20	1	20.412	45	M	9	2 years of high school	14	40	cesarean	1 Single	3062
+2527393	3	6	20	1	7.257	16	M	9	1 year of high school	10	36	Natural	1 Single	2510
+3967559	2	4	19	2	16.783	37	F	10	NULL	23	39	Natural	1 Single	3402
+2452990	12	1	23	1	17.237	38	F	9	2 years of high school	11	40	Natural	1 Single	3232
+2237976	8	2	22	1	6.804	15	F	9	2 years of college	12	40	Natural	1 Single	3608
+3081944	2	2	26	4	9.979	22	M	9	NULL	99	38	cesarean	1 Single	3010
+3939430	11	7	32	3	16.329	36	F	9	3 years of college	11	40	Natural	1 Single	3203
+2733463	5	2	25	1	12.701	28	M	9	NULL	11	38	Natural	1 Single	2778
+924228	1	5	38	1	10.886	24	F	9	NULL	12	40	Natural	1 Single	3912
+566345	8	7	28	1	NA	NA	M	NA	NULL	13	99	Natural	1 Single	3046
+3919589	9	4	22	1	9.072	20	M	10	1 year of college	15	38	Natural	1 Single	3090
+1644794	5	2	29	2	10.886	24	F	9	4 years of high school	10	39	Natural	1 Single	3062
+3059244	11	6	28	5	9.072	20	F	8	2 years of high school	12	39	Natural	1 Single	3402
+2021525	4	7	32	4	13.608	30	M	9	6 Years of elementary school	10	38	Natural	1 Single	2835
+2262340	10	4	21	3	24.948	55	F	9	8 Years of elementary school	25	39	cesarean	1 Single	3487
+3088976	3	7	35	3	19.958	44	F	9	NULL	5	39	Natural	1 Single	3790
+2262612	10	2	21	2	18.144	40	M	9	NULL	6	34	Natural	2 Twin	2070
+2268089	1	3	37	2	19.051	42	F	10	3 years of college	11	39	Natural	1 Single	3459
+3125501	5	5	35	4	NA	NA	F	7	NULL	99	40	Natural	1 Single	3950
+2874726	6	3	20	2	15.422	34	M	9	NULL	6	38	cesarean	1 Single	3400
+3496438	4	1	17	1	25.401	56	M	9	NULL	12	39	Natural	1 Single	3515
+1491404	12	4	27	4	6.350	14	F	9	4 Years of elementary school	10	38	cesarean	1 Single	2835
+303132	3	2	33	1	NA	NA	F	NA	NULL	12	99	Natural	1 Single	2020
+991262	4	6	36	5	14.061	31	F	8	NULL	10	35	Natural	2 Twin	2115
+1281139	11	3	25	2	14.515	32	F	9	4 years of high school	9	37	Natural	1 Single	3430
+3381254	11	4	21	2	20.412	45	M	10	NULL	99	38	Natural	1 Single	2920
+110162	12	4	33	2	9.979	22	F	9	2 years of college	12	38	cesarean	1 Single	3629
+587029	8	4	25	1	NA	NA	M	NA	NULL	14	99	Natural	1 Single	3175
+1664276	3	5	26	1	NA	NA	F	8	NULL	12	39	Natural	1 Single	3130
+1265798	10	4	31	3	11.340	25	F	8	3 years of high school	11	39	cesarean	1 Single	3487
+2766343	8	6	35	2	3.629	8	F	9	NULL	21	39	Natural	1 Single	3600
+2539304	5	2	23	3	18.144	40	M	9	4 Years of elementary school	12	39	Natural	1 Single	3455
+1352391	8	2	30	2	8.618	19	F	9	2 years of college	12	40	Natural	1 Single	3400
+2697044	2	2	22	2	19.051	42	F	9	NULL	16	42	Natural	1 Single	2892
+3425858	2	3	15	1	20.865	46	F	9	NULL	3	34	Natural	1 Single	2523
+2516049	1	3	26	5	14.515	32	M	9	2 years of high school	10	39	Natural	1 Single	2838
+1089632	9	6	27	3	20.865	46	M	9	NULL	5	37	cesarean	1 Single	4139
+2278090	4	3	18	3	11.340	25	M	9	7 Years of elementary school	10	39	Natural	1 Single	3204
+3544678	5	7	20	2	10.886	24	M	10	NULL	11	37	Natural	1 Single	2835
+2277122	3	5	24	2	NA	NA	M	9	2 years of high school	15	41	Natural	1 Single	3630
+3401444	1	2	25	3	14.515	32	F	9	NULL	9	38	Natural	1 Single	3459
+1256144	9	4	32	2	13.608	30	F	9	2 years of college	13	39	cesarean	1 Single	3799
+1630751	12	2	19	1	20.412	45	M	9	2 years of high school	13	41	Natural	1 Single	3572
+1451766	8	2	31	3	11.340	25	F	9	2 years of high school	16	38	cesarean	1 Single	3260
+3274915	10	3	35	4	0.000	0	F	9	NULL	12	40	Natural	1 Single	3688
+1104135	10	5	30	2	19.051	42	M	9	NULL	8	40	cesarean	1 Single	3317
+2774816	9	1	25	2	13.608	30	F	9	NULL	4	36	Natural	1 Single	2600
+2242538	4	2	34	6	NA	NA	M	8	2 years of high school	10	37	Natural	1 Single	3500
+1081333	9	4	28	3	9.979	22	F	9	NULL	10	40	Natural	1 Single	3147
+2362291	4	4	35	2	9.979	22	M	9	2 years of college	11	39	cesarean	1 Single	3827
+3683660	9	2	30	2	9.072	20	F	9	NULL	9	36	Natural	1 Single	3147
+3775882	12	5	25	3	14.515	32	M	9	NULL	10	37	Natural	1 Single	3165
+100536	9	6	40	2	6.804	15	M	9	2 years of college	15	38	cesarean	1 Single	3657
+2928020	10	5	22	2	4.990	11	F	7	NULL	17	41	Natural	1 Single	4112
+1480141	11	5	30	3	19.958	44	F	9	2 years of high school	12	39	Natural	1 Single	3175
+989903	4	4	30	4	9.979	22	M	9	NULL	11	36	cesarean	1 Single	3147
+1299026	12	2	27	2	11.340	25	M	8	4 Years of elementary school	7	35	Natural	1 Single	2325
+1432713	6	3	20	1	7.711	17	F	9	2 years of high school	17	39	Natural	1 Single	3459
+2786785	10	7	24	2	17.237	38	M	9	NULL	14	37	cesarean	1 Single	3289
+3934525	10	1	34	7	11.340	25	M	9	6 Years of elementary school	10	39	Natural	1 Single	3105
+447160	6	2	28	2	NA	NA	F	NA	NULL	15	99	Natural	1 Single	3050
+3418739	1	6	32	1	18.597	41	M	9	NULL	16	39	Natural	1 Single	2835
+2366491	5	3	20	1	19.958	44	M	10	2 years of high school	16	38	Natural	1 Single	4253
+3882983	5	6	25	2	11.340	25	F	9	2 years of college	14	40	cesarean	1 Single	3884
+94151	7	2	26	2	19.504	43	F	9	2 years of college	14	38	Natural	1 Single	2920
+3839907	10	6	24	2	22.226	49	F	9	2 years of high school	11	39	Natural	1 Single	3749
+2842449	3	5	19	1	16.329	36	F	9	NULL	13	39	Natural	1 Single	3340
+1002455	5	7	20	1	8.618	19	F	9	NULL	4	40	Natural	1 Single	3540
+3275145	10	6	20	1	21.319	47	M	9	NULL	16	38	Natural	1 Single	3402
+3334757	5	3	27	2	19.051	42	M	9	NULL	9	38	Natural	1 Single	3185
+3617903	8	6	36	2	10.886	24	F	9	NULL	11	40	Natural	1 Single	3312
+998462	5	3	24	2	11.340	25	M	9	NULL	10	34	Natural	1 Single	2608
+4124290	4	5	21	1	15.876	35	M	8	4 years of high school	16	40	Natural	1 Single	3572
+135896	3	4	31	6	18.144	40	F	9	2 years of college	10	39	Natural	1 Single	3771
+3252950	6	7	25	4	12.701	28	F	9	NULL	9	38	Natural	1 Single	3162
+353005	4	3	27	3	NA	NA	M	NA	NULL	10	99	Natural	1 Single	3147
+3032906	5	4	36	2	11.793	26	F	9	2 years of high school	12	37	cesarean	1 Single	3061
+2040152	6	5	18	2	28.576	63	F	7	2 years of high school	16	40	cesarean	1 Single	3475
+325914	3	1	17	2	NA	NA	M	NA	NULL	2	99	Natural	1 Single	2720
+498510	7	1	24	2	NA	NA	M	NA	NULL	16	99	Natural	1 Single	3476
+3309	4	6	21	2	11.340	25	F	10	4 years of high school	10	39	Natural	1 Single	3827
+1540906	6	7	23	3	20.412	45	M	7	1 year of high school	7	33	cesarean	1 Single	1389
+2287625	6	1	22	3	15.876	35	M	9	3 years of high school	19	39	Natural	1 Single	3195
+1867017	8	4	31	2	15.422	34	M	8	2 years of college	6	37	Natural	1 Single	3487
+619173	9	6	27	2	NA	NA	M	NA	NULL	12	99	Natural	1 Single	2778
+1483836	11	2	34	6	16.329	36	F	9	2 years of high school	99	35	Natural	1 Single	1465
+767675	12	3	41	4	NA	NA	M	NA	NULL	12	99	cesarean	1 Single	3285
+1155311	12	6	26	2	NA	NA	M	9	NULL	10	37	cesarean	1 Single	3459
+1046018	7	3	22	3	10.433	23	M	9	NULL	99	40	Natural	1 Single	3572
+808556	9	6	29	2	8.165	18	M	9	2 years of high school	9	39	Natural	1 Single	3232
+2445730	12	3	21	1	9.072	20	F	9	2 years of high school	5	39	cesarean	1 Single	3799
+1133833	11	5	21	1	16.783	37	F	9	NULL	14	40	Natural	1 Single	3119
+1938389	7	4	29	1	27.216	60	F	9	3 years of college	13	36	cesarean	2 Twin	3090
+3034249	5	2	23	3	6.350	14	F	9	2 years of high school	9	40	Natural	1 Single	3146
+125963	2	2	26	3	10.433	23	M	9	2 years of college	16	39	Natural	1 Single	3870
+3335829	6	1	23	2	NA	NA	F	9	NULL	3	39	Natural	1 Single	3522
+2702481	2	4	30	6	19.958	44	M	8	NULL	9	37	Natural	2 Twin	2325
+3620291	8	3	33	3	6.804	15	F	9	NULL	6	33	cesarean	1 Single	2126
+70690	12	3	32	3	11.340	25	M	9	7 Years of elementary school	17	40	Natural	1 Single	3600
+2445059	12	6	23	3	15.876	35	F	9	3 years of high school	16	39	cesarean	1 Single	3544
+1639832	2	5	24	3	13.608	30	F	9	1 year of high school	8	39	cesarean	1 Single	2977
+932801	1	1	36	2	5.897	13	F	9	NULL	14	39	Natural	1 Single	3260
+1828633	2	6	25	5	11.340	25	F	9	2 years of high school	10	39	Natural	1 Single	3629
+3246877	5	2	24	3	18.597	41	M	9	NULL	8	36	Natural	1 Single	2882
+1013596	6	5	23	3	18.144	40	M	9	NULL	3	40	Natural	1 Single	4139
+2182727	12	6	31	1	9.072	20	M	9	3 years of college	10	40	cesarean	1 Single	3912
+2724753	4	3	26	1	20.865	46	F	9	NULL	11	37	cesarean	1 Single	3335
+3412878	1	6	30	2	23.587	52	M	9	NULL	12	37	cesarean	2 Twin	2637
+2227524	11	4	19	1	23.587	52	M	9	1 year of high school	15	38	Natural	2 Twin	2552
+2183767	12	1	24	3	13.608	30	M	10	2 years of college	12	40	Natural	1 Single	4394
+408124	5	2	36	5	NA	NA	M	NA	NULL	10	99	Natural	1 Single	3600
+1499967	4	7	26	2	8.165	18	M	9	1 year of college	14	40	Natural	1 Single	3147
+2054408	7	3	32	1	14.061	31	F	9	2 years of college	19	38	cesarean	1 Single	2637
+2629218	6	4	25	2	13.608	30	F	9	3 years of college	20	40	Natural	1 Single	3281
+1580015	3	5	21	1	21.772	48	F	7	2 years of high school	10	37	Natural	1 Single	2637
+1963276	11	3	27	3	11.340	25	F	9	2 years of high school	5	38	Natural	1 Single	2892
+2209458	7	7	22	3	21.319	47	F	9	4 years of high school	9	39	cesarean	1 Single	2863
+1727894	7	3	28	1	8.165	18	F	9	NULL	16	40	cesarean	1 Single	3487
+2325370	1	1	31	2	10.433	23	M	9	2 years of high school	13	41	cesarean	1 Single	3799
+3912975	8	5	37	3	20.865	46	F	9	4 years of high school	12	40	Natural	1 Single	3445
+208623	12	3	31	3	9.072	20	F	9	2 years of high school	8	38	Natural	1 Single	3827
+3313341	3	5	31	1	20.865	46	F	9	NULL	10	37	cesarean	1 Single	2778
+3613461	8	3	25	2	17.690	39	M	9	NULL	15	37	Natural	1 Single	2948
+2513686	2	7	18	1	15.422	34	M	9	1 year of high school	12	38	Natural	1 Single	2381
+1420856	4	2	39	3	NA	NA	M	9	3 years of college	99	39	Natural	1 Single	3969
+46256	8	6	30	3	12.701	28	M	8	2 years of college	9	40	cesarean	1 Single	3799
+2604097	11	7	32	5	24.948	55	F	9	4 years of high school	12	40	cesarean	1 Single	2830
+1150794	12	1	23	2	12.701	28	M	9	NULL	5	32	Natural	1 Single	1928
+1351141	8	2	30	2	19.958	44	F	9	2 years of college	10	40	Natural	1 Single	3629
+2444201	12	5	35	2	12.247	27	F	9	2 years of college	14	39	Natural	1 Single	3884
+1432188	6	6	36	3	18.144	40	F	9	4 years of high school	15	38	cesarean	1 Single	3204
+800559	11	7	31	2	NA	NA	M	9	NULL	10	41	Natural	1 Single	3941
+1265142	10	3	31	3	9.072	20	F	9	2 years of college	6	39	Natural	1 Single	2920
+2939377	11	5	21	4	9.525	21	M	9	NULL	5	39	cesarean	1 Single	3285
+3123803	6	1	21	1	34.927	77	M	9	NULL	9	40	cesarean	1 Single	4012
+2842934	3	2	27	4	22.680	50	F	9	NULL	8	38	cesarean	1 Single	3138
+682176	10	4	34	4	NA	NA	F	NA	NULL	12	99	cesarean	1 Single	3175
+3766754	12	2	24	4	14.969	33	M	9	NULL	10	40	Natural	1 Single	3374
+1396583	1	2	24	2	21.319	47	F	9	2 years of high school	13	39	Natural	1 Single	3930
+3194652	11	6	42	4	11.793	26	F	9	NULL	13	37	Natural	1 Single	2640
+1858351	7	5	19	1	27.216	60	F	9	2 years of high school	12	39	Natural	1 Single	3827
+1356031	9	2	26	1	13.608	30	M	9	3 years of college	10	38	Natural	1 Single	3033
+2174526	11	6	31	2	14.061	31	F	9	2 years of college	12	40	Natural	1 Single	3147
+626734	9	6	20	1	NA	NA	M	NA	NULL	14	99	cesarean	1 Single	3244
+1408873	3	3	22	3	21.319	47	F	9	8 Years of elementary school	12	40	Natural	1 Single	2732
+2535489	4	3	38	2	3.629	8	F	9	3 years of college	10	39	Unknown	1 Single	2855
+3249061	5	6	30	1	14.061	31	M	10	NULL	16	39	cesarean	1 Single	3232
+343067	4	3	29	1	NA	NA	M	NA	NULL	10	99	cesarean	1 Single	3770
+1209064	5	2	24	3	1.814	4	F	9	2 years of high school	11	40	Natural	1 Single	3119
+2343751	2	2	26	1	17.690	39	M	8	2 years of high school	12	39	Natural	1 Single	3289
+1283283	11	4	26	1	34.019	75	F	8	1 year of high school	14	41	Natural	1 Single	3629
+2518683	2	7	32	3	15.422	34	F	1	4 years of high school	11	39	Natural	1 Single	3005
+2293360	8	6	19	2	13.154	29	F	9	2 years of high school	8	40	cesarean	1 Single	3147
+117954	1	3	32	3	3.175	7	F	9	4 years of high school	1	38	Natural	1 Single	3180
+2336203	2	2	30	2	14.969	33	M	9	2 years of high school	16	38	Natural	1 Single	3515
+172015	8	5	32	2	3.175	7	F	9	2 years of college	6	40	cesarean	1 Single	4026
+3527759	5	6	28	1	18.597	41	M	9	NULL	5	39	Natural	1 Single	3573
+3491080	4	4	20	3	2.722	6	F	9	NULL	11	39	Natural	1 Single	3005
+2451723	12	1	22	2	9.072	20	M	9	2 years of high school	10	38	Natural	1 Single	3487
+3948236	12	3	28	5	8.618	19	M	9	8 Years of elementary school	6	40	Natural	1 Single	2975
+3017625	1	2	26	5	9.072	20	M	9	2 years of high school	14	39	Natural	1 Single	3203
+3075661	1	4	34	3	13.608	30	F	9	NULL	9	39	Natural	1 Single	3288
+3339996	6	5	22	2	10.886	24	F	9	NULL	19	38	cesarean	1 Single	2948
+3981368	4	4	36	2	0.000	0	F	9	NULL	11	38	cesarean	1 Single	3799
+2088878	10	5	18	1	26.308	58	F	9	1 year of high school	10	39	Natural	1 Single	3515
+1778627	6	4	18	1	4.536	10	M	9	7 Years of elementary school	4	34	Natural	1 Single	2500
+2442844	12	6	24	1	22.680	50	M	9	4 years of high school	20	39	Natural	1 Single	3657
+3434133	2	3	23	1	27.669	61	M	9	NULL	10	38	Natural	1 Single	2920
+1468123	9	7	21	1	11.340	25	F	9	2 years of high school	12	40	Natural	1 Single	3544
+1311741	3	5	34	2	22.680	50	M	9	2 years of college	22	41	cesarean	1 Single	3408
+2043262	6	1	26	1	14.515	32	M	8	2 years of high school	12	35	Natural	1 Single	2892
+294097	2	7	32	1	NA	NA	M	NA	NULL	15	99	Natural	1 Single	3090
+1749967	11	2	34	2	13.608	30	M	9	NULL	16	39	Natural	1 Single	3748
+1572513	1	3	41	8	12.247	27	M	9	2 years of college	12	39	cesarean	1 Single	3771
+1618206	9	4	36	2	13.608	30	F	9	2 years of high school	11	39	Natural	1 Single	3289
+337517	3	4	21	2	NA	NA	M	NA	NULL	13	99	Natural	1 Single	3620
+1523505	1	3	34	2	11.340	25	F	9	3 years of college	12	37	Natural	1 Single	2850
+4150963	1	6	32	8	13.154	29	M	9	1 year of high school	7	38	cesarean	1 Single	3521
+187393	9	5	37	5	8.618	19	M	9	2 years of high school	8	37	Natural	1 Single	2722
+217880	1	3	22	1	NA	NA	F	NA	NULL	12	99	Natural	1 Single	3175
+2875677	6	5	29	3	23.133	51	F	8	NULL	13	40	Natural	1 Single	3610
+4255512	11	3	24	1	13.154	29	M	9	1 year of high school	18	38	Natural	1 Single	2863
+1345036	6	2	23	7	10.886	24	M	8	2 years of high school	6	32	Natural	1 Single	1531
+2509339	1	6	34	5	13.154	29	F	9	3 years of college	11	37	Natural	2 Twin	2523
+237901	1	2	21	1	NA	NA	F	NA	NULL	9	99	Natural	1 Single	3169
+4117747	12	1	31	3	23.587	52	F	9	4 years of high school	8	39	Natural	1 Single	3572
+2169583	10	4	23	2	14.061	31	M	9	2 years of high school	13	40	Natural	1 Single	2977
+1795498	9	3	25	2	22.680	50	M	8	8 Years of elementary school	12	40	cesarean	1 Single	3204
+3770772	11	4	32	2	2.722	6	M	9	NULL	17	37	Natural	1 Single	3295
+1769386	4	4	19	1	9.525	21	M	9	2 years of high school	13	39	Natural	1 Single	3686
+3483421	3	4	19	1	14.515	32	F	9	NULL	8	40	cesarean	1 Single	3175
+885268	10	5	32	1	17.237	38	F	9	3 years of college	10	40	Natural	1 Single	3856
+253496	1	6	39	4	NA	NA	F	NA	NULL	15	99	cesarean	2 Twin	2523
+1675093	6	3	32	1	14.969	33	M	8	NULL	10	37	Natural	1 Single	3236
+2399823	8	1	31	6	9.072	20	M	9	4 Years of elementary school	3	40	Natural	1 Single	3515
+3554228	6	5	24	4	15.876	35	M	9	NULL	10	38	Natural	1 Single	3610
+198626	10	2	19	1	12.247	27	F	9	2 years of high school	12	40	cesarean	1 Single	3165
+2699668	2	2	18	1	27.216	60	F	9	NULL	12	40	cesarean	1 Single	3356
+3754851	11	5	26	3	18.144	40	M	9	NULL	12	39	Natural	1 Single	2405
+2186273	1	3	24	2	1.814	4	M	9	2 years of high school	18	36	Natural	1 Single	2693
+1122792	11	1	26	1	10.886	24	M	9	NULL	10	35	Natural	1 Single	2410
+2143065	6	2	30	4	14.515	32	F	9	2 years of college	10	38	Natural	1 Single	3317
+1646891	6	7	38	6	9.979	22	F	8	4 Years of elementary school	3	38	Natural	1 Single	3742
+3570959	6	3	22	3	19.958	44	F	9	NULL	4	36	Natural	1 Single	2693
+1848422	5	5	27	4	13.608	30	M	9	7 Years of elementary school	7	38	cesarean	1 Single	2807
+921743	1	4	20	2	9.525	21	F	9	NULL	14	38	cesarean	1 Single	2920
+1036070	7	3	35	2	4.536	10	F	9	NULL	12	39	cesarean	1 Single	3232
+1750146	11	5	27	8	24.948	55	M	9	NULL	23	38	Natural	1 Single	3459
+1222253	5	4	18	1	3.175	7	F	9	2 years of high school	6	40	Natural	1 Single	3260
+89449	6	6	23	6	13.608	30	F	10	2 years of high school	14	39	Natural	1 Single	2977
+242666	1	6	26	1	NA	NA	M	NA	NULL	7	99	cesarean	1 Single	3544
+440555	6	1	35	3	NA	NA	M	NA	NULL	8	99	Natural	1 Single	3755
+2265578	12	6	33	2	22.680	50	M	9	3 years of college	14	40	Natural	1 Single	3147
+374775	4	7	34	2	NA	NA	M	NA	NULL	13	99	Natural	1 Single	3512
+2537780	4	7	25	2	13.608	30	M	9	2 years of high school	7	39	Natural	1 Single	3611
+2652726	3	6	22	1	6.804	15	M	9	7 Years of elementary school	0	38	Natural	1 Single	2863
+618486	9	5	43	7	NA	NA	F	NA	NULL	10	99	Natural	1 Single	2863
+1684569	8	6	34	5	17.237	38	M	10	NULL	3	39	Natural	1 Single	3856
+1100217	10	2	27	2	18.144	40	M	9	NULL	10	38	Natural	1 Single	3487
+4096817	9	3	33	3	14.061	31	F	9	2 years of college	11	38	Natural	1 Single	3657
+939052	1	6	34	4	13.608	30	M	9	NULL	10	39	Natural	1 Single	2750
+2227494	11	3	23	4	9.072	20	F	9	4 years of high school	7	38	cesarean	1 Single	3175
+2581150	9	2	39	1	9.072	20	F	9	3 years of college	9	40	cesarean	1 Single	3345
+2590399	10	3	34	1	17.690	39	F	9	3 years of college	14	37	Natural	1 Single	2855
+2518528	2	5	27	2	8.618	19	M	9	7 Years of elementary school	12	40	Natural	1 Single	3232
+1803181	9	6	24	2	9.072	20	M	10	2 years of high school	12	39	cesarean	1 Single	3232
+1208503	5	1	32	3	11.340	25	M	9	4 Years of elementary school	10	41	Natural	1 Single	3771
+217250	1	5	35	3	NA	NA	F	NA	NULL	20	99	Natural	1 Single	3080
+4139487	12	4	31	3	9.525	21	F	10	4 years of high school	5	33	Natural	1 Single	3686
+2973961	3	5	20	1	18.144	40	F	9	2 years of high school	8	39	Natural	1 Single	3147
+2698845	2	2	37	4	11.340	25	F	9	NULL	15	34	cesarean	2 Twin	2296
+2446848	12	6	37	2	28.576	63	M	9	2 years of college	16	37	Natural	1 Single	3515
+1063580	8	2	19	1	25.855	57	M	9	NULL	10	39	Natural	1 Single	3600
+4222627	8	6	37	6	19.958	44	F	9	2 years of high school	8	34	cesarean	1 Single	2013
+2614380	12	5	17	1	9.072	20	M	9	1 year of high school	8	36	Natural	1 Single	2950
+1423099	4	4	28	3	16.329	36	F	9	4 years of high school	13	40	Natural	1 Single	3190
+3635856	8	5	27	2	13.154	29	M	7	NULL	10	40	cesarean	1 Single	3289
+630729	10	6	31	3	NA	NA	M	NA	NULL	15	99	Natural	1 Single	3232
+1536279	5	6	30	1	18.144	40	M	9	2 years of college	99	41	Natural	1 Single	3410
+3237757	3	3	25	1	18.597	41	M	8	NULL	9	36	Natural	1 Single	2353
+335776	3	6	30	1	NA	NA	F	NA	NULL	19	99	Natural	1 Single	3289
+1251423	8	1	20	2	6.804	15	M	9	2 years of high school	9	39	Natural	1 Single	2948
+1222597	6	1	19	2	13.608	30	F	9	7 Years of elementary school	10	36	Natural	1 Single	2495
+2845475	3	6	29	3	25.401	56	M	9	NULL	99	38	cesarean	1 Single	4111
+2613755	12	3	27	3	3.629	8	F	9	1 year of college	12	40	Natural	1 Single	3420
+4158814	2	6	21	2	11.340	25	M	9	4 years of high school	12	39	Natural	1 Single	2700
+1300955	11	4	33	2	14.515	32	M	8	2 years of college	15	38	Natural	1 Single	3430
+3427741	2	5	36	4	15.422	34	F	9	NULL	11	38	cesarean	1 Single	2920
+4132701	8	3	28	5	14.061	31	F	9	2 years of college	10	39	Natural	1 Single	2892
+2089418	10	3	21	3	9.525	21	M	9	2 years of high school	13	40	Natural	1 Single	3402
+790969	7	7	32	6	16.783	37	F	9	3 years of high school	10	37	Natural	1 Single	3374
+3584635	7	3	15	1	9.525	21	M	8	NULL	1	37	cesarean	1 Single	3374
+3041901	7	6	34	2	0.000	0	F	1	3 years of college	2	18	Natural	2 Twin	283
+3218653	5	6	24	2	NA	NA	M	9	2 years of high school	99	37	Natural	1 Single	2977
+558850	8	4	33	3	NA	NA	F	NA	NULL	9	99	Natural	1 Single	1800
+3938803	10	6	36	4	19.051	42	M	9	2 years of high school	11	38	Natural	1 Single	4680
+3963022	1	7	28	3	8.165	18	M	9	NULL	7	38	Natural	1 Single	3742
+1067138	8	7	22	3	14.515	32	M	9	NULL	8	37	Natural	1 Single	2688
+258429	2	1	29	3	NA	NA	M	NA	NULL	10	99	Natural	1 Single	3430
+3764790	11	4	24	2	22.680	50	F	8	NULL	4	38	cesarean	1 Single	4054
+488468	7	4	21	3	NA	NA	M	NA	NULL	12	99	cesarean	1 Single	3625
+848866	4	3	26	2	13.154	29	F	9	2 years of college	12	39	Natural	1 Single	3430
+1298644	12	7	30	2	13.154	29	M	9	4 years of high school	10	32	cesarean	1 Single	1871
+3647623	8	1	34	1	9.979	22	M	9	NULL	12	36	cesarean	1 Single	3033
+143932	5	2	26	2	12.247	27	M	9	4 years of high school	12	39	cesarean	1 Single	3005
+814832	6	3	26	4	14.969	33	M	9	6 Years of elementary school	10	38	cesarean	1 Single	3884
+2773264	9	4	30	1	14.969	33	M	9	NULL	16	39	Natural	1 Single	3846
+602576	9	1	37	1	NA	NA	F	NA	NULL	13	99	Natural	1 Single	3643
+3826290	7	1	26	2	13.608	30	F	9	2 years of high school	12	36	Natural	1 Single	3240
+3768804	12	7	28	2	12.701	28	M	9	NULL	12	39	Natural	1 Single	3430
+1474248	10	6	34	4	32.205	71	F	9	4 years of high school	13	38	Natural	1 Single	3062
+1082929	9	6	32	1	11.340	25	M	9	NULL	15	51	cesarean	1 Single	3969
+1718156	4	2	43	8	0.000	0	M	10	NULL	0	38	Natural	1 Single	2969
+1607136	8	4	26	1	13.608	30	F	9	2 years of college	14	38	Natural	1 Single	2835
+512263	6	6	24	1	NA	NA	M	NA	NULL	15	99	Natural	1 Single	3528
+2324535	12	5	17	1	10.886	24	M	9	1 year of high school	16	37	Natural	1 Single	2835
+3546223	5	3	22	2	12.701	28	M	9	NULL	9	38	Natural	1 Single	2892
+1931038	6	1	19	1	18.144	40	F	5	4 years of high school	9	36	Natural	1 Single	2466
+2092509	10	4	31	3	15.422	34	F	9	4 years of high school	12	38	cesarean	2 Twin	2835
+7083	8	5	18	1	2.722	6	M	8	6 Years of elementary school	1	35	Natural	1 Single	2693
+572612	9	3	27	2	NA	NA	M	NA	NULL	10	99	cesarean	1 Single	3714
+1343157	6	2	26	1	18.597	41	F	9	2 years of college	14	40	Natural	1 Single	3204
+2962001	12	5	25	3	NA	NA	F	9	NULL	7	39	cesarean	1 Single	2730
+2879154	6	5	40	2	13.608	30	F	9	NULL	13	39	cesarean	1 Single	3150
+353890	4	6	36	3	NA	NA	M	NA	NULL	15	99	cesarean	1 Single	3289
+4167378	3	4	32	1	14.515	32	F	9	3 years of college	12	39	Natural	1 Single	3230
+2848363	3	6	25	NA	NA	NA	M	9	NULL	99	37	Natural	1 Single	3116
+4241694	10	3	26	2	13.608	30	M	9	2 years of high school	99	40	Natural	1 Single	3460
+3190943	11	7	30	4	20.412	45	F	8	NULL	9	39	Natural	1 Single	3742
+59013	10	6	20	1	9.979	22	F	9	2 years of high school	12	39	Natural	1 Single	2640
+2847552	3	5	21	1	12.247	27	F	9	NULL	6	39	Natural	1 Single	2690
+697289	11	4	23	2	NA	NA	F	NA	NULL	10	99	Natural	1 Single	3770
+3257296	7	5	33	1	18.144	40	M	8	NULL	16	41	cesarean	1 Single	3692
+3108904	4	4	36	2	13.154	29	M	9	NULL	11	36	Natural	1 Single	2685
+2000305	2	6	15	1	14.969	33	F	9	7 Years of elementary school	20	40	Natural	1 Single	2722
+973238	3	5	29	1	10.433	23	F	9	NULL	12	40	Natural	1 Single	2778
+1412150	3	2	41	2	2.268	5	M	9	2 years of college	18	39	cesarean	1 Single	3686
+1734348	8	4	23	2	18.144	40	M	9	NULL	15	41	Natural	1 Single	3665
+3839086	10	5	20	1	10.433	23	M	7	2 years of high school	12	38	cesarean	1 Single	2926
+294675	2	3	40	2	NA	NA	F	NA	NULL	14	99	cesarean	2 Twin	1175
+2805905	12	5	32	2	11.340	25	F	9	NULL	10	38	cesarean	1 Single	3119
+838613	5	3	23	3	16.783	37	M	9	6 Years of elementary school	10	40	Natural	1 Single	3050
+3428384	2	5	32	3	16.783	37	F	10	NULL	10	37	Natural	1 Single	2665
+91260	7	2	31	5	22.680	50	F	2	2 years of college	20	23	cesarean	2 Twin	482
+392907	4	7	31	7	NA	NA	F	NA	NULL	7	99	Natural	2 Twin	2353
+4141672	3	3	17	1	31.298	69	M	7	NULL	7	40	Natural	1 Single	3520
+1505456	9	6	36	6	9.072	20	F	9	7 Years of elementary school	8	38	Natural	1 Single	3515
+4056861	2	5	25	2	3.175	7	M	9	2 years of high school	12	40	Natural	1 Single	3849
+4238946	9	1	43	8	13.608	30	M	9	1 year of high school	10	40	Natural	1 Single	3910
+974504	3	6	29	1	9.072	20	M	9	NULL	10	39	Natural	1 Single	3260
+2912656	9	6	36	4	10.433	23	M	9	NULL	11	38	Natural	1 Single	2845
+1818737	12	5	29	8	6.804	15	F	9	3 years of high school	1	29	Natural	1 Single	1162
+2101832	12	3	23	5	10.886	24	M	9	3 years of high school	16	38	Natural	1 Single	2722
+1836585	3	3	20	1	10.433	23	F	9	8 Years of elementary school	11	40	cesarean	1 Single	2863
+1821175	1	5	34	3	9.072	20	F	9	2 years of college	15	40	cesarean	1 Single	3402
+4203757	6	2	23	1	22.680	50	M	9	2 years of high school	15	37	Natural	1 Single	2750
+2436086	11	7	31	1	11.340	25	F	10	2 years of high school	12	40	cesarean	1 Single	3062
+3184120	10	6	40	4	16.783	37	F	9	NULL	10	39	Natural	1 Single	3090
+1090312	9	2	17	1	12.701	28	F	9	NULL	14	37	Natural	1 Single	2608
+267540	1	1	21	1	NA	NA	M	NA	NULL	7	99	Natural	1 Single	2600
+4102651	10	7	18	2	12.247	27	M	9	2 years of high school	6	40	Natural	1 Single	3629
+4194628	5	5	31	4	5.897	13	M	9	2 years of high school	10	37	Natural	1 Single	3135
+1156326	12	5	29	2	12.247	27	F	9	NULL	16	39	Natural	1 Single	3402
+464645	6	7	20	2	NA	NA	F	NA	NULL	10	99	Natural	1 Single	3313
+2251483	4	2	31	5	4.536	10	F	9	3 years of high school	9	39	Natural	1 Single	4820
+3861558	2	2	37	1	11.340	25	F	9	2 years of college	13	38	Natural	1 Single	2445
+1588074	5	5	26	2	21.772	48	F	9	6 Years of elementary school	11	39	cesarean	1 Single	3232
+3370360	10	1	18	2	0.000	0	M	8	NULL	10	38	Natural	1 Single	3657
+3617260	8	1	16	1	22.226	49	F	9	NULL	4	39	Natural	1 Single	3317
+1626369	10	5	19	1	22.680	50	F	9	2 years of high school	11	38	Natural	1 Single	3260
+3862234	2	5	27	1	15.876	35	M	9	3 years of college	9	37	Natural	1 Single	3973
+1035014	7	3	18	1	9.072	20	F	9	NULL	8	30	Natural	1 Single	1503
+550568	8	7	42	3	NA	NA	M	NA	NULL	10	99	Natural	1 Single	3290
+3082743	2	4	22	2	14.515	32	M	9	NULL	99	37	Natural	1 Single	2972
+1513354	5	7	30	1	13.608	30	F	9	4 years of high school	10	40	Natural	1 Single	3487
+3219751	6	7	30	1	13.608	30	M	9	3 years of college	10	39	cesarean	1 Single	3475
+454278	5	2	39	2	NA	NA	M	NA	NULL	12	99	cesarean	1 Single	3368
+3866988	3	6	31	1	3.175	7	M	9	3 years of college	14	37	Unknown	1 Single	3570
+3943765	11	6	30	4	13.608	30	F	9	1 year of high school	15	40	Natural	1 Single	3996
+47099	8	5	25	3	12.247	27	F	10	8 Years of elementary school	14	38	cesarean	1 Single	2838
+658994	10	5	34	1	NA	NA	M	NA	NULL	15	99	cesarean	1 Single	3186
+3530201	5	2	20	1	22.680	50	F	9	NULL	13	37	Natural	1 Single	1786
+3873737	3	3	23	2	13.608	30	F	9	2 years of high school	13	39	Natural	1 Single	4054
+3869734	3	6	32	3	11.340	25	F	9	2 years of high school	12	39	cesarean	1 Single	3490
+1655580	12	1	27	4	10.433	23	F	9	4 Years of elementary school	5	38	Natural	1 Single	2750
+307938	3	4	29	1	NA	NA	M	NA	NULL	12	99	Natural	1 Single	2948
+2441764	11	4	20	1	9.072	20	M	9	2 years of high school	15	40	Natural	1 Single	3232
+3207904	12	6	18	2	18.144	40	F	6	NULL	10	38	Natural	1 Single	3025
+1450854	8	5	30	3	10.886	24	M	9	2 years of college	22	36	cesarean	2 Twin	2381
+1437140	5	1	32	4	10.433	23	F	9	2 years of high school	9	38	cesarean	1 Single	3327
+1943799	8	2	27	7	20.412	45	F	9	2 years of high school	12	40	Natural	1 Single	3544
+1950934	9	6	30	4	10.886	24	F	9	5 Years of elementary school	19	40	Natural	1 Single	3945
+2588255	8	2	28	7	17.237	38	F	9	2 years of high school	11	39	Natural	1 Single	3310
+2783883	10	4	29	2	11.340	25	M	9	NULL	12	37	cesarean	1 Single	2905
+3663453	9	3	13	1	20.412	45	F	9	NULL	10	40	cesarean	1 Single	3005
+427691	5	1	25	1	NA	NA	M	NA	NULL	15	99	Natural	1 Single	3238
+3794373	12	6	17	1	10.886	24	F	9	NULL	2	42	Natural	1 Single	3742
+104559	10	6	32	4	9.979	22	F	9	2 years of high school	11	41	cesarean	1 Single	3459
+1023037	6	6	33	5	18.144	40	M	9	NULL	9	38	cesarean	1 Single	3487
+1437272	6	6	18	1	4.536	10	M	9	1 year of high school	2	20	Natural	1 Single	375
+3016821	12	1	35	2	15.876	35	M	9	3 years of college	12	39	Natural	1 Single	3799
+445111	5	4	39	3	NA	NA	M	NA	NULL	14	99	cesarean	1 Single	3515
+2377355	6	1	24	1	5.443	12	M	9	2 years of college	10	39	cesarean	1 Single	3459
+1317998	8	2	26	3	NA	NA	F	9	4 years of high school	2	38	Natural	1 Single	2968
+714100	11	5	27	1	NA	NA	M	NA	NULL	15	99	cesarean	1 Single	3529
+2680034	11	3	20	3	NA	NA	M	9	7 Years of elementary school	12	41	Natural	1 Single	3515
+3954089	12	7	24	1	9.072	20	F	8	4 years of high school	14	40	cesarean	1 Single	3742
+3774498	12	6	16	1	17.690	39	F	9	NULL	12	39	Natural	1 Single	2948
+3272095	10	3	26	2	25.401	56	F	9	NULL	13	38	Natural	2 Twin	2410
+2133701	4	6	24	2	9.525	21	M	8	3 years of high school	11	40	cesarean	1 Single	3487
+31842	5	2	29	3	2.722	6	F	9	2 years of high school	16	39	cesarean	1 Single	3090
+248845	1	2	25	2	NA	NA	M	NA	NULL	49	99	cesarean	1 Single	2110
+1566290	12	3	17	1	NA	NA	M	9	2 years of high school	8	38	Natural	1 Single	3145
+3184800	10	3	27	1	14.969	33	F	9	NULL	13	40	Natural	1 Single	3132
+760270	12	1	29	2	NA	NA	M	NA	NULL	10	99	Natural	1 Single	2725
+3588108	7	6	27	2	4.536	10	M	9	NULL	13	35	cesarean	1 Single	3005
+2319610	7	5	32	2	14.969	33	F	9	3 years of college	10	39	cesarean	1 Single	4250
+3455546	3	1	34	1	4.990	11	F	9	NULL	7	40	Natural	1 Single	3827
+3970366	2	3	25	3	16.329	36	M	9	NULL	8	41	Natural	1 Single	4167
+2827487	2	5	28	1	28.576	63	F	9	NULL	15	36	cesarean	2 Twin	1850
+1238374	8	3	32	2	NA	NA	F	9	2 years of high school	12	35	Unknown	2 Twin	2070
+1934401	7	5	18	1	13.608	30	M	9	6 Years of elementary school	9	41	Natural	1 Single	2863
+1499465	4	2	36	3	11.793	26	M	9	3 years of college	9	38	cesarean	1 Single	3544
+2645311	12	7	34	1	18.144	40	F	9	3 years of college	14	40	cesarean	1 Single	3260
+2814138	1	3	17	1	29.030	64	M	9	NULL	10	39	Natural	1 Single	3370
+3843787	11	5	31	2	8.618	19	F	9	4 years of high school	7	30	cesarean	1 Single	1530
+3939936	11	7	38	2	9.979	22	M	9	2 years of high school	14	39	Natural	1 Single	3714
+1035970	7	6	34	3	17.237	38	M	9	NULL	14	40	Natural	1 Single	3969
+2643819	12	1	35	6	13.608	30	M	10	2 years of high school	12	38	cesarean	1 Single	3560
+2183828	12	5	26	1	15.876	35	M	9	4 years of high school	12	38	cesarean	1 Single	4196
+3940530	11	2	36	5	7.257	16	F	9	2 years of college	15	38	cesarean	1 Single	3147
+3573497	6	3	20	1	14.515	32	F	9	NULL	10	39	Natural	1 Single	2980
+241996	1	4	19	1	NA	NA	M	NA	NULL	13	99	Natural	1 Single	3450
+3325808	4	2	23	2	14.969	33	M	9	NULL	13	39	Natural	1 Single	3827
+1931245	6	3	31	3	19.958	44	F	9	3 years of college	10	39	Natural	1 Single	2843
+1042863	7	7	29	2	16.783	37	F	9	NULL	8	34	cesarean	2 Twin	2211
+3819250	6	7	42	8	18.144	40	F	9	1 year of college	13	39	Natural	1 Single	3596
+2194286	3	7	25	1	13.608	30	F	9	7 Years of elementary school	9	37	Natural	1 Single	2807
+2548192	6	4	19	2	12.247	27	M	9	2 years of high school	5	38	Natural	1 Single	3383
+2172551	11	5	30	7	1.361	3	M	10	1 year of high school	14	40	Natural	1 Single	3317
+1909026	3	4	31	8	12.701	28	M	9	1 year of college	14	36	cesarean	1 Single	3111
+3394247	1	2	29	3	1.814	4	F	9	NULL	14	37	cesarean	1 Single	2825
+1260832	9	4	26	4	11.340	25	F	9	6 Years of elementary school	10	40	Natural	1 Single	3175
+3710184	10	4	24	3	24.494	54	M	8	NULL	12	41	Natural	1 Single	3980
+2302855	10	5	22	2	11.340	25	F	8	2 years of high school	12	35	Natural	1 Single	2510
+4220926	8	1	29	4	11.340	25	F	9	2 years of high school	10	40	Natural	1 Single	3742
+648918	10	4	39	2	NA	NA	M	NA	NULL	15	99	Natural	1 Single	3570
+2965747	1	4	37	2	12.701	28	M	10	4 years of high school	9	39	cesarean	1 Single	2977
+37857	6	3	24	1	11.793	26	F	9	4 Years of elementary school	11	40	cesarean	1 Single	3545
+686808	11	1	27	4	NA	NA	F	NA	NULL	12	99	Natural	1 Single	4026
+2825853	2	2	19	1	17.690	39	M	9	NULL	13	40	Natural	1 Single	3370
+1120652	11	3	20	2	9.072	20	F	9	NULL	15	37	Natural	1 Single	2693
+75606	1	1	19	2	10.433	23	F	9	1 year of high school	0	35	Natural	1 Single	2070
+2146663	7	7	24	2	14.969	33	M	9	2 years of college	12	39	Natural	1 Single	3771
+787292	12	1	37	8	4.536	10	F	9	8 Years of elementary school	5	38	cesarean	1 Single	2863
+2494704	4	6	28	4	12.247	27	M	9	NULL	24	41	Natural	1 Single	3487
+3507482	4	5	26	6	6.350	14	F	9	NULL	14	39	Natural	1 Single	3845
+1793116	8	3	22	1	18.144	40	M	9	1 year of college	12	39	cesarean	1 Single	4026
+483465	7	6	21	1	NA	NA	M	NA	NULL	18	99	cesarean	1 Single	3572
+1104184	10	1	19	5	15.422	34	M	9	NULL	11	39	Natural	1 Single	2523
+3657181	9	5	30	1	21.772	48	M	9	NULL	10	33	cesarean	1 Single	2126
+2804407	12	1	29	1	18.597	41	F	9	NULL	11	39	cesarean	1 Single	3441
+3615457	8	4	24	3	12.247	27	M	9	NULL	12	38	Natural	1 Single	3145
+32474	5	2	22	3	7.711	17	M	9	2 years of high school	10	38	cesarean	1 Single	2628
+2137002	5	4	27	2	13.608	30	M	9	2 years of college	13	39	Natural	1 Single	4054
+3310741	2	3	18	1	20.865	46	F	9	NULL	10	36	Natural	1 Single	2608
+4182736	4	3	30	1	NA	NA	F	9	3 years of college	10	39	Natural	1 Single	3450
+897652	5	3	30	5	NA	NA	F	9	4 years of high school	99	37	cesarean	1 Single	2256
+681525	11	5	33	3	NA	NA	M	NA	NULL	12	99	Natural	1 Single	3465
+1708919	3	1	24	4	12.701	28	F	9	NULL	12	39	cesarean	1 Single	3402
+2098104	12	2	24	3	12.701	28	F	10	2 years of high school	12	40	Natural	1 Single	2892
+2622289	2	6	23	2	15.422	34	F	9	2 years of high school	11	37	cesarean	1 Single	3240
+1996483	1	3	16	2	12.247	27	M	9	1 year of high school	6	40	Natural	1 Single	2940
+1748797	12	2	25	2	18.144	40	M	9	NULL	12	39	Natural	1 Single	3166
+1705098	2	5	28	1	20.865	46	F	9	NULL	10	39	Natural	1 Single	3175
+2508058	1	7	45	5	4.990	11	M	7	2 years of college	12	29	cesarean	1 Single	1716
+3390621	1	6	18	4	18.144	40	M	9	NULL	5	38	Natural	1 Single	3068
+390250	5	5	23	2	NA	NA	F	NA	NULL	13	99	Natural	1 Single	3470
+2650395	1	2	23	1	9.979	22	M	9	1 year of college	15	40	Natural	1 Single	2750
+2747776	7	3	27	2	23.587	52	F	9	NULL	5	39	Natural	1 Single	3050
+1662384	2	1	24	1	12.247	27	F	9	NULL	12	40	cesarean	1 Single	2767
+380287	4	4	33	4	NA	NA	M	NA	NULL	14	99	Natural	1 Single	3487
+1092831	10	4	35	3	18.597	41	M	9	NULL	8	39	Natural	1 Single	3345
+1351790	8	2	36	2	4.536	10	M	10	4 years of high school	11	39	cesarean	1 Single	3402
+473385	6	1	37	2	NA	NA	M	NA	NULL	14	99	Natural	1 Single	3629
+3648437	8	3	30	1	11.340	25	F	9	NULL	10	39	Natural	1 Single	3800
+353430	4	4	19	1	NA	NA	M	NA	NULL	11	99	Natural	1 Single	3459
+2406825	8	2	32	2	16.783	37	M	9	2 years of college	12	39	cesarean	1 Single	3515
+1952489	9	5	27	2	11.340	25	M	9	5 Years of elementary school	16	40	Natural	1 Single	4032
+3711908	10	3	26	4	12.247	27	M	NA	NULL	17	38	cesarean	1 Single	3705
+4254522	11	3	24	2	7.257	16	M	9	2 years of high school	10	39	cesarean	1 Single	2950
+3306823	2	2	34	5	9.072	20	F	9	NULL	10	40	Natural	1 Single	3651
+1069143	8	3	24	1	26.308	58	M	9	NULL	15	39	Natural	1 Single	3459
+3302882	1	2	29	3	24.948	55	M	9	NULL	13	39	Natural	1 Single	3629
+3432216	2	3	34	4	22.226	49	F	9	NULL	12	40	Natural	1 Single	3742
+1420548	4	4	32	2	23.587	52	F	9	3 years of college	15	39	Natural	1 Single	3260
+4090990	8	6	24	2	10.886	24	M	9	2 years of high school	8	38	Natural	1 Single	2945
+2328008	1	6	26	2	6.804	15	F	9	4 years of high school	12	37	Natural	1 Single	2948
+3776268	12	1	16	2	21.319	47	M	9	NULL	5	38	Natural	1 Single	3182
+1841834	4	3	27	3	9.979	22	F	9	5 Years of elementary school	8	41	Natural	1 Single	3544
+3297902	11	5	22	3	27.669	61	F	7	NULL	4	40	Natural	1 Single	3600
+2822080	2	6	27	2	17.690	39	M	8	NULL	13	37	Natural	1 Single	4125
+1770949	4	2	31	5	14.061	31	M	9	2 years of high school	12	39	Natural	1 Single	4990
+1849603	5	7	37	1	13.608	30	M	9	3 years of college	10	40	cesarean	1 Single	3850
+3478327	3	2	31	3	11.793	26	F	9	NULL	12	38	Natural	1 Single	3345
+3299971	1	2	32	1	20.412	45	M	9	NULL	10	40	cesarean	1 Single	2863
+335581	3	4	35	2	NA	NA	F	NA	NULL	10	99	Natural	1 Single	3317
+3354361	8	4	21	2	15.876	35	M	9	NULL	10	40	Natural	1 Single	3799
+3728510	11	4	22	2	0.000	0	M	9	NULL	10	40	Natural	1 Single	3459
+3064980	12	6	26	4	9.072	20	M	9	6 Years of elementary school	9	41	Natural	1 Single	3458
+3808496	3	6	34	2	17.237	38	F	9	2 years of college	12	39	Natural	1 Single	3358
+3364118	9	6	21	2	9.072	20	F	3	NULL	1	41	Natural	1 Single	3202
+3822972	7	5	28	2	13.608	30	F	9	4 years of high school	99	39	Natural	1 Single	3198
+1943148	8	5	28	2	15.876	35	M	9	3 years of high school	20	38	cesarean	1 Single	3033
+2254465	6	4	19	1	31.751	70	F	9	2 years of high school	15	40	Natural	1 Single	3175
+4166780	2	4	37	2	11.340	25	M	9	2 years of college	12	39	Natural	1 Single	3289
+3199164	11	3	25	1	6.804	15	M	9	NULL	17	40	cesarean	1 Single	3081
+3529028	5	2	30	3	13.608	30	M	9	NULL	5	39	Natural	1 Single	3080
+1642454	3	3	29	2	11.340	25	M	3	1 year of high school	3	22	Natural	1 Single	567
+3586905	6	4	26	2	15.876	35	M	9	NULL	8	39	Natural	1 Single	3686
+3364298	9	1	28	5	17.690	39	M	8	NULL	10	37	Natural	1 Single	3147
+1212838	5	4	36	7	0.000	0	M	9	2 years of high school	10	40	Natural	1 Single	4054
+1499575	4	5	20	1	13.608	30	M	9	4 years of high school	12	39	Natural	1 Single	3515
+2592807	10	5	33	1	15.876	35	M	9	2 years of college	12	38	Natural	1 Single	3260
+1989058	1	2	22	2	22.680	50	M	9	8 Years of elementary school	12	40	Natural	1 Single	3600
+1503061	7	7	31	4	NA	NA	M	9	1 year of college	12	39	Natural	1 Single	3306
+702772	11	6	21	1	NA	NA	M	NA	NULL	11	99	Natural	1 Single	3811
+2579581	9	6	24	7	11.340	25	M	9	2 years of high school	13	38	Natural	1 Single	3790
+648646	10	3	22	1	NA	NA	M	NA	NULL	10	99	Natural	1 Single	2423
+2366867	5	3	20	1	18.144	40	F	9	2 years of high school	13	41	Natural	1 Single	3827
+3624117	8	2	30	4	10.886	24	M	8	NULL	7	41	cesarean	1 Single	5188
+3065189	12	5	37	8	12.247	27	F	9	2 years of high school	8	38	Natural	1 Single	3458
+1125120	11	4	15	1	NA	NA	M	9	NULL	5	40	Natural	1 Single	3549
+2981969	5	3	21	2	9.072	20	M	8	2 years of high school	8	40	Natural	1 Single	3260
+402659	5	6	23	1	NA	NA	F	NA	NULL	10	99	Natural	1 Single	3509
+3055344	10	6	21	1	17.237	38	F	9	2 years of high school	9	40	Natural	1 Single	3231
+2036761	6	4	28	2	21.772	48	M	9	2 years of high school	15	33	cesarean	1 Single	1474
+454153	5	4	16	1	NA	NA	M	NA	NULL	14	99	Natural	1 Single	3740
+2704191	2	2	24	2	22.226	49	F	9	NULL	10	40	cesarean	1 Single	3884
+3466830	3	7	25	3	18.144	40	M	10	NULL	11	38	Natural	1 Single	3045
+2345734	3	2	27	5	27.216	60	F	9	2 years of high school	14	39	cesarean	1 Single	4479
+3474499	3	2	29	1	15.876	35	F	9	NULL	11	38	cesarean	1 Single	3204
+1350771	8	4	34	6	16.783	37	F	9	4 Years of elementary school	12	39	cesarean	1 Single	4185
+1884443	11	6	33	4	8.618	19	F	9	3 years of college	9	39	Natural	1 Single	3175
+1505422	9	7	33	1	13.608	30	M	9	2 years of high school	11	39	cesarean	1 Single	3232
+645059	9	4	30	3	NA	NA	M	NA	NULL	8	99	Natural	1 Single	3260
+2221110	10	7	29	1	11.340	25	M	9	3 years of college	11	39	cesarean	1 Single	3686
+1788032	8	3	40	3	14.515	32	M	9	3 years of college	13	39	Natural	1 Single	3147
+4238272	9	5	32	2	16.783	37	M	9	2 years of college	9	38	Natural	1 Single	2268
+3178402	10	5	30	1	NA	NA	F	9	NULL	7	39	Natural	1 Single	3140
+2275408	3	2	29	2	21.772	48	M	9	2 years of college	13	39	Natural	1 Single	3544
+682181	10	4	27	2	NA	NA	F	NA	NULL	10	99	cesarean	1 Single	3422
+1362994	12	7	26	1	16.329	36	M	9	3 years of college	12	40	Natural	1 Single	3657
+2833419	3	2	35	3	13.608	30	F	9	NULL	14	39	Natural	1 Single	3285
+3919492	9	6	28	3	9.525	21	M	9	3 years of high school	14	40	cesarean	1 Single	3818
+2414615	8	5	23	1	22.680	50	F	10	4 years of high school	12	39	Natural	1 Single	3175
+30164	4	6	33	2	18.144	40	F	5	2 years of high school	14	38	Natural	1 Single	2608
+3607325	7	5	33	3	14.515	32	F	9	NULL	10	40	Natural	1 Single	3600
+3802611	2	3	28	2	9.072	20	M	9	2 years of college	12	40	Natural	1 Single	3498
+2605715	11	3	37	4	15.422	34	M	9	2 years of high school	8	37	cesarean	1 Single	2665
+1700004	1	3	17	1	14.515	32	F	9	NULL	5	40	Natural	1 Single	3657
+1527030	2	7	27	1	NA	NA	F	9	2 years of college	10	39	Natural	1 Single	3657
+1992385	1	2	35	1	23.587	52	M	9	2 years of college	11	39	cesarean	1 Single	3317
+984664	4	2	27	1	15.422	34	M	9	NULL	13	40	Natural	1 Single	3402
+3103561	4	7	21	2	13.154	29	M	10	NULL	15	40	Natural	1 Single	3515
+2680841	11	5	26	2	18.144	40	M	9	4 years of high school	13	39	Natural	1 Single	3827
+2926704	9	7	34	2	6.350	14	M	8	NULL	10	38	Natural	1 Single	3425
+3228019	1	4	20	3	18.597	41	F	9	NULL	12	38	Natural	1 Single	3089
+3951742	12	4	31	2	9.072	20	M	9	2 years of high school	0	30	Natural	1 Single	2088
+507349	5	3	35	1	NA	NA	F	NA	NULL	14	99	Natural	1 Single	3090
+3373320	10	6	35	2	20.865	46	M	8	NULL	10	38	cesarean	1 Single	3317
+2707473	3	4	21	2	3.629	8	M	9	NULL	10	40	Natural	1 Single	3884
+44234	7	2	18	1	15.876	35	M	10	7 Years of elementary school	9	38	Natural	1 Single	2863
+4264215	12	4	32	1	16.783	37	F	9	3 years of college	13	41	Natural	1 Single	2948
+3240481	3	6	35	1	11.793	26	F	9	NULL	16	38	Natural	1 Single	2693
+1219447	6	3	39	5	12.701	28	M	9	1 year of college	11	39	cesarean	1 Single	3629
+1513936	5	5	30	3	12.701	28	M	9	3 years of college	12	40	Natural	1 Single	3686
+853711	1	2	24	1	15.876	35	M	9	3 years of college	12	40	Natural	1 Single	3402
+276526	2	3	30	2	NA	NA	M	NA	NULL	15	99	Natural	1 Single	3203
+1872831	8	3	33	2	9.979	22	F	9	2 years of college	10	36	cesarean	1 Single	2523
+118450	1	7	17	1	12.701	28	M	8	1 year of high school	13	39	Natural	1 Single	3600
+878305	8	4	17	1	6.804	15	M	9	8 Years of elementary school	10	40	Natural	1 Single	3487
+67427	11	4	26	3	0.000	0	F	9	1 year of high school	12	39	Natural	1 Single	3005
+1203120	4	1	31	6	15.876	35	M	9	2 years of college	9	37	cesarean	1 Single	2977
+1749756	11	2	28	2	17.237	38	M	9	NULL	5	38	Natural	1 Single	3005
+2861573	4	4	31	3	18.144	40	M	8	NULL	12	40	Natural	1 Single	3941
+413300	5	3	37	3	NA	NA	F	NA	NULL	12	99	Natural	1 Single	2778
+2093705	11	5	31	1	28.123	62	F	9	3 years of high school	12	40	cesarean	1 Single	4066
+3448130	2	4	21	2	10.886	24	F	9	NULL	8	40	Natural	1 Single	3037
+1790521	6	1	21	2	1.361	3	F	9	2 years of college	12	34	Natural	1 Single	2381
+1662557	2	3	17	1	7.711	17	F	9	NULL	9	37	Natural	1 Single	3149
+548570	8	2	24	1	NA	NA	M	NA	NULL	12	99	Natural	1 Single	3741
+1383590	9	4	38	5	18.144	40	F	9	NULL	10	39	cesarean	1 Single	3118
+1581110	3	2	25	2	18.144	40	F	9	8 Years of elementary school	13	38	cesarean	1 Single	2693
+2291073	7	4	18	1	18.144	40	F	10	1 year of high school	7	37	Unknown	1 Single	2580
+3464101	3	4	23	1	17.690	39	M	9	NULL	8	40	Natural	1 Single	3119
+3316296	3	5	32	3	32.205	71	M	9	NULL	12	40	Natural	1 Single	3856
+497369	7	7	35	3	NA	NA	M	NA	NULL	10	99	Natural	1 Single	2948
+1742948	10	3	29	2	18.144	40	F	9	NULL	12	39	Natural	1 Single	3175
+112937	1	1	35	2	8.165	18	M	9	2 years of high school	6	35	cesarean	1 Single	3232
+1985418	12	4	36	3	6.804	15	F	9	1 year of high school	8	39	Natural	1 Single	2353
+394911	5	4	26	2	NA	NA	F	NA	NULL	16	99	Natural	1 Single	2903
+3670318	9	5	28	4	13.608	30	F	9	NULL	11	39	Natural	1 Single	2977
+3315830	3	2	34	3	20.412	45	M	9	NULL	14	39	Natural	1 Single	3459
+1672203	5	5	27	3	16.329	36	F	9	NULL	19	39	Natural	1 Single	3502
+855015	2	2	21	1	8.618	19	F	9	2 years of high school	15	41	Natural	1 Single	2892
+4010302	7	7	36	3	12.701	28	M	9	NULL	8	41	Natural	1 Single	3657
+3858116	2	7	26	1	18.597	41	F	9	2 years of college	5	40	Natural	1 Single	3310
+2871348	6	2	19	NA	0.000	0	F	9	NULL	99	41	Natural	1 Single	3189
+2520070	3	6	44	4	13.608	30	M	9	2 years of college	12	34	Natural	1 Single	2160
+684247	11	6	27	1	NA	NA	F	NA	NULL	10	99	Natural	1 Single	2910
+2788411	10	5	28	3	17.237	38	M	7	NULL	15	39	cesarean	1 Single	3920
+271727	2	4	27	3	NA	NA	M	NA	NULL	12	99	Natural	1 Single	3036
+2170443	10	3	23	3	13.154	29	F	9	2 years of high school	99	38	Natural	1 Single	3033
+4057591	2	6	25	2	9.979	22	F	2	3 years of high school	11	36	Natural	1 Single	3090
+1433212	6	3	22	3	11.793	26	F	9	4 years of high school	12	36	cesarean	2 Twin	2353
+1242663	8	4	27	NA	NA	NA	M	9	2 years of college	18	39	Natural	1 Single	3600
+287788	2	6	29	3	NA	NA	F	NA	NULL	10	99	Natural	1 Single	3485
+3309454	2	2	34	2	12.247	27	F	9	NULL	7	40	cesarean	1 Single	2495
+128454	3	4	26	2	18.144	40	F	9	2 years of high school	9	40	cesarean	1 Single	4593
+170571	7	1	36	3	5.897	13	F	9	4 Years of elementary school	12	39	Natural	1 Single	3836
+3702374	10	1	17	1	18.144	40	F	9	NULL	9	37	Natural	1 Single	3175
+3177645	10	3	21	6	23.587	52	M	9	NULL	5	40	Natural	1 Single	3234
+3933730	10	7	22	1	5.443	12	F	8	8 Years of elementary school	13	36	cesarean	1 Single	2438
+3490826	4	7	31	6	5.443	12	M	9	NULL	6	37	cesarean	1 Single	3827
+206119	11	5	25	2	13.608	30	F	9	4 years of high school	12	39	cesarean	1 Single	3810
+3264245	8	3	19	2	6.804	15	M	10	NULL	27	40	Natural	1 Single	3629
+606806	9	2	33	2	NA	NA	F	NA	NULL	12	99	cesarean	1 Single	3958
+1117377	11	5	23	1	19.504	43	F	9	NULL	15	38	Natural	1 Single	3232
+1940428	8	6	25	1	18.144	40	M	9	3 years of college	14	38	cesarean	1 Single	4281
+1766765	4	6	33	1	0.000	0	F	10	4 years of high school	9	42	cesarean	1 Single	3374
+2740284	6	1	22	4	5.897	13	M	9	NULL	1	40	Natural	1 Single	3175
+839804	9	6	22	2	NA	NA	F	9	4 Years of elementary school	0	39	cesarean	1 Single	2893
+3993362	5	7	23	1	18.597	41	F	9	NULL	10	33	cesarean	1 Single	1673
+1869037	8	5	36	5	18.144	40	M	9	3 years of college	9	41	Natural	1 Single	4252
+3742614	11	6	21	1	10.433	23	F	9	NULL	10	38	cesarean	1 Single	3605
+1557278	10	7	27	2	4.536	10	M	9	2 years of high school	8	39	Natural	1 Single	3147
+1774244	3	5	29	1	0.000	0	F	9	4 years of high school	13	38	cesarean	1 Single	2977
+71832	12	3	16	1	11.340	25	F	9	7 Years of elementary school	15	41	Natural	1 Single	3535
+3847304	12	6	26	2	16.329	36	F	9	1 year of college	12	38	Natural	1 Single	3834
+3259767	7	3	23	3	43.091	95	M	9	NULL	4	40	cesarean	1 Single	3550
+3967279	2	4	25	1	16.783	37	F	8	NULL	14	39	Natural	1 Single	3714
+955251	2	3	25	5	NA	NA	F	9	NULL	0	34	cesarean	2 Twin	1956
+3441376	2	3	27	2	17.237	38	M	9	NULL	7	38	Natural	1 Single	3657
+2068559	8	7	17	1	22.680	50	F	9	2 years of high school	12	41	cesarean	1 Single	3330
+124050	2	5	28	1	17.690	39	M	9	3 years of college	11	40	Natural	1 Single	3629
+2591450	10	1	26	1	18.144	40	F	8	3 years of college	10	38	Natural	1 Single	3311
+4099843	9	2	28	2	14.969	33	M	9	4 years of high school	11	39	Natural	1 Single	3657
+3237575	3	3	26	1	12.247	27	M	9	NULL	14	40	cesarean	1 Single	3285
+2747679	7	3	24	1	13.608	30	M	9	NULL	12	39	Natural	1 Single	3625
+2449727	12	6	36	2	NA	NA	M	1	5 Years of elementary school	4	22	Natural	1 Single	624
+2470136	3	2	30	5	8.165	18	M	9	NULL	8	36	cesarean	1 Single	3345
+2006253	2	3	34	5	13.608	30	M	9	2 years of high school	20	41	cesarean	1 Single	3204
+2484280	9	5	25	2	22.680	50	F	9	NULL	10	40	Natural	1 Single	3838
+2127015	3	3	29	2	NA	NA	M	NA	3 years of college	11	33	cesarean	2 Twin	2240
+1986650	1	2	21	4	9.072	20	M	9	8 Years of elementary school	12	32	cesarean	1 Single	1701
+2192975	3	4	21	3	10.886	24	M	9	3 years of high school	13	38	Natural	1 Single	3430
+3020837	1	2	42	7	11.340	25	M	9	2 years of college	6	38	cesarean	1 Single	3373
+1346992	6	3	19	1	11.340	25	M	9	2 years of high school	14	38	Natural	1 Single	3572
+1293362	12	5	29	4	14.061	31	F	10	2 Years of elementary school	10	40	Natural	1 Single	2750
+798324	8	3	26	2	NA	NA	M	9	7 Years of elementary school	8	37	cesarean	1 Single	2835
+2492057	1	3	33	2	16.783	37	M	9	NULL	12	39	cesarean	1 Single	4167
+1615887	9	5	21	4	20.865	46	F	9	2 years of high school	11	34	cesarean	2 Twin	2150
+2978839	4	4	34	3	15.876	35	M	9	2 years of high school	12	40	cesarean	1 Single	3799
+309085	3	7	25	2	NA	NA	F	NA	NULL	14	99	Natural	1 Single	3110
+3644074	8	5	24	3	19.051	42	M	9	NULL	9	39	Natural	1 Single	3243
+2293847	8	6	27	4	13.608	30	F	10	2 years of high school	8	40	Natural	1 Single	3289
+532112	8	4	25	2	NA	NA	F	NA	NULL	6	99	cesarean	1 Single	3033
+2418855	9	4	36	6	13.608	30	M	9	1 year of college	15	37	Natural	2 Twin	2835
+1324553	12	1	28	4	19.958	44	F	9	3 years of high school	11	39	Natural	1 Single	3717
+1037639	7	7	37	6	12.247	27	F	9	NULL	4	40	Natural	1 Single	2948
+3316608	3	7	19	1	NA	NA	M	9	NULL	12	39	Natural	1 Single	3113
+531836	7	2	22	1	NA	NA	M	NA	NULL	10	99	Natural	1 Single	3203
+2061464	6	2	32	6	NA	NA	M	10	2 years of high school	10	41	Natural	1 Single	4167
+2349776	2	3	19	2	13.608	30	F	9	2 years of high school	13	33	cesarean	2 Twin	1247
+3305262	1	3	27	6	NA	NA	F	9	NULL	5	39	Natural	1 Single	2928
+1971828	1	7	31	1	9.072	20	M	8	2 years of high school	12	40	Natural	1 Single	2580
+1822308	1	1	28	2	11.793	26	M	9	1 year of college	14	40	cesarean	1 Single	3770
+2634588	8	4	18	1	9.072	20	M	9	2 years of high school	15	37	cesarean	1 Single	2879
+460725	6	1	37	2	NA	NA	F	NA	NULL	15	99	Natural	1 Single	3629
+2356021	3	7	23	2	6.804	15	M	9	7 Years of elementary school	8	31	Natural	1 Single	2070
+2061226	8	2	30	4	13.608	30	M	9	7 Years of elementary school	12	38	Natural	1 Single	3572
+3848416	12	4	28	5	11.793	26	F	9	1 year of high school	10	39	Natural	1 Single	3183
+1807445	11	4	23	2	7.257	16	M	9	2 years of high school	20	38	Natural	1 Single	2778
+1191444	3	4	39	3	13.608	30	M	9	1 year of college	10	37	Natural	1 Single	4082
+4028893	10	4	29	3	11.340	25	M	9	NULL	8	38	Natural	1 Single	3791
+99154	9	5	30	3	13.608	30	F	9	4 years of high school	13	39	Natural	1 Single	3657
+3048201	8	3	20	1	22.680	50	M	9	1 year of high school	10	39	cesarean	1 Single	4252
+2506485	1	5	39	1	18.144	40	F	9	3 years of college	13	39	Natural	1 Single	3110
+3971825	2	3	15	1	18.597	41	M	8	NULL	16	40	cesarean	1 Single	3686
+4000697	6	2	25	2	13.608	30	M	9	NULL	9	38	cesarean	1 Single	3440
+3759423	11	2	36	3	15.876	35	M	9	NULL	10	40	cesarean	1 Single	3900
+1069791	8	4	26	2	11.340	25	F	9	NULL	13	38	Natural	1 Single	2920
+1622039	10	5	28	2	20.412	45	M	9	3 years of college	12	40	Natural	1 Single	3515
+2632799	7	6	28	4	21.772	48	F	8	2 years of high school	8	37	Natural	1 Single	2807
+1867968	8	4	34	2	6.804	15	M	10	2 years of high school	12	38	Natural	1 Single	2948
+2103555	12	6	19	1	22.226	49	F	9	1 year of high school	10	38	Natural	1 Single	3525
+443930	6	2	28	3	NA	NA	F	NA	NULL	16	99	cesarean	1 Single	2901
+985996	4	5	36	3	15.876	35	F	9	NULL	15	38	cesarean	1 Single	3260
+1940628	8	3	21	3	0.000	0	F	9	6 Years of elementary school	7	39	cesarean	1 Single	3460
+851189	1	3	36	3	15.876	35	M	9	3 years of college	8	38	cesarean	1 Single	4621
+3377762	11	4	34	4	16.329	36	F	9	NULL	14	38	cesarean	1 Single	4770
+3366663	10	4	21	2	12.701	28	M	10	NULL	9	37	cesarean	1 Single	2397
+2063158	8	6	18	1	9.072	20	F	8	1 year of high school	10	36	Natural	1 Single	2353
+35894	6	2	30	3	7.711	17	M	3	4 years of high school	49	39	cesarean	1 Single	3430
+366369	3	6	29	3	NA	NA	M	NA	NULL	14	99	cesarean	1 Single	3522
+1089929	9	2	36	3	18.597	41	M	9	NULL	6	38	cesarean	1 Single	2863
+3209807	12	3	25	1	NA	NA	F	9	NULL	0	99	Natural	1 Single	3260
+2113108	1	7	24	2	15.876	35	M	9	3 years of high school	15	40	Natural	1 Single	3260
+994154	5	4	33	2	13.154	29	F	9	NULL	20	37	cesarean	1 Single	3119
+1554731	9	3	20	1	15.876	35	M	9	2 years of high school	25	36	Natural	1 Single	2286
+3465318	3	3	33	2	15.422	34	M	9	NULL	14	36	cesarean	1 Single	2125
+3963682	1	6	22	1	15.422	34	M	9	NULL	10	41	cesarean	1 Single	3758
+4143322	5	2	26	4	NA	NA	M	5	NULL	0	40	cesarean	1 Single	3536
+3704995	10	2	27	3	11.340	25	F	9	NULL	4	34	Natural	1 Single	1871
+4025096	9	6	25	1	17.690	39	M	9	NULL	13	41	Natural	1 Single	4054
+2228794	12	1	27	2	14.061	31	M	9	2 years of high school	12	40	Natural	1 Single	3686
+3520636	5	2	27	4	15.422	34	F	9	NULL	12	39	Natural	1 Single	3572
+3827318	8	1	23	1	23.587	52	F	9	2 years of high school	2	37	Natural	1 Single	2841
+4161923	2	4	26	2	9.072	20	F	9	2 years of high school	13	38	cesarean	1 Single	2940
+67877	11	5	37	2	18.144	40	M	9	2 years of college	12	38	cesarean	1 Single	3781
+1685224	9	4	33	5	9.072	20	F	10	NULL	10	38	Natural	1 Single	2702
+2437416	11	1	31	3	14.515	32	F	9	2 years of college	11	39	Natural	1 Single	3742
+1715506	4	7	26	3	9.979	22	F	9	NULL	8	39	Natural	1 Single	3068
+2256992	6	7	18	1	24.040	53	F	8	2 years of high school	10	37	Natural	1 Single	2325
+145032	5	7	26	1	13.608	30	M	9	4 years of high school	8	39	Natural	1 Single	3572
+413551	5	4	20	1	NA	NA	M	NA	NULL	12	99	Natural	1 Single	3657
+3782302	12	6	18	1	13.608	30	M	9	NULL	11	41	Natural	1 Single	3485
+1773986	5	3	21	2	12.701	28	F	9	2 years of high school	6	37	Natural	1 Single	3050
+302455	3	7	20	1	NA	NA	F	NA	NULL	18	99	Natural	1 Single	2948
+4044124	11	2	32	1	7.257	16	F	9	NULL	4	39	cesarean	1 Single	3648
+805949	9	4	27	1	20.412	45	M	9	3 years of college	10	39	Natural	1 Single	3459
+1515032	7	4	22	1	8.165	18	F	9	3 years of high school	13	36	Natural	1 Single	3376
+1228018	7	2	15	1	14.969	33	F	9	8 Years of elementary school	16	41	Natural	1 Single	3487
+123785	2	3	32	6	2.722	6	F	9	8 Years of elementary school	9	39	Natural	1 Single	2608
+2902386	8	3	26	2	14.969	33	M	9	NULL	16	36	Natural	1 Single	2983
+3501112	4	5	25	4	15.422	34	M	8	NULL	8	38	cesarean	1 Single	3402
+1032663	7	6	26	2	11.340	25	M	9	NULL	7	40	Natural	1 Single	3657
+1508718	11	3	33	3	17.237	38	M	9	2 years of college	11	39	Natural	1 Single	3005
+3910980	8	3	37	2	9.072	20	M	9	2 years of college	14	40	cesarean	1 Single	4540
+3601609	7	7	18	1	20.412	45	M	NA	NULL	6	38	Natural	1 Single	3605
+3320193	3	5	37	6	12.701	28	F	9	NULL	10	38	Natural	1 Single	3325
+679362	11	4	31	3	NA	NA	M	NA	NULL	11	99	Natural	1 Single	3800
+1008733	5	1	30	2	17.690	39	F	9	NULL	12	39	Natural	1 Single	3771
+1431348	5	1	15	1	9.072	20	F	9	6 Years of elementary school	12	39	Natural	1 Single	2722
+3962546	1	5	22	2	NA	NA	M	9	NULL	11	38	Natural	1 Single	3660
+1219496	6	6	22	1	16.783	37	F	9	2 years of college	10	39	Natural	1 Single	3260
+2411215	9	5	29	2	15.422	34	M	9	2 years of college	14	39	cesarean	1 Single	3827
+1073321	8	3	34	4	13.154	29	F	9	NULL	9	39	Natural	1 Single	3969
+2823469	2	2	34	7	3.629	8	F	9	NULL	10	39	Natural	1 Single	3819
+1112246	10	7	15	1	19.958	44	M	8	NULL	12	27	cesarean	2 Twin	1027
+98614	8	4	31	2	9.072	20	M	8	1 year of college	3	39	Natural	1 Single	3119
+3979584	3	4	20	1	28.123	62	M	9	NULL	3	40	Natural	1 Single	3015
+3325361	4	6	27	2	2.722	6	M	9	NULL	15	37	Natural	1 Single	2977
+1087962	9	2	22	5	9.072	20	M	9	NULL	5	38	cesarean	1 Single	3515
+839746	8	1	25	2	NA	NA	F	9	7 Years of elementary school	0	39	Natural	1 Single	3416
+3298181	11	7	33	3	17.237	38	F	9	NULL	6	34	Natural	1 Single	2909
+2636502	9	4	27	1	7.257	16	M	9	1 year of high school	12	39	Natural	1 Single	3244
+2297453	9	4	27	2	11.340	25	M	8	4 years of high school	11	40	cesarean	1 Single	3204
+96211	8	5	19	1	17.237	38	M	9	2 years of high school	16	40	Natural	1 Single	3430
+95558	8	7	21	1	16.329	36	M	9	2 years of high school	8	35	cesarean	1 Single	2268
+1033715	7	2	34	2	8.618	19	F	9	NULL	99	38	Natural	1 Single	3289
+336418	3	5	31	1	NA	NA	M	NA	NULL	12	99	Natural	1 Single	4090
+904353	10	2	22	1	4.536	10	M	9	4 years of high school	99	39	Natural	1 Single	3296
+556810	8	2	29	2	NA	NA	M	NA	NULL	12	99	cesarean	1 Single	3080
+2659850	5	3	22	1	NA	NA	M	9	6 Years of elementary school	99	39	Natural	1 Single	3742
+153262	6	5	34	1	11.793	26	F	9	2 years of college	10	41	cesarean	1 Single	2760
+3889825	6	5	29	5	9.072	20	F	9	8 Years of elementary school	10	39	Natural	1 Single	2733
+3812185	5	3	30	1	23.133	51	M	9	3 years of college	13	40	Natural	1 Single	3678
+3126181	6	3	29	4	23.133	51	F	9	NULL	99	37	Natural	1 Single	3600
+3673523	9	4	33	3	3.629	8	F	3	NULL	14	40	Natural	1 Single	3033
+1535572	5	2	20	1	18.144	40	F	9	2 years of high school	11	40	cesarean	1 Single	4196
+523010	8	5	32	3	NA	NA	M	NA	NULL	10	99	Natural	1 Single	3339
+2158349	8	4	21	1	19.051	42	F	9	2 years of high school	14	41	cesarean	1 Single	3317
+1554784	10	1	30	2	NA	NA	M	10	3 years of college	13	39	Natural	1 Single	3374
+748251	12	4	24	2	NA	NA	F	NA	NULL	15	99	cesarean	2 Twin	2650
+3659245	9	1	23	2	12.247	27	F	9	NULL	11	41	Natural	1 Single	3705
+4068789	4	6	17	1	12.247	27	F	9	2 years of high school	6	39	Natural	1 Single	3430
+1054433	8	7	24	2	19.958	44	F	9	NULL	8	40	Natural	1 Single	3884
+2468691	3	4	24	4	22.680	50	F	7	NULL	11	36	cesarean	1 Single	2296
+2490316	12	5	21	4	9.072	20	M	9	NULL	14	40	Natural	1 Single	3460
+517373	7	6	19	1	NA	NA	F	NA	NULL	14	99	Natural	1 Single	3260
+109959	12	1	23	2	19.504	43	M	9	4 years of high school	10	40	cesarean	1 Single	3232
+3086994	2	3	37	3	NA	NA	F	9	NULL	13	39	Natural	1 Single	3570
+338433	4	7	17	2	NA	NA	F	NA	NULL	11	99	Natural	1 Single	4260
+258261	2	1	37	3	NA	NA	M	NA	NULL	10	99	Natural	1 Single	3770
+105327	10	2	28	2	11.793	26	M	9	2 years of high school	15	38	Natural	1 Single	3515
+1106515	10	5	23	2	18.144	40	F	9	NULL	6	34	cesarean	1 Single	1418
+885729	10	6	39	2	20.865	46	M	9	2 years of high school	13	40	Natural	1 Single	3204
+3138667	6	7	33	3	12.701	28	M	9	NULL	11	40	Natural	1 Single	3940
+3258455	7	3	24	2	17.690	39	M	8	NULL	9	41	Natural	1 Single	2918
+3962736	1	6	35	1	13.154	29	M	9	NULL	14	39	Natural	1 Single	3345
+4008004	7	7	37	6	10.886	24	M	9	NULL	8	38	Natural	1 Single	3487
+1514862	6	1	25	2	14.515	32	M	9	3 years of high school	13	40	Natural	1 Single	3535
+2245569	1	3	31	3	13.154	29	F	9	3 years of high school	14	39	Natural	1 Single	2920
+3650339	8	4	20	1	13.154	29	M	9	NULL	15	41	Natural	1 Single	3345
+2352411	3	1	21	2	10.433	23	F	9	7 Years of elementary school	6	38	Natural	1 Single	2807
+3658461	9	4	21	3	19.504	43	F	9	NULL	11	38	cesarean	1 Single	3175
+3204289	12	6	26	3	0.000	0	F	9	NULL	12	40	Unknown	1 Single	3345
+360192	4	6	23	2	NA	NA	F	NA	NULL	14	99	cesarean	1 Single	3784
+695237	11	5	27	4	NA	NA	M	NA	NULL	12	99	Natural	1 Single	4167
+2658823	5	3	34	1	13.608	30	F	9	3 years of college	14	38	cesarean	1 Single	2665
+1190501	3	5	29	3	4.536	10	F	9	3 years of high school	18	40	Natural	1 Single	3005
+793772	3	3	25	2	7.711	17	M	9	2 years of high school	7	37	cesarean	1 Single	2580
+862794	4	5	32	1	20.412	45	M	9	3 years of college	14	39	Natural	1 Single	2637
+366459	4	1	27	3	NA	NA	M	NA	NULL	10	99	Natural	1 Single	3540
+56628	9	5	19	1	21.319	47	M	9	3 years of high school	11	41	Natural	1 Single	2750
+3904610	7	6	26	3	10.886	24	F	9	4 years of high school	9	39	cesarean	1 Single	3090
+3482661	4	1	21	2	26.308	58	F	10	NULL	5	36	cesarean	1 Single	3374
+1878760	9	6	35	2	13.608	30	F	9	3 years of high school	13	40	Natural	1 Single	3515
+1701632	1	6	27	3	0.000	0	M	9	NULL	11	40	cesarean	1 Single	3560
+1030126	6	4	36	3	26.308	58	M	9	NULL	40	37	cesarean	2 Twin	2523
+4249597	10	4	24	2	13.608	30	M	9	4 Years of elementary school	10	38	Natural	1 Single	3629
+2427643	10	3	23	4	9.072	20	F	9	2 years of high school	99	40	Natural	1 Single	3771
+3295478	9	7	29	1	14.061	31	F	9	NULL	12	40	cesarean	1 Single	4508
+3017409	1	7	29	5	9.072	20	M	9	8 Years of elementary school	10	41	Natural	1 Single	3969
+3285897	12	6	29	1	9.072	20	M	9	NULL	11	39	Natural	1 Single	3748
+184392	9	4	25	1	10.886	24	F	9	4 years of high school	11	20	Natural	1 Single	3033
+1226746	6	3	19	1	11.340	25	F	9	3 years of high school	12	39	Natural	1 Single	3033
+2176331	11	1	34	3	8.618	19	F	9	3 years of college	10	38	cesarean	1 Single	3119
+2377344	6	5	30	3	NA	NA	M	10	2 years of high school	10	39	cesarean	1 Single	4196
+3796771	1	6	24	2	16.329	36	M	9	2 years of high school	12	38	Natural	1 Single	4298
+4205911	6	2	32	5	7.711	17	F	9	3 years of high school	16	39	cesarean	1 Single	2975
+3807031	3	4	21	2	11.340	25	M	9	2 years of high school	8	37	Natural	1 Single	2975
+723787	11	7	23	3	NA	NA	M	NA	NULL	15	99	Natural	1 Single	2548
+2099852	12	6	32	1	7.257	16	F	9	3 years of high school	14	37	Natural	1 Single	3438
+504395	7	3	18	2	NA	NA	M	NA	NULL	6	99	cesarean	1 Single	3005
+2392087	7	2	19	1	14.969	33	F	9	2 years of high school	7	41	cesarean	1 Single	3175
+4018410	8	1	20	2	0.000	0	M	9	NULL	1	38	cesarean	1 Single	3515
+430131	5	4	34	2	NA	NA	M	NA	NULL	12	99	Natural	1 Single	3380
+3959671	9	7	38	5	14.061	31	F	9	NULL	12	39	Natural	1 Single	2807
+2940229	10	6	24	NA	NA	NA	M	9	NULL	99	38	Natural	1 Single	2548
+1770603	5	4	36	1	15.876	35	M	9	2 years of college	13	37	Natural	1 Single	3062
+1449916	7	5	30	1	4.990	11	M	9	2 years of high school	11	39	Natural	1 Single	3317
+3864435	3	5	30	4	14.515	32	M	9	7 Years of elementary school	14	39	Natural	1 Single	2776
+3201097	11	4	23	3	30.844	68	M	9	NULL	12	38	Natural	1 Single	3458
+4083550	7	5	32	3	19.051	42	M	9	3 years of college	32	36	Natural	2 Twin	2381
+1022339	6	6	31	4	20.865	46	F	9	NULL	11	39	Natural	1 Single	3119
+3808941	4	6	18	1	13.608	30	F	9	3 years of high school	9	34	Natural	1 Single	2390
+442151	6	5	34	6	NA	NA	M	NA	NULL	12	99	cesarean	1 Single	4140
+1441763	7	6	26	1	4.536	10	F	9	3 years of college	10	40	cesarean	1 Single	3317
+174308	8	5	18	1	15.876	35	M	10	2 years of high school	8	37	Natural	1 Single	3101
+3659638	8	1	20	1	7.711	17	F	9	NULL	15	38	cesarean	1 Single	1699
+3174950	10	2	38	2	NA	NA	M	8	NULL	13	38	cesarean	1 Single	3334
+2658761	5	7	18	1	13.608	30	M	9	2 years of high school	12	38	cesarean	1 Single	3119
+980451	4	7	28	1	19.958	44	F	9	NULL	13	40	Natural	1 Single	3884
+4205932	6	3	28	2	13.608	30	F	9	3 years of college	10	39	Natural	1 Single	2892
+537796	8	6	17	1	NA	NA	F	NA	NULL	18	99	Natural	1 Single	3033
+2678427	10	3	21	1	15.876	35	F	8	2 years of college	99	40	cesarean	1 Single	3572
+301425	2	3	27	4	NA	NA	F	NA	NULL	10	99	Natural	1 Single	3048
+1288294	11	4	22	1	13.608	30	M	9	8 Years of elementary school	10	40	Natural	1 Single	3033
+4039639	11	4	23	4	15.876	35	F	9	NULL	11	39	cesarean	1 Single	3930
+3947240	12	2	31	3	18.144	40	M	9	3 years of college	9	40	Natural	1 Single	4135
+3061693	11	4	41	5	5.443	12	M	9	2 years of high school	10	40	cesarean	1 Single	3458
+963121	3	2	36	2	9.979	22	M	9	NULL	5	40	Natural	1 Single	3680
+2616564	12	2	26	5	18.144	40	M	9	4 Years of elementary school	12	39	cesarean	1 Single	3345
+2612754	12	3	36	3	13.608	30	F	9	2 years of college	10	40	Natural	1 Single	3055
+4137031	11	6	33	3	0.000	0	F	9	4 years of high school	13	40	cesarean	1 Single	4167
+769152	11	2	27	3	NA	NA	F	NA	NULL	6	99	Natural	1 Single	2934
+665781	10	2	18	2	NA	NA	F	NA	NULL	5	99	Natural	1 Single	3702
+4078326	5	2	29	8	7.257	16	F	9	8 Years of elementary school	18	41	Natural	1 Single	3686
+3473683	3	5	32	4	25.401	56	M	9	NULL	16	38	cesarean	2 Twin	3317
+4241109	9	6	35	2	15.876	35	F	9	3 years of college	12	38	cesarean	1 Single	2523
+3597985	7	1	24	3	18.144	40	M	9	NULL	12	39	Natural	1 Single	3629
+3783559	12	3	27	3	9.072	20	F	9	NULL	0	42	Natural	1 Single	2195
+2343358	2	7	39	6	18.144	40	F	9	3 years of high school	6	35	cesarean	1 Single	2552
+2769916	8	5	28	2	24.040	53	F	9	NULL	14	41	Natural	1 Single	3714
+2128549	3	1	35	6	13.608	30	M	9	2 years of high school	12	41	Natural	1 Single	3969
+3339578	6	5	26	1	5.443	12	F	9	NULL	13	40	cesarean	1 Single	3175
+3034441	5	6	22	4	10.433	23	F	10	8 Years of elementary school	9	38	cesarean	1 Single	3460
+1388820	11	5	20	2	11.340	25	F	9	NULL	11	40	Natural	1 Single	2977
+142509	4	6	27	1	8.618	19	M	8	3 years of college	11	38	cesarean	1 Single	3629
+2284192	5	4	23	2	1.814	4	F	9	4 years of high school	10	37	Natural	1 Single	3119
+3890874	5	7	34	1	15.876	35	F	9	2 years of college	14	39	Natural	1 Single	3175
+3244688	4	2	19	3	22.226	49	M	9	NULL	22	38	Natural	1 Single	3572
+1738923	9	5	17	1	11.340	25	F	9	NULL	4	37	Natural	1 Single	1855
+4221133	8	1	19	2	NA	NA	F	9	8 Years of elementary school	9	39	cesarean	1 Single	2605
+2791316	10	3	33	1	19.051	42	M	9	NULL	10	36	Natural	1 Single	2465
+2642358	11	5	28	4	19.504	43	F	9	2 years of high school	6	37	Natural	1 Single	2481
+999527	5	3	25	3	3.175	7	F	9	NULL	9	39	Natural	1 Single	3629
+314467	3	6	33	6	NA	NA	M	NA	NULL	8	99	cesarean	1 Single	3753
+2864638	5	4	37	2	21.319	47	F	8	NULL	11	39	Natural	1 Single	3528
+2907377	8	3	19	2	41.277	91	M	9	NULL	8	39	Natural	1 Single	4345
+302040	3	5	20	1	NA	NA	F	NA	NULL	14	99	Natural	1 Single	3374
+3826826	8	5	33	6	20.412	45	F	9	2 years of high school	2	39	cesarean	1 Single	2728
+3279334	11	5	19	2	20.412	45	M	9	NULL	12	40	Natural	1 Single	3090
+2092278	11	2	35	2	6.804	15	M	9	3 years of high school	12	39	cesarean	1 Single	3215
+1893903	12	7	23	2	11.340	25	F	9	4 years of high school	14	41	Natural	1 Single	3884
+2153020	7	1	39	3	15.876	35	M	9	2 years of college	20	38	cesarean	1 Single	3204
+134768	3	6	25	NA	4.536	10	M	9	1 year of college	14	39	Natural	1 Single	3374
+410689	5	7	27	4	NA	NA	M	NA	NULL	5	99	Natural	1 Single	3885
+2943604	11	2	29	2	NA	NA	F	8	NULL	12	41	Natural	1 Single	3835
+2072315	9	2	26	1	9.072	20	F	8	2 years of college	13	39	Natural	1 Single	3353
+36713	6	1	27	3	20.412	45	F	9	1 year of high school	12	31	cesarean	1 Single	851
+3185591	10	7	18	1	NA	NA	F	8	NULL	99	38	Natural	1 Single	NA
+2367274	5	4	23	3	11.340	25	M	9	8 Years of elementary school	10	30	cesarean	1 Single	1531
+609	1	3	32	3	NA	NA	M	9	1 year of high school	8	39	cesarean	1 Single	3742
+4135471	10	4	19	1	15.422	34	F	9	1 year of high school	8	37	Natural	1 Single	2070
+3302756	1	3	26	2	26.762	59	M	8	NULL	13	40	Natural	1 Single	3799
+3833852	9	7	28	1	14.515	32	M	9	2 years of college	15	35	Natural	1 Single	2463
+4116157	12	3	29	2	13.608	30	F	9	2 years of high school	12	39	cesarean	1 Single	3345
+561523	8	5	24	2	NA	NA	F	NA	NULL	12	99	Natural	1 Single	4217
+3336348	6	4	25	2	14.061	31	F	8	NULL	10	38	Natural	1 Single	2920
+782328	1	3	25	8	18.144	40	F	9	3 years of high school	7	39	cesarean	1 Single	3799
+605000	9	1	26	1	NA	NA	M	NA	NULL	5	99	cesarean	1 Single	3440
+404329	5	4	25	1	NA	NA	F	NA	NULL	12	99	cesarean	1 Single	3345
+1610103	8	3	24	5	14.061	31	M	9	2 years of high school	11	39	Natural	1 Single	3884
+1485492	12	5	33	1	11.793	26	M	9	3 years of college	11	37	Natural	1 Single	3147
+3984980	4	5	36	5	15.876	35	F	9	NULL	5	35	Natural	1 Single	3088
+2321726	9	5	30	4	17.690	39	F	8	1 year of college	12	35	Natural	2 Twin	2381
+3388454	12	2	17	1	0.000	0	F	6	NULL	14	26	cesarean	3 Triplet	830
+2000698	2	2	27	6	18.597	41	F	9	2 years of high school	9	39	cesarean	1 Single	3005
+606273	9	6	36	2	NA	NA	M	NA	NULL	10	99	Natural	1 Single	3090
+2914207	9	6	20	2	18.597	41	F	9	NULL	12	38	Natural	1 Single	2849
+4250542	10	1	27	4	15.876	35	F	9	2 years of high school	11	40	Natural	1 Single	3125
+1131339	11	2	33	4	8.618	19	M	9	NULL	14	39	Natural	1 Single	3005
+1988300	1	2	27	3	18.144	40	M	9	3 years of college	15	39	cesarean	1 Single	4167
+1013615	6	6	29	2	6.804	15	F	9	NULL	12	38	cesarean	1 Single	2835
+1114101	10	2	32	1	24.494	54	M	9	NULL	12	41	cesarean	1 Single	3969
+455375	6	5	18	1	NA	NA	F	NA	NULL	11	99	Natural	1 Single	3685
+45927	8	5	20	1	9.072	20	M	9	2 years of high school	12	37	Natural	1 Single	2910
+1880831	10	7	28	2	18.597	41	M	10	4 years of high school	12	40	cesarean	1 Single	3487
+2265229	11	6	31	3	20.412	45	M	8	3 years of college	12	39	Natural	1 Single	3912
+568513	8	3	30	2	NA	NA	M	NA	NULL	10	99	Natural	1 Single	3775
+1440791	6	1	35	2	13.608	30	F	9	2 years of college	9	40	Natural	1 Single	3629
+3407946	1	1	30	2	12.701	28	M	10	NULL	16	43	Natural	1 Single	3997
+2476265	6	5	26	1	13.154	29	M	8	NULL	8	38	Natural	1 Single	2810
+3647749	8	2	30	4	9.072	20	F	9	NULL	14	40	Natural	1 Single	3260
+1973247	2	6	31	2	13.154	29	F	10	2 years of college	12	39	cesarean	1 Single	3541
+1732479	8	2	27	2	17.690	39	M	9	NULL	15	39	Natural	1 Single	3076
+2121035	2	3	28	6	27.216	60	F	9	2 years of high school	13	39	Natural	1 Single	3544
+797175	5	5	26	2	19.051	42	M	9	3 years of high school	9	40	Natural	1 Single	3544
+2456333	3	5	24	1	6.350	14	M	9	NULL	5	39	cesarean	1 Single	3288
+2916993	9	1	42	4	NA	NA	M	9	NULL	10	38	Natural	1 Single	3915
+3399628	1	4	20	1	27.216	60	F	9	NULL	10	37	cesarean	1 Single	3204
+1361890	11	4	22	8	18.144	40	F	9	7 Years of elementary school	12	37	cesarean	2 Twin	2546
+1153250	12	3	20	2	NA	NA	M	5	NULL	99	35	cesarean	1 Single	2240
+3224892	10	3	19	1	31.751	70	M	9	3 years of high school	6	41	cesarean	1 Single	4250
+1891139	12	7	28	1	13.608	30	M	9	2 years of college	12	41	Natural	1 Single	3997
+3768269	12	2	30	1	10.886	24	M	9	NULL	9	38	Natural	1 Single	3317
+2789612	10	7	31	1	12.247	27	F	8	NULL	12	41	Natural	1 Single	3062
+560382	7	7	36	4	NA	NA	M	NA	NULL	13	99	Natural	1 Single	3357
+2638518	9	6	29	2	7.257	16	M	9	2 years of high school	8	36	Natural	1 Single	3470
+689690	11	2	28	2	NA	NA	F	NA	NULL	10	99	Natural	1 Single	3113
+4182312	4	4	34	2	9.072	20	F	9	3 years of college	13	38	Natural	1 Single	2608
+3173631	8	4	22	3	18.144	40	M	9	NULL	10	40	Natural	1 Single	4706
+2865157	5	2	19	4	9.072	20	F	9	NULL	4	31	Natural	1 Single	2000
+1652402	10	6	24	3	19.504	43	F	9	8 Years of elementary school	10	39	cesarean	1 Single	3515
+956088	2	3	31	NA	NA	NA	M	9	NULL	11	40	Natural	1 Single	2750
+1232309	7	1	29	1	NA	NA	M	9	2 years of college	99	40	Natural	1 Single	3090
+1029529	6	4	27	4	12.701	28	M	9	NULL	7	39	cesarean	1 Single	4054
+965538	3	5	22	1	22.226	49	F	9	NULL	6	39	Natural	1 Single	2722
+4160046	2	5	37	2	18.144	40	F	9	3 years of college	10	40	Natural	1 Single	3600
+4144616	7	6	22	3	12.247	27	M	9	NULL	11	39	cesarean	1 Single	3490
+650597	10	1	26	1	NA	NA	M	NA	NULL	13	99	cesarean	1 Single	3195
+136401	3	6	30	3	20.865	46	M	8	2 years of college	16	39	Natural	1 Single	4026
+841706	12	5	27	2	12.701	28	M	9	2 years of college	9	39	Natural	1 Single	3572
+3031640	3	3	34	1	15.422	34	F	10	3 years of college	13	40	Natural	1 Single	3345
+3392702	1	4	26	1	23.587	52	F	9	NULL	15	41	cesarean	1 Single	3241
+416209	4	7	30	3	NA	NA	M	NA	NULL	10	99	Natural	1 Single	3742
+1109921	10	6	23	3	26.762	59	F	9	NULL	99	39	cesarean	1 Single	3969
+3364079	9	4	21	3	12.247	27	F	9	NULL	4	40	Natural	1 Single	3214
+2210996	7	4	17	1	31.751	70	M	9	8 Years of elementary school	10	38	cesarean	1 Single	3884
+3516340	4	5	29	2	17.237	38	F	9	NULL	10	38	cesarean	1 Single	3119
+3813349	5	2	15	1	28.123	62	M	9	7 Years of elementary school	9	37	Natural	1 Single	2874
+3435038	2	5	16	1	15.876	35	F	9	NULL	8	39	Natural	1 Single	3204
+21741	3	5	19	1	9.072	20	F	9	1 year of college	8	38	Natural	1 Single	2470
+1505894	9	7	31	1	17.237	38	M	8	2 years of college	13	38	Natural	1 Single	4111
+759690	12	6	20	1	NA	NA	F	NA	NULL	18	99	Natural	1 Single	2850
+3738328	11	6	31	4	13.608	30	F	9	NULL	6	40	Natural	1 Single	3980
+3376908	11	5	30	3	9.979	22	M	8	NULL	11	38	cesarean	1 Single	2722
+4268991	12	5	25	3	12.701	28	M	9	2 years of high school	14	38	Natural	1 Single	2722
+3493018	4	2	22	5	6.804	15	F	9	NULL	18	39	cesarean	1 Single	3742
+800176	9	6	28	3	19.051	42	M	8	2 years of college	9	40	Natural	1 Single	3175
+2120255	2	4	30	1	10.886	24	M	9	3 years of college	12	39	Natural	1 Single	3856
+2126724	3	5	27	2	9.979	22	F	9	3 years of college	20	41	Natural	1 Single	3487
+2807399	12	5	36	1	16.329	36	F	9	NULL	12	39	Natural	1 Single	3714
+77903	2	2	36	3	18.144	40	M	9	2 years of college	99	38	cesarean	1 Single	3175
+2618163	1	2	17	2	11.793	26	M	9	2 years of high school	5	36	Natural	1 Single	2474
+3048841	8	5	21	1	17.237	38	F	9	2 years of high school	13	39	Natural	1 Single	3515
+4262671	12	6	29	2	9.072	20	M	9	3 years of college	9	41	Natural	1 Single	3345
+509670	7	5	37	4	NA	NA	F	NA	NULL	14	99	Natural	1 Single	3742
+836918	10	4	36	2	11.340	25	M	9	4 years of high school	10	37	cesarean	1 Single	3544
+804085	5	5	36	2	13.608	30	F	9	2 years of high school	12	38	Natural	1 Single	2268
+122711	2	3	29	1	11.340	25	F	9	8 Years of elementary school	4	39	Natural	1 Single	3147
+1106569	10	4	22	2	21.772	48	F	9	NULL	11	36	Natural	1 Single	2438
+3557068	6	2	29	2	10.433	23	F	9	NULL	9	39	Natural	1 Single	3710
+3197002	11	1	20	1	14.061	31	M	9	NULL	12	39	cesarean	1 Single	3316
+814506	5	3	35	1	14.969	33	M	9	4 years of high school	17	40	Natural	1 Single	3289
+925397	1	3	38	2	7.257	16	F	9	NULL	14	38	cesarean	1 Single	2778
+2988776	6	6	36	5	11.340	25	M	9	3 years of college	15	38	cesarean	1 Single	3232
+3869672	3	4	28	1	11.340	25	M	9	3 years of high school	11	40	cesarean	1 Single	3035
+2210245	7	2	30	3	15.876	35	F	9	2 years of high school	11	39	Natural	1 Single	3742
+2642471	11	3	17	1	13.608	30	M	9	1 year of high school	10	37	Natural	1 Single	2480
+48708	8	3	27	1	8.165	18	M	9	2 years of college	9	37	Natural	1 Single	2722
+2348657	3	3	19	1	20.865	46	M	9	2 years of high school	13	40	cesarean	1 Single	2892
+358018	4	7	39	1	NA	NA	M	NA	NULL	12	99	Natural	1 Single	3884
+3459308	3	6	24	3	11.340	25	F	5	NULL	4	36	cesarean	2 Twin	2892
+3340851	6	7	36	2	12.701	28	F	9	NULL	11	38	cesarean	1 Single	3686
+946689	2	6	30	3	10.886	24	M	9	NULL	10	37	cesarean	1 Single	2835
+2145155	6	1	28	5	14.969	33	M	9	3 years of high school	4	39	Natural	1 Single	4820
+2972598	2	2	25	2	15.876	35	M	9	2 years of high school	13	36	Natural	1 Single	3289
+801322	9	5	40	2	17.237	38	F	9	3 Years of elementary school	11	38	Natural	1 Single	4196
+4263546	12	3	39	1	13.608	30	F	9	3 years of college	10	39	Natural	1 Single	3250
+3296598	10	3	28	1	14.061	31	F	8	NULL	13	41	Natural	1 Single	3317
+4010490	7	7	23	2	0.000	0	F	9	NULL	12	40	cesarean	1 Single	3629
+1769614	3	6	21	3	11.340	25	M	9	4 years of high school	13	38	Natural	1 Single	3374
+1488075	12	6	25	3	10.886	24	M	9	6 Years of elementary school	7	39	cesarean	1 Single	3634
+2070222	8	5	26	4	5.443	12	F	8	3 years of college	7	35	Natural	2 Twin	2100
+3235092	2	2	19	1	9.072	20	F	9	NULL	13	40	Natural	1 Single	2734
+4210765	7	2	18	1	13.608	30	F	9	7 Years of elementary school	14	38	Natural	1 Single	3032
+142178	4	4	22	2	13.154	29	M	9	4 Years of elementary school	10	39	Natural	1 Single	3225
+976349	3	3	25	4	7.257	16	M	9	NULL	15	37	Natural	1 Single	2466
+4040974	11	5	27	5	21.319	47	M	9	NULL	10	41	Natural	1 Single	4060
+916199	9	2	31	5	21.319	47	M	3	NULL	12	41	cesarean	1 Single	3742
+1087344	9	3	27	3	19.504	43	M	9	NULL	12	38	Natural	1 Single	3175
+1368314	1	2	20	1	12.247	27	M	5	NULL	15	37	Natural	1 Single	3402
+2233950	3	6	28	5	23.587	52	F	9	2 years of high school	10	40	Natural	1 Single	3119
+1193198	4	3	27	1	13.608	30	M	8	2 years of college	10	40	cesarean	1 Single	3572
+372813	3	1	28	3	NA	NA	M	NA	NULL	14	99	Natural	1 Single	3090
+1671439	5	5	29	3	NA	NA	F	9	NULL	5	39	Natural	1 Single	4111
+2238707	10	3	27	1	27.216	60	M	8	2 years of college	10	38	cesarean	2 Twin	3221
+2870877	5	4	28	5	15.422	34	F	9	NULL	15	36	cesarean	1 Single	2620
+170230	8	3	29	3	13.154	29	M	9	4 years of high school	11	38	cesarean	1 Single	3459
+484247	7	1	24	3	NA	NA	M	NA	NULL	10	99	Natural	1 Single	2750
+876646	8	6	28	2	10.886	24	M	9	2 years of college	8	39	cesarean	1 Single	3912
+3475227	3	5	22	1	7.711	17	F	9	NULL	10	36	Natural	1 Single	2778
+4241738	10	2	32	1	13.608	30	M	9	2 years of high school	2	39	cesarean	1 Single	3830
+2654244	3	6	18	1	18.144	40	M	9	3 years of high school	0	39	cesarean	1 Single	3544
+1301500	12	5	16	1	10.886	24	M	8	6 Years of elementary school	16	38	Natural	1 Single	3300
+300302	2	4	19	1	NA	NA	F	NA	NULL	10	99	Natural	1 Single	3170
+2255919	7	2	19	1	18.144	40	F	9	2 years of high school	7	38	cesarean	1 Single	2070
+1380370	7	5	18	1	12.247	27	M	9	NULL	12	39	Natural	1 Single	3608
+1370229	2	3	29	3	20.412	45	M	9	NULL	11	39	Natural	1 Single	3800
+4107182	11	4	36	1	12.247	27	M	9	3 years of college	12	40	cesarean	1 Single	3600
+491508	6	4	28	1	NA	NA	M	NA	NULL	8	99	Natural	1 Single	3660
+4080950	6	7	29	2	18.597	41	M	9	2 years of college	14	41	Natural	1 Single	4167
+622119	9	6	20	1	NA	NA	F	NA	NULL	12	99	Natural	1 Single	3245
+2837790	3	4	26	2	4.536	10	F	9	NULL	10	39	Natural	1 Single	4125
+2746468	6	6	31	2	17.237	38	M	9	NULL	9	40	Natural	1 Single	3916
+2435766	11	3	27	3	18.597	41	M	9	2 years of high school	14	40	Natural	1 Single	4309
+3508150	4	3	24	1	22.680	50	F	9	NULL	14	38	cesarean	1 Single	4394
+699103	11	3	28	1	NA	NA	M	NA	NULL	6	99	Natural	1 Single	3232
+2277911	3	3	24	1	9.072	20	F	9	3 years of college	10	37	Natural	1 Single	2863
+3682301	9	1	23	2	10.886	24	F	9	NULL	41	41	Natural	1 Single	2992
+1132103	11	4	25	1	18.144	40	F	5	NULL	0	26	cesarean	1 Single	936
+1858685	7	3	37	1	9.072	20	F	9	3 years of college	10	39	cesarean	1 Single	3317
+352200	3	6	38	4	NA	NA	M	NA	NULL	15	99	Natural	1 Single	3317
+2839316	2	4	29	1	16.783	37	M	9	NULL	12	39	cesarean	1 Single	2840
+2885921	6	1	33	2	0.907	2	F	9	NULL	12	40	Natural	1 Single	4050
+1927863	5	1	28	2	10.886	24	F	9	2 years of college	11	38	cesarean	1 Single	3487
+3304369	1	3	27	NA	4.536	10	M	9	NULL	99	37	cesarean	1 Single	3487
+1764183	3	5	27	1	19.051	42	F	9	4 years of high school	9	41	Natural	1 Single	3515
+766498	12	3	25	2	NA	NA	F	NA	NULL	12	99	cesarean	2 Twin	1722
+3477413	3	2	32	2	13.608	30	M	9	NULL	7	38	cesarean	1 Single	3119
+4041630	11	3	38	3	10.433	23	M	9	NULL	24	38	cesarean	1 Single	3926
+1882247	10	3	27	5	6.804	15	M	5	2 years of high school	5	21	Natural	1 Single	280
+2995458	8	6	25	1	7.257	16	F	6	3 years of high school	9	27	cesarean	1 Single	652
+1790201	8	6	30	2	14.515	32	F	9	2 years of college	12	38	Natural	1 Single	3856
+3398236	1	5	37	1	2.722	6	F	9	NULL	3	41	cesarean	1 Single	3912
+510504	7	1	25	4	NA	NA	F	NA	NULL	12	99	Natural	1 Single	3217
+2480129	8	2	33	5	13.608	30	M	9	NULL	13	41	Natural	1 Single	3969
+1548248	8	5	32	1	31.298	69	F	6	2 years of college	13	36	cesarean	2 Twin	2605
+1753286	12	6	15	1	0.000	0	M	9	NULL	5	29	Natural	1 Single	1304
+1893661	12	5	32	3	20.412	45	F	8	7 Years of elementary school	15	33	cesarean	2 Twin	1946
+191938	10	6	32	2	11.340	25	M	9	3 years of college	15	39	cesarean	1 Single	3880
+2449663	12	3	20	1	10.433	23	M	9	2 years of high school	15	39	Natural	1 Single	3402
+3275803	10	5	38	2	13.154	29	M	9	NULL	11	35	cesarean	1 Single	3003
+906816	12	6	21	1	NA	NA	F	9	NULL	99	39	Natural	1 Single	2933
+2386320	6	4	14	1	9.525	21	F	9	7 Years of elementary school	10	39	Natural	1 Single	2608
+3019938	1	3	33	1	13.608	30	M	9	3 years of college	8	38	Natural	1 Single	3685
+2704111	2	2	20	1	6.804	15	M	10	NULL	11	40	Natural	1 Single	3107
+1862945	7	7	31	5	6.804	15	M	9	2 years of high school	10	38	cesarean	1 Single	3657
+1129554	11	4	33	2	15.876	35	M	9	NULL	19	35	Natural	1 Single	2807
+4194742	5	6	22	3	5.443	12	M	9	1 year of high school	12	39	Natural	1 Single	3455
+3303559	1	5	21	3	13.154	29	F	8	NULL	12	34	cesarean	2 Twin	2571
+3988349	4	7	43	7	14.515	32	F	9	NULL	8	36	Natural	1 Single	2350
+2222490	10	3	29	2	18.144	40	F	9	1 year of college	13	39	cesarean	1 Single	3620
+3941119	11	2	41	6	6.804	15	M	9	7 Years of elementary school	8	38	cesarean	1 Single	2637
+4162031	2	1	19	2	20.865	46	M	9	4 years of high school	13	39	Natural	1 Single	3385
+854495	2	3	27	2	15.422	34	F	9	1 year of high school	12	40	Natural	1 Single	3600
+2092287	11	4	28	2	27.216	60	F	9	2 years of college	12	40	Natural	1 Single	3170
+344693	3	3	24	2	NA	NA	M	NA	NULL	10	99	cesarean	1 Single	3742
+1822261	1	3	23	2	15.876	35	F	10	2 years of high school	14	40	Natural	1 Single	3714
+599372	9	6	21	1	NA	NA	M	NA	NULL	10	99	Natural	1 Single	3035
+2702577	2	7	26	1	16.783	37	M	9	NULL	10	40	Natural	1 Single	3430
+2775051	8	1	30	1	12.701	28	F	8	NULL	13	39	Natural	1 Single	2722
+334607	3	5	26	4	NA	NA	M	NA	NULL	0	99	cesarean	1 Single	4990
+3852803	1	1	38	4	19.051	42	F	9	4 years of high school	16	38	Natural	1 Single	3995
+1883263	10	2	30	2	14.515	32	M	9	2 years of college	10	40	Natural	1 Single	3175
+807813	6	3	20	2	12.701	28	F	8	4 Years of elementary school	13	40	Natural	1 Single	4763
+1328264	1	3	38	8	2.722	6	M	9	4 years of high school	13	40	Natural	1 Single	3714
+2883418	5	5	25	1	2.268	5	M	8	NULL	12	40	cesarean	1 Single	3289
+1266226	10	6	17	1	11.340	25	F	9	7 Years of elementary school	9	39	Natural	1 Single	3459
+1237585	7	4	32	1	9.072	20	F	9	2 years of college	11	40	Natural	1 Single	2693
+3852657	1	1	32	4	7.257	16	F	9	3 years of college	13	39	Natural	1 Single	3251
+416386	4	2	29	4	NA	NA	M	NA	NULL	9	99	cesarean	1 Single	2506
+2329557	1	6	30	3	4.536	10	M	9	2 years of high school	16	40	Natural	1 Single	3459
+1905229	2	4	18	1	25.855	57	M	9	1 year of high school	12	37	Natural	2 Twin	2466
+272235	2	6	25	3	NA	NA	M	NA	NULL	15	99	Natural	1 Single	3997
+1168396	2	4	23	3	11.340	25	M	8	2 years of high school	12	40	Natural	1 Single	3614
+3750721	11	1	21	1	14.969	33	M	9	NULL	11	39	Natural	1 Single	3487
+97753	8	7	31	1	9.072	20	F	8	2 years of college	12	36	Natural	1 Single	3147
+3256118	7	5	25	4	9.072	20	M	9	NULL	12	38	Natural	1 Single	3685
+2733087	5	4	20	1	18.144	40	F	9	NULL	12	38	Natural	1 Single	2778
+4218252	7	1	15	1	24.948	55	M	9	7 Years of elementary school	8	39	cesarean	1 Single	3680
+19302	2	3	26	1	17.690	39	F	9	1 year of college	13	37	Natural	1 Single	2353
+3463743	3	3	36	1	14.515	32	F	9	NULL	30	37	Natural	2 Twin	2608
+2525252	3	3	30	5	17.237	38	M	9	4 Years of elementary school	5	40	cesarean	1 Single	2820
+2651299	2	1	30	2	18.144	40	M	9	4 years of high school	8	40	Natural	1 Single	3856
+3777769	12	3	20	2	14.515	32	M	8	NULL	10	38	Natural	1 Single	3204
+2917286	9	1	25	1	22.680	50	F	9	NULL	12	38	Natural	1 Single	3803
+1485205	11	4	31	5	15.876	35	M	9	2 Years of elementary school	20	38	Natural	1 Single	4281
+2385194	6	6	29	1	9.072	20	F	9	2 years of college	16	39	Natural	1 Single	2948
+1698459	12	5	32	4	9.072	20	F	9	NULL	19	38	cesarean	1 Single	3545
+3323334	4	6	22	3	15.876	35	M	8	NULL	20	41	cesarean	1 Single	4621
+2226842	11	2	28	2	NA	NA	F	9	2 years of college	99	40	Natural	1 Single	3830
+63601	11	2	26	3	6.804	15	M	9	4 years of high school	14	38	Natural	1 Single	3884
+3423466	2	6	24	4	28.576	63	M	9	NULL	14	36	cesarean	2 Twin	3147
+1662539	2	3	23	1	24.494	54	F	8	NULL	7	34	Natural	1 Single	2024
+3834244	9	2	23	3	7.711	17	M	9	2 years of high school	12	39	Natural	1 Single	3495
+3643409	8	7	20	1	13.608	30	F	10	NULL	11	39	Natural	1 Single	3459
+2903782	8	4	31	2	15.422	34	F	9	NULL	9	41	Natural	1 Single	3236
+1236398	7	3	33	3	NA	NA	F	8	NULL	99	41	Natural	1 Single	3515
+1806032	6	4	18	2	17.237	38	F	9	2 years of high school	9	39	Natural	1 Single	3402
+3764456	12	3	35	3	14.515	32	F	9	NULL	8	40	cesarean	1 Single	3572
+3178777	9	6	31	1	11.340	25	F	9	NULL	99	40	Natural	1 Single	3412
+2910646	9	2	24	2	NA	NA	F	9	NULL	14	38	Natural	1 Single	3390
+2845109	2	4	36	3	14.061	31	F	9	NULL	14	38	Natural	1 Single	4500
+1535977	5	6	32	3	13.608	30	M	9	4 years of high school	20	39	Natural	1 Single	3175
+745062	12	4	30	2	NA	NA	M	NA	NULL	15	99	Natural	1 Single	3105
+1152321	12	6	15	1	20.412	45	M	9	NULL	12	39	cesarean	1 Single	2892
+4506	6	6	27	3	10.886	24	F	8	2 years of high school	10	40	Natural	1 Single	3613
+3441029	2	3	17	1	16.329	36	F	9	NULL	9	39	Natural	1 Single	3525
+3010223	11	4	30	2	11.340	25	F	9	3 years of college	13	39	cesarean	1 Single	2580
+659955	10	2	31	2	NA	NA	F	NA	NULL	15	99	cesarean	1 Single	3683
+3993704	5	5	24	3	0.000	0	F	9	NULL	9	39	Natural	1 Single	3771
+3497134	4	2	30	4	24.948	55	F	9	NULL	10	39	cesarean	1 Single	3544
+4261902	11	5	31	1	11.340	25	F	9	2 years of college	12	37	Natural	1 Single	3280
+679712	11	6	30	2	NA	NA	F	NA	NULL	13	99	Natural	1 Single	3260
+2133381	4	2	29	1	15.876	35	F	9	2 years of college	15	40	Natural	1 Single	3880
+3338108	6	5	28	1	17.237	38	F	9	NULL	15	38	Natural	1 Single	3799
+2554243	6	3	27	1	18.144	40	M	9	2 years of college	11	40	Natural	1 Single	3285
+2107965	12	7	27	1	16.329	36	F	9	1 year of college	14	40	Natural	1 Single	3544
+753083	12	1	25	1	NA	NA	F	NA	NULL	12	99	Natural	1 Single	3629
+1487198	12	5	35	2	8.618	19	F	9	1 year of college	16	39	Natural	1 Single	3345
+4049297	1	4	33	1	2.268	5	F	9	3 years of high school	10	42	Natural	1 Single	3191
+1183081	3	2	34	3	11.340	25	F	9	3 years of high school	10	37	Natural	1 Single	3033
+2282654	5	7	23	2	17.237	38	F	9	8 Years of elementary school	10	39	Natural	1 Single	3260
+70384	12	6	25	1	14.061	31	F	9	2 years of college	10	40	cesarean	1 Single	2806
+1106450	10	5	29	1	15.876	35	M	9	NULL	12	38	cesarean	1 Single	4054
+156018	6	3	38	3	14.515	32	F	9	4 years of high school	12	39	Natural	1 Single	3774
+409614	5	4	39	7	NA	NA	M	NA	NULL	2	99	cesarean	2 Twin	2523
+3896462	6	4	19	2	18.144	40	M	9	2 years of high school	12	39	cesarean	1 Single	3260
+1505897	9	1	23	2	14.969	33	M	9	3 years of high school	12	39	Natural	1 Single	3969
+2132704	4	2	36	3	NA	NA	M	9	3 years of college	7	27	cesarean	1 Single	1219
+1146656	12	5	39	2	15.876	35	F	9	NULL	15	37	cesarean	1 Single	3175
+1327076	1	2	33	2	13.608	30	M	9	2 years of college	12	38	cesarean	1 Single	3345
+3904368	7	6	28	1	15.876	35	F	9	3 years of college	16	40	cesarean	1 Single	3580
+3016254	12	5	20	2	19.504	43	M	9	2 years of high school	12	40	cesarean	1 Single	3912
+989715	4	6	26	6	9.525	21	M	9	NULL	13	36	Natural	1 Single	2920
+504523	7	3	30	4	NA	NA	M	NA	NULL	1	99	Natural	1 Single	3833
+210243	12	7	19	1	9.979	22	M	8	4 years of high school	12	39	Natural	1 Single	3629
+2649207	1	3	31	3	8.618	19	F	9	8 Years of elementary school	12	38	cesarean	1 Single	2325
+2577753	9	6	28	1	22.680	50	F	9	3 years of college	11	38	cesarean	1 Single	3460
+3136017	6	4	35	2	9.979	22	F	8	NULL	10	38	cesarean	1 Single	3662
+1012130	6	5	20	1	20.865	46	M	9	NULL	11	39	Natural	1 Single	3005
+1818797	12	6	25	1	20.412	45	M	10	1 year of college	12	39	Natural	1 Single	2665
+2164794	9	3	30	4	5.443	12	M	8	2 years of college	8	40	Natural	1 Single	3487
+2705270	2	6	31	NA	NA	NA	M	9	NULL	10	40	Natural	1 Single	2948
+4152525	1	6	40	3	NA	NA	M	9	6 Years of elementary school	15	38	cesarean	1 Single	3435
+543747	8	2	34	8	NA	NA	M	NA	NULL	9	99	cesarean	1 Single	4177
+1847269	5	6	37	4	14.515	32	M	9	2 years of college	12	38	Natural	1 Single	3742
+225947	1	6	29	2	NA	NA	M	NA	NULL	12	99	Natural	1 Single	3075
+610036	9	5	25	3	NA	NA	M	NA	NULL	13	99	cesarean	1 Single	2045
+3935611	10	3	17	1	13.608	30	F	9	1 year of high school	15	38	cesarean	1 Single	3064
+1981545	9	1	31	1	11.340	25	F	9	3 years of college	13	40	Natural	1 Single	3360
+3692071	10	1	25	1	15.422	34	F	9	NULL	13	39	Natural	1 Single	3119
+3734784	11	3	18	2	16.783	37	F	9	NULL	9	38	Natural	1 Single	2807
+3731047	11	3	29	2	10.433	23	M	8	NULL	8	37	cesarean	1 Single	3912
+4016670	8	3	38	3	NA	NA	M	9	NULL	99	37	Natural	1 Single	3260
+391642	5	1	26	2	NA	NA	M	NA	NULL	13	99	cesarean	1 Single	1869
+4234531	9	7	23	3	16.329	36	F	9	3 years of high school	10	39	Natural	1 Single	3130
+2754245	7	7	25	1	15.876	35	M	9	NULL	14	39	Natural	1 Single	3861
+4135680	10	2	33	1	8.165	18	M	9	4 years of high school	10	38	cesarean	1 Single	3289
+3928174	10	5	33	3	6.804	15	M	9	2 years of high school	12	39	cesarean	1 Single	4235
+2746549	6	3	18	2	43.091	95	M	9	NULL	14	41	cesarean	1 Single	4126
+1013782	6	6	24	1	24.040	53	F	9	NULL	12	39	Natural	1 Single	2580
+2152231	7	1	33	1	13.608	30	F	9	3 years of college	12	40	Natural	1 Single	3600
+198563	10	3	40	4	13.608	30	M	9	7 Years of elementary school	1	39	cesarean	1 Single	3289
+872541	7	7	18	2	17.690	39	F	9	6 Years of elementary school	7	35	Natural	1 Single	2070
+3405126	1	3	21	1	13.608	30	F	9	NULL	10	40	Natural	1 Single	3815
+1465159	9	6	27	3	13.608	30	F	9	2 years of high school	3	37	Natural	1 Single	2070
+759062	12	5	44	5	NA	NA	F	NA	NULL	13	99	Natural	1 Single	3840
+3196929	10	2	20	1	10.886	24	M	8	NULL	9	38	Natural	1 Single	2965
+159067	6	7	31	2	8.618	19	F	8	7 Years of elementary school	10	36	Natural	1 Single	3760
+3258886	7	6	18	2	15.876	35	M	9	NULL	5	39	Natural	1 Single	3700
+3210552	12	2	23	3	NA	NA	F	9	NULL	5	38	Natural	1 Single	3842
+446908	6	1	24	1	NA	NA	M	NA	NULL	9	99	cesarean	1 Single	2807
+1449485	7	1	26	2	14.061	31	M	9	4 years of high school	12	39	Natural	1 Single	3260
+1374503	5	7	20	2	31.751	70	M	9	NULL	12	41	cesarean	1 Single	4734
+3903948	7	2	23	3	13.608	30	F	8	2 years of high school	10	38	cesarean	1 Single	3033
+1980418	8	2	32	7	6.804	15	M	9	4 years of high school	12	38	cesarean	1 Single	4649
+3369211	10	4	31	2	6.350	14	F	9	NULL	8	40	Natural	1 Single	2863
+3723117	10	3	30	5	26.762	59	M	9	NULL	5	31	cesarean	2 Twin	2126
+3171105	9	3	40	5	12.701	28	F	9	NULL	9	38	cesarean	1 Single	2829
+2270026	1	2	15	1	16.783	37	F	9	8 Years of elementary school	12	40	Natural	1 Single	3515
+2233156	3	5	41	3	24.948	55	M	6	3 years of high school	2	28	cesarean	1 Single	735
+2050780	5	5	24	1	14.061	31	F	10	4 years of high school	12	41	Natural	1 Single	3402
+1041791	7	3	27	1	9.072	20	F	9	NULL	10	39	cesarean	1 Single	3430
+1545415	7	1	42	1	4.536	10	F	9	3 years of college	10	31	Natural	1 Single	1525
+3865920	3	4	25	3	3.175	7	F	9	1 year of high school	11	37	Natural	1 Single	2795
+1410026	3	5	35	4	32.659	72	M	9	1 year of high school	11	39	cesarean	1 Single	4366
+1350138	8	2	23	2	24.948	55	F	9	4 years of high school	13	40	Natural	1 Single	3742
+2552592	6	3	28	1	18.144	40	F	9	2 years of high school	19	40	cesarean	1 Single	3413
+3728559	10	3	35	5	9.072	20	M	9	NULL	0	38	Natural	1 Single	3147
+614723	8	4	28	3	NA	NA	M	NA	NULL	12	99	cesarean	1 Single	3631
+3549426	5	2	32	1	18.144	40	M	8	NULL	14	38	cesarean	1 Single	3119
+2909790	8	1	39	2	11.340	25	F	9	NULL	5	42	Natural	1 Single	3487
+3109942	4	4	20	1	NA	NA	M	9	NULL	9	40	cesarean	1 Single	3572
+2521801	3	4	31	4	19.051	42	F	9	3 years of college	7	39	Natural	1 Single	3185
+2088954	10	3	38	4	18.144	40	M	9	4 years of high school	10	39	cesarean	1 Single	4564
+2837707	2	5	32	2	19.504	43	M	9	NULL	12	39	Natural	1 Single	3412
+1935655	7	3	35	4	16.329	36	M	9	2 years of college	11	39	Natural	1 Single	3137
+1905990	2	4	19	2	8.165	18	M	10	8 Years of elementary school	10	38	Natural	1 Single	3402
+2519284	3	5	42	7	18.144	40	M	9	3 years of high school	9	39	Natural	1 Single	3941
+3295607	8	4	25	5	13.608	30	F	9	NULL	7	38	Natural	1 Single	3400
+3569239	5	4	20	1	12.701	28	M	8	NULL	11	39	Natural	1 Single	3120
+846035	10	1	23	2	17.690	39	F	9	2 years of high school	14	39	Natural	1 Single	3090
+1456369	8	6	27	2	14.061	31	M	9	4 years of high school	15	39	Natural	1 Single	3402
+3467689	3	7	28	1	11.793	26	F	9	NULL	15	39	Natural	1 Single	3033
+4216930	7	7	28	4	12.247	27	M	9	2 years of high school	9	38	Natural	1 Single	2523
+923704	1	2	24	1	7.711	17	M	9	NULL	12	37	Natural	1 Single	2722
+1339981	5	5	25	2	9.072	20	M	9	3 years of high school	12	37	Natural	1 Single	2835
+3190858	10	1	38	3	15.876	35	F	9	NULL	7	37	cesarean	1 Single	3288
+3710649	10	6	28	3	14.061	31	M	9	NULL	0	38	Natural	1 Single	3771
+1521850	1	4	21	1	NA	NA	F	7	1 year of high school	99	22	Natural	1 Single	510
+3697614	10	3	25	3	15.422	34	M	9	NULL	9	41	Natural	1 Single	3260
+787270	9	6	18	3	15.876	35	M	10	2 years of high school	5	37	cesarean	1 Single	3204
+3581317	7	2	26	3	19.958	44	F	9	NULL	12	40	Natural	1 Single	3884
+3439042	2	2	35	5	22.680	50	F	9	NULL	13	41	Natural	1 Single	3916
+3982940	4	4	35	3	18.144	40	F	10	NULL	11	40	Natural	1 Single	4054
+784659	7	2	32	2	13.608	30	M	9	3 years of college	10	39	Natural	1 Single	3289
+854444	2	5	31	3	10.433	23	F	9	3 years of college	11	37	cesarean	1 Single	2835
+3743007	11	1	34	2	9.979	22	M	9	NULL	12	39	Natural	1 Single	3560
+2186681	1	1	19	1	17.237	38	M	10	2 years of high school	9	38	cesarean	1 Single	3090
+2304382	10	5	19	2	13.608	30	F	9	1 year of high school	12	38	cesarean	1 Single	2778
+812518	12	2	32	1	10.886	24	M	9	2 years of college	12	39	Natural	1 Single	3629
+2069411	8	7	30	1	12.247	27	F	9	2 years of high school	25	38	Natural	1 Single	3968
+2359636	4	5	28	1	14.061	31	M	9	2 years of high school	9	41	Natural	1 Single	3657
+2663553	6	2	25	5	22.680	50	F	9	1 year of high school	11	39	Natural	1 Single	3430
+3142968	7	3	27	1	18.597	41	M	8	NULL	11	38	Natural	1 Single	3435
+897890	5	6	30	6	15.876	35	M	9	2 years of college	12	39	Natural	1 Single	3560
+4118153	12	4	29	3	38.555	85	M	9	4 years of high school	14	38	Natural	1 Single	3459
+2702355	2	5	18	1	10.886	24	M	9	NULL	8	37	Natural	1 Single	3335
+3296907	10	5	22	1	9.072	20	F	9	NULL	10	39	Natural	1 Single	3260
+288277	2	4	34	3	NA	NA	M	NA	NULL	25	99	Natural	2 Twin	3062
+1302235	12	1	25	4	12.247	27	M	9	4 years of high school	28	36	Natural	1 Single	2835
+2696836	2	5	30	4	19.958	44	M	9	NULL	12	39	Natural	1 Single	4100
+1726048	6	4	26	5	14.969	33	M	9	NULL	10	38	Natural	1 Single	3310
+3080353	2	6	26	5	29.484	65	M	9	NULL	12	38	Natural	1 Single	3160
+2263231	10	4	19	1	27.216	60	F	9	8 Years of elementary school	15	40	Natural	1 Single	3345
+4267297	12	4	28	3	16.783	37	M	9	2 years of high school	9	39	Natural	1 Single	3232
+3386510	12	2	36	3	14.969	33	M	9	NULL	11	38	Natural	1 Single	2790
+3760810	12	2	27	4	18.144	40	M	9	NULL	12	39	cesarean	1 Single	3350
+968425	3	5	19	1	13.154	29	M	9	NULL	11	41	cesarean	1 Single	3686
+1418546	3	1	26	4	9.072	20	F	7	3 years of high school	9	39	Natural	1 Single	4111
+2913367	9	3	30	1	NA	NA	F	9	NULL	12	41	cesarean	1 Single	3965
+201748	11	3	19	2	6.804	15	M	9	7 Years of elementary school	15	39	Natural	1 Single	3969
+2068360	7	7	32	3	9.072	20	M	10	2 years of college	11	40	Natural	1 Single	3771
+2544195	4	5	30	2	13.608	30	F	8	3 years of high school	13	39	Natural	1 Single	4067
+2520676	3	4	31	6	10.433	23	M	9	2 years of high school	11	40	Natural	1 Single	3459
+2536648	4	5	34	2	18.144	40	M	9	3 years of college	10	37	cesarean	2 Twin	2825
+1403864	2	7	27	3	NA	NA	M	9	2 years of high school	10	39	Natural	1 Single	2608
+1564403	12	6	25	6	9.072	20	M	9	2 years of high school	10	36	Natural	1 Single	2807
+313164	3	2	31	4	NA	NA	M	NA	NULL	12	99	cesarean	1 Single	3234
+3221341	7	5	26	NA	17.237	38	F	8	3 years of college	10	35	cesarean	1 Single	2180
+3882144	4	5	24	5	11.340	25	M	9	2 years of high school	0	41	Natural	1 Single	3068
+278801	2	2	25	3	NA	NA	F	NA	NULL	12	99	Natural	1 Single	3230
+117430	1	4	26	1	12.247	27	F	9	2 years of college	13	39	Natural	1 Single	3147
+96171	8	2	18	1	9.072	20	M	9	2 years of high school	9	39	Natural	1 Single	3430
+694941	11	4	31	2	NA	NA	M	NA	NULL	15	99	Natural	1 Single	3540
+1760119	2	4	20	1	13.608	30	M	9	2 years of high school	20	38	Natural	1 Single	2948
+1221805	6	5	29	4	7.257	16	M	9	4 years of high school	20	38	cesarean	1 Single	2693
+1810171	11	1	27	1	14.061	31	M	9	2 years of college	16	39	cesarean	1 Single	3628
+223899	1	1	25	2	NA	NA	F	NA	NULL	16	99	cesarean	1 Single	2551
+228037	1	7	44	4	NA	NA	M	NA	NULL	11	99	Natural	1 Single	3430
+775345	11	5	18	1	NA	NA	F	NA	NULL	11	99	Natural	1 Single	3572
+1281819	11	6	37	2	6.804	15	M	8	3 years of college	15	38	cesarean	1 Single	3268
+1812303	12	5	31	1	11.340	25	M	9	2 years of college	14	37	Natural	1 Single	3231
+2605448	12	6	36	5	11.340	25	F	9	2 years of high school	18	39	Natural	1 Single	3405
+137481	3	6	19	1	18.144	40	F	9	2 years of high school	13	40	Natural	1 Single	3374
+1475501	10	6	24	2	NA	NA	M	9	2 years of high school	14	40	cesarean	1 Single	3465
+3292526	6	5	19	1	19.958	44	F	8	NULL	13	41	Natural	1 Single	4876
+2965562	1	4	32	3	18.144	40	F	9	3 years of college	12	40	cesarean	1 Single	3062
+3590533	6	6	20	3	13.154	29	M	9	NULL	15	35	Natural	1 Single	2530
+3575830	6	1	34	1	10.886	24	M	8	NULL	11	39	Natural	1 Single	3402
+487308	6	5	26	4	NA	NA	F	NA	NULL	99	99	Natural	1 Single	3657
+1013727	5	4	36	3	9.072	20	M	9	NULL	8	33	Natural	1 Single	2438
+2337592	2	5	24	1	22.680	50	F	10	6 Years of elementary school	9	38	cesarean	1 Single	3260
+4125257	4	3	19	1	5.897	13	M	9	1 year of high school	10	40	Natural	1 Single	4054
+3059873	11	2	19	1	10.433	23	F	9	1 year of high school	14	37	Natural	1 Single	2045
+2016043	3	5	27	2	7.711	17	M	9	2 years of college	10	38	Unknown	1 Single	3075
+3242281	4	6	29	2	18.597	41	M	9	NULL	12	38	Natural	1 Single	2807
+1458992	8	4	25	2	15.876	35	F	9	3 years of high school	12	40	Natural	1 Single	3884
+2850651	4	5	32	2	24.040	53	F	9	NULL	11	39	Natural	2 Twin	2500
+4123220	2	6	28	1	20.412	45	F	9	1 year of college	12	39	cesarean	1 Single	3941
+2158487	8	3	29	2	5.897	13	F	9	2 years of college	11	39	Natural	1 Single	4111
+2764440	8	7	27	3	16.783	37	M	9	NULL	9	40	Natural	1 Single	3915
+847496	8	3	24	2	15.422	34	F	9	2 years of high school	12	39	Natural	1 Single	3005
+3309969	2	5	36	1	13.608	30	F	9	NULL	9	38	Natural	1 Single	2683
+2426546	10	4	16	1	1.814	4	M	7	8 Years of elementary school	15	37	Natural	1 Single	3090
+3966880	2	5	20	3	14.969	33	M	10	NULL	16	39	Natural	1 Single	3069
+254654	1	3	32	2	NA	NA	M	NA	NULL	13	99	Natural	1 Single	3715
+3269486	8	6	28	5	0.000	0	M	9	NULL	20	40	cesarean	1 Single	3351
+3513216	4	5	31	2	23.133	51	F	9	NULL	12	39	cesarean	1 Single	3430
+3953377	12	6	29	2	9.525	21	M	9	2 years of college	11	38	cesarean	1 Single	3515
+2212491	8	5	20	1	20.412	45	F	9	1 year of high school	99	37	Natural	1 Single	3090
+2893415	7	1	21	1	10.433	23	F	7	NULL	8	37	Natural	1 Single	2637
+3430646	2	4	37	4	11.793	26	F	9	NULL	12	37	Natural	1 Single	2721
+1111073	10	6	31	3	NA	NA	F	9	NULL	99	38	Natural	1 Single	3090
+3997121	6	6	35	1	35.834	79	F	9	NULL	5	39	cesarean	1 Single	3820
+2592513	10	3	37	3	13.608	30	M	9	2 years of college	9	38	Natural	1 Single	3645
+1810546	10	4	37	1	19.504	43	M	9	3 years of college	30	41	Natural	1 Single	3374
+1299494	12	2	31	7	11.340	25	F	9	3 years of high school	10	36	Natural	1 Single	2523
+2206260	6	2	22	3	0.907	2	F	9	7 Years of elementary school	11	39	Natural	1 Single	2960
+4016170	8	4	30	1	27.216	60	F	9	NULL	17	39	Natural	1 Single	2658
+2944412	11	4	33	NA	NA	NA	M	1	NULL	99	22	Natural	3 Triplet	501
+1524277	2	4	37	6	1.361	3	F	9	3 years of college	11	39	Natural	1 Single	3890
+3964085	1	6	32	5	6.804	15	M	9	NULL	16	39	Natural	1 Single	4270
+3322607	4	4	29	4	13.608	30	M	9	NULL	5	40	Natural	1 Single	3232
+1763503	3	3	27	2	21.319	47	M	9	2 years of college	14	40	Natural	1 Single	3969
+1468733	10	2	26	3	13.608	30	F	9	4 years of high school	10	41	Natural	1 Single	3714
+2866361	5	5	23	2	6.804	15	F	10	NULL	12	39	Natural	1 Single	3430
+1302445	11	4	21	3	1.814	4	F	9	3 years of high school	5	38	Natural	1 Single	2807
+2998725	8	6	19	1	9.979	22	M	9	2 years of high school	10	37	cesarean	1 Single	3856
+748107	12	5	39	1	NA	NA	M	NA	NULL	15	99	Natural	1 Single	2985
+1984056	11	3	30	2	15.876	35	M	9	1 year of high school	9	37	cesarean	1 Single	4060
+2737629	6	5	25	1	11.340	25	F	9	NULL	10	39	Natural	1 Single	3597
+1939622	7	5	29	1	15.876	35	M	8	2 years of college	10	38	cesarean	1 Single	3430
+1837899	3	4	31	2	21.319	47	M	9	4 years of high school	13	39	Natural	1 Single	3383
+462060	6	1	17	1	NA	NA	F	NA	NULL	15	99	cesarean	1 Single	2975
+659577	10	1	19	1	NA	NA	M	NA	NULL	20	99	Natural	1 Single	3232
+1696570	12	2	19	2	12.701	28	M	9	NULL	12	40	Natural	1 Single	4349
+3932350	10	5	35	1	5.443	12	F	4	3 years of college	13	34	cesarean	1 Single	1758
+2452322	12	4	22	3	10.886	24	M	8	2 years of high school	10	40	Natural	1 Single	3771
+998415	5	7	34	2	9.979	22	M	9	NULL	13	37	Natural	1 Single	2381
+139953	4	5	27	4	11.340	25	F	8	2 years of high school	15	38	Natural	1 Single	3260
+3681825	9	3	29	3	18.144	40	M	8	NULL	10	38	Natural	1 Single	3119
+1043552	7	7	30	1	16.783	37	F	10	NULL	14	39	Natural	1 Single	3062
+50190	8	7	34	3	14.515	32	M	9	4 years of high school	12	39	Natural	1 Single	3487
+1398332	1	6	35	3	9.979	22	M	9	2 years of high school	17	37	cesarean	1 Single	2535
+3006574	10	1	22	1	20.412	45	F	9	4 years of high school	99	39	cesarean	1 Single	3742
+2094667	11	1	20	1	20.412	45	M	9	2 years of high school	10	39	Natural	1 Single	3210
+2823564	2	2	26	4	16.329	36	M	9	NULL	8	37	Natural	1 Single	3577
+3653047	9	2	26	2	23.587	52	M	9	NULL	18	38	Natural	1 Single	3402
+400727	5	3	25	6	NA	NA	M	NA	NULL	12	99	Natural	2 Twin	3912
+4241965	10	3	26	2	17.237	38	M	9	4 years of high school	11	41	cesarean	1 Single	3570
+3824178	7	1	19	1	29.937	66	M	9	2 years of high school	6	40	Natural	1 Single	3265
+1731423	8	4	25	2	10.433	23	F	6	NULL	10	40	Natural	1 Single	3462
+2575969	8	3	29	1	29.030	64	M	9	2 years of college	23	37	cesarean	2 Twin	3140
+496760	7	2	33	2	NA	NA	M	NA	NULL	15	99	Natural	1 Single	3232
+1704477	2	5	20	1	13.154	29	M	9	NULL	20	39	cesarean	1 Single	3368
+3930716	10	3	20	1	10.886	24	F	9	2 years of college	6	38	cesarean	1 Single	3180
+3155161	8	6	16	1	10.886	24	M	9	NULL	16	41	Natural	1 Single	3430
+1032221	7	4	24	4	13.608	30	F	9	NULL	15	38	cesarean	1 Single	3430
+2111330	12	3	31	4	9.072	20	M	9	2 years of high school	10	37	Natural	1 Single	3010
+2226896	11	6	39	1	5.443	12	F	9	3 years of college	13	40	Natural	1 Single	4026
+3401395	1	1	25	1	9.072	20	F	9	NULL	14	39	Natural	1 Single	2915
+1266255	10	2	29	3	0.000	0	M	9	3 years of high school	8	39	Natural	1 Single	2296
+2315507	3	3	31	2	22.680	50	F	7	2 years of college	11	39	cesarean	1 Single	2726
+3340420	6	4	37	3	18.597	41	F	9	NULL	25	38	Natural	2 Twin	2779
+2342168	1	2	21	1	44.452	98	M	9	2 years of high school	18	40	cesarean	1 Single	3912
+2319891	7	7	23	3	8.165	18	F	4	2 years of high school	10	29	cesarean	1 Single	1191
+614792	9	3	30	6	NA	NA	M	NA	NULL	15	99	cesarean	1 Single	2322
+4109109	11	4	19	1	27.216	60	M	9	3 years of high school	8	40	Natural	1 Single	3260
+4117608	12	6	20	1	12.701	28	M	3	2 years of high school	20	33	cesarean	1 Single	2665
+3065208	12	5	18	1	10.433	23	M	9	NULL	15	40	Natural	1 Single	3402
+4086274	7	1	18	1	33.566	74	F	9	2 years of high school	12	39	Natural	1 Single	3827
+3540620	5	1	23	3	13.608	30	F	9	NULL	0	35	Natural	1 Single	3374
+527471	8	4	19	1	NA	NA	F	NA	NULL	15	99	Natural	1 Single	3620
+2745690	6	4	22	2	4.990	11	F	9	NULL	10	39	Natural	1 Single	3572
+95768	8	1	26	1	22.226	49	F	10	2 years of high school	15	40	cesarean	1 Single	3459
+1380554	7	1	22	3	0.000	0	M	10	NULL	8	40	Natural	1 Single	3807
+3865530	3	6	33	4	15.876	35	M	9	2 years of high school	12	40	Natural	1 Single	4026
+4213758	7	6	31	6	22.680	50	F	9	3 years of high school	9	35	Natural	1 Single	2350
+4044115	12	2	24	4	12.247	27	F	9	NULL	4	37	Natural	1 Single	2892
+993988	5	6	26	1	13.608	30	F	9	NULL	20	39	Natural	1 Single	2863
+3227891	1	4	16	1	14.061	31	F	8	NULL	12	39	Natural	1 Single	2750
+70044	12	7	23	1	21.772	48	M	9	1 year of high school	12	37	Natural	1 Single	3516
+699919	10	4	30	1	NA	NA	M	NA	NULL	9	99	Natural	1 Single	3118
+2670019	8	2	21	1	2.722	6	F	2	2 years of high school	4	22	Natural	1 Single	482
+1851308	6	4	37	3	9.979	22	M	9	2 years of college	13	40	Natural	1 Single	3289
+3101592	4	3	24	3	14.515	32	F	8	NULL	11	39	cesarean	1 Single	3686
+3541969	5	3	19	3	15.876	35	M	9	NULL	9	38	Natural	1 Single	3570
+3103659	4	1	24	2	NA	NA	M	9	NULL	11	39	Natural	1 Single	2976
+998980	5	3	24	1	27.216	60	F	9	NULL	10	42	Natural	1 Single	3260
+1844773	5	4	32	3	13.608	30	M	9	2 years of college	12	40	cesarean	1 Single	3175
+1782308	6	3	23	1	0.000	0	F	9	2 years of high school	12	38	Natural	1 Single	3232
+4189545	5	7	29	2	18.597	41	F	9	2 years of college	13	39	Natural	1 Single	4065
+1895828	12	5	33	3	13.608	30	F	9	4 years of high school	16	37	cesarean	1 Single	3118
+1247882	8	7	19	1	11.793	26	M	9	4 years of high school	14	39	Natural	1 Single	3776
+1891450	11	5	26	2	5.443	12	M	9	2 years of high school	8	41	Natural	1 Single	3714
+521437	7	6	36	4	NA	NA	F	NA	NULL	5	99	Natural	1 Single	3062
+1770529	3	1	17	1	13.608	30	M	9	8 Years of elementary school	11	39	Natural	1 Single	3884
+2050250	7	5	33	2	16.783	37	F	9	2 years of college	16	41	cesarean	1 Single	3503
+2971560	2	5	26	3	20.412	45	M	9	2 years of high school	5	40	Natural	1 Single	3827
+3351805	8	2	26	1	14.969	33	M	9	NULL	16	40	Natural	1 Single	3375
+3530030	5	5	16	1	15.422	34	F	9	NULL	6	39	Natural	1 Single	3459
+140700	4	3	27	3	4.990	11	M	9	2 years of high school	10	40	Natural	1 Single	3657
+2001771	2	5	33	2	NA	NA	M	9	2 years of college	12	39	cesarean	1 Single	3317
+1172334	2	6	23	3	14.515	32	F	9	1 year of college	6	39	cesarean	1 Single	2580
+3365690	9	7	23	3	14.515	32	M	8	NULL	15	41	Natural	1 Single	3515
+1271248	10	6	26	2	19.958	44	M	9	2 years of high school	8	38	cesarean	1 Single	3515
+508249	7	2	23	3	NA	NA	M	NA	NULL	9	99	Natural	1 Single	3234
+3995666	6	6	23	2	11.793	26	F	9	NULL	13	41	Natural	1 Single	3402
+1847262	5	5	31	2	0.907	2	M	9	2 years of high school	6	39	Natural	1 Single	3320
+2915099	9	2	17	1	10.433	23	M	9	NULL	8	39	Natural	1 Single	3390
+1311687	4	7	25	6	13.608	30	M	9	4 years of high school	10	39	Natural	1 Single	3420
+988685	4	4	21	3	5.897	13	F	9	NULL	10	38	cesarean	1 Single	2920
+1295311	12	7	33	5	13.608	30	F	9	3 years of college	12	38	cesarean	1 Single	2353
+3841461	11	3	34	5	8.165	18	M	9	2 years of high school	9	36	Natural	1 Single	2670
+1307377	1	4	24	2	12.247	27	F	9	2 years of high school	10	39	Natural	1 Single	2679
+2156021	8	2	36	2	21.772	48	M	9	2 years of college	10	39	cesarean	1 Single	3600
+1923656	5	6	20	1	11.340	25	M	9	NULL	0	41	Natural	1 Single	4462
+2882822	7	2	31	1	0.000	0	F	10	NULL	10	39	Natural	1 Single	3235
+3928537	10	1	28	1	23.587	52	M	10	2 years of high school	18	40	cesarean	1 Single	4095
+3981125	4	6	30	NA	NA	NA	F	8	NULL	99	31	cesarean	3 Triplet	1540
+3192076	11	4	31	3	16.783	37	M	10	NULL	99	39	Natural	1 Single	2920
+939330	2	7	38	3	12.247	27	F	8	NULL	12	35	cesarean	2 Twin	2353
+1822723	1	7	27	1	13.608	30	F	9	2 years of high school	12	40	cesarean	1 Single	3745
+584439	9	6	20	1	NA	NA	M	NA	NULL	16	99	cesarean	1 Single	2977
+1909933	3	1	30	2	20.412	45	F	9	3 years of college	14	39	Natural	1 Single	3430
+3753961	11	5	18	2	15.422	34	M	6	NULL	8	36	Natural	1 Single	3204
+3461569	2	3	21	2	16.329	36	M	9	NULL	9	38	Natural	1 Single	4026
+2203417	6	5	36	6	19.051	42	F	9	2 years of college	18	40	Natural	1 Single	3629
+3248189	5	3	24	1	16.329	36	F	9	NULL	15	39	cesarean	1 Single	3487
+3815717	5	4	39	3	36.287	80	F	8	3 years of high school	12	39	cesarean	1 Single	4270
+2624530	4	1	21	3	11.793	26	M	9	2 years of high school	13	39	Natural	1 Single	3820
+3797800	1	7	37	NA	17.237	38	F	9	3 years of college	9	38	cesarean	1 Single	3176
+1958861	10	6	25	1	11.340	25	F	9	2 years of high school	6	39	Natural	1 Single	3430
+2664914	6	5	18	2	NA	NA	M	9	2 Years of elementary school	9	41	Natural	1 Single	4082
+3918963	8	1	38	1	13.608	30	F	9	2 years of college	13	39	cesarean	1 Single	3856
+1241811	8	4	39	5	4.536	10	M	9	4 years of high school	18	40	Natural	1 Single	3714
+3441653	2	5	17	2	13.154	29	M	9	NULL	12	38	Natural	1 Single	3175
+1953522	10	2	33	3	14.515	32	F	9	3 years of college	15	39	Natural	1 Single	3345
+3888933	5	7	31	2	18.144	40	F	9	2 years of college	9	37	Natural	1 Single	3397
+230423	1	2	32	5	NA	NA	M	NA	NULL	14	99	Natural	1 Single	3600
+2562887	6	5	24	2	13.608	30	M	9	4 Years of elementary school	11	38	Natural	1 Single	3600
+1591028	4	6	19	1	24.494	54	M	9	3 years of high school	11	37	Natural	1 Single	3515
+3689126	9	4	23	3	15.876	35	M	9	NULL	15	37	Natural	1 Single	3160
+1137710	12	1	32	1	10.886	24	M	9	NULL	11	36	Natural	1 Single	2835
+2381258	5	4	24	2	20.412	45	F	9	1 year of college	12	38	Natural	1 Single	3572
+230797	1	3	26	4	NA	NA	F	NA	NULL	8	99	Natural	1 Single	3600
+1349509	7	4	36	1	7.257	16	F	9	2 years of college	10	38	Natural	1 Single	3155
+2902082	8	5	28	4	21.319	47	M	9	NULL	12	41	Natural	1 Single	3370
+2839494	3	7	16	3	17.237	38	F	8	NULL	99	41	Natural	1 Single	3900
+3458407	3	5	43	4	13.608	30	M	9	NULL	17	38	cesarean	1 Single	3771
+506533	7	1	33	7	NA	NA	F	NA	NULL	15	99	cesarean	1 Single	3470
+4187998	5	3	27	3	6.804	15	F	9	2 years of high school	4	42	cesarean	1 Single	3380
+4065460	4	7	21	5	16.783	37	F	9	8 Years of elementary school	9	26	cesarean	2 Twin	1106
+446603	6	6	31	2	NA	NA	M	NA	NULL	12	99	Natural	1 Single	2977
+1469307	10	4	38	5	20.865	46	M	9	4 years of high school	10	39	Natural	1 Single	4103
+1493352	12	6	23	1	21.772	48	M	9	4 years of high school	15	40	Natural	1 Single	3062
+2451204	12	6	26	2	19.958	44	F	9	4 years of high school	15	41	cesarean	1 Single	4309
+2352987	3	6	35	4	13.608	30	M	9	2 years of college	10	40	Natural	1 Single	3827
+52911	9	4	30	4	6.350	14	F	9	7 Years of elementary school	10	41	Natural	1 Single	3780
+2845525	3	3	23	1	24.948	55	M	9	NULL	10	39	Natural	1 Single	3655
+2881258	6	3	23	1	17.237	38	M	8	NULL	0	40	Natural	1 Single	2491
+1168796	1	2	37	3	10.886	24	M	9	3 years of college	8	36	Natural	1 Single	2637
+451939	6	5	32	2	NA	NA	F	NA	NULL	14	99	Natural	1 Single	3584
+3608910	7	6	32	4	9.072	20	F	9	NULL	10	38	Natural	1 Single	3941
+2810415	12	2	25	3	6.804	15	M	10	NULL	14	38	cesarean	1 Single	3204
+2124156	3	3	37	4	22.680	50	M	9	3 years of college	12	39	Natural	1 Single	4281
+746821	12	7	34	3	NA	NA	M	NA	NULL	10	99	Natural	1 Single	4196
+291111	3	4	27	1	NA	NA	F	NA	NULL	16	99	Natural	1 Single	3035
+4104047	10	6	38	8	0.000	0	M	9	2 years of high school	9	40	Natural	1 Single	2892
+2637001	9	6	29	5	22.226	49	M	9	6 Years of elementary school	99	36	cesarean	2 Twin	2520
+1139846	12	4	22	2	11.340	25	M	9	NULL	10	39	cesarean	1 Single	3657
