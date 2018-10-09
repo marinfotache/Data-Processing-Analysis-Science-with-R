@@ -11,9 +11,9 @@
 ############################################################################
 ###                    2a. Data Input from Most Common Sources           ###
 ### See also the presentation:
-### xxxxxxxxxxxx
+### https://github.com/marinfotache/Data-Processing-Analysis-Science-with-R/blob/master/02%20Basic%20Data%20Import%20and%20Export/02a_basic_data_input_output.pptx
 ############################################################################
-## last update: 03.10.2018
+## last update: 09.10.2018
 
 
 sessionInfo()
