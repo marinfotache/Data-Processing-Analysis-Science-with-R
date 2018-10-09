@@ -373,9 +373,8 @@ glimpse(fuel_economy)
 
 ############################################################################
 #    Import the FEAA students for 2014-2015 (anonymized) academic year
-#   the file `students_FEAA.xlsx is placed in subdirectory `students``
 getwd()
-file <- "students/students_FEAA.xlsx"
+file <- "anonymized_students_FEAA_2014.xlsx"
 studs <- read_excel(file, sheet = 1, col_names = TRUE, skip = 0)
 str(studs)
 glimpse(studs)
