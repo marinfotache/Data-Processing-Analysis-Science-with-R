@@ -643,7 +643,7 @@ head(states)
 states <- read_stata("states.dta")
 head(states)
 
-## import a SAS file in "DataSets/foreign"
+## import a SAS file 
 sas1 <- read_sas('music.sas7bdat')
 
 
