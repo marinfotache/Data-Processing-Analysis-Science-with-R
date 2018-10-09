@@ -718,7 +718,7 @@ rm(list = ls())
 #################################################################################
 #       Save all the current session objects in the R binary format 
 #                   in a single file 
-save.image(file = paste0('other/all_objects_', Sys.time(), '.RData'))
+save.image(file = paste0('all_objects_', Sys.time(), '.RData'))
 
 
 
