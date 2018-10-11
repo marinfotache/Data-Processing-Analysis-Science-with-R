@@ -11,9 +11,9 @@
 ############################################################################
 ###    3b. Data processing with the tidy-verse: tibble, dplyr, tidyr    ####
 ### See also the presentation:
-### xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+### https://github.com/marinfotache/Data-Processing-Analysis-Science-with-R/blob/master/03%20Data_Processing/03b_Tidy-verse.pptx
 ############################################################################
-## last update: 09.10.2018
+## last update: 11.10.2018
 
 library(tidyverse) # for `glimpse` and `read_tsv`
 
