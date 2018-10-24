@@ -850,6 +850,7 @@ temp <- (studs %>% select (FAMILY_NAME) %>% sample_n(100, replace=F) %>%
 
 
 
+
 ########################################################################
 ###                        I.6 Unions/Binds                          ### 
 ########################################################################
@@ -974,15 +975,13 @@ temp <- bind_rows (
 temp
 
 
-
-
 ########################################################################
 ###                            bind_cols()                          ### 
 
 load(file = 'sales.RData')
 library(lubridate)
-# display, for each product, three separate variables (columns) containing
-#  sales for 2016, 2017 and 2018 and column for product overall sales
+## display, for each product, three separate variables (columns) containing
+##  sales for 2016, 2017 and 2018 and column for product overall sales
 
 # solution 1: without outer join and bind_cols()
 temp <- invoice_detailed %>%
@@ -1034,6 +1033,142 @@ temp <- bind_cols(
                select (sales2016_2018)
      ) %>%
      mutate (sales2016_2018 = ifelse(is.na(sales2016_2018), 0, sales2016_2018))
+
+
+########################################################################
+###                      I.7 OLAP functions                          ### 
+########################################################################
+
+########################################################################
+###                           row numbering                          ### 
+
+# load data frames loaded from the `chinook` database tables
+load('chinook.RData')
+
+# display the order number of each artist's album, by `albumid` 
+artist %>%
+     inner_join(album) %>%
+     arrange(name, albumid) %>%
+     group_by(name) %>%
+     mutate (album_no_within_artist = row_number())
+
+
+## display the order number for each album of each artist, 
+## by `albumid`; also add a general order number (for artists + albums)
+
+# sol. 1
+temp <- artist %>%
+     inner_join(album) %>%
+     arrange(name, albumid) %>%
+     group_by(name) %>%
+     mutate (album_number_within_artist = row_number()) %>%
+     ungroup() %>%
+     mutate (album_number_general = row_number())
+     
+# sol. 2
+temp <- artist %>%
+     inner_join(album) %>%
+     arrange(name, albumid) %>%
+     group_by(name) %>%
+     mutate (album_number__within_artist = rank(albumid)) %>%
+     ungroup() %>%
+     mutate (artist_and_album = paste(name, albumid)) %>%
+     mutate (album_number__general = rank(artist_and_album))
+
+
+# sol. 3
+temp <- artist %>%
+     inner_join(album) %>%
+     arrange(name, albumid) %>%
+     group_by(name) %>%
+     mutate (album_number__within_artist = dense_rank(albumid)) %>%
+     ungroup() %>%
+     mutate (artist_and_album = paste(name, albumid)) %>%
+     mutate (album_number__general = dense_rank(artist_and_album))
+
+
+########################################################################
+###                               lag/lead                          ### 
+
+load(file = 'sales.RData')
+## display, for each product the yearly sales and the difference 
+## in sales between current and the previous year
+glimpse(invoice_detailed)
+
+invoice_detailed %>%
+     group_by(productname, year = year(invoicedate)) %>%
+     summarise(crt_year_sales = sum(amount)) %>%
+     mutate (prev_year_sales = lag(crt_year_sales, order_by = year, default = 0), 
+             sales_diff = crt_year_sales - prev_year_sales)
+
+
+########################################################################
+###                               cumsum                             ### 
+
+load(file = 'sales.RData')
+
+## display, for each product the yearly sales and the sum of sales
+## for all the prevoius years until (including) the current year
+glimpse(invoice_detailed)
+
+invoice_detailed %>%
+     group_by(productname, year = year(invoicedate)) %>%
+     summarise(crt_year_sales = sum(amount)) %>%
+     mutate (cumulative_sales = cumsum(crt_year_sales))
+
+
+
+########################################################################
+###                  I.8 Other types of subqueries                   ### 
+########################################################################
+
+
+## extract the tracks from the same album(s) with track `Dazed and Confused`
+
+# sol. 1
+track %>%
+     filter (name == "Dazed and Confused") %>%
+     distinct (albumid) %>%
+     inner_join(track) %>%
+     select (albumid, name) %>%
+     inner_join(album)
+
+# sol. 2
+track %>%
+     inner_join(track %>%
+                    filter (name == "Dazed and Confused") %>%
+                    distinct (albumid)
+                ) %>%
+     select (albumid, name) %>%
+     inner_join(album)
+
+
+# sol. 3
+track %>%
+     select (albumid, name) %>%
+     inner_join(album) %>%
+     filter (albumid %in% (track %>%
+                              filter (name == "Dazed and Confused") %>%
+                              distinct (albumid) %>%
+                              pull() ) )
+# sol. 4
+track %>%
+     select (albumid, name) %>%
+     inner_join(album) %>%
+     filter (albumid %in% (track %>%
+                              filter (name == "Dazed and Confused") %>%
+                              distinct (albumid)  ) [['albumid']] )
+     
+# sol. 5
+track %>%
+     select (albumid, name) %>%
+     inner_join(album) %>%
+     filter (albumid %in% (track %>%
+                              filter (name == "Dazed and Confused") %>%
+                              distinct (albumid) %>%
+                              .$albumid  )  )
+
+
 
 
 
