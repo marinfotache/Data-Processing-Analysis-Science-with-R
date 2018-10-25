@@ -13,9 +13,10 @@
 ### See also the presentation:
 ### https://github.com/marinfotache/Data-Processing-Analysis-Science-with-R/blob/master/03%20Data_Processing/03b_Tidy-verse.pptx
 ############################################################################
-## last update: 11.10.2018
+## last update: 25.10.2018
 
 library(tidyverse) # for `glimpse` and `read_tsv`
+library(readxl)
 
 ############################################################################
 ###            Download the necesary data sets for this script
@@ -83,11 +84,11 @@ getwd()
 file <- "anonymized_students_FEAA_2014.xlsx"
 studs <- read_excel(file, sheet = 1, col_names = TRUE, skip = 0)
 
-# display the data frame structure
+## display the data frame structure
 glimpse(studs)
 
-# add a new variable (column) called `FULL_NAME` by concatenating the variables
-#   `FAMILY_NAME`, `MIDDLE_NAME` and `FIRST_NAME`
+## add a new variable (column) called `FULL_NAME` by concatenating the variables
+##   `FAMILY_NAME`, `MIDDLE_NAME` and `FIRST_NAME`
 studs <- mutate(studs, FULL_NAME  = paste(studs$FAMILY_NAME, 
           studs$MIDDLE_NAME, studs$FIRST_NAME))
 glimpse(studs)
@@ -99,11 +100,11 @@ studs
 fuel_economy_2018 <- read_tsv("all_alpha_18.txt") 
 glimpse(fuel_economy_2018)
 
-# Add two new variables for expressing fuel consumption in
-#    `liters per 100 kilometers` (miles per gallon is difficult to
-#         grasp for Europeans)
-# The formula is:   
-# liters per 100 kilometers = 235.214583333333 ÷ (mile per gallon)
+## Add two new variables for expressing fuel consumption in
+##    `liters per 100 kilometers` (miles per gallon is difficult to
+##         grasp for Europeans)
+## The formula is:   
+## liters per 100 kilometers = 235.214583333333 ÷ (mile per gallon)
 fuel_economy_2018 <- mutate(fuel_economy_2018, 
      cty_l100km = round(235.214583333333 / as.numeric(`City MPG`),2),
      hwy_l100km = round(235.214583333333 / as.numeric(`Hwy MPG`),2),
@@ -115,11 +116,11 @@ glimpse(fuel_economy_2018)
 ############################
 ###       Sales
 load (file = 'sales.RData')
-# ... taken the data frame `invoice_detailed`
+## ... taken the data frame `invoice_detailed`
 glimpse(invoice_detailed)
-# extract year, month, day, the day of the week and the invoice line VAT for each 
-# invoice in separate columns/variables; 
-# install.packages('lubridate')
+## extract year, month, day, the day of the week and the invoice line VAT for each 
+## invoice in separate columns/variables; 
+## install.packages('lubridate')
 library(lubridate)
 invoice_detailed <- mutate (invoice_detailed, 
      year = year(invoicedate),
@@ -134,11 +135,11 @@ glimpse(invoice_detailed)
 #######################################################################
 ###                mutate() for removing variables
 
-# The simplest way is just to set the variable on the NULL (meta)value
-# Example:
-# In data frame `fuel_economy_2018` remove variables `Stnd`, `Stnd Description`
-#   and `Underhood ID`
-#   
+## The simplest way is just to set the variable on the NULL (meta)value
+## Example:
+## In data frame `fuel_economy_2018` remove variables `Stnd`, `Stnd Description`
+##   and `Underhood ID`
+##   
 
 glimpse(fuel_economy_2018)
 fuel_economy_2018 <- mutate (fuel_economy_2018, Stnd = NULL, 
@@ -151,11 +152,11 @@ glimpse(fuel_economy_2018)
 ###                mutate() for recoding variables
 
 ###  FEAA students
-str(studs)
-# display variabile `YEAR_OF_STUDY` values
+glimpse(studs)
+## display variabile `YEAR_OF_STUDY` values
 studs$YEAR_OF_STUDY
 
-# task: change the roman numbers (I, II, III) with the arabic equivalents (1, 2 or 3)
+## task: change the roman numbers (I, II, III) with the arabic equivalents (1, 2 or 3)
 studs <- mutate(studs, 
      YEAR_OF_STUDY = as.numeric(if_else(YEAR_OF_STUDY == 'I', 1, 
           if_else(YEAR_OF_STUDY == 'II', 2, 
@@ -174,15 +175,15 @@ studs$YEAR_OF_STUDY
 
 file <- "anonymized_students_FEAA_2014.xlsx"
 studs <- read_excel(file, sheet = 1, col_names = TRUE, skip = 0)
-# display the data frame structure
+## display the data frame structure
 glimpse(studs)
 
-# notice the difference between...
+## notice the difference between...
 studs.mutate <- mutate(studs, FULL_NAME  = paste(studs$FAMILY_NAME, 
           studs$MIDDLE_NAME, studs$FIRST_NAME))
 glimpse(studs.mutate)
 
-# ... and
+## ... and
 studs.transmute <- transmute(studs, FULL_NAME  = paste(studs$FAMILY_NAME, 
           studs$MIDDLE_NAME, studs$FIRST_NAME))
 glimpse(studs.transmute)
@@ -192,8 +193,8 @@ glimpse(studs.transmute)
 ###      transmute() for selecting variables (and removing 
 ###            unselected variables)
 
-# Extract all the rows of the data frame `studs`, but only columns
-# `FAMILY_NAME` and `FIRST_NAME`
+## Extract all the rows of the data frame `studs`, but only columns
+## `FAMILY_NAME` and `FIRST_NAME`
 temp <- transmute(studs, FAMILY_NAME, FIRST_NAME)
 temp
 
@@ -201,9 +202,9 @@ temp
 #######################################################################
 ###      transmute() for changing the order of the columns 
 names(contacts)
-# Task: change the variables (columns) position in the data frame:
-# instead of ("personalcode", "customerid",  "position"), the order must be:
-#   ("customerid",  "position", "personalcode")
+## Task: change the variables (columns) position in the data frame:
+## instead of ("personalcode", "customerid",  "position"), the order must be:
+##   ("customerid",  "position", "personalcode")
 contacts <-  transmute(contacts, 
      customerid,  position, personalcode)
 
@@ -211,15 +212,17 @@ contacts <-  transmute(contacts,
 #######################################################################
 ###     transmute() for renaming variables (not quite recommended...)
 
-# Task: Rename the variable `YEAR_OF_STUDY` (in data frame `studs`) into `STUDY_YEAR`
- # First, display the variable name in the dataframe
+## Task: Rename the variable `YEAR_OF_STUDY` (in data frame `studs`) into `STUDY_YEAR`
+# First, display the variable name in the dataframe
 names(studs)
 
+# now, rename wihin `transmute`
 studs <- transmute(studs,
      LEVEL_OF_STUDY, ATTENDANCE, STUDY_YEAR = YEAR_OF_STUDY, 
      PROGRAMME, LOCATION, LECTURE_GROUP, LAB_GROUP, FINANCIAL_SUPPORT, FAMILY_NAME, 
      MIDDLE_NAME, FIRST_NAME, STUD_ID) 
 
+# check the new names
 names(studs)
 
 
@@ -233,10 +236,10 @@ names(studs)
 ###     selecting() for selecting variables (and removing 
 ###            unselected variables) in a specific order
 
-# Extract the following columns/variables (in this order) 
-#   from the data frame `studs`
-#   STUD_ID, FAMILY_NAME, MIDDLE_NAME, FIRST_NAME, LEVEL_OF_STUDY, 
-#   ATTENDANCE, STUDY_YEAR, PROGRAMME
+## Extract the following columns/variables (in this order) 
+##   from the data frame `studs`
+##   STUD_ID, FAMILY_NAME, MIDDLE_NAME, FIRST_NAME, LEVEL_OF_STUDY, 
+#$   ATTENDANCE, STUDY_YEAR, PROGRAMME
 View(studs)
 names(studs)
 temp <- select(studs, STUD_ID, FAMILY_NAME:FIRST_NAME, 
@@ -253,7 +256,7 @@ studs <- read_excel(file, sheet = 1, col_names = TRUE, skip = 0)
 # display the data frame structure
 glimpse(studs)
 
-# Task: Rename the variable `YEAR_OF_STUDY` (in data frame `studs`) into `STUDY_YEAR`
+## Task: Rename the variable `YEAR_OF_STUDY` (in data frame `studs`) into `STUDY_YEAR`
 studs <- select(studs,
      LEVEL_OF_STUDY:ATTENDANCE, STUDY_YEAR = YEAR_OF_STUDY, 
      PROGRAMME:STUD_ID) 
@@ -266,13 +269,13 @@ glimpse(studs)
 #######################################################################
 ###   arrange() orders the rows in the result (like ORDER BY in SQL)
 
-# sort people by their last name
+## sort people by their last name
 
 people_ord1 <- arrange(people, lastname)
 people
 people_ord1
 
-# sort people by their genre (descending) and their last name (ascending)
+## sort people by their genre (descending) and their last name (ascending)
 people_ord2 <- arrange(people, desc(genre), lastname)
 people
 people_ord2
@@ -284,8 +287,8 @@ people_ord2
 ###   filter() extracts from a data frame only the rows 
 ###   matching a criteria
 
-# extract only males in data frame `people` who do not own a mobile
-#   phone (apparently)
+## extract only males in data frame `people` who do not own a mobile
+##   phone (apparently)
 females_no_phones <- filter(people, genre == 'B' & is.na(mobilephone))
 females_no_phones
 
@@ -341,12 +344,12 @@ sample_5invoices.1
 #
 
 
-# Task: Extract variables `lastname`, `firstname` and `address` only for the females
-# in base R the solution would be:
-# people [people$genre == 'F', c('lastname', 'firstname', 'address')]
+## Task: Extract variables `lastname`, `firstname` and `address` only for the females
+## in base R the solution would be:
+## people [people$genre == 'F', c('lastname', 'firstname', 'address')]
 
-# With `dplyr` the solution is non necessarily shorter, but 
-#   easier to grasp
+## With `dplyr` the solution is non necessarily shorter, but 
+##   easier to grasp
 people %>% 
      filter (genre == 'F') %>% 
      select (lastname:address)
@@ -360,13 +363,14 @@ temp <- people %>%
      select (lastname:address)
 temp
 
-# Extract all columns except `email` for females
-# subset(people, genre == 'F', select =  -c( email ))
+
+## Extract all columns except `email` for females
+## subset(people, genre == 'F', select =  -c( email ))
 people %>%
      filter (genre == 'F') %>%
      select ( - email)
 
-# Extract, for females, all columns except the three phone numbers  
+## Extract, for females, all columns except the three phone numbers  
 # subset(people, genre == 'F', select =  -c(homephone, officephone, mobilephone ))
 # ... or
 # subset(people, genre == 'F', select = personalcode:email)
@@ -387,7 +391,8 @@ studs <- read_excel(file, sheet = 1, col_names = TRUE, skip = 0)
 # display the data frame structure
 glimpse(studs)
 
-#    Display, in alphabetical order, all the master programmes at FEAA 
+##    Display, in alphabetical order, all the master programmes at FEAA 
+
 # SQL solution:
 #    SELECT DISTINCT PROGRAMME
 #    FROM studs
@@ -412,8 +417,8 @@ View(temp)
 
 
 
-#    Extract students enrolled in the second year of study of the
-#    undegraduate programme `Business Informatics`
+##    Extract students enrolled in the second year of study of the
+##    undegraduate programme `Business Informatics`
 temp <- studs %>%
      filter (LEVEL_OF_STUDY == 'undergraduate' & 
                   PROGRAMME == 'Business Informatics'
@@ -424,8 +429,8 @@ temp
 View(temp)
 
 
-#    How many lab groups are there in the second year of study of the
-#    `Business Informatics` undegraduate programme ?
+##    How many lab groups are there in the second year of study of the
+##    `Business Informatics` undegraduate programme ?
 studs %>%
      filter (LEVEL_OF_STUDY == 'undergraduate' & 
           PROGRAMME == 'Business Informatics'
@@ -445,16 +450,24 @@ studs %>%
 ########################################################################
 ###               I.4 Group operations with `dplyr`                 ### 
 ########################################################################
-# group_by() verb states how to break a dataset down into groups of rows
+## group_by() verb states how to break a dataset down into groups of rows
 
 
-#    Display the number of enrolled students for each level of study
+##    Display the number of enrolled students for each level of study
+
+# solution with `n()` (equivalent to SQL's COUNT(*))
 studs %>%
      group_by(LEVEL_OF_STUDY) %>%
      summarise (n_of_studs = n())
 
-#    Display, for each level of study, the number of programmes and 
-#    the number enrolled students (on that study level)
+# solution with `tally` (the agrregate colum name is `n`)
+studs %>%
+     group_by(LEVEL_OF_STUDY) %>%
+     tally()
+
+
+##    Display, for each level of study, the number of programmes and 
+##    the number enrolled students (on that study level)
 studs %>%
      group_by(LEVEL_OF_STUDY) %>%
      summarise (
@@ -463,10 +476,10 @@ studs %>%
           )
 
 
-#    Given tha data frame `invoice_detailed`...
+##    Given tha data frame `invoice_detailed`...
 glimpse(invoice_detailed)
-# ... Display for each year, the first and the last day 
-#         with sales (for that year) 
+## ... Display for each year, the first and the last day 
+##         with sales (for that year) 
 library(lubridate)   
 invoice_detailed %>%
      group_by(year2 = year(invoicedate)) %>%
@@ -477,16 +490,18 @@ invoice_detailed %>%
      arrange (year2)
 
 
-#    Compute the monthly sales
+##    Compute the monthly sales
+glimpse(invoice_detailed) 
 invoice_detailed %>%
-     group_by(year, month) %>%
+     group_by(year  = year(invoicedate), month = month(invoicedate)) %>%
      summarise ( sales = sum(amount) ) %>%
      arrange (year, month)
 
 
-#    Extract the lab groups for the second year 
-#    of study of the `Business Informatics` undegraduate programme ?
-#    with at least 26 studs
+##    Extract the lab groups for the second year 
+##    of study of the `Business Informatics` undegraduate programme ?
+##    with at least 26 studs
+glimpse(studs)
 studs %>%
      filter (LEVEL_OF_STUDY == 'undergraduate' & 
                   PROGRAMME == 'Business Informatics'
@@ -496,8 +511,8 @@ studs %>%
      filter (n_of_studs >= 26)
 
 
-#    Display the largest number of students in a lab group for the second year 
-#    of study of the `Business Informatics` undegraduate programme ?
+##    Display the largest number of students in a lab group for the second year 
+##    of study of the `Business Informatics` undegraduate programme ?
 studs %>%
      filter (LEVEL_OF_STUDY == 'undergraduate' & 
                   PROGRAMME == 'Business Informatics'
@@ -507,7 +522,7 @@ studs %>%
      summarise(n_max = max(n_of_studs))
 
 
-#    Display the total number of students for each master programme
+##    Display the total number of students for each master programme
 temp <- studs %>%
      filter (LEVEL_OF_STUDY == 'master') %>%
      group_by(PROGRAMME) %>%
@@ -515,7 +530,7 @@ temp <- studs %>%
 temp
 
 
-#    Display top 5 master programmes as total number of students
+##    Display top 5 master programmes as total number of students
 temp <- studs %>%
      filter (LEVEL_OF_STUDY == 'master') %>%
      group_by(PROGRAMME) %>%
@@ -525,8 +540,8 @@ temp <- studs %>%
 temp
 
 
-#    Display the master programmes with at least the total 
-#    number of students as the programme `Business Information Systems`
+##    Display the master programmes with at least the total 
+##    number of students as the programme `Business Information Systems`
 temp <- studs %>%
      filter (LEVEL_OF_STUDY == 'master') %>%
      group_by(PROGRAMME) %>%
@@ -565,19 +580,19 @@ rm(list = ls())
 
 
 ########################################################################
-#         Joining data frames by attributes having identical names 
+###        Joining data frames by attributes having identical names 
 
 # load `Chinook` database tables saved as data frames
 load('chinook.RData')
 
-# Extract the artist names ordered alphabetically
+## Extract the artist names ordered alphabetically
 names(artist)
 View(artist)
 artist %>% 
      select (name) %>% 
      arrange (name)
      
-# Display the albums released by `Creedence Clearwater Revival`
+## Display the albums released by `Creedence Clearwater Revival`
 View(album)
 temp <- artist %>%
      filter (name == 'Creedence Clearwater Revival') %>%
@@ -587,17 +602,17 @@ temp
 
 
 ########################################################################
-#      `Restricted` join (specifying the attributes for the join)
+###                 Join by specifying the join attributes 
 
-# Display the tracks on each album of Led Zeppelin?
+## Display the tracks on each album of Led Zeppelin?
 View(track)
 temp <- artist %>%
      filter (name == 'Led Zeppelin') %>%
      inner_join(album) %>%
      inner_join(track)
 View(temp)
-# Not good!!!!!
-# Source of the problem:
+## Not good!!!!!
+## Source of the problem:
 #   both data frames `artist` and `track` contain variable `name`, 
 #   so the inner join between `artist`-`album` and `track` is 
 #   performed on both `name` and `albumid` columns, which is wrong.
@@ -624,7 +639,7 @@ temp <- artist %>%
 temp
 
 
-# How many tracks are contained on each album of Led Zeppelin?
+## How many tracks are contained on each album of Led Zeppelin band?
 temp <- artist %>%
      filter (name == 'Led Zeppelin') %>%
      inner_join(album) %>%
@@ -634,8 +649,8 @@ temp <- artist %>%
 temp
 
 
-# Which Led Zeppelin album (or albums, if there are more with the 
-# same numeber) contain the largest number of tracks?
+## Which Led Zeppelin album (or albums, if there are more with the 
+## same numeber) contain the largest number of tracks?
 # 
 # Solution 1 is based on `top_n(1)`:
 temp <- artist %>%
@@ -658,8 +673,8 @@ temp <- artist %>%
 temp
 
 
-# Which Led Zeppelin album (or albums, if there are more with the 
-# same number) contains the second largest number of tracks?
+## Which Led Zeppelin album (or albums, if there are more with the 
+## same number) contains the second largest number of tracks?
 # 
 # Solution 1:
 temp <- artist %>%
@@ -685,7 +700,7 @@ temp
 
 
 ########################################################################
-#         Joining tables by attributes with different names
+###           Joining tables by attributes with different names
 
 names(customer)
 View(customer)
@@ -705,10 +720,11 @@ temp
 
 
 ########################################################################
-#                             Self join
-#                 (joining two copies of the same table)
+###                             Self join
+###            (joining two copies of the same table/data frame)
 
-# Display the name of each employee's boss
+## Display the name of each employee's boss
+
 # Solution: table `employee` has attribute `reportsto` which points
 #   to the id of current employee's boss;
 #   we'll join two copies of table `employee` by condition
@@ -726,13 +742,13 @@ temp
 
 
 ########################################################################
-#                             Outer joins
+###                             Outer joins
 
 load(file = 'sales.RData')
 library(lubridate)
 
-# display, for each product, three separate variables (columns) containing
-#  sales for 2016, 2017 and 2018
+## display, for each product, three separate variables (columns) containing
+##  sales for 2016, 2017 and 2018
 
 # solution 1: without outer join
 temp <- invoice_detailed %>%
@@ -774,9 +790,9 @@ temp <- products %>%
 
 
 ########################################################################
-#                             Semi joins
+###                             Semi joins
 
-# Display the title of Led Zeppelin albums 
+## Display the title of all Led Zeppelin albums 
 # 
 # Solution 1: without semi-join
 temp <- artist %>%
@@ -793,9 +809,9 @@ temp
 
 
 ########################################################################
-#                             Anti joins
+###                             Anti joins
 
-# Display products sold in August 2017 which were not sold in September 2017
+## Display products sold in August 2017 which were not sold in September 2017
 temp <- invoice_detailed %>%
      filter (year(invoicedate) == 2017 & month(invoicedate) == 8) %>%
      select (productid, productname) %>%
@@ -826,13 +842,16 @@ temp <- (a %>% mutate(foo = 1)) %>%
 temp
 
 
-# We generate a data seta with people by combining all the
-#   original students family name with all students first name
-# reload FEAA students
+## We want to generate a data seta with people by combining all the
+##   original students family name with all students first name
+
+# reload FEAA students ...
 file <- "anonymized_students_FEAA_2014.xlsx"
 studs <- read_excel(file, sheet = 1, col_names = TRUE, skip = 0)
-# display the data frame structure
+
+# ...display the data frame structure
 glimpse(studs)
+
 # Take care! The results will contain more than 42,000,000 rows
 # When data set is large, the cross join may block the system
 temp <- (studs %>% select (FAMILY_NAME) %>% mutate(foo = 1)) %>% 
@@ -850,7 +869,6 @@ temp <- (studs %>% select (FAMILY_NAME) %>% sample_n(100, replace=F) %>%
 
 
 
-
 ########################################################################
 ###                        I.6 Unions/Binds                          ### 
 ########################################################################
@@ -862,8 +880,8 @@ rm(list = ls())
 ###                            bind_rows()                          ### 
 
 
-# Aggregate all the data sets in DragosCogean directory into two
-#  data frames, `all_inserts` and `all_reads`
+## Aggregate all the data sets in DragosCogean directory into two
+##  data frames, `all_inserts` and `all_reads`
 library(readr)
 all_inserts <- bind_rows(
      read_tsv("DragosCogean__InsertMongo_ALL.txt") %>%
@@ -895,11 +913,13 @@ all_reads <- bind_rows(
 
 
 
-# Given `studs` data frame (FEAA students)....
+## Given `studs` data frame (FEAA students)....
 file <- "anonymized_students_FEAA_2014.xlsx"
 studs <- read_excel(file, sheet = 1, col_names = TRUE, skip = 0)
-#... Display number of studs for each master programme and year of study,
-#  then a subtotal with the overall number of students for each programme
+
+## ... Display number of studs for each master programme and year of study,
+##  then a subtotal with the overall number of students for each programme
+
 # Solution: there are two types of records in the result:
 #   - one for each programme and year of study 
 #   - another for each programme
@@ -955,7 +975,7 @@ temp <- bind_rows (
 temp
 
 
-#  Actually, there is a slighly simpler solution:
+#  Actually, there is a slightly simpler solution:
 temp <- bind_rows (
      bind_rows(
           studs %>%   # extract rows for programmes and years of study
@@ -1035,9 +1055,12 @@ temp <- bind_cols(
      mutate (sales2016_2018 = ifelse(is.na(sales2016_2018), 0, sales2016_2018))
 
 
+
 ########################################################################
 ###                      I.7 OLAP functions                          ### 
 ########################################################################
+###                          (just a few)                            ###
+
 
 ########################################################################
 ###                           row numbering                          ### 
@@ -1045,7 +1068,7 @@ temp <- bind_cols(
 # load data frames loaded from the `chinook` database tables
 load('chinook.RData')
 
-# display the order number of each artist's album, by `albumid` 
+## display the order number of each artist's album, by `albumid` 
 artist %>%
      inner_join(album) %>%
      arrange(name, albumid) %>%
@@ -1056,7 +1079,7 @@ artist %>%
 ## display the order number for each album of each artist, 
 ## by `albumid`; also add a general order number (for artists + albums)
 
-# sol. 1
+# sol. 1 (notice the `ungroup()`)
 temp <- artist %>%
      inner_join(album) %>%
      arrange(name, albumid) %>%
@@ -1065,7 +1088,7 @@ temp <- artist %>%
      ungroup() %>%
      mutate (album_number_general = row_number())
      
-# sol. 2
+# sol. 2 (notice the `ungroup()`)
 temp <- artist %>%
      inner_join(album) %>%
      arrange(name, albumid) %>%
@@ -1076,7 +1099,7 @@ temp <- artist %>%
      mutate (album_number__general = rank(artist_and_album))
 
 
-# sol. 3
+# sol. 3 (notice the `ungroup()`)
 temp <- artist %>%
      inner_join(album) %>%
      arrange(name, albumid) %>%
@@ -1171,9 +1194,6 @@ track %>%
 
 
 
-
-
-
 ########################################################################
 ###                 II.  Restructuring/Reshaping Data                ###
 ########################################################################
@@ -1188,12 +1208,13 @@ rm(list = ls())
 load(file = 'sales.RData')
 library(lubridate)
 
+
 ########################################################################
 ###      II.1   Reshaping/pivoting data with package `dplyr`          ### 
 ########################################################################
 
-# display, for each product, three separate variables (columns) containing
-#  sales for 2016, 2017 and 2018
+## display, for each product, three separate variables (columns) containing
+##  sales for 2016, 2017 and 2018
 invoice_detailed %>%
      mutate(
           i.d.2016 = ifelse(year(invoicedate)==2016, invoice_detailed$amount, 0),
@@ -1206,8 +1227,8 @@ invoice_detailed %>%
           sales.2018 = sum(i.d.2018, na.rm=TRUE)          )
      
 
-# display, for each product, three separate variables (columns) containing
-#  sales for 2016, 2017 and 2018; also display a grand total row
+## display, for each product, three separate variables (columns) containing
+##  sales for 2016, 2017 and 2018; also display a grand total row
 rbind(
 invoice_detailed %>%
      mutate(
@@ -1246,9 +1267,9 @@ invoice_detailed %>%
 ###      II.2     Reshaping/pivoting data with package `tidyr`       ### 
 ########################################################################
 
-## Tidy data: Every column in a data frame represents a variable and 
-##    every row represents an observation. 
-##    This is also referred to as long format (as opposed to wide format).
+### Tidy data: Every column in a data frame represents a variable and 
+###    every row represents an observation. 
+###    This is also referred to as long format (as opposed to wide format).
 
 # one can install `tidyr` separatedly...
 # install.packages("tidyr")
@@ -1257,29 +1278,32 @@ invoice_detailed %>%
 #... but, ir loads automatically when loading the `tidyverse` package
 library(tidyverse)
 
+
 ########################################################################
-#                             gather()
+###                             gather()
 # with gather() data can be converted from a `wide` format to a 
 #  `long` format
 
-# Ex: Assessement "Databases 2" course taught in 2013-2014 at SIA 
-#  master program is in a `wide` format
+## Ex: Assessement "Databases 2" course taught in 2013-2014 at SIA 
+##  master program is in a `wide` format
 getwd()
 library(readxl)
 file.name <- "BD2_2013_SIA1_v2.xlsx"
 assessment <- read_excel(file.name, sheet = 'centralizator', col_names = TRUE, skip = 0)
 glimpse(assessment)
 View(assessment)
-# extract separately the general data about students (not important for conversion, 
-#   but for a better visibility)
+
+## task: extract separately the general data about students (not important 
+## for conversion, but for a better visibility)
 assess_summary <- assessment %>%
      select (nr:echipa, nota, catalog)
 View(assess_summary)
-# now, we want that all assessment parts (`nota.t.1`, `bonus.t.1`, `nota.t.2`, ...)
-# to be stored as rows (not as columns, as currently they are); 
-# the column with name of assessment part will be `asess_part`
-# the column with the (assessment) value will be `grade`
-# covertion will be done only for columns between `nota.t.1` and `nota.pr.2`  
+
+## now, we want that all assessment parts (`nota.t.1`, `bonus.t.1`, `nota.t.2`, ...)
+## to be stored as rows (not as columns, as currently they are); 
+## the column with name of assessment part will be `asess_part`
+## the column with the (assessment) value will be `grade`
+## conversion will be done only for columns between `nota.t.1` and `nota.pr.2`  
 assess_details_long <- assessment %>%
      select (nr, nota.t.1:nota.pr.2) %>%
      gather (assess_part, grade, nota.t.1:nota.pr.2) %>%
@@ -1288,7 +1312,7 @@ glimpse(assess_details_long)
 View(assess_details_long)
 
 
-###  Import montly earnings from the (Romanian) National Institute for Statistics
+##  Import montly earnings from the (Romanian) National Institute for Statistics
 # install.packages ('htmltab')
 library(htmltab)
 url <- 'http://www.insse.ro/cms/ro/content/castiguri-salariale-din-1991-serie-lunara'
@@ -1340,13 +1364,13 @@ View(exchange_rates_long)
 
 
 ########################################################################
-#                             spread()
-# with spread() data can be converted from a `long` format to a 
-#  `wide` format; very useful for pivoting
+###                             spread()
+### with spread() data can be converted from a `long` format to a 
+###  `wide` format; very useful for pivoting
 
 
-# Display, for each product, three separate variables (columns) containing
-#  sales for 2016, 2017 and 2018
+## Display, for each product, three separate variables (columns) containing
+##  sales for 2016, 2017 and 2018
 View(invoice_detailed)
 library(lubridate)
 sales_prods_2016_2018 <- invoice_detailed %>%
@@ -1358,8 +1382,8 @@ sales_prods_2016_2018 <- invoice_detailed %>%
 View(sales_prods_2016_2018)
 
 
-# Display, for each product, separate variables (columns) containing
-#  montly sales for 2017  
+## Display, for each product, separate variables (columns) containing
+##  monthly sales for 2017  
 montly_sales_prods_2017 <- invoice_detailed %>%
      filter (year(invoicedate) == 2017) %>%
      mutate (month = month(invoicedate)) %>%
@@ -1369,7 +1393,7 @@ montly_sales_prods_2017 <- invoice_detailed %>%
 View(montly_sales_prods_2017)
 
 
-# Display, for 2016, a pivot table with product sales  by each client
+## Display, for 2016, a pivot table with product sales  by each client
 prod_client_sales_2016 <- invoice_detailed %>%
      filter (year(invoicedate) == 2016) %>%
      group_by(productname, customername) %>%
@@ -1378,8 +1402,9 @@ prod_client_sales_2016 <- invoice_detailed %>%
 prod_client_sales_2016
 
 
-#  Display for each year starting with 2006 the monthly earnings, but with 
-#  months displayed as numbers (not labels) 
+##  Display for each year starting with 2006 the monthly earnings, but with 
+##     months displayed as numbers (not labels) 
+
 #  We'll use the above created `net_earning_long2` data frame
 View(net_earning_long2)
 net_earning_wide2 <- net_earning_long2 %>%
@@ -1389,21 +1414,22 @@ net_earning_wide2 <- net_earning_long2 %>%
 View(net_earning_wide2)
 
 
-# For the exchange rates published by National Bank of Romania (BNR)
-#   currently in data frame `exchange_rates_long`...
+## For the exchange rates published by National Bank of Romania (BNR)
+##   currently in data frame `exchange_rates_long`...
 exchange_rates_long
-#  Display the recent evolution of exchange rate for each currency 
+
+##  Display the recent evolution of exchange rate for each currency 
 exchange_rates_wide <- exchange_rates_long %>%
      spread (Date, exchange_rate)
 exchange_rates_wide
 
 
 ########################################################################
-#                     spread() and totals
-# see `rowSum()`, `colSum`, `.` and `bind_rows` in the next queries 
+###                     spread() and totals
+### see `rowSum()`, `colSum`, `.` and `bind_rows` in the next queries 
 
-# Display, for each product, three separate variables (columns) containing
-#  sales for 2016, 2017 and 2018; add a total column and a total row
+## Display, for each product, three separate variables (columns) containing
+##  sales for 2016, 2017 and 2018; add a total column and a total row
 library(lubridate)
 sales_prods_2016_2018_totals <- invoice_detailed %>%
      filter (year(invoicedate) %in% c(2016, 2017, 2018)) %>%
@@ -1415,14 +1441,14 @@ sales_prods_2016_2018_totals <- invoice_detailed %>%
      mutate(Total = rowSums(.[2:4])) %>%  # this the the column with totals
      bind_rows(.,      # `.` refers to the current result (data frame)
                        # to the current result content a total row will be added
-          data.frame(productname="Total", t(colSums(.[2:5]))))  # the total row
+          tibble(productname="Total", t(colSums(.[2:5]))))  # the total row
                # is build as a (one-row) data frame; `t` stands for `transpose`
 View(sales_prods_2016_2018_totals)
 
 
 
-# Display, for each product, separate variables (columns) containing
-#  montly sales for 2017; add total row and column  
+## Display, for each product, separate variables (columns) containing
+##  the monthly sales for 2017; add total row and column  
 montly_sales_prods_2017_totals <- invoice_detailed %>%
      filter (year(invoicedate) == 2017) %>%
      mutate (month = paste0('month_', substring(100+month(invoicedate), 2) )) %>%
@@ -1438,7 +1464,7 @@ montly_sales_prods_2017_totals <- invoice_detailed %>%
 View(montly_sales_prods_2017_totals)
 
 
-# Display, for 2016, a pivot table with product sales  by each client
+## Display, for 2016, a pivot table with product sales  by each client
 library(stringr) # needed for function `str_replace_all`
 prod_client_sales_2016_totals <- invoice_detailed %>%
      filter (year(invoicedate) == 2016) %>%
@@ -1460,8 +1486,8 @@ View(prod_client_sales_2016_totals)
 
 
 ########################################################################
-#                             separate()
-# separate() takes values inside a column and separates them.
+###                             separate()
+### separate() takes values inside a column and separates them.
 
 
 assess_details_long <- assessment %>%
@@ -1479,10 +1505,11 @@ assess_details_even_longer <- assess_details_long %>%
 View(assess_details_even_longer)
 
 
-###  Exchange rates published by National Bank of Romania (BNR)
+##  Exchange rates published by National Bank of Romania (BNR)
 # install.packges ('htmltab')
 library(htmltab)
 url <- 'http://www.bnr.ro/Exchange-rates-15192.aspx'
+## ... convert the data into the long format
 exchange_rates_longer <- htmltab(doc = url, which = 1, encoding = "UTF-8") %>%
      gather(currency, exchange_rate, -Data) %>%
      separate(Data, into = c("day", "month", "year"), sep = "\\.")
@@ -1493,9 +1520,8 @@ View(exchange_rates_longer)
 
 
 #####################################################################################
-###    III. A (slighly) more advanced stuff: working with lists (in tidyverse)    ###
+###    III. (Slightly) more advanced stuff: working with lists (in tidyverse)    ###
 #####################################################################################
-library(tidyverse)
 
 # clear the environment
 rm(list = ls())
@@ -1503,7 +1529,8 @@ rm(list = ls())
 
 # load data frames loaded from the `chinook` database tables
 load('chinook.RData')
-# Display, as a string, the track names for each Led Zeppelin album
+
+## Display, as a string, the track names for each Led Zeppelin album
 album_track_list_LZ <- artist %>%
      filter (name == 'Led Zeppelin') %>%
      inner_join(album) %>%
@@ -1515,8 +1542,8 @@ album_track_list_LZ <- artist %>%
 View(album_track_list_LZ)
 
 
-# Given data frame `album_track_list_LZ`, get a data frame in 
-#  tidy format (title, track_no, track_name )
+## Given data frame `album_track_list_LZ`, get a data frame in 
+##     tidy format (title, track_no, track_name )
 
 tidy_album_track_list_LZ <- album_track_list_LZ %>%
      # first, split in track list (track separator is `; `)
@@ -1533,25 +1560,26 @@ tidy_album_track_list_LZ <- album_track_list_LZ %>%
 View(tidy_album_track_list_LZ)
 
 
-# Another example taken from:
+## Another example taken from:
 # https://blog.rstudio.org/2015/01/09/dplyr-0-4-0/
 qs <- mtcars %>%
   group_by(cyl) %>%
   summarise(y = list(quantile(mpg)))
 
 list1 <- qs[1,]$y
+list1
 
-# Unnest input to collpase into rows
+## Unnest input to collpase into rows
 qs %>% tidyr::unnest(y)
 
-# To extract individual elements into columns, wrap the result in rowwise()
-# then use summarise()
+## To extract individual elements into columns, wrap the result in rowwise()
+## then use summarise()
 qs %>% 
   rowwise() %>% 
   summarise(q25 = y[2], q75 = y[4])
 
 
-# Display on separate column the first three tracks on each Led Zeppelin album
+## Display on separate column the first three tracks on each Led Zeppelin album
 first3tracks_each_album_LZ <- album_track_list_LZ %>%
      # first, split in track list (track separator is `; `)
      mutate (track_list2 = str_split (track_list, '; ')) %>%
