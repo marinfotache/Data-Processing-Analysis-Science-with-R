@@ -1589,7 +1589,8 @@ first3tracks_each_album_LZ <- album_track_list_LZ %>%
      
 
 # list processing is considerably easier with `purrr` package   
-# (`map` family ) - see script/presentation 05b   
+# (`map` family ) - see subsequent script/presentation on functional
+# programming   
 
 
 
