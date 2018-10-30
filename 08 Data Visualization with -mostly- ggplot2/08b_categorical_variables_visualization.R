@@ -61,12 +61,6 @@ getwd()
 #######################################################################
 ###		
 
-
-# http://www.cookbook-r.com/Graphs/Bar_and_line_graphs_(ggplot2)/
-# http://www.sthda.com/english/wiki/ggplot2-barplots-quick-start-guide-r-software-and-data-visualization
-# http://www.r-bloggers.com/when-to-use-stacked-barcharts/
-
-
 #######################################################################
 ###		               I. Basic barcharts                         ###	
 #######################################################################
@@ -1099,12 +1093,10 @@ ggplot(data = studs %>%
 ###		                     IV. Piecharts                        ###	
 #######################################################################
 ## Not very popular among statisticians and data scientists
-
 ## see
 ## https://www.businessinsider.com/pie-charts-are-the-worst-2013-6
-
-
-# http://varianceexplained.org/r/improving-pie-chart/
+## or
+## http://varianceexplained.org/r/improving-pie-chart/
 
 
 #######################################################################
