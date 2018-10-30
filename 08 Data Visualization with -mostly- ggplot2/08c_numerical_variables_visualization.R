@@ -221,7 +221,7 @@ ggplot(fuel_economy_2018 %>% filter (!is.na(hwy_l100km)),
      geom_histogram(aes(y = ..density..), alpha = .5) +
      geom_density(alpha = .5) +
      geom_vline( aes (xintercept = mean(hwy_l100km, na.rm=T)),   
-               color="red", linetype="dashed", size=.5) 
+               color="red", linetype="dashed", size=.5)  +
 	ggtitle("Superimposed Histogram and Density Curve of \nHighway Fuel Consumption") +
   	xlab("liters per 100 km") 
 
@@ -259,7 +259,6 @@ ggplot(fuel_economy_2018 %>% filter (!is.na(cty_l100km)),
      theme(axis.text.x = element_blank()) +
      scale_y_continuous(breaks = seq(0, 30, 2))
      
-
 
 #######################################################################
 ###	        II. Superimposing/Faceting Two Numeric Variables       ###	
@@ -317,7 +316,7 @@ ggplot(fuel_economy_2018 %>%
             select (row_num, cty_l100km, hwy_l100km) %>%
             gather (parameter, value, -row_num), 
           aes(x = value, fill = parameter)) +  
-     geom_histogram( alpha = 0.4) +
+     geom_histogram( alpha = 0.7) +
   	xlab("liters per 100 km") +
 	ggtitle("Faceted Histograms of City and Highway \nFuel Consumption") +
      facet_wrap(~ parameter) +

@@ -36,19 +36,6 @@ setwd('/Users/marinfotache/Google Drive/R(Mac)/DataSets')
 #options("scipen"=30, "digits"=14)
 
 
-# http://r-statistics.co/ggplot2-Tutorial-With-R.html
-# http://sharpsightlabs.com/blog/r-package-think-about-visualization/
-
-# Myfanwy Johnston on graphing with ggplot
-# https://www.youtube.com/watch?v=SaJCKpYX5Lo
-
-#https://www.youtube.com/watch?v=rsG-GgR0aEY
-
-# http://www.sthda.com/english/wiki/be-awesome-in-ggplot2-a-practical-guide-to-be-highly-effective-r-software-and-data-visualization#at_pco=smlre-1.0&at_si=56e91c075a4d017c&at_ab=per-2&at_pos=2&at_tot=4
-
-# https://github.com/slowkow/ggrepel/blob/master/vignettes/ggrepel.md
-
-
 #######################################################################
 ###	                              Agenda                           ###	
 #######################################################################
@@ -72,32 +59,32 @@ glimpse(invoice_detailed)
 ## Task:
 ## Display the overall product sales
 invoice_detailed %>%
-          group_by(productname) %>%
-          summarise (sales = sum(amount)) %>%
-     ggplot(., aes(x = productname, y = sales, fill = productname)) +
-          geom_bar(stat="identity") +
-          xlab("product") + ylab("sales") +
-          ggtitle("Product Sales") +
-          theme(plot.title = element_text(hjust = 0.5)) +  # center the title
-          theme(legend.position="none") +
-     	scale_y_continuous(labels = comma)    # separate thousands with comma
+     group_by(productname) %>%
+     summarise (sales = sum(amount)) %>%
+ggplot(., aes(x = productname, y = sales, fill = productname)) +
+     geom_bar(stat="identity") +
+     xlab("product") + ylab("sales") +
+     ggtitle("Product Sales") +
+     theme(plot.title = element_text(hjust = 0.5)) +  # center the title
+     theme(legend.position="none") +
+     scale_y_continuous(labels = comma)    # separate thousands with comma
 
 
 ## Task:
 ## Display the product sales for each year
 invoice_detailed %>%
-          group_by(year = year (invoicedate), productname) %>%
-          summarise (sales = sum(amount)) %>%
-     ggplot(., aes(x = productname, y = sales, fill = productname)) +
-          geom_bar(stat="identity") +
-          xlab("product") + ylab("sales") +
-          ggtitle("Yearly Sales, by Product") +
-          theme(plot.title = element_text(hjust = 0.5)) +  # center the title
-          theme(legend.position="none") +
-          theme(axis.text.x = element_text(angle = 45, 
-               vjust = 1, hjust = 1 )) + 
-     	scale_y_continuous(labels = comma)  +  # separate thousands with comma
-          facet_wrap( ~ year)
+     group_by(year = year (invoicedate), productname) %>%
+     summarise (sales = sum(amount)) %>%
+ggplot(., aes(x = productname, y = sales, fill = productname)) +
+     geom_bar(stat="identity") +
+     xlab("product") + ylab("sales") +
+     ggtitle("Yearly Sales, by Product") +
+     theme(plot.title = element_text(hjust = 0.5)) +  # center the title
+     theme(legend.position="none") +
+     theme(axis.text.x = element_text(angle = 45, 
+          vjust = 1, hjust = 1 )) + 
+     scale_y_continuous(labels = comma)  +  # separate thousands with comma
+     facet_wrap( ~ year)
 
 
 ## Task:
@@ -105,31 +92,31 @@ invoice_detailed %>%
 
 # solution 1: with faceting
 invoice_detailed %>%
-          group_by(year = year (invoicedate), productname) %>%
-          summarise (sales = sum(amount)) %>%
-     ggplot(., aes(x = year, y = sales, fill = factor(year))) +
-          geom_bar(stat="identity") +
-          xlab("year") + ylab("sales") +
-          ggtitle("Product Sales, by Year") +
-          theme(plot.title = element_text(hjust = 0.5)) +  # center the title
-          theme(legend.position="none") +
-          theme(axis.text.x = element_text(angle = 45, 
+     group_by(year = year (invoicedate), productname) %>%
+     summarise (sales = sum(amount)) %>%
+ggplot(., aes(x = year, y = sales, fill = factor(year))) +
+     geom_bar(stat="identity") +
+     xlab("year") + ylab("sales") +
+     ggtitle("Product Sales, by Year") +
+     theme(plot.title = element_text(hjust = 0.5)) +  # center the title
+     theme(legend.position="none") +
+     theme(axis.text.x = element_text(angle = 45, 
                vjust = 1, hjust = 1 )) + 
-     	scale_y_continuous(labels = comma)  +  # separate thousands with comma
-          facet_wrap( ~ productname)
+     scale_y_continuous(labels = comma)  +  # separate thousands with comma
+     facet_wrap( ~ productname)
 
 # solution 2 - stacked bars
 invoice_detailed %>%
-          group_by(year = factor(year (invoicedate)), productname) %>%
-          summarise (sales = sum(amount)) %>%
-     ggplot(., aes(x = productname, y = sales, fill = year)) +
-          geom_bar(stat="identity") +
-          xlab("year") + ylab("sales") +
-          ggtitle("Product Sales, by Year") +
-          theme(plot.title = element_text(hjust = 0.5)) +  # center the title
-          theme(axis.text.x = element_text(angle = 45, 
-               vjust = 1, hjust = 1 )) + 
-     	scale_y_continuous(labels = comma)    # separate thousands with comma
+     group_by(year = factor(year (invoicedate)), productname) %>%
+     summarise (sales = sum(amount)) %>%
+ggplot(., aes(x = productname, y = sales, fill = year)) +
+     geom_bar(stat="identity") +
+     xlab("year") + ylab("sales") +
+     ggtitle("Product Sales, by Year") +
+     theme(plot.title = element_text(hjust = 0.5)) +  # center the title
+     theme(axis.text.x = element_text(angle = 45, 
+          vjust = 1, hjust = 1 )) + 
+	scale_y_continuous(labels = comma)    # separate thousands with comma
 
 
 ## Task:
@@ -137,19 +124,20 @@ invoice_detailed %>%
 
 # solution: `facet_wrap` on both year and month (notice `labeller`)
 invoice_detailed %>%
-          group_by(year = year (invoicedate), month = month (invoicedate), 
-                   productname) %>%
-          summarise (sales = sum(amount)) %>%
-     ggplot(., aes(x = productname, y = sales, fill = productname)) +
-          geom_bar(stat="identity") +
-          xlab("product") + ylab("sales") +
-          ggtitle("Monthly (Within Each Year) Product Sales ") +
-          theme(plot.title = element_text(hjust = 0.5)) +  # center the title
-          theme(legend.position="none") +
-          theme(axis.text.x = element_text(angle = 45, 
-               vjust = 1, hjust = 1 )) + 
-     	scale_y_continuous(labels = comma)  +  # separate thousands with comma
-          facet_wrap( year ~ month, labeller = label_both) 
+     group_by(year = year (invoicedate), month = month (invoicedate), 
+              productname) %>%
+     summarise (sales = sum(amount)) %>%
+ggplot(., aes(x = productname, y = sales, fill = productname)) +
+     geom_bar(stat="identity") +
+     xlab("product") + ylab("sales") +
+     ggtitle("Monthly (Within Each Year) Product Sales ") +
+     theme(plot.title = element_text(hjust = 0.5)) +  # center the title
+     theme(legend.position="none") +
+     theme(axis.text.x = element_text(angle = 45, 
+          vjust = 1, hjust = 1 )) + 
+	scale_y_continuous(labels = comma)  +  # separate thousands with comma
+     facet_wrap( year ~ month, labeller = label_both) 
+
 
 
 #######################################################################
@@ -159,7 +147,6 @@ invoice_detailed %>%
 #  For line graphs, the data points must be grouped so that it knows 
 #  which points to connect. For all points to be connected, 
 #  use `group = 1` 
-
 
 #######################################################################
 ###                                Sales
@@ -173,17 +160,17 @@ glimpse(invoice_detailed)
 #   "daily_sales": y-axis
 
 invoice_detailed %>%
-          group_by(date = factor(invoicedate)) %>%
-          summarise (daily_sales = sum(amount)) %>%
-     ggplot(., aes(x = date, y = daily_sales, group = 1)) +
-          geom_line(colour="red", linetype="dotted", size=0.5) +
-          geom_point() + # Add points to the extremities
-          ggtitle("Daily Sales") +
-          theme(plot.title = element_text(hjust = 0.5)) +  # center the title
-          theme(legend.position="none") +
-          theme(axis.text.x = element_text(angle = 60, 
-               vjust = 1, hjust = 1 )) + 
-     	scale_y_continuous(labels = comma) 
+     group_by(date = factor(invoicedate)) %>%
+     summarise (daily_sales = sum(amount)) %>%
+ggplot(., aes(x = date, y = daily_sales, group = 1)) +
+     geom_line(colour="red", linetype="dotted", size=0.5) +
+     geom_point() + # Add points to the extremities
+     ggtitle("Daily Sales") +
+     theme(plot.title = element_text(hjust = 0.5)) +  # center the title
+     theme(legend.position="none") +
+     theme(axis.text.x = element_text(angle = 60, 
+          vjust = 1, hjust = 1 )) + 
+	scale_y_continuous(labels = comma) 
 
 
 ## Task:
@@ -195,71 +182,47 @@ invoice_detailed %>%
 #  In this case, we want them to be grouped by sex.
 
 invoice_detailed %>%
-          group_by(year = factor(year (invoicedate)), 
+     group_by(year = factor(year (invoicedate)), 
                    month = factor(month (invoicedate))) %>%
-          summarise (sales = sum(amount)) %>%
-     ggplot(., aes(x = month, y = sales, group = year, 
+     summarise (sales = sum(amount)) %>%
+ggplot(., aes(x = month, y = sales, group = year, 
                    colour = year, shape = year)) +
-          geom_line() +
-          geom_point() + # Add points to the extremities
-          ggtitle("Monthly Sales Evolution, by Year") +
-          theme(plot.title = element_text(hjust = 0.5)) +  # center the title
-          theme(axis.text.x = element_text(angle = 0, 
+     geom_line() +
+     geom_point() + # Add points to the extremities
+     ggtitle("Monthly Sales Evolution, by Year") +
+     theme(plot.title = element_text(hjust = 0.5)) +  # center the title
+     theme(axis.text.x = element_text(angle = 0, 
                vjust = 1, hjust = 0.5 )) + 
-     	scale_y_continuous(labels = comma) 
+     scale_y_continuous(labels = comma) 
 
 
+## Task:
+## Display the sales monthly evolution for each product 
 
+# Solution:
+#  To draw multiple lines, the points must be grouped by a variable; 
+#   otherwise all points will be connected by a single line. 
+#  In this case, we want them to be grouped by `productname`
 
-#####################################################################################
-## 				other cases
+invoice_detailed %>%
+     group_by(year = factor(year (invoicedate)), 
+                   month = factor(month (invoicedate)), 
+              productname) %>%
+     summarise (sales = sum(amount)) %>%
+     mutate(year_month = paste(year, 
+                               str_pad(month, 2, side ='left' ,
+                                       pad = "0") , sep = '-')) %>%
+ggplot(., aes(x = year_month, y = sales, 
+              group = productname, colour = productname, shape = productname)) +
+     geom_line() +
+     geom_point() + # Add points to the extremities
+     ggtitle("Product Monthly Sales Evolution") +
+     xlab("year-month") + ylab("sales") +
+     theme(plot.title = element_text(hjust = 0.5)) +  # center the title
+     theme(axis.text.x = element_text(angle = 45, 
+               vjust = 1, hjust = 1 )) + 
+     scale_y_continuous(labels = comma) 
 
-## evolution of enrolled students in the first year of study 
-##    for three master programmes
-#  with legend and the name of the program as text labels
-load("students/mpi.rda")
-mpi
-# text labels as number of enrollments
-ggplot (data=subset(mpi, yearofstudy==1), aes(x=academicyear, y=nofstuds)) +
-	geom_line(aes(colour = factor(program), group=program)) +
-	scale_color_discrete(name="Programme") +
-	labs(title="Students Enrolled in the First Year for \nThree Master Programmes",
-		x="Academic Year", y="Number of enrolled students") +
-	geom_text(aes(x=academicyear, y=nofstuds, label=nofstuds) )
-# text labels as the name of the programme	
-ggplot (data=subset(mpi, yearofstudy==1), aes(x=academicyear, y=nofstuds)) +
-	geom_line(aes(colour = factor(program), group=program)) +
-	scale_color_discrete(name="Programme") +
-	labs(title="Students Enrolled in the First Year for \nThree Master Programmes",
-		x="Academic Year", y="Number of enrolled students") +
-	geom_text(aes(x=academicyear, y=nofstuds, label=program) )
-
-
-
-
-# Montly sales for each year on different panels arranged vertically
-ggplot (data=monthly_sales, aes(x=month, y=sales)) +
-	geom_line(aes(colour = factor(year), group=factor(year))) +
-	scale_color_discrete(name="Year") +
-	labs(title="Montly sales for \neach year",
-		x="Month", y="Sales") +
-	scale_y_continuous(labels=comma) +
-	facet_wrap(~ year)
-
-# Montly sales for each year on different panels arranged horizontally
-ggplot (data=monthly_sales, aes(x=month, y=sales)) +
-	geom_line(aes(colour = factor(year), group=factor(year))) +
-	scale_color_discrete(name="Year") +
-	labs(title="Montly sales for \neach year",
-		x="Month", y="Sales") +
-	scale_y_continuous(labels=comma) +
-	facet_grid( year ~ .)
-
-
-
-
-
-# http://www.sthda.com/english/wiki/ggplot2-scatter-plots-quick-start-guide-r-software-and-data-visualization
 
 
 #######################################################################
@@ -267,165 +230,181 @@ ggplot (data=monthly_sales, aes(x=month, y=sales)) +
 #######################################################################
 
 
-#  Histogram and density plots with multiple groups
-head(FuelEfficiency2)
-
-ggplot(FuelEfficiency2, aes(x = cty_l100km, 
-		fill = factor(cyl))) + 
-	geom_histogram(binwidth=.5, alpha=.5, position="identity")
-
-# Interleaved histograms
-ggplot(FuelEfficiency2, aes(x=cty_l100km, 
-		fill = factor(cyl))) + 
-	geom_histogram(binwidth=1, position="dodge")
-
-# Density plots
-ggplot(FuelEfficiency2, aes(x=cty_l100km, colour=factor(cyl))) + 
-	geom_density()
-
-# Density plots with semi-transparent fill
-ggplot(FuelEfficiency2, aes(x=cty_l100km, colour=factor(cyl))) + 
-	geom_density(alpha=.3)
-
-
-# density kernel of latency for insert operation (100SEC) in Mongo DB
-load("DragosCogean/Dragos.Cogean.2.RData")
-head(AllInserts)
-
-ggplot(subset(AllInserts, testtype="100SEC" & dbserver=="Mongo"), 
-	aes(x = latenta)) + 
-	geom_density() +
-	ggtitle("Density kernel of latency for insert operation (100SEC) in Mongo DB") 
-
-# superimposed density kernels of latency for insert operation (100SEC) 
-#   in Mongo vs. MySQL
-ggplot(subset(AllInserts, testtype="100SEC"), aes(x=latenta)) + 
-    	geom_density( data = subset(AllInserts, testtype="100SEC" & dbserver=="Mongo"),
-		fill = "red", alpha = 0.2) +
-    	geom_density( data = subset(AllInserts, testtype="100SEC" & dbserver=="MySQL"),
-		fill = "green", alpha = 0.2) +
-	ggtitle("Superimposed density kernels of latency for insert operation (100SEC) \n
-in Mongo vs. MySQL") 
-# or (also changing legend position)
-ggplot(subset(AllInserts, testtype="100SEC"), 
-	aes(x=latenta, color = dbserver)) + 
-	geom_density(  alpha = 0.2) +
-	theme(legend.position = "bottom", 
-		legend.direction = "horizontal")
+#######################################################################
+###                      Fuel Economy dataset(s) 
+fuel_economy_2018 <- read_tsv("all_alpha_18.txt") %>%
+     mutate (cty_l100km = round(235.214583333333 / as.numeric(`City MPG`),2),
+          hwy_l100km = round(235.214583333333 / as.numeric(`Hwy MPG`),2),
+          combined_l100km = round(235.214583333333 / as.numeric(`Cmb MPG`),2)) %>%
+     mutate (manufacturer = word(Model)) %>%
+     mutate(manufacturer = case_when(
+          manufacturer == 'ACURA' ~ 'HONDA',
+          manufacturer == 'ASTON' ~ 'ASTON MARTIN',
+          manufacturer == 'ALFA' ~ 'FIAT',
+          manufacturer %in% c('BUICK', 'CADILLAC', 'CHEVROLET',
+               'GMC') ~ 'GENERAL MOTORS',
+          manufacturer %in% c( 'DODGE', 'JEEP', 'RAM') ~ 'CHRYSLER',
+          manufacturer == 'GENESIS' ~ 'HYUNDAI',
+          manufacturer == 'INFINITI' ~ 'NISSAN',
+          manufacturer == 'JAGUAR' |  
+               str_detect (manufacturer, '(^LAND|^RANGE)|ROVER') ~ 'TATA MOTORS',
+          manufacturer == 'LEXUS' ~ 'TOYOTA',
+          manufacturer == 'LINCOLN' ~ 'FORD',
+          manufacturer == 'MINI' ~ 'BMW',
+          manufacturer == 'SMART' ~ 'MERCEDES-BENZ',
+          TRUE ~ manufacturer)
+     )
+glimpse(fuel_economy_2018)
 
 
-# separate panels (vertically) density kernels of latency for 
-# insert operation (100SEC) in Mongo vs. MySQL
-ggplot(subset(AllInserts, testtype="100SEC"), aes(x=latenta)) + 
-    	geom_density() +
-	ggtitle("Density kernels of latency for insert operation (100SEC) \n
-in Mongo vs. MySQL") +
-	facet_wrap(~ dbserver)
+## Task:
+## Display the combined fuel consumption for 100 Km (`combined_l100km`)
+## as supeimposed (interleaved) density curvers
+## for all vehicle classes (`Veh Class`) that have at least 50 models
+fuel_economy_2018 %>%
+     filter (!is.na(combined_l100km)) %>%
+     group_by(`Veh Class`) %>%
+     summarise(n = n()) %>%
+     filter (n >= 50) %>%
+     inner_join(fuel_economy_2018) %>%
+ggplot(., aes(x = combined_l100km, fill = `Veh Class`, col = `Veh Class`)) + 
+	geom_density(alpha=.3, position="identity") +
+     ggtitle("Combined Fuel Consumption, by Vehicle Class") 
+     
 
-# separate panels (horizontally) density kernels of latency for 
-# insert operation (100SEC) in Mongo vs. MySQL
-ggplot(subset(AllInserts, testtype="100SEC"), aes(x=latenta)) + 
-    	geom_density() +
-	ggtitle("Density kernels of latency for insert operation (100SEC) \n
-in Mongo vs. MySQL") +
-	facet_grid( dbserver ~ .)
+## Task:
+## Display the histograms of combined fuel consumption for 
+## 100 Km (`combined_l100km`) for all vehicle classes (`Veh Class`) 
+## that have at least 50 models;
+## this time, every histogram will be displayes in a separate panel
+fuel_economy_2018 %>%
+     filter (!is.na(combined_l100km)) %>%
+     group_by(`Veh Class`) %>%
+     summarise(n = n()) %>%
+     filter (n >= 50) %>%
+     inner_join(fuel_economy_2018) %>%
+ggplot(., aes(x = combined_l100km, fill = `Veh Class`, col = `Veh Class`)) + 
+	geom_histogram(alpha=.3, position="identity") +
+     ggtitle("Combined Fuel Consumption, by Vehicle Class") +
+     facet_wrap (. ~ `Veh Class`, ncol = 1) + # display on a single column
+                                              # for easying the comparison
+     theme(legend.position="none") 
+     
 
-# display latency for all groups (dbserver~testtype) - 1
-ggplot(AllInserts, aes(x = latenta)) + geom_density() + 
-	facet_wrap(dbserver~testtype)
+############################################################################
+###            Dragos Cogean's Data Set (compare two cloud 
+###                 database services, MongoDB and MySQL)
 
-# display latency for all groups (dbserver~testtype) - 1
-ggplot(AllInserts, aes(x = latenta)) + geom_density() + 
-	facet_grid(dbserver~testtype)
+# import the data on `read` operations for MongoDB and 
+ReadMongoDB <- read_tsv("DragosCogean__ReadMongo_ALL.txt") %>%
+     mutate (dbserver = 'MongoDB', latency_secs = latenta / 1000)
+ReadMySQL <- read_tsv("DragosCogean__ReadMySQL_ALL.txt") %>%
+     mutate (dbserver = 'MySQL', latency_secs = latenta / 1000)
 
+AllRead <- bind_rows(ReadMongoDB, ReadMySQL)
+rm(ReadMongoDB, ReadMySQL)
 
-
-# or (also changing legend position)
-ggplot(subset(AllInserts, testtype="100SEC"), 
-	aes(x=latenta, color = dbserver)) + 
-	geom_density(  alpha = 0.2) +
-	theme(legend.position = "bottom", 
-		legend.direction = "horizontal")
-
-
-# separate panels (vertically) density kernels of latency for 
-# insert operation (100SEC) in Mongo vs. MySQL
-ggplot(subset(AllInserts, testtype="100SEC"), aes(x=latenta)) + 
-    	geom_density() +
-	ggtitle("Density kernels of latency for insert operation (100SEC) \n
-in Mongo vs. MySQL") +
-	facet_wrap(~ dbserver)
-
-# separate panels (horizontally) density kernels of latency for 
-# insert operation (100SEC) in Mongo vs. MySQL
-ggplot(subset(AllInserts, testtype="100SEC"), aes(x=latenta)) + 
-    	geom_density() +
-	ggtitle("Density kernels of latency for insert operation (100SEC) \n
-in Mongo vs. MySQL") +
-	facet_grid( dbserver ~ .)
-
-# display latency for all groups (dbserver~testtype) - 1
-ggplot(AllInserts, aes(x = latenta)) + geom_density() + 
-	facet_wrap(dbserver~testtype)
-
-# display latency for all groups (dbserver~testtype) - 1
-ggplot(AllInserts, aes(x = latenta)) + geom_density() + 
-	facet_grid(dbserver~testtype)
+glimpse(AllRead)
 
 
+## Task (identical a task in script 08c, section II.2): 
+## Display two SUPERIMPOSED density curves for: 
+## - the latency or read operations of type `100SEC`
+## - the latency or read operations of type `LONG`
+## only for MongoDB
+
+# New solution 
+ggplot (AllRead, aes(x = latency_secs, fill = testtype )) + 
+     geom_density( alpha = .3) +
+	ggtitle("Superimposed Density Curves for the Latency of \nREAD operations \nof type `100SEC` and `LONG` in MongoDB") +
+     theme(plot.title = element_text(hjust = 0.5)) +  # center the title
+     theme(legend.position="top") +
+     guides(fill = guide_legend(title = "Read Test Type")) # change the legend title
+
+# ... another way of changing the legend title
+ggplot (AllRead, aes(x = latency_secs, fill = testtype )) + 
+     geom_density( alpha = .3) +
+	ggtitle("Superimposed Density Curves for the Latency of \nREAD operations \nof type `100SEC` and `LONG` in MongoDB") +
+     theme(plot.title = element_text(hjust = 0.5)) +  # center the title
+     theme(legend.position="top") +
+     scale_fill_discrete(name="Read Test Type") # another way to change the legend title
 
 
-#####################################################################################
-###						Boxplots	
-#####################################################################################
+## Task : 
+## Display in two separate panels, one for read operations of type `100SEC`
+## and the other for read operations of type `LONG`, 
+## the recorded latencies for the two database servers (as interleaved
+## density plots)
 
-# The same kind of boxplot displayed with...
-boxplot(FuelEfficiency2$cty_l100km, 
-	main="A Boxplot (for variable liters_for_100km in cities)",
-	ylab="Number of necessary liters", las=1)
-# ... can be displayed with:
-ggplot(FuelEfficiency2, aes(x = 0, y = cty_l100km)) +
-	geom_boxplot() +
-	ggtitle("A Boxplot (for variable liters_for_100km in cities)") +
-	ylab("Number of necessary liters")
-
-
-# compare with boxplots the distribution of latency for insert
-#  (100SEC) operations - Mongo vs. MySQL
-ggplot(subset(AllInserts, testtype=="100SEC"), 
-	aes(x = dbserver, y = latenta/1000)) +
-	geom_boxplot() +
-	ggtitle("Compared latency (seconds) of insert operations (100SEC) \n for Mongo and MySQL") +
-	xlab("DB Server") + ylab("Latency (seconds)")
-	
-
-# compare using boxplots the distribution of latency for both types
-#  of insert operations - Mongo vs. MySQL
-ggplot(subset(AllInserts), 
-	aes(x = dbserver, y = latenta/1000)) +
-	geom_boxplot() +
-	ggtitle("Compared latency (seconds) of insert operations (100SEC) \n for Mongo and MySQL") +
-	xlab("DB Server")+ylab("Latency (seconds)") +
-		facet_grid(testtype ~ .)
+ggplot (AllRead, aes(x = latency_secs, fill = dbserver )) + 
+     geom_density( alpha = .3) +
+	ggtitle("Superimposed Density Curves for the Latency of \nREAD operations \nof type `100SEC` and `LONG` in MongoDB") +
+     theme(plot.title = element_text(hjust = 0.5)) +  # center the title
+     theme(legend.position="top") +
+     scale_fill_discrete(name="database\nserver") + # change the legend title 
+     facet_wrap( . ~ testtype)
 
 
-head(FuelEfficiency2)
-ggplot(FuelEfficiency2, aes(x = factor(cyl), y = cty_l100km)) +
-	geom_boxplot() +
-	ggtitle("Boxplots - number of liters for 100km in cities \n grouped by number of cylinders") +
-	ylab("Number of necessary liters")
+## Task : 
+## Display in four separate panels, the density plots of latency 
+## for read operations by both servers and test types
+ggplot (AllRead, aes(x = latency_secs, fill = dbserver )) + 
+     geom_density( alpha = .3) +
+	ggtitle("Latency of READ Pperations \nby Server and Test Type") +
+     theme(plot.title = element_text(hjust = 0.5)) +  # center the title
+     theme(legend.position="none") +
+     scale_fill_discrete(name="database\nserver") + # change the legend title 
+     facet_wrap( dbserver ~ testtype)
 
 
-# Add a diamond at the mean, and make it larger
-ggplot(FuelEfficiency2, aes(x = factor(cyl), y = cty_l100km)) +
-	geom_boxplot() +
-	ggtitle("Boxplots - number of liters for 100km in cities \n grouped by number of cylinders") +
-	ylab("Number of necessary liters") +
-	stat_summary(fun.y=mean, geom="point", shape=5, size=4)
+# with `facet_grid`, the chart is a bit more elegant
+ggplot (AllRead, aes(x = latency_secs, fill = dbserver )) + 
+     geom_density( alpha = .3) +
+	ggtitle("Latency of READ Pperations \nby Server and Test Type") +
+     theme(plot.title = element_text(hjust = 0.5)) +  # center the title
+     theme(legend.position="none") +
+     scale_fill_discrete(name="database\nserver") + # change the legend title 
+     facet_grid( dbserver ~ testtype)
+
 
 
 #######################################################################
-###	 V. Scatter plots with multiple groups                         ###
+###	               IV. Boxplot with multiple groups                ###
+#######################################################################
+
+
+############################################################################
+###            Dragos Cogean's Data Set (compare two cloud 
+###                 database services, MongoDB and MySQL)
+
+## Task:
+## Compare with boxplots the distribution of latency for read operations
+## of type `100SEC` - Mongo vs. MySQL
+ggplot(subset(AllRead, testtype=="100SEC"), 
+	aes(x = dbserver, y = latency_secs)) +
+	geom_boxplot() +
+	ggtitle("Latency of `READ 100SEC` Operations \nMongo vs. MySQL") +
+     theme(plot.title = element_text(hjust = 0.5)) +  # center the title
+	xlab("DB Server") + ylab("Latency (seconds)")
+	
+
+## Task:
+# Compare using boxplots the distribution of latency for both types
+#  of insert operations - Mongo vs. MySQL
+#  on each boxplot, add a `+` signalling the mean
+ggplot(subset(AllRead), 
+	aes(x = dbserver, y = latency_secs)) +
+	geom_boxplot() +
+	ggtitle("Latency of Read Operations \n by Server and Test Type") +
+     theme(plot.title = element_text(hjust = 0.5)) +  # center the title
+	xlab("DB Server")+ylab("Latency (seconds)") +
+	facet_grid(testtype ~ .) +
+	stat_summary(fun.y=mean, geom="point", shape=3, size=1, color = "red")
+     
+
+
+#######################################################################
+###	          V. Scatter plots with multiple groups                ###
 #######################################################################
 
 #######################################################################

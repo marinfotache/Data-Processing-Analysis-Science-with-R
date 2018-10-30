@@ -120,14 +120,16 @@ ggplot(data = data , aes(x = PROGRAMME, y = n_of_studs)) +
 ##... Map the programme to different fill colors. 
 
 # Both next two ggplots have the same result...
-ggplot(data = data, aes(x = PROGRAMME, y = n_of_studs, fill = PROGRAMME)) +
+ggplot(data = data, aes(x = PROGRAMME, y = n_of_studs, 
+                        fill = PROGRAMME)) +
 	geom_bar(stat="identity")
 # ...and
 ggplot(data = data, aes(x = PROGRAMME, y = n_of_studs)) + 
 	geom_bar( aes(fill = PROGRAMME), stat="identity")
 
 # Add a black outline for each bar
-ggplot(data = data, aes(x = PROGRAMME, y = n_of_studs, fill = PROGRAMME)) +
+ggplot(data = data, aes(x = PROGRAMME, y = n_of_studs, 
+                        fill = PROGRAMME)) +
 	geom_bar(colour="black", stat="identity")
 
 # Remove the legend, since in this case it is redundant
@@ -138,15 +140,18 @@ ggplot(data = data, aes(x = PROGRAMME, y = n_of_studs, fill = PROGRAMME)) +
 # Add title, narrow the bars, use a gray fill, and change axis labels
 # notice that `fill` in `geom_bar` overwrites `fill` in the main aestetics
 # clause
-ggplot(data = data, aes(x = PROGRAMME, y = n_of_studs, fill = PROGRAMME)) +
-    geom_bar(colour="black", fill="#DD8888", width=.7, stat="identity") + 
+ggplot(data = data, aes(x = PROGRAMME, y = n_of_studs, 
+                        fill = PROGRAMME)) +
+    geom_bar(colour="black", fill="#DD8888", 
+             width=.7, stat="identity") + 
     guides(fill=FALSE) +
     xlab("Undergraduate Programme") + ylab("Number of students") +
     ggtitle("Undergraduate Students Structure")
 
 
 ## Problem: the x axis labels are not visible; we'll change the angle on x-axis
-ggplot(data = data, aes(x = PROGRAMME, y = n_of_studs, fill = PROGRAMME)) +
+ggplot(data = data, aes(x = PROGRAMME, y = n_of_studs, 
+                        fill = PROGRAMME)) +
     geom_bar(stat="identity") +
     guides(fill=FALSE) +
     xlab("Undergraduate Programme") + ylab("Number of students") +
@@ -157,7 +162,8 @@ ggplot(data = data, aes(x = PROGRAMME, y = n_of_studs, fill = PROGRAMME)) +
 
 
 # try with another angle and center the title
-ggplot(data = data, aes(x = PROGRAMME, y = n_of_studs, fill = PROGRAMME)) +
+ggplot(data = data, aes(x = PROGRAMME, y = n_of_studs, 
+                        fill = PROGRAMME)) +
     geom_bar(stat="identity") +
     guides(fill=FALSE) +
     xlab("Undergraduate Programme") + ylab("Number of students") +
@@ -168,7 +174,8 @@ ggplot(data = data, aes(x = PROGRAMME, y = n_of_studs, fill = PROGRAMME)) +
     theme(plot.title = element_text(hjust = 0.5))  # center the title
 
 # rotate the entire graph with 90 degrees
-ggplot(data = data, aes(x = PROGRAMME, y = n_of_studs, fill = PROGRAMME)) +
+ggplot(data = data, aes(x = PROGRAMME, y = n_of_studs, 
+                        fill = PROGRAMME)) +
      geom_bar(stat="identity") +
      coord_flip()  +   # horizontal bars
      guides(fill=FALSE) +
@@ -189,7 +196,7 @@ glimpse(invoice_detailed)
 invoice_detailed %>%
      group_by(productname) %>%
      summarise (freq = n()) %>%
-     ggplot(., aes (x = productname, y = freq, fill = productname)) +
+ggplot(., aes (x = productname, y = freq, fill = productname)) +
      geom_bar(stat="identity") +
      guides(fill=FALSE) + # no legend
      xlab("product name") + ylab("Number of occurences (frequency)") +
@@ -204,7 +211,7 @@ invoice_detailed %>%
 invoice_detailed %>%
      group_by(productname) %>%
      summarise (freq = n()) %>%
-     ggplot(., aes (x = productname, y = freq, fill = productname)) +
+ggplot(., aes (x = productname, y = freq, fill = productname)) +
      geom_bar(stat="identity") +
      guides(fill=FALSE) + # no legend
      xlab("product name") + ylab("Number of occurences (frequency)") +
@@ -260,7 +267,7 @@ table(Arthritis$Improved)
 
 ggplot(Arthritis, 
      aes(x = factor(Improved), fill = "yellow2")) + 
-	geom_bar(width = 1, color="white") +
+	geom_bar(width = 0.7, color="white") +
 	ggtitle("Result of the Treatment", 
 	        subtitle = "(`Arthritis` dataset is included in the `vcd` package)" ) +
 	theme (plot.title = element_text (colour="black", size="16", hjust = 0.5))+
@@ -570,6 +577,23 @@ ggplot(data = studs %>%
      ggtitle("Financial Support of Undergraduate \nStudents, by Programme and Attendance") +
           # notice the title wraping
      facet_wrap( FINANCIAL_SUPPORT ~ ATTENDANCE, labeller = label_both) +
+     theme(legend.position="none") # remove the legend
+
+
+## in this case, with `facet_grid` the chart is slightly more lisible 
+## than `facet_wrap`
+ggplot(data = studs %>%
+            filter (LEVEL_OF_STUDY == 'undergraduate' & !is.na(PROGRAMME) &
+                  !str_detect(PROGRAMME, "^Common courses")), 
+     aes(x = PROGRAMME, fill = FINANCIAL_SUPPORT)) +
+     geom_bar(position = position_dodge()) + # side-by-side bars 
+     coord_flip()  +   # horizontal bars
+     theme_bw() +   # a new theme (must be inserted before the other `themes`)
+     xlab("Undergraduate Programme") + ylab("Number of students") +
+     theme(axis.text.x = element_text(angle = 45, vjust = 1, hjust = 1 )) + 
+     ggtitle("Financial Support of Undergraduate \nStudents, by Programme and Attendance") +
+          # notice the title wraping
+     facet_grid( FINANCIAL_SUPPORT ~ ATTENDANCE, labeller = label_both) +
      theme(legend.position="none") # remove the legend
 
 
