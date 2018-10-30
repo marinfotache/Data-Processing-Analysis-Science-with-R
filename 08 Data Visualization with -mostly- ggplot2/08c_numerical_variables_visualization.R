@@ -35,22 +35,6 @@ setwd('/Users/marinfotache/Google Drive/R(Mac)/DataSets')
 #options("scipen"=30, "digits"=14)
 
 
-
-# http://r-statistics.co/ggplot2-Tutorial-With-R.html
-
-# http://sharpsightlabs.com/blog/r-package-think-about-visualization/
-
-# Myfanwy Johnston on graphing with ggplot
-# https://www.youtube.com/watch?v=SaJCKpYX5Lo
-
-#https://www.youtube.com/watch?v=rsG-GgR0aEY
-
-# http://www.sthda.com/english/wiki/be-awesome-in-ggplot2-a-practical-guide-to-be-highly-effective-r-software-and-data-visualization#at_pco=smlre-1.0&at_si=56e91c075a4d017c&at_ab=per-2&at_pos=2&at_tot=4
-
-
-# https://github.com/slowkow/ggrepel/blob/master/vignettes/ggrepel.md
-
-
 #######################################################################
 ###  Agenda:                                                        ###
 ###	I. Visualizing Single Numeric Variable                         ###	
