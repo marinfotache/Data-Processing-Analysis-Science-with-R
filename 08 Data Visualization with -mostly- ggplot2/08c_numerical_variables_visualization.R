@@ -11,9 +11,9 @@
 ############################################################################
 ###              8c. Numerical Data Visualization with ggplot2          ####
 ### See also the presentation:
-### xxxxxxxxxxxxx
+### https://github.com/marinfotache/Data-Processing-Analysis-Science-with-R/blob/master/08%20Data%20Visualization%20with%20-mostly-%20ggplot2/08_ggplot2.pptx
 ############################################################################
-## last update: 29.10.2018
+## last update: 30.10.2018
 
 library(tidyverse) 
 library(readxl)
@@ -56,7 +56,7 @@ setwd('/Users/marinfotache/Google Drive/R(Mac)/DataSets')
 ###	I. Visualizing Single Numeric Variable                         ###	
 ###		I.1 Histograms                                            ###	
 ###		I.2 Density plots                                         ###	
-###       I.3 Single Variables Boxplots                             ###	
+###       I.3 Single Variable Boxplots                              ###	
 ###	II. Superimposing/Faceting Two Numeric Variables               ###	
 ###		II.1 Superimposed and Faceted Histograms                  ###
 ###		II.2 Superimposed and Faceted Density Curves              ###

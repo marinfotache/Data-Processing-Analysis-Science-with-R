@@ -11,9 +11,9 @@
 #######################################################################
 ###         8b. Categorical Data Visualization with ggplot2        ####
 ### See also the presentation:
-### xxxxxxxxxxxxx
+### https://github.com/marinfotache/Data-Processing-Analysis-Science-with-R/blob/master/08%20Data%20Visualization%20with%20-mostly-%20ggplot2/08_ggplot2.pptx
 #######################################################################
-## last update: 29.10.2018
+## last update: 30.10.2018
 
 library(tidyverse) 
 library(readxl)
