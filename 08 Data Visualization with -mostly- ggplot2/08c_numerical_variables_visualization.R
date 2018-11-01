@@ -578,6 +578,31 @@ ggplot(. , aes(x = Displ, y = combined_l100km)) +
 
 
 
+# Solution 6 uses a hexbin chart
+# A hexbin plot is like a two-dimensional histogram. 
+# The data is divided into bins, and the number of data points 
+#  in each bin is represented by color or shading (lighter = more crowded)
+# install.packages("hexbin")
+library(hexbin)
+
+fuel_economy_2018 %>%
+     filter (!is.na(cty_l100km) & !is.na(hwy_l100km) &
+                  !is.na(Displ) & Displ != 'N/A') %>%
+     mutate (Displ = as.numeric(Displ)) %>%
+ggplot(. , aes(x = Displ, y = combined_l100km)) +
+     geom_hex() + 
+     xlab("engine displacement (thousands of cubic centimetres)") + 
+     ylab("liters per 100 Km") +
+     ggtitle("Combined Fuel Consumption vs. Engine Displacement") +
+     theme(plot.title = element_text(hjust = 0.5)) +  # center the title
+     theme(legend.position="none") +
+     theme(axis.text.x = element_text(angle = 45, 
+               vjust = 1, hjust = 1 )) + 
+     scale_y_continuous(breaks = seq(0, 25, 1))  +  
+     scale_x_continuous(breaks = seq(0.5, 8, 0.5))  + 
+     geom_smooth()    # Add a (non-linear) regression line, 
+                      # including a confidence region for the curve
+
 
 #######################################################################
 ###	         III.2 Correlation plots (without ggplot2)             ###	

@@ -58,6 +58,7 @@ getwd()
 ###	 IV. Piecharts                                                 ###	
 ###    V. Association between categorical variables                 ###	
 ###		V.1. Mosaic plots                                         ###	
+###		V.2. Heat maps                                            ###	
 #######################################################################
 ###		
 
@@ -1266,6 +1267,84 @@ ggplot(.) +
      theme (plot.title = element_text (colour="black", size=14, hjust = 0.5))+
      guides(fill=guide_legend(title = "Drive", reverse = TRUE)) +
      theme(legend.position = "none") # remove the lengend     
+
+
+
+
+#######################################################################
+###		                     V.2. Heatmaps                        ###	
+#######################################################################
+
+
+#######################################################################
+###	                         `Arthritis` dataset 
+library (vcd)
+glimpse(Arthritis)
+
+## Task:
+## Visualize with a heatmap the association
+## between `Treatment` and `Result`
+
+# Solution with `ggplot2` package - notice `geom_tile`
+Arthritis %>%
+     group_by(treatment_group = Treatment, result = Improved) %>%
+     summarise(frequency = n()) %>%
+ggplot(., aes (x = treatment_group, y = result, 
+               fill = frequency)) +
+     geom_tile() +
+     labs(x = "Treatment", y = "Result", title='Treatment vs. Result') +
+     theme (plot.title = element_text (colour="black", size=14, hjust = 0.5)) 
+     
+
+# Same solution, but with better colours
+Arthritis %>%
+     group_by(treatment_group = Treatment, result = Improved) %>%
+     summarise(frequency = n()) %>%
+ggplot(., aes (x = treatment_group, y = result, 
+               fill = frequency)) +
+     geom_tile() +
+     labs(x = "Treatment", y = "Result", title='Treatment vs. Result') +
+     theme (plot.title = element_text (colour="black", size=14, hjust = 0.5)) +
+     scale_fill_gradient(low = "white", high = "steelblue")
+
+
+
+#######################################################################
+###                      Fuel Economy dataset(s) 
+glimpse(fuel_economy_2018) 
+
+## Task:
+## Examine visually if there is an association between
+## variables `Drive` (2WD/4WD) and `Trans` (transmission)
+
+# In this case, hhe reatmap is better than the mosaic plot 
+fuel_economy_2018 %>%
+     group_by(weel_drive = Drive, transmission = Trans) %>%
+     summarise(frequency = n()) %>%
+ggplot(., aes (x = weel_drive, y = transmission, fill = frequency)) +
+     geom_tile() +
+     labs(title='Association between `Drive` and `Transmission Type`') + 
+     theme (plot.title = element_text (colour="black", size=14, hjust = 0.5)) +
+     scale_fill_gradient(low = "white", high = "steelblue")
+
+
+## Task:
+## Examine visually f there is an association between
+## variables `Trans` (transmission) and `Veh Class`
+
+# solution
+fuel_economy_2018 %>%
+     group_by(vehicle_class = `Veh Class`, transmission = Trans) %>%
+     summarise(frequency = n()) %>%
+ggplot(., aes (x = vehicle_class, y = transmission, fill = frequency)) +
+     geom_tile() +
+     labs(title='Association between Vehicle Class and Transmission Type') + 
+     theme (plot.title = element_text (colour="black", size=14, hjust = 0.5)) +
+     theme(axis.text.x=element_text(angle = 45, hjust= 1, vjust = 1)) + 
+     scale_fill_gradient(low = "white", high = "steelblue")
+
+
+
 
 
 
