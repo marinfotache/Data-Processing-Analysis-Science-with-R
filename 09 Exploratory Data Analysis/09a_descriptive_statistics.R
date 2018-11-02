@@ -11,9 +11,9 @@
 ############################################################################
 ###                       09a Descriptive Statistics                     ###
 ### See also the presentation:
-### xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+### https://github.com/marinfotache/Data-Processing-Analysis-Science-with-R/blob/master/09%20Exploratory%20Data%20Analysis/09%20Exploratory%20Data%20Analysis.pptx
 ############################################################################
-## last update: 31.10.2018
+## last update: 02.11.2018
 
 
 ############################################################################
@@ -36,6 +36,10 @@ options("scipen"=30, "digits"=14)
 library(tidyverse)
 #install.packages('modeest')  # for computing median 
 library(modeest)
+
+# install.packages('skimr')
+library(skimr) # for summary statistics
+
 # install.packages('PerformanceAnalytics')
 library(PerformanceAnalytics)
 library(scales) # for `scale_x_continuous` ... `pretty_breaks`
@@ -155,7 +159,7 @@ fuel_economy_2018 <- read_tsv("all_alpha_18.txt") %>%
 glimpse(fuel_economy_2018)
 
 # Some numeric attributes were imported as characters;
-# we convert then:
+# we convert them:
 fuel_economy_2018 <- fuel_economy_2018 %>%
      mutate (displacement  = as.numeric(Displ), 
              n_of_cyl = as.numeric(Cyl),
@@ -374,6 +378,33 @@ temp <- invoice_detailed %>%
      )
 View(temp)          
 
+## descriptive statistics using `skim` function provided by package `skimr`
+##  some of the statistics are provided (the most popular) 
+## - number of missing values
+## - number of non-missing values
+## - total number of values
+## - mean
+## - standard deviation
+## - min (p0), first quartile (p25), median (p50), 
+##        third quartile (p75) and max (p100),
+## - plus a tiny histogram!
+## 
+library(skimr)
+
+# we can just visualize...
+invoice_detailed %>%
+     group_by(invoiceno, customername) %>%
+     summarise (inv_amount = sum(amount)) %>%  # compute the invoice amount
+     group_by(customername) %>%  # group by each customer
+     skimr::skim()
+
+# ... or save the results in a data frame
+temp <- invoice_detailed %>%
+     group_by(invoiceno, customername) %>%
+     summarise (inv_amount = sum(amount)) %>%  # compute the invoice amount
+     group_by(customername) %>%  # group by each customer
+     skimr::skim()
+View(temp)
 
 
 #######################################################################
@@ -423,7 +454,14 @@ fuel_economy_2018 %>%
           sd = sd(combined_l100km, na.rm = TRUE) # standard deviation
      )
 
-          
+
+## with `skim` from package `skimr`, solution is considerably simpler,
+## even if the number of distinct values is not provided
+fuel_economy_2018 %>%
+     select (combined_l100km) %>%
+     skim()
+
+
 ## Task:
 ## For each of the variables: `cty_l100km`, `hwy_l100km`, `combined_l100km`
 ## compute the following statistics:
@@ -452,6 +490,37 @@ fuel_economy_2018 %>%
           max = max(value, na.rm = TRUE), 
           sd = sd(value, na.rm = TRUE) # standard deviation
      )
+
+
+## with `skim` from package `skimr`, solution is considerably simpler,
+## even if the number of distinct values is not provided
+fuel_economy_2018 %>%
+     select (cty_l100km:combined_l100km) %>%
+     skim()
+
+
+
+## Task:
+## Compute the main descriptive statistics for all numeric 
+## variables
+
+# solution with `dplyr` package
+fuel_economy_2018 %>%
+     select_if(is.numeric) %>%
+     summary()
+
+
+# first solution with `dplyr` + `skimr` package
+fuel_economy_2018 %>%
+     select_if(is.numeric) %>%
+     skim()
+
+# second solution with `dplyr` + `skimr` package
+temp <- fuel_economy_2018 %>%
+     skim() %>%
+     dplyr::filter(type == "numeric")
+View(temp)
+
 
 
 
@@ -545,6 +614,12 @@ glimpse(invoice_detailed)
 # summary()... 
 summary(invoice_detailed$invoicerownumber)
 
+# `skimr` package
+invoice_detailed %>%
+     select (invoicerownumber) %>%
+     skim()
+
+
 # similar to nominal variables a table of frequencies would be
 #    more useful
 table(invoice_detailed$invoicerownumber)
@@ -598,12 +673,33 @@ ggplot(., aes(x = value, fill = variable, col = variable)) +
 ### For nominal variables, descriptive statistics is usually
 ### reduced to only frequency tables;
 ### 
-### Barcharts are usually ok for describing nominal variables
+### Barcharts are ok for describing nominal variables
 
 
 #######################################################################
 ###              Sales data set (`invoice_detailed`)
 glimpse(invoice_detailed)
+
+## Task:
+## Display some basic information about nominal variable `customername`
+
+# `summary` provides no much information... 
+summary(invoice_detailed$customername)
+
+#... but `skimr` package do (notice the min and the max lengths and
+# also the number of distinct values)
+invoice_detailed %>%
+     select (customername) %>%
+     skim()
+
+# for displaying the frequency table one can use...
+table(invoice_detailed$customername)
+# ...or 
+invoice_detailed %>%
+     select (customername) %>%
+     table()
+
+
 
 ## Task:
 ## Display, for each customer, the product frequency (number of 
