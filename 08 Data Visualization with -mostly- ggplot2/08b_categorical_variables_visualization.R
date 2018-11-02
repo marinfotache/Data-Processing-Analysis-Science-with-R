@@ -1091,6 +1091,8 @@ ggplot(data = studs %>%
      
 # is does not look too good.
 # package `ggrepel` to the rescue
+# see
+# https://cran.r-project.org/web/packages/ggrepel/vignettes/ggrepel.html
 library(ggrepel)
 
 # solution: instead of `geom_text` we will use `geom_text_repel`
