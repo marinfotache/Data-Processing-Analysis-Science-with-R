@@ -30,13 +30,19 @@ library(readxl)
 # default/working directory, ex:
 setwd('/Users/marinfotache/Google Drive/R(Mac)/DataSets')
 
-
+#########################################################################
+###                                Agenda                             ###
+#########################################################################
+###  I. Basics of Control Structures                                  ###
+###       I.a `if`, `ifelse`, `if_else`, `case_when`                  ###
+###       I.b Loops                                                   ###
+###  II. Other tasks and solutions requiring Basic Control Structures ###
+#########################################################################
 
 
 #########################################################################
 ###                   I. Basics of Control Structures                 ###
 #########################################################################
-
 
 #########################################################################
 ###                   I.a `if`, `ifelse`, `if_else`, `case_when`      ###
