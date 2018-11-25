@@ -11,9 +11,9 @@
 ############################################################################
 ###                           4b. User-Defined Functions                 ###   
 ### See also the presentation:
-### xxxxxxxxxxxxxxxxxxxxxxxxx
+### https://github.com/marinfotache/Data-Processing-Analysis-Science-with-R/blob/master/04%20Basic%20Programming/04_Programming_UDFs_eval_tidyeval.pptx
 ############################################################################
-## last update: 16.11.2018
+## last update: 22.11.2018
 
 # packages
 library(tidyverse)
@@ -225,8 +225,7 @@ summary(modelA)
 
 
 # here is the function
-equation_lm <- function(the_lm_model)
-{
+equation_lm <- function(the_lm_model) {
      return (paste(
           the_lm_model$terms[[2]], the_lm_model$terms[[1]], 
                paste0(round(coefficients(the_lm_model)[1],5), "  +  ", 

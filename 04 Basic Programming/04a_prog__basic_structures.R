@@ -11,7 +11,7 @@
 ############################################################################
 ###             4a. Programming: Basic control structures                ###
 ### See also the presentation:
-### xxxxxxxxxxxxxxxxxxxxxxxxx
+### https://github.com/marinfotache/Data-Processing-Analysis-Science-with-R/blob/master/04%20Basic%20Programming/04_Programming_UDFs_eval_tidyeval.pptx
 ############################################################################
 ## last update: 16.11.2018
 
@@ -45,7 +45,7 @@ setwd('/Users/marinfotache/Google Drive/R(Mac)/DataSets')
 #########################################################################
 
 #########################################################################
-###                   I.a `if`, `ifelse`, `if_else`, `case_when`      ###
+###            I.a `if`, `ifelse`, `if_else`, `case_when`             ###
 #########################################################################
 
 
@@ -407,8 +407,7 @@ print(destination_subdirs)
 
 
 # 4. copy the source file in all the destionation subdirectories
-for (crt_folder in destination_subdirs)
-{
+for (crt_folder in destination_subdirs) {
      full_path <- paste(base_dir, crt_folder, sep = '/')
      file.copy(from = source_file, to = full_path, 
                recursive = FALSE, copy.mode = TRUE, overwrite = TRUE)
@@ -456,8 +455,7 @@ print(destination_subdirs)
 
 
 # 4. copy a randomly chosen source file in each destionation subdirectory
-for (crt_folder in destination_subdirs)
-{
+for (crt_folder in destination_subdirs) {
      source_file <- sample(source_files_set, 1)
      file.copy(from = source_file, to = crt_folder, 
                recursive = FALSE, copy.mode = TRUE, overwrite = TRUE)
@@ -539,8 +537,7 @@ index_source_2 <- 1
 
 # 6. copy, in each destionation subdirectory, two files according
 # to the above rule
-for (crt_folder in destination_subdirs)
-{
+for (crt_folder in destination_subdirs) {
      
      # get the source file in the first source directory
      source_file_1 <- source_files_set1 [index_source_1]
