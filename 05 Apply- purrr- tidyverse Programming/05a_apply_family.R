@@ -38,6 +38,10 @@ setwd('/Users/marinfotache/Google Drive/R(Mac)/DataSets')
 ###                                Agenda                             ###
 #########################################################################
 ###  I.   `apply`                                                     ###
+###       I.a getting `apply` result as named vector, matrix          ###
+###            or list                                                ### 
+###       I.b `apply` and data frames. `tibble`, `as_tibble`,         ###
+###            `as_data_frame`, `as.data.frame`                       ### 
 ###  II.  lapply`                                                     ###
 ###  III. `sapply`                                                    ###
 ###  IV.  `tapply`                                                    ### 
@@ -108,6 +112,9 @@ fuel_economy_2018 <- fuel_economy_2018 %>%
 ##        the function syntax of apply function
 
 
+#########################################################################
+###      I.a getting `apply` result as named vector, matrix or list   ###                                             ### 
+#########################################################################
 
 #########################################################################
 ###                                Task 1                             ###
@@ -118,36 +125,33 @@ glimpse(fuel_economy_2018)
 vars <- c('cty_l100km', 'hwy_l100km', 'combined_l100km', 'air_pollution',
           'greenhouse', 'combined_CO2')
 
-# compute the mean for given variables and display
+### Compute the mean for all these variables and get the result 
+###  as a vector or a matrix
+
+# get the result as a named vector
 result <- apply(fuel_economy_2018[vars], 2, mean, na.rm = TRUE)
-View(result)
-
-# `result` is a named vector; if we want to get the resut as a 
-# data frame/tible in the long format...
-
-#... then one of the following solution will do the task 
-#
-apply(fuel_economy_2018[vars], 2, mean, na.rm = TRUE) %>%
-     as.data.frame() %>%
-     set_names('mean') %>%
-     mutate(variable = rownames(.))
-
-#
-apply(fuel_economy_2018[vars], 2, mean, na.rm = TRUE) %>%
-     tibble(variable = names(.), mean = .)
+result
+is.vector(result)
+is.matrix(result)
+dim(result)
+length(result)
+result[1]
+result[1,1]
+glimpse(result)
+names(result)
 
 
-# if you prefer the long format, then one of the following solutions
-# might be appropriate
-
-# 
-apply(fuel_economy_2018[vars], 2, mean, na.rm = TRUE) %>%
-     tibble(variable = names(.), mean = .) %>%
-     spread(variable, mean)
-
-apply(fuel_economy_2018[vars], 2, mean, na.rm = TRUE) %>%
-     t() %>%
-     as.tibble()
+# get the result as a matrix
+result <- apply(fuel_economy_2018[vars], 2, mean, na.rm = TRUE) %>%
+     t()       # `t()` for `transpose`
+result
+is.vector(result)
+is.matrix(result)
+dim(result)
+length(result)
+result[1,1]
+glimpse(result)
+names(result)
 
 
 
@@ -159,12 +163,15 @@ glimpse(fuel_economy_2018)
 ##       standard deviation?                                          ###
 #########################################################################
 
-# this is a on-step solution based on `apply`
+## this is a two-step solution based on `apply`
+
+# get the result as a named vector
 result <- apply (fuel_economy_2018 %>% select_if(is.numeric), 2,
-                 sd, na.rm = TRUE) %>%
-     tibble(variable = names(.), sd = .) %>%
-     top_n(1, sd)
-     
+                 sd, na.rm = TRUE) 
+
+# extract the max value
+result[result == max(result)]
+
 
 
 #########################################################################
@@ -191,12 +198,214 @@ descr_stats <- function(x, na.omit=FALSE) {
           mean=mean, st_dev=st_dev, skew=skew, kurtosis=kurt))
 }
 
-## Get, as a list, all the variables statistics
 
-# `result` will be a list
+## Get, as a list, all the variables statistics
 result <- apply(fuel_economy_2018 %>% select_if(is.numeric), 2, 
                 descr_stats)
+result
 View(result)
+
+
+
+
+#########################################################################
+###       I.b `apply` and data frames. `tibble`, `as_tibble`,         ###
+###            `as_data_frame`, `as.data.frame`                       ### 
+#########################################################################
+
+
+#########################################################################
+###                                Task 1                             ###
+### Given the `fuel_economy_2018` data set...
+glimpse(fuel_economy_2018)
+
+### Display
+vars <- c('cty_l100km', 'hwy_l100km', 'combined_l100km', 'air_pollution',
+          'greenhouse', 'combined_CO2')
+
+### Compute the mean for all these variables and get the result 
+###  as a data frame
+
+## solution with `apply` and `tibble`
+result <- apply(fuel_economy_2018[vars], 2, mean, na.rm = TRUE) %>%
+     tibble(variable = names(.), mean = .)
+
+# check the type of the result
+is.tibble(result)
+is.data.frame(result)
+glimpse(result)
+result
+
+
+## solution with `apply` and `as_tibble`
+result <- apply(fuel_economy_2018[vars], 2, mean, na.rm = TRUE) %>%
+     as_tibble() %>%
+     mutate(variable = vars)
+
+# check the type of the result
+is.tibble(result)
+is.data.frame(result)
+glimpse(result)
+result
+
+
+## solution with `apply` and `as.tibble`
+result <- apply(fuel_economy_2018[vars], 2, mean, na.rm = TRUE) %>%
+     as.tibble() %>%
+     mutate(variable = vars)
+
+# check the type of the result
+is.tibble(result)
+is.data.frame(result)
+glimpse(result)
+result
+
+
+## solution with `apply` and `as_data_frame`
+apply(fuel_economy_2018[vars], 2, mean, na.rm = TRUE) %>%
+     as_data_frame() %>%
+     set_names('mean') %>%
+     mutate(variable = rownames(.))
+
+# check the type of the result
+is.tibble(result)
+is.data.frame(result)
+glimpse(result)
+result
+
+
+## solution with `apply` and `as.data.frame`
+apply(fuel_economy_2018[vars], 2, mean, na.rm = TRUE) %>%
+     as.data.frame() %>%
+     set_names('mean') %>%
+     mutate(variable = rownames(.))
+
+# check the type of the result
+is.tibble(result)
+is.data.frame(result)
+glimpse(result)
+result
+
+
+
+# if you prefer the long format...
+
+result <- apply(fuel_economy_2018[vars], 2, mean, na.rm = TRUE) %>%
+     tibble(variable = names(.), mean = .) %>%
+     spread(variable, mean)
+result
+
+# or ...
+result <- apply(fuel_economy_2018[vars], 2, mean, na.rm = TRUE) %>%
+     t() %>%
+     as.tibble()
+result 
+
+
+
+#########################################################################
+##                  Task 2: (taken from script `04a`)                 ###
+##  Given the fuel efficiency data set (see above) ...                ###
+glimpse(fuel_economy_2018)
+##  Which is the numeric variable with the largest                    ###
+##       standard deviation?                                          ###
+#########################################################################
+
+# this is a one-step solution based on `apply` and `tibble`
+result <- apply (fuel_economy_2018 %>% select_if(is.numeric), 2,
+                 sd, na.rm = TRUE) %>%
+     tibble(variable = names(.), sd = .) %>%
+     top_n(1, sd)
+
+result     
+
+
+#########################################################################
+##                     Task 3: (taken from script `04a`)              ###
+##  Given the fuel efficiency data set (see above) ...                ###
+glimpse(fuel_economy_2018)
+
+## ... and the UDF for descriptive statistics written in              ###
+## script `04b` and compiled above...                                 ###
+
+## Get, as a data frame, all the variables statistics
+
+
+## `as.tibble` solution triggers an error!!!
+result <- apply(fuel_economy_2018 %>% select_if(is.numeric), 2, 
+                descr_stats) %>%
+     as.tibble()
+
+
+## `tibble` solution gets a data frame of lists...
+result <- apply(fuel_economy_2018 %>% select_if(is.numeric), 2, 
+                descr_stats) %>%
+     tibble() %>%
+     mutate (variable = names(.))
+
+class(result)
+type_of(result)
+result
+
+# ... but, if `tibble()` id preceeded by `unlist`...
+result <- apply(fuel_economy_2018 %>% select_if(is.numeric), 2, 
+                descr_stats) %>%
+     unlist() %>%
+     tibble(variable = names(.), value = .)
+
+# ...we get the result in the long format
+class(result)
+result
+
+# if some adjustements, we get what we want
+result <- apply(fuel_economy_2018 %>% select_if(is.numeric), 2, 
+                descr_stats) %>%
+     unlist() %>%
+     tibble(variable = names(.), value = .) %>%
+     mutate (variable = str_replace_all(variable, ' ', '_')) %>%  # replace ' ' with '_' in 
+                                                               # variable names
+     separate(variable, into = c('variable_name', 'statistic'),
+               sep = "\\.") %>%
+     spread(statistic, value)
+
+
+
+# while `as_data_frame()` solution does not work in the syntax below...
+result <- apply(fuel_economy_2018 %>% select_if(is.numeric) %>%
+     set_names(str_replace_all(str_replace_all(names(.),       ## fix the variable names
+                    ' ', '_'), '^\\.\\.', ''))
+                , 2, 
+                descr_stats) %>%
+     as_data_frame()
+     
+# ... `as.data.frame()` does...
+result <- apply(fuel_economy_2018 %>% select_if(is.numeric) %>%
+     set_names(str_replace_all(str_replace_all(names(.),       ## fix the variable names
+                    ' ', '_'), '^\\.\\.', ''))
+                , 2, 
+                descr_stats) %>%
+     as.data.frame()
+
+# ... but the final result needs the same tweaking     
+result <- apply(fuel_economy_2018 %>% select_if(is.numeric) %>%
+     set_names(str_replace_all(str_replace_all(names(.),       ## fix the variable names
+                    ' ', '_'), '^\\.\\.', ''))
+                , 2, 
+                descr_stats) %>%
+     as.data.frame() %>%
+     gather(variable, value) %>%
+     separate(variable, into = c('variable_name', 'statistic'),
+               sep = "\\.") %>%
+     spread(statistic, value)
+
+
+
+## there is also a simple solution based on `bind_rows` which 
+##   yields a data frame
+result <- apply(fuel_economy_2018 %>% select_if(is.numeric), 2, 
+                descr_stats) %>%
+     bind_rows(.id = "variable")
+
 
 
 
