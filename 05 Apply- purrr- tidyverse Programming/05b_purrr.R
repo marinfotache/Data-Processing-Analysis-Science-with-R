@@ -14,13 +14,14 @@
 ### See also the presentation:
 ### xxxxxxxx
 ############################################################################
-## last update: 04.12.2018
+## last update: 05.12.2018
 
 
 # needed packages
 library(tidyverse)
 library(readxl)
 library(purrr)
+library(stringr)
 
 
 ############################################################################
@@ -45,7 +46,7 @@ setwd('/Users/marinfotache/Google Drive/R(Mac)/DataSets')
 ###       I.c  `map_dbl`, `map_chr`, `map_lgl`                        ###
 ###       I.d  data frames and lists                                  ###
 ###  II.  `map2` (with some help from `keep`, `pluck`)                ###
-###  III.   `walk` and `walk2`                                        ###
+###  III.  `walk` and `walk2`                                         ###
 #########################################################################
 
 #########################################################################
@@ -92,7 +93,6 @@ fuel_economy_2018 <- fuel_economy_2018 %>%
 #########################################################################
 ##        (Anonymized) FEAA students for 2014-2015 academic year 
 ## example taken from script `03b_tidy-verse.R`
-getwd()
 file <- "anonymized_students_FEAA_2014.xlsx"
 studs <- read_excel(file, sheet = 1, col_names = TRUE, skip = 0)
 ## display the data frame structure
@@ -103,8 +103,6 @@ glimpse(studs)
 #########################################################################
 ###      Create two versions of  descriptive statistics function      ###
 #########################################################################
-
-glimpse(fuel_economy_2018)
 
 # first version returns a tibble in the `wide` format
 descr_stats_wide <- function(x, na.omit=FALSE) {
@@ -174,11 +172,12 @@ descr_stats_long <- function(x, na.omit=FALSE) {
 ###                     Task 1 (taken from script `05a`):             ###
 ### Given the `fuel_economy_2018` data set...
 glimpse(fuel_economy_2018)
-### create a data framme with the means of the following variable
+### create a data frame with the means of the following variables
 vars <- c('cty_l100km', 'hwy_l100km', 'combined_l100km', 'air_pollution',
           'greenhouse', 'combined_CO2')
 
-# first solution based on `map` function
+# first solution based on `map` function results in a data frame
+# containing a list column
 result <- fuel_economy_2018 %>%
      select (!!!vars) %>%
      map(., mean, na.rm = TRUE) %>%
@@ -186,11 +185,12 @@ result <- fuel_economy_2018 %>%
      set_names('mean') %>%
      mutate(variable = vars )
 
-# second solution based on `map` function
+# ... the same for the second solution
 result <- fuel_economy_2018 %>%
      select (!!!vars) %>%
      map(., mean, na.rm = TRUE) %>%
      tibble(variable = names(.), mean = .)
+
 
 
 
@@ -659,6 +659,15 @@ result <- fuel_economy_2018 %>%
 
 ## ... will get the mean values properly 
 result
+
+
+# there is also a solution that instead of `unnest` uses
+#    a combination of `map_dbl` and `pluck`
+result <- fuel_economy_2018 %>%
+     select (!!!vars) %>%
+     map(., mean, na.rm = TRUE) %>%
+     tibble(variable = names(.), mean = .) %>%
+     mutate(mean = map_dbl(.$mean, pluck(1)) )
 
 
 

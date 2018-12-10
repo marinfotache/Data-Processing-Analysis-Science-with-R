@@ -20,6 +20,7 @@
 # needed packages
 library(tidyverse)
 library(readxl)
+library(stringr)
 
 ############################################################################
 ###            Download the necesary data sets for this script
@@ -444,11 +445,16 @@ file_names <- list.files(pattern = "DragosCogean__.+txt")
 the_list <- lapply(file_names, readr::read_tsv) %>%
      set_names(file_names)
 
-# merge all the list elements into a data frame
+# merge all the list elements into a data frame, adding
+# a column with the file name
 the_df <- bind_rows(the_list) 
 
 # add a column with the name of the source file
 the_df$file_name <- rep(names(the_list), lapply(the_list, nrow))
+
+
+# last two commands can be replaced with just one
+the_df <- bind_rows(the_list, .id = "file_name") 
 
 
 # add a column for the db_server
@@ -477,6 +483,7 @@ short_df <- bind_rows(short_list)
 
 # add a column with the name of the source file
 short_df$file_name <- rep(names(short_list), lapply(short_list, nrow))
+
 
 # add a column for the db_server
 short_df <- short_df %>%
