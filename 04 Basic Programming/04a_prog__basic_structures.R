@@ -90,14 +90,17 @@ glimpse(studs)
 studs$YEAR_OF_STUDY
 
 ##
-## task: change the roman numbers (I, II, III) with the arabic equivalents (1, 2 or 3)
+## task: change the roman numbers (I, II, III) with 
+##   the arabic equivalents (1, 2 or 3)
 ## 
 
 # Sol.1 - with `ifelse` (base R)
 studs <- mutate(studs, 
-     YEAR_OF_STUDY = as.integer(ifelse(YEAR_OF_STUDY == 'I', 1, 
-          ifelse(YEAR_OF_STUDY == 'II', 2, 
-          ifelse(YEAR_OF_STUDY == 'III', 3, as.integer(YEAR_OF_STUDY))))))
+     YEAR_OF_STUDY = as.integer(
+          ifelse(YEAR_OF_STUDY == 'I', 1, 
+               ifelse(YEAR_OF_STUDY == 'II', 2, 
+                    ifelse(YEAR_OF_STUDY == 'III', 3, 
+                           as.integer(YEAR_OF_STUDY))))))
 table(studs$YEAR_OF_STUDY)
 typeof(studs$YEAR_OF_STUDY)
 
@@ -228,14 +231,17 @@ variable <- ""
 max_sd <- 0
 for (i in 1:ncol(fuel_economy_2018)) {
      if (is.numeric(fuel_economy_2018[[i]])) {
-          if (sd(fuel_economy_2018[[i]], na.rm = TRUE) > max_sd ) {
+          crt_sd <- sd(fuel_economy_2018[[i]], na.rm = TRUE)
+          if (crt_sd > max_sd ) {
                variable = names(fuel_economy_2018) [i]
-               max_sd <- sd(fuel_economy_2018[[i]], na.rm = TRUE)
+               max_sd <- crt_sd
           }
      }
 }
 print(variable)
 print(max_sd)
+
+
 
 
 # sol. 3' - `for ... seq_along` 

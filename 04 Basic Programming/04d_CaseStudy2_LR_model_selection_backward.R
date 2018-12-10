@@ -1,15 +1,21 @@
-################################################################################
-#########                Regression Models Selection                ############
-################################################################################
+############################################################################
+###                         Al.I. Cuza University of Iași                ###
+###            Faculty of Economics and Business Administration          ###
+###       Department of Accounting, Information Systems and Statistics   ###
+############################################################################
+###
+############################################################################
+###             Data Processing/Analysis/Science with R                  ###
+############################################################################
+###
+############################################################################
+###                      4d. Regression Models Selection                ###   
+############################################################################
 ####  last update: 14.11.2017
 
 library(tidyverse)
 options(scipen=10)
 library (stringr)
-
-## install.packages('devtools')
-#library(devtools)
-#devtools::install_github("dgrtwo/broom")
 library (broom)
 
 # install.packages('devtools')
@@ -22,14 +28,14 @@ library(corrplot)
 library(car)
 
 
-###################################################################################
+############################################################################
 ###                      Case study: `States` (USA)
 #  Example taken from Kabacoff's R in Action (Manning), 2013, 2015 
 # state.x77 dataset in the base package 
 # Explore the relationship between a state’s murder rate and other characteristics of
 #   the state, including population, illiteracy rate, average income, 
 #   and frost levels (mean number of days below freezing).
-###################################################################################
+############################################################################
 
 # lm() function requires a data frame;state.x77 dataset is contained in a matrix, 
 #    so one must convert it:
@@ -42,13 +48,22 @@ head(states)
 # examine bivariate relationships
 cor(states %>% select (-State))
 
-# install.packages('corrplot')
+library(corrplot)
 corrplot::corrplot(cor(states %>% select (-State), 
              method = "spearman"), method = "number", type = "upper")
 
-car::scatterplotMatrix(states %>% select (-State), spread=FALSE, 
-                  lty.smooth=2, main="Scatter Plot Matrix")
-warnings()
+
+library(corrgram)
+corrgram::corrgram(states %>% select (-State) %>% select_if(is.numeric),
+                   lower.panel=panel.conf, upper.panel=panel.pts)
+
+corrgram::corrgram(states %>% select (-State) %>% select_if(is.numeric),
+     lower.panel=panel.pie, upper.panel=panel.pts,
+     diag.panel=panel.density)
+
+corrgram::corrgram(states %>% select (-State) %>% select_if(is.numeric),
+     lower.panel=panel.conf, upper.panel=panel.pts,
+     diag.panel=panel.density)
 
 
 
@@ -57,7 +72,7 @@ warnings()
 ##   (except `State`)                                         ## 
 ################################################################
 
-states_lm1 <- lm(Murder ~ ., data=states %>% select (-State))
+states_lm1 <- lm(Murder ~ ., data = states %>% select (-State))
 summary(states_lm1)
 
 ####################################################
@@ -82,6 +97,7 @@ sum(states_lm1$residuals^2)
 # Mean Squared Error
 mse <- mean((states$Murder - predict(states_lm1))^2)
 mse
+
 
 # Density plot of the residuals
 title_ <- paste0('Residuals Distribution for ALL-IN Model')
@@ -123,7 +139,7 @@ predictors <- setdiff(names(states), c('State', 'Murder'))
 ####################################################################
 ####      Task:                                                 ####
 ####      Find the best model (what `best` is ?) that explains  ####
-####      and/or predict the outcomene (Murder rate)            ####
+####      and/or predict the outcome (Murder rate)              ####
 ####################################################################
 
 
@@ -164,8 +180,7 @@ significance_level <- 0.05
 # loop variable
 stop <- FALSE
 
-while (!stop)
-{
+while (!stop) {
      current_step <- current_step + 1
      
      # fit the model
@@ -283,6 +298,8 @@ ggplot(the_backward_models, aes(x = step, y = BIC)) +
      scale_fill_grey()  +
      scale_y_continuous(limits = c(0, 350), breaks=seq(200, 250, 5)) +
      scale_x_continuous(limits = c(0, 5), breaks=seq(0, 5, 1)) 
+
+
 
 
 

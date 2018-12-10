@@ -71,6 +71,7 @@ string_authors <- 'Fotache, M.; Strimbei, C.; Cretu, L.'
      return (as_tibble(y))     
           }) (string_authors)
 
+str_split(string_authors, ';')[[1]][[2]]
 
 
 #########################################################################
@@ -126,12 +127,11 @@ skimr::skim(fuel_economy_2018)
 fuel_economy_2018 %>% 
      select_if (is.numeric)
 
-
 #    - display columns whose means which exceed 10 
 # `Filter`
 Filter( function( x ) x > 10, 
-        colMeans (fuel_economy_2018 %>% select_if (is.numeric), na.rm = TRUE ))
-
+        colMeans (fuel_economy_2018 %>% 
+                       select_if (is.numeric), na.rm = TRUE ))
 
 #    - display first column mean  that exceeds 10
 # `Find`
@@ -158,7 +158,7 @@ Position( function( x ) x > 10,
 ##############################################################################
 ###                 UDF for cleaning a string (in Romania)                 ###
 library(stringr)
-f_clean_string = function (the_string) {
+f_clean_string <- function (the_string) {
 	# remove punctuation characters (by replacing them with blanks)
 	the_string <- str_replace_all(the_string, pattern = "[[:punct:]]", " ")
 	# removing double (triple...) blanks
@@ -205,6 +205,8 @@ descr_stats <- function(x, na.omit=FALSE) {
 glimpse(fuel_economy_2018)
 descr_stats(fuel_economy_2018$combined_CO2)
 
+temp <- descr_stats(fuel_economy_2018$combined_l100km)
+
 
 ##############################################################################
 ###       UDF for displaying a liniar model as an equation                ###
@@ -219,7 +221,8 @@ glimpse(states_)
 skimr::skim(states_)
 
 # this the liniar regression model
-modelA <- lm(Murder ~ Population + Illiteracy + Income + Frost, data=states_)
+modelA <- lm(Murder ~ Population + Illiteracy + Income +
+                  Frost, data=states_)
 summary(modelA)
 
 
@@ -238,13 +241,21 @@ equation_lm <- function(the_lm_model) {
 equation_lm(modelA)
 
 
+summary(modelA)
+broom::glance(modelA)
+broom::tidy(modelA)
+broom::augment(modelA)
+
+
 # we will prefer using `broom` package (see scripts `11a` and `11b`)
 equation_lm2 <- function(the_lm_model) {
      
      df <- broom::tidy(the_lm_model)
      return ( paste(
-               paste(names(augment(the_lm_model)) [1], '~', round(df$estimate[1], 5)), 
-                   paste( round(df$estimate[2:nrow(df)], 5), '*', df$term[2:nrow(df)],  
+               paste(names(augment(the_lm_model)) [1], '~', 
+                     round(df$estimate[1], 5)), 
+               paste( round(df$estimate[2:nrow(df)], 5), '*', 
+                      df$term[2:nrow(df)],  
                          collapse = ' + '), 
                    sep = ' + '))
 }          
@@ -309,7 +320,7 @@ f_get_vatpercent <- function (productid_) {
 }
 
 # test the function
-f_get_vatpercent(4)
+f_get_vatpercent(1)
 
 
 ##  function `f_invoice_amount` gets an `invoiceno` and 
@@ -327,9 +338,11 @@ f_invoice_amount <- function (invoiceno_) {
 }
 # test the function
 f_invoice_amount(1111)
+
 f_invoice_amount(9999)
 
 invoiceno_ = 111999
+
 f_invoice_amount <- function (invoiceno_) {
      # `invoice_details` 
      df <- invoice_details %>%
@@ -340,7 +353,7 @@ f_invoice_amount <- function (invoiceno_) {
                rowwise() %>%
                mutate (vat = f_get_vatpercent (productid)) %>%
                ungroup() %>%
-               summarise (amount = sum(quantity * unitprice * (1 + vat)))      %>%
+               summarise (amount = sum(quantity * unitprice * (1 + vat))) %>%
                pull()
      } else {
           return (NA)
