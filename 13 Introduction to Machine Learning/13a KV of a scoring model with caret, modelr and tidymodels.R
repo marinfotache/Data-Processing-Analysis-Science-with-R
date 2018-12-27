@@ -46,7 +46,6 @@ options(scipen = 6)
 # Please download the files in a local directory (such as 'DataSets') and  
 # set the directory where you dowloaded the data files as the 
 # default/working directory, ex:
-setwd('/Users/admin/SkyDrive/DataSets')
 setwd('/Users/marinfotache/Google Drive/R(Mac)/DataSets')
 
 
@@ -123,7 +122,8 @@ corrgram::corrgram(states %>% select (-State) %>% select_if(is.numeric),
 ##   weights that are relatively high or low relative to height, 
 ##   objective index of body weight (kg / m ^ 2) using the ratio 
 ##   of height to weight, ideally 18.5 to 24.9
-## `children`: Number of children covered by health insurance / Number of dependents
+## `children`: Number of children covered by health insurance / Number 
+##   of dependents
 ## `smoker`: Smoking
 ## `region`: the beneficiary's residential area in the US, northeast, southeast, 
 ##        southwest, northwest.
@@ -162,7 +162,7 @@ summary(insurance_lm1)
 #########################################################################
 
 #########################################################################
-###                      I.a  `States` (USA) data set                ###
+###                      I.a  `States` (USA) data set                 ###
 #########################################################################
 
 #   Baseline (from script 11b):
@@ -177,7 +177,8 @@ summary(states_lm1)
 set.seed(123)
 
 ## Split the data into train/test using an index of row numbers:
-index__states <- caret::createDataPartition(y = states$Murder, p = .7, list = FALSE)
+index__states <- caret::createDataPartition(y = states$Murder, 
+     p = .7, list = FALSE)
 main_train__states <- states[index__states, ] %>%
      select (-State)
 main_test__states <- states[-index__states, ] %>%
@@ -192,7 +193,7 @@ tr_states1 <- caret::trainControl(method = "cv", number = 5)
 
 # train the model using 5-fold CV
 lm_states1_caret <- caret::train(Murder ~ ., data = main_train__states, 
-                    method = "lm", trControl = tr_states1, trace = FALSE)
+     method = "lm", trControl = tr_states1, trace = FALSE)
 
 # extract general information about the model
 lm_states1_caret
@@ -219,8 +220,8 @@ plot(caret::varImp(lm_states1_caret))
 ##   with `caret`
 ## Here we run automated stepwise regression and look at 
 ##   the resampling results. 
-lm_states2_caret <- caret::train(Murder ~ ., data = main_train__states , 
-                    method = "lmStepAIC", trControl = tr_states1, trace = FALSE)
+lm_states2_caret <- caret::train(Murder ~ ., data = main_train__states, 
+     method = "lmStepAIC", trControl = tr_states1, trace = FALSE)
 
 lm_states2_caret$results
 
@@ -253,15 +254,21 @@ caret::compare_models(lm_states1_caret, lm_states2_caret)
 
 # get the values of outcome (`Murder`) predicted by the models 
 #    for the testing data set
-predicted__lm_states1_caret__main_test <- predict(lm_states1_caret, main_test__states)
-predicted__lm_states2_caret__main_test <- predict(lm_states2_caret, main_test__states)
-predicted__lm_states3_caret__main_test <- predict(lm_states3_caret, main_test__states)
+predicted__lm_states1_caret__main_test <- predict(lm_states1_caret, 
+     main_test__states)
+predicted__lm_states2_caret__main_test <- predict(lm_states2_caret, 
+     main_test__states)
+predicted__lm_states3_caret__main_test <- predict(lm_states3_caret, 
+     main_test__states)
 
 
 # RMSE 
-caret::RMSE (predicted__lm_states1_caret__main_test, main_test__states$Murder)
-caret::RMSE (predicted__lm_states2_caret__main_test, main_test__states$Murder)
-caret::RMSE (predicted__lm_states3_caret__main_test, main_test__states$Murder)
+caret::RMSE (predicted__lm_states1_caret__main_test, 
+     main_test__states$Murder)
+caret::RMSE (predicted__lm_states2_caret__main_test, 
+     main_test__states$Murder)
+caret::RMSE (predicted__lm_states3_caret__main_test, 
+     main_test__states$Murder)
 
 
 # R2
@@ -298,11 +305,12 @@ summary(insurance_lm1)
 set.seed(123)
 
 ## Split the data into train/test using an index of row numbers:
-index__insurance <- caret::createDataPartition(y = insurance$charges, p = .8, list = FALSE)
+index__insurance <- caret::createDataPartition(y = insurance$charges, 
+     p = .8, list = FALSE)
 main_train__insurance <- insurance[index__insurance, ]
 main_test__insurance <- insurance[-index__insurance, ]
 
-# Set up the resampling, here repeated CV
+# Set up the resampling, here 10-fold CV
 tr_insurance1 <- trainControl(method = "cv", number = 10)
 
 
@@ -311,7 +319,7 @@ tr_insurance1 <- trainControl(method = "cv", number = 10)
 
 # train the model using 10-fold CV
 lm_insurance1_caret <- train(charges ~ ., data = main_train__insurance, 
-                    method = "lm", trControl = tr_insurance1, trace = FALSE)
+     method = "lm", trControl = tr_insurance1, trace = FALSE)
 lm_insurance1_caret
 
 lm_insurance1_caret$results
@@ -427,10 +435,10 @@ predicted_within_folds_states1_modelr %>%
 ##   on the assessment date (i.e. the test data inside each fold)
 models_and_folds_states1_modelr %>% 
      transmute (
-          analysis_rmse_modelr = purrr::map2_dbl(model, analysis, modelr::rmse),
-          assessment_rmse_modelr = purrr::map2_dbl(model, assessment, modelr::rmse),
-          analysis_rsq_modelr = purrr::map2_dbl(model, analysis, modelr::rsquare),
-          assessment_rsq_modelr = purrr::map2_dbl(model, assessment, modelr::rsquare)             
+     analysis_rmse_modelr = purrr::map2_dbl(model, analysis, modelr::rmse),
+     assessment_rmse_modelr = purrr::map2_dbl(model, assessment, modelr::rmse),
+     analysis_rsq_modelr = purrr::map2_dbl(model, analysis, modelr::rsquare),
+     assessment_rsq_modelr = purrr::map2_dbl(model, assessment, modelr::rsquare)             
              ) %>%
      print()
 
@@ -458,12 +466,12 @@ models_and_folds_states1_modelr %>%
 ## metrics with  `modelr`
 metrics_states1_modelr <- models_and_folds_states1_modelr %>% 
      mutate (
-          analysis_rmse_modelr = purrr::map2_dbl(model, analysis, modelr::rmse),
-          assessment_rmse_modelr = purrr::map2_dbl(model, assessment, modelr::rmse),
-          test_rmse_modelr = purrr::map2_dbl(model, main_test__states, modelr::rmse),
-          analysis_rsq_modelr = purrr::map2_dbl(model, analysis, modelr::rsquare),
-          assessment_rsq_modelr = purrr::map2_dbl(model, assessment, modelr::rsquare),
-          test_rsq_modelr = purrr::map2_dbl(model, main_test__states, modelr::rsquare)             
+     analysis_rmse_modelr = purrr::map2_dbl(model, analysis, modelr::rmse),
+     assessment_rmse_modelr = purrr::map2_dbl(model, assessment, modelr::rmse),
+     test_rmse_modelr = purrr::map2_dbl(model, main_test__states, modelr::rmse),
+     analysis_rsq_modelr = purrr::map2_dbl(model, analysis, modelr::rsquare),
+     assessment_rsq_modelr = purrr::map2_dbl(model, assessment, modelr::rsquare),
+     test_rsq_modelr = purrr::map2_dbl(model, main_test__states, modelr::rsquare)             
              ) %>%
     summarise(
           mean_rmse_assessment_modelr = mean(assessment_rmse_modelr),
@@ -526,12 +534,12 @@ models_and_folds_insurance1_modelr %>%
 ## metrics with  `modelr`
 metrics_insurance1_modelr <- models_and_folds_insurance1_modelr %>% 
      mutate (
-          analysis_rmse_modelr = purrr::map2_dbl(model, analysis, modelr::rmse),
-          assessment_rmse_modelr = purrr::map2_dbl(model, assessment, modelr::rmse),
-          test_rmse_modelr = purrr::map2_dbl(model, main_test__insurance, modelr::rmse),
-          analysis_rsq_modelr = purrr::map2_dbl(model, analysis, modelr::rsquare),
-          assessment_rsq_modelr = purrr::map2_dbl(model, assessment, modelr::rsquare),
-          test_rsq_modelr = purrr::map2_dbl(model, main_test__insurance, modelr::rsquare)             
+     analysis_rmse_modelr = purrr::map2_dbl(model, analysis, modelr::rmse),
+     assessment_rmse_modelr = purrr::map2_dbl(model, assessment, modelr::rmse),
+     test_rmse_modelr = purrr::map2_dbl(model, main_test__insurance, modelr::rmse),
+     analysis_rsq_modelr = purrr::map2_dbl(model, analysis, modelr::rsquare),
+     assessment_rsq_modelr = purrr::map2_dbl(model, assessment, modelr::rsquare),
+     test_rsq_modelr = purrr::map2_dbl(model, main_test__insurance, modelr::rsquare)             
              ) %>%
     summarise(
           mean_rmse_assessment_modelr = mean(assessment_rmse_modelr),
@@ -692,11 +700,13 @@ f_lm_states1_assessment <- function(split, formula){
      assessment_set <- assessment(split)
 
      # 3. define the recipe
-     analysis_recipe <- recipes::recipe(as.formula(formula), data = analysis_set)
+     analysis_recipe <- recipes::recipe(as.formula(formula), 
+          data = analysis_set)
      
      # 4. prepare the analysis set; estimate parameters (nothing spectacularly here,
      #    since we didn't scale/dummy-field/... any predictor or the outcome)
-     analysis_prep <- recipes::prep(analysis_recipe, training = analysis_set)
+     analysis_prep <- recipes::prep(analysis_recipe, 
+          training = analysis_set)
 
      # 5. bake (apply computations to the both subsets) and get the
      #    processed version (again, in this case, this is not spectacular)
@@ -733,7 +743,8 @@ f_lm_states1_test <- function(split, formula, test_set) {
      analysis_set <- rsample::analysis(split)
 
      # 3. define the recipe
-     analysis_recipe <- recipes::recipe(as.formula(formula), data = analysis_set)
+     analysis_recipe <- recipes::recipe(as.formula(formula), 
+          data = analysis_set)
      
      # 4. prepare the analysis set; estimate parameters (nothing spectacularly here,
      #    since we didn't scale/dummy-field/... any predictor or the outcome)
