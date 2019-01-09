@@ -351,7 +351,7 @@ ggplot(fuel_economy_2018 %>% filter (!is.na(cty_l100km) &
 	ggtitle("Superimosed Density Curves of City (red) and \nHighway (yellow) Fuel Consumption") 
      
 # Solution 2: identical to histogram: we transform the data set (from 
-# `wide` to `long` format), use a single `geom_histogram` clause, 
+# `wide` to `long` format), use a single `geom_density` clause, 
 # and use `fill` and `col` options for plotting two density lines
 ggplot(fuel_economy_2018 %>% 
             filter (!is.na(cty_l100km) & !is.na(hwy_l100km)) %>%
