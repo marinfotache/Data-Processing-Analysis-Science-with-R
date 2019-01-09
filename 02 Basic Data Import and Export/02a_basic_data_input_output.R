@@ -75,7 +75,7 @@ class(df1)
 
 #... or (preferred solution)
 library(tidyverse)
-df2 <-tibble(age=numeric(0), gender=character(0), weight=numeric(0))
+df2 <- tibble(age=numeric(0), gender=character(0), weight=numeric(0))
 class(df2)
 
 # you can create an emply data frame / tibble with `tibble` function
@@ -132,7 +132,7 @@ rm(list = ls())
 ############################################################################
 ##    readr 0.2.0 package
 #    http://blog.rstudio.org/2015/10/28/readr-0-2-0/
-# install.packages('readr')
+#install.packages('readr')
 require(readr)
 
 ############################################################################
@@ -142,7 +142,7 @@ require(readr)
 
 ## Two functions (of package `readr`) can be used
 # `read_delim`...
-births2006 <- read_delim('births2006_package_nutshell.txt', '\t', 
+births2006 <- readr::read_delim('births2006_package_nutshell.txt', '\t', 
      progress = interactive())
 
 # display the data frame content
@@ -165,10 +165,12 @@ head(births2006)
 # copy the attribute names into a vector
 df_names <- names(births2006)
 df_names
+class(df_names)
 
 # display some of the attribute names
 df_names[1]
-df_names[5]
+df_names[5] <- "TBO"
+names(births2006)[5] <- "TBO"
 
 # display the number of attributes
 length(df_names)
@@ -180,7 +182,7 @@ ncol(births2006)
 df_names[length(df_names)]
 df_names[1:3]
 df_names[(length(df_names)-2):length(df_names)]
-df_names[c(1:3, (length(df_names)-2):length(df_names))]
+df_names[c(1:3, 7, (length(df_names)-2):length(df_names))]
 
 # Note: progress = interactive() display the progress bar that might be not
 #    visible, as the data set is relatively small
@@ -351,8 +353,6 @@ rm(list = ls())
 #install.packages('readxl')
 # http://blog.rstudio.org/2015/04/15/readxl-0-1-0/
 library(readxl)
-
-
 
 
 ############################################################################
