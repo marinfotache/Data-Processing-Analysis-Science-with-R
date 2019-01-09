@@ -105,10 +105,31 @@ glimpse(fuel_economy_2018)
 ##         grasp for Europeans)
 ## The formula is:   
 ## liters per 100 kilometers = 235.214583333333 ÷ (mile per gallon)
-fuel_economy_2018 <- mutate(fuel_economy_2018, 
-     cty_l100km = round(235.214583333333 / as.numeric(`City MPG`),2),
-     hwy_l100km = round(235.214583333333 / as.numeric(`Hwy MPG`),2),
-     combined_l100km = round(235.214583333333 / as.numeric(`Cmb MPG`),2))
+##
+## Also add a variable about the (`approximate`) manufacturer
+fuel_economy_2018 <- fuel_economy_2018 %>%
+     mutate (cty_l100km = round(235.214583333333 / as.numeric(`City MPG`),2),
+          hwy_l100km = round(235.214583333333 / as.numeric(`Hwy MPG`),2),
+          combined_l100km = round(235.214583333333 / as.numeric(`Cmb MPG`),2)) %>%
+     mutate (manufacturer = word(Model)) %>%
+     mutate(manufacturer = case_when(
+          manufacturer == 'ACURA' ~ 'HONDA',
+          manufacturer == 'ASTON' ~ 'ASTON MARTIN',
+          manufacturer == 'ALFA' ~ 'FIAT',
+          manufacturer %in% c('BUICK', 'CADILLAC', 'CHEVROLET',
+               'GMC') ~ 'GENERAL MOTORS',
+          manufacturer %in% c( 'DODGE', 'JEEP', 'RAM') ~ 'CHRYSLER',
+          manufacturer == 'GENESIS' ~ 'HYUNDAI',
+          manufacturer == 'INFINITI' ~ 'NISSAN',
+          manufacturer == 'JAGUAR' |  
+               str_detect (manufacturer, '(^LAND|^RANGE)|ROVER') ~ 'TATA MOTORS',
+          manufacturer == 'LEXUS' ~ 'TOYOTA',
+          manufacturer == 'LINCOLN' ~ 'FORD',
+          manufacturer == 'MINI' ~ 'BMW',
+          manufacturer == 'SMART' ~ 'MERCEDES-BENZ',
+          TRUE ~ manufacturer)
+     )
+                 
 
 glimpse(fuel_economy_2018)
 
@@ -350,6 +371,7 @@ sample_5invoices.1
 
 ## With `dplyr` the solution is non necessarily shorter, but 
 ##   easier to grasp
+glimpse(people)
 people %>% 
      filter (genre == 'F') %>% 
      select (lastname:address)
@@ -481,13 +503,14 @@ glimpse(invoice_detailed)
 ## ... Display for each year, the first and the last day 
 ##         with sales (for that year) 
 library(lubridate)   
+
 invoice_detailed %>%
-     group_by(year2 = year(invoicedate)) %>%
+     group_by(year = year(invoicedate)) %>%
      summarise (
-          first_date_with_saled = min(invoicedate), 
+          first_date_with_sales = min(invoicedate), 
           last_date_with_sales = max(invoicedate)
           ) %>%
-     arrange (year2)
+     arrange (year)
 
 
 ##    Compute the monthly sales
@@ -546,8 +569,8 @@ temp <- studs %>%
      filter (LEVEL_OF_STUDY == 'master') %>%
      group_by(PROGRAMME) %>%
      summarise (n_of_studs = n()) %>%
-     mutate(n_of_studs_BIS = ifelse(PROGRAMME == 'Business Information Systems',
-          n_of_studs, 0)) %>%
+     mutate(n_of_studs_BIS = if_else(PROGRAMME == 'Business Information Systems',
+          n_of_studs, 0L)) %>%
      filter (n_of_studs >= max(n_of_studs_BIS)) %>%
      select (PROGRAMME, n_of_studs) %>%
      arrange(desc(n_of_studs))
@@ -588,7 +611,7 @@ load('chinook.RData')
 ## Extract the artist names ordered alphabetically
 names(artist)
 View(artist)
-artist %>% 
+temp <- artist %>% 
      select (name) %>% 
      arrange (name)
      
@@ -599,6 +622,11 @@ temp <- artist %>%
      inner_join(album)
 temp
 
+#...or
+temp <- artist %>%
+     inner_join(album) %>%
+     filter (name == 'Creedence Clearwater Revival') 
+temp
 
 
 ########################################################################
@@ -625,9 +653,11 @@ temp <- artist %>%
      select (artistid, artist_name = name) %>%
      filter (artist_name == 'Led Zeppelin') %>%
      inner_join(album) %>%
-     inner_join(track %>% select (trackid, track_name = name, 
-          albumid:unitprice)) %>%
-     select (album_title=title, track_name)
+     inner_join(
+          track %>% 
+               select (trackid, track_name = name, albumid:unitprice)) %>%
+     select (album_title=title, track_name) %>%
+     arrange(album_title)
 temp
 
 # Solution 2: we force the inner_join with `track` to be performed only 
@@ -718,7 +748,7 @@ temp <- customer %>%
      distinct (lastname.y, firstname.y)
 temp
 
-
+names(temp)
 ########################################################################
 ###                             Self join
 ###            (joining two copies of the same table/data frame)
@@ -753,9 +783,9 @@ library(lubridate)
 # solution 1: without outer join
 temp <- invoice_detailed %>%
      mutate(
-          i.d.2016 = ifelse(year(invoicedate)==2016, invoice_detailed$amount, 0),
-          i.d.2017 = ifelse(year(invoicedate)==2017, invoice_detailed$amount, 0),
-          i.d.2018 = ifelse(year(invoicedate)==2018, invoice_detailed$amount, 0) ) %>%
+          i.d.2016 = if_else(year(invoicedate)==2016, invoice_detailed$amount, 0),
+          i.d.2017 = if_else(year(invoicedate)==2017, invoice_detailed$amount, 0),
+          i.d.2018 = if_else(year(invoicedate)==2018, invoice_detailed$amount, 0) ) %>%
      group_by(productname) %>%
      summarise(
           sales.2016 = sum(i.d.2016, na.rm=TRUE),
@@ -995,7 +1025,7 @@ temp <- bind_rows (
 temp
 
 
-########################################################################
+#######################################################################
 ###                            bind_cols()                          ### 
 
 load(file = 'sales.RData')
@@ -1069,7 +1099,7 @@ temp <- bind_cols(
 load('chinook.RData')
 
 ## display the order number of each artist's album, by `albumid` 
-artist %>%
+temp <- artist %>%
      inner_join(album) %>%
      arrange(name, albumid) %>%
      group_by(name) %>%
@@ -1149,7 +1179,7 @@ invoice_detailed %>%
 ## extract the tracks from the same album(s) with track `Dazed and Confused`
 
 # sol. 1
-track %>%
+temp <- track %>%
      filter (name == "Dazed and Confused") %>%
      distinct (albumid) %>%
      inner_join(track) %>%
@@ -1289,7 +1319,8 @@ library(tidyverse)
 getwd()
 library(readxl)
 file.name <- "BD2_2013_SIA1_v2.xlsx"
-assessment <- read_excel(file.name, sheet = 'centralizator', col_names = TRUE, skip = 0)
+assessment <- read_excel(file.name, sheet = 'centralizator', 
+          col_names = TRUE, skip = 0)
 glimpse(assessment)
 View(assessment)
 
@@ -1322,7 +1353,7 @@ head(net_earning)
 names(net_earning)[1] <- 'Year'
 
 # backup this data frame, in case of the link will no longer be accesible
-save (net_earning, file = 'net_earning.RData')
+#save (net_earning, file = 'net_earning.RData')
 
 # convert the data into the long format
 net_earning_long <- net_earning %>%
@@ -1352,7 +1383,7 @@ View(exchange_rates)
 names(exchange_rates)[1] <- 'Date'
 
 # backup this data frame, in case of the link will no longer be accesible
-#save (exchange_rates, file = 'exchange_rates.RData')
+# save (exchange_rates, file = 'exchange_rates.RData')
 
 
 # Now, convert to the `long format`:
