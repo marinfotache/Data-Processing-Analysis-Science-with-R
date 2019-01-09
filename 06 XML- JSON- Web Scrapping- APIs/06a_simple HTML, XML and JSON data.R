@@ -90,7 +90,8 @@ names(net_earning)[1] <- 'Year'
 ###  Import the exchange rates published by National Bank of Romania (BNR)
 # see also script `03b`, section `II.2`
 url <- 'http://www.bnr.ro/Exchange-rates-15192.aspx'
-exchange_rates <- htmltab::htmltab(doc = url, which = 1, encoding = "UTF-8")
+exchange_rates <- htmltab::htmltab(doc = url, which = 1, 
+          encoding = "UTF-8")
 head(exchange_rates)
 View(exchange_rates)
 names(exchange_rates)[1] <- 'Date'
@@ -99,7 +100,7 @@ names(exchange_rates)[1] <- 'Date'
 ##                      Romanian family names frequency
 # http://www.name-statistics.org/ro/numedefamiliecomune.php
 url <- "http://www.name-statistics.org/ro/numedefamiliecomune.php"
-roNF <- XML::readHTMLTable(url,which=1)
+roNF <- htmltab::htmltab(url,which=1)
 
 
 
@@ -261,14 +262,16 @@ View(hamlet_flatxml_final)
 
 ## with `jsonlite`
 nobel_countries_url <- 'http://api.nobelprize.org/v1/country.json'
-nobel_countries_jsonlite <- jsonlite::fromJSON(nobel_countries_url, flatten = TRUE)
+nobel_countries_jsonlite <- jsonlite::fromJSON(nobel_countries_url, 
+          flatten = TRUE)
 nobel_countries_jsonlite
 nobel_countries_df_jsonlite <- dplyr::bind_rows(nobel_countries_jsonlite)
 glimpse(nobel_countries_df_jsonlite)
 
 
 ## with `tidyjson`
-nobel_countries_df_tydyjson <- paste(jsonlite::toJSON(jsonlite::fromJSON(nobel_countries_url)),
+nobel_countries_df_tydyjson <- paste(jsonlite::toJSON(
+          jsonlite::fromJSON(nobel_countries_url)),
                                   collapse = ' ') %>%
      tidyjson::as.tbl_json() %>%
      tidyjson::gather_keys() %>%
@@ -292,9 +295,11 @@ test <- jsonlite::fromJSON(url)
 
 ## with `jsonlite` - we'l use `unnest`
 nobel_prizes_url <- 'http://api.nobelprize.org/v1/prize.json'
-nobel_prizes_jsonlite <- jsonlite::fromJSON(nobel_prizes_url, flatten = TRUE)
+nobel_prizes_jsonlite <- jsonlite::fromJSON(nobel_prizes_url, 
+               flatten = TRUE)
 nobel_prizes_jsonlite
-nobel_prizes_df_jsonlite <- dplyr::bind_rows(nobel_prizes_jsonlite, .id = 'prizes') %>%
+nobel_prizes_df_jsonlite <- dplyr::bind_rows(nobel_prizes_jsonlite, 
+          .id = 'prizes') %>%
      unnest(laureates)
 
 glimpse(nobel_prizes_df_jsonlite)
@@ -331,22 +336,14 @@ glimpse(nobel_prizes_df_tydyjson)
 #########################################################################
 
 
-url <- 'http://api.nobelprize.org/v1/laureate.json'
-test <- jsonlite::fromJSON(url, flatten = TRUE)
-
-
-
-url <- 'http://api.nobelprize.org/v1/prize.json'
-test <- jsonlite::fromJSON(url)
-
-
-
 ## with `jsonlite` - we'l use `unnest`
 nobel_laureates_url <- 'http://api.nobelprize.org/v1/laureate.json'
-nobel_laureates_jsonlite <- jsonlite::fromJSON(nobel_laureates_url, flatten = TRUE)
+nobel_laureates_jsonlite <- jsonlite::fromJSON(nobel_laureates_url, 
+          flatten = TRUE)
 nobel_laureates_jsonlite
 
-nobel_laureates_df_jsonlite <- dplyr::bind_rows(nobel_prizes_jsonlite, .id = 'laureates') %>%
+nobel_laureates_df_jsonlite <- dplyr::bind_rows(nobel_prizes_jsonlite, 
+                                                .id = 'laureates') %>%
      unnest(prizes)
 ### ... error
 

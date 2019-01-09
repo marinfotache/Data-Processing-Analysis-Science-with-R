@@ -90,7 +90,6 @@ romanian_names <- romanian_names_raw %>%
 wikipedia_romania_url <- 'https://en.wikipedia.org/wiki/Romania'
 wikipedia_romania_raw <- xml2::read_html(wikipedia_romania_url) 
 
-
 ## extract all the tables within the page 
 wikipedia_romania_tables <- wikipedia_romania_raw %>%
      rvest::html_nodes("table")
@@ -167,7 +166,7 @@ wikipedia_wars_raw <- wikipedia_wars_url %>%
 
 links_and_titles <- wikipedia_wars_raw %>%
      html_nodes("ul li a") %>%
-     head(9) %>%
+     head(8) %>%
      html_attrs() %>%    # get a list
      tibble(link = map_chr(., 'href'),     # create the data frame from the list
             title = map_chr(., 'title'))    %>%
@@ -201,7 +200,7 @@ for (i in 1:nrow(links_and_titles)) {
      wikipedia_wars_df <- bind_rows(wikipedia_wars_df, crt_tibble)
 }
 
-
+View(wikipedia_wars_df)
 
 
 
