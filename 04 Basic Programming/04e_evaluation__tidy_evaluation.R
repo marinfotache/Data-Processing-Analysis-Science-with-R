@@ -88,6 +88,7 @@ tables <- dbGetQuery(con,
      "select table_name from information_schema.tables where table_schema = 'public'")
 tables
 
+#i <- 1
 # import each of the table as a data frame 
 for (i in 1:nrow(tables)) {
      # extract data from table in PostgreSQL
@@ -121,6 +122,7 @@ file_name <- "northwind.xlsx"
 # display the worksheets names in a .xls(x) file
 ws <- readxl::excel_sheets(file_name)
 
+i <- 2
 # now, loop through the worksheets
 for (i in 1:length(ws)) {
      # read the current worksheet
@@ -145,6 +147,7 @@ files <- list.files(pattern = "*.xlsx")
 # or
 files <- dir(pattern = "*.xlsx") 
 
+i <- 3
 # now, loop through the files, but remove the `.xlsx` suffix in the data 
 #   frame name
 for (i in 1:length(files)) {
@@ -234,6 +237,10 @@ result <- studs %>%
                summarise (frequency = n())
 print(result)
 
+studs %>%
+     group_by(LEVEL_OF_STUDY) %>%
+     tally()
+
 
 #
 # We have to do the same for all the variables of interes
@@ -247,7 +254,7 @@ print(result)
 ##   which was introduced in `dplyr` 0.7.0
 variables <- c('LEVEL_OF_STUDY', 'ATTENDANCE', 'YEAR_OF_STUDY', 
                'PROGRAMME', 'LOCATION', 'FINANCIAL_SUPPORT')
-#variable <- variables[1]
+# variable <- variables[1]
 
 for (variable in variables) {
      result <- studs %>%
