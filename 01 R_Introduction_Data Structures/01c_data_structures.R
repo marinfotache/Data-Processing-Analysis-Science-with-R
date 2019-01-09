@@ -52,6 +52,7 @@ ten_integers.1
 seq(from=5, to=-5, by=-1)
 
 
+
 # combine sequences and c function
 a_vector <- c( 2:4, 8:14) 
 a_vector [5]
@@ -508,15 +509,18 @@ final_grade <- c(9, 9.45, 9.75, 9, 6)
 
 student_gi <- data.frame(studentID, name, age, 
      scholarship, lab_assessment, final_grade, stringsAsFactors = FALSE)
-student_gi
+
+View(student_gi)
 str(student_gi)
 
 
 # compare with ....
+library(tidyverse)
 student_tibble <- tibble(studentID, name, age, 
      scholarship, lab_assessment, final_grade)
 str(student_tibble)
-
+glimpse(student_tibble)
+student_tibble
 
 # delete vectors which formed the data frame
 rm(studentID, name, age, scholarship, lab_assessment, final_grade)
