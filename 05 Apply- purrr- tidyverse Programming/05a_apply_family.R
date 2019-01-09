@@ -122,9 +122,9 @@ fuel_economy_2018 <- fuel_economy_2018 %>%
 ### Given the `fuel_economy_2018` data set...
 glimpse(fuel_economy_2018)
 
-### Display
-vars <- c('cty_l100km', 'hwy_l100km', 'combined_l100km', 'air_pollution',
-          'greenhouse', 'combined_CO2')
+### and the following variables...
+vars <- c('cty_l100km', 'hwy_l100km', 'combined_l100km', 
+          'air_pollution', 'greenhouse', 'combined_CO2')
 
 ### Compute the mean for all these variables and get the result 
 ###  as a vector or a matrix
@@ -136,7 +136,7 @@ is.vector(result)
 is.matrix(result)
 dim(result)
 length(result)
-result[1]
+result[3]
 result[1,1]
 glimpse(result)
 names(result)
@@ -167,7 +167,8 @@ glimpse(fuel_economy_2018)
 ## this is a two-step solution based on `apply`
 
 # get the result as a named vector
-result <- apply (fuel_economy_2018 %>% select_if(is.numeric), 2,
+result <- apply (fuel_economy_2018 %>% 
+                    select_if(is.numeric), 2,
                  sd, na.rm = TRUE) 
 
 # extract the max value
@@ -180,7 +181,10 @@ result[result == max(result)]
 ##  Given the fuel efficiency data set (see above) ...                ###
 glimpse(fuel_economy_2018)
 
-## ... and the UDF for descriptive statistics written in script `04b`...                         ###
+fuel_economy_2018 %>%
+     skimr::skim()
+
+## ... and the UDF for descriptive statistics written in script `04b`...###
 descr_stats <- function(x, na.omit=FALSE) {
      if (na.omit)
           x <- x[!is.na(x)]
@@ -204,6 +208,9 @@ descr_stats <- function(x, na.omit=FALSE) {
 result <- apply(fuel_economy_2018 %>% select_if(is.numeric), 2, 
                 descr_stats)
 result
+is.vector(result)
+is.matrix(result)
+is.list(result)
 View(result)
 
 

@@ -298,7 +298,7 @@ result <- fuel_economy_2018 %>%
      tibble(variable = names(.), n_of_distinct_values = as.numeric(.)) %>%
      select (-`.`)
      
-
+table(fuel_economy_2018$Displ, fuel_economy_2018$Drive)
 
 #########################################################################
 ###                     Task 5 (taken from scripts `02a`)             ###
