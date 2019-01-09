@@ -66,7 +66,6 @@ setwd('/Users/marinfotache/Google Drive/R(Mac)/DataSets')
 ###                 O. Import and prepare the data sets               ###
 #########################################################################
 
-
 #########################################################################
 ###            0.a. `States` (USA) data set - see script `11b`        ###
 ###                      (for scoring/regression)                     ###
@@ -302,7 +301,7 @@ summary(insurance_lm1)
 
 
 ## Set seed for reproducibility
-set.seed(123)
+set.seed(1234)
 
 ## Split the data into train/test using an index of row numbers:
 index__insurance <- caret::createDataPartition(y = insurance$charges, 
@@ -319,7 +318,7 @@ tr_insurance1 <- trainControl(method = "cv", number = 10)
 
 # train the model using 10-fold CV
 lm_insurance1_caret <- train(charges ~ ., data = main_train__insurance, 
-     method = "lm", trControl = tr_insurance1, trace = FALSE)
+     method = "lm", trControl = tr_insurance1)
 lm_insurance1_caret
 
 lm_insurance1_caret$results
