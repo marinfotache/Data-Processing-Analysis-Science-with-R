@@ -254,7 +254,8 @@ heart_gbm <- gbm::gbm(formula = AHD ~ .,
 heart_gbm
 summary(heart_gbm)
 
-
+# plot loss function as a result of n trees added to the ensemble
+gbm.perf(heart_gbm, method = "cv")
 
 #########################################################################
 #                             Display variables importance
