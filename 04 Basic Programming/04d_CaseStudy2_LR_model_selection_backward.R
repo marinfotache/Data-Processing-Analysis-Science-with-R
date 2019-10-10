@@ -11,21 +11,30 @@
 ############################################################################
 ###                      4d. Regression Models Selection                ###   
 ############################################################################
-####  last update: 14.11.2017
+####  last update: 10.10.2019
+
+### For a comprehensive discussion abour Reegression, see
+### https://github.com/marinfotache/Data-Processing-Analysis-Science-with-R/tree/master/11%20Regression
+
 
 library(tidyverse)
 options(scipen=10)
-library (stringr)
 library (broom)
 
-# install.packages('devtools')
-#library(devtools)
-# remove.packages('ggrepel')
-#devtools::install_github("slowkow/ggrepel")
 #install.packages("ggrepel")
 library(ggrepel)
+
+#install.packages('corrplot')
 library(corrplot)
+#install.packages('car')
 library(car)
+
+#install.packages('corrgram')
+library(corrgram)
+
+library(DataExplorer)
+
+setwd('/Users/marinfotache/Google Drive/R(Mac)/DataSets/to_be_deleted')
 
 
 ############################################################################
@@ -45,15 +54,30 @@ names(states) <- str_replace_all(names(states), ' |\\.', '_')
 head(states)
 
 
+# Get a comprehensive report about variables distribution and correlation
+config <- configure_report(
+     add_introduce = TRUE, 
+     add_plot_intro = TRUE,     
+     add_plot_missing = TRUE,     
+     add_plot_str = TRUE,
+     add_plot_histogram = TRUE, 
+     add_plot_density = TRUE,
+     add_plot_qq = TRUE,
+     add_plot_prcomp = FALSE,
+     add_plot_boxplot = TRUE,
+     add_plot_scatterplot = TRUE
+) 
+
+
+DataExplorer::create_report(states, config = config)
+
 # examine bivariate relationships
 cor(states %>% select (-State))
 
-library(corrplot)
 corrplot::corrplot(cor(states %>% select (-State), 
              method = "spearman"), method = "number", type = "upper")
 
 
-library(corrgram)
 corrgram::corrgram(states %>% select (-State) %>% select_if(is.numeric),
                    lower.panel=panel.conf, upper.panel=panel.pts)
 
@@ -74,6 +98,9 @@ corrgram::corrgram(states %>% select (-State) %>% select_if(is.numeric),
 
 states_lm1 <- lm(Murder ~ ., data = states %>% select (-State))
 summary(states_lm1)
+
+states_lm1$coefficients
+
 
 ####################################################
 ## with the `broom` package, we can collect simply
@@ -184,15 +211,18 @@ while (!stop) {
      current_step <- current_step + 1
      
      # fit the model
-     formula_ <- paste('Murder ~', paste(current_predictors, collapse = ' + '))
-     current_model <- lm(formula = formula_, data = states %>% select (-State))    
+     formula_ <- paste('Murder ~', 
+                       paste(current_predictors, collapse = ' + '))
+     current_model <- lm(formula = formula_, 
+                         data = states %>% select (-State))    
      # summary(current_model)
      
      # add the overall information about the data into the dataframe
      #  `the_backward_models`
      the_backward_models <- bind_rows(the_backward_models,
           glance(current_model) %>%
-               mutate (predictors = paste(current_predictors, collapse = ' + '),
+               mutate (predictors = paste(current_predictors, 
+                                          collapse = ' + '),
                        step = current_step))
      
      # find the least significant predictor
@@ -224,7 +254,8 @@ while (!stop) {
      # store the model residuals
      models_residuals <- bind_rows(models_residuals, 
           augment(states_lm1) %>%
-          mutate(step = current_step, n_of_predictors = length(current_predictors)) )     
+          mutate(step = current_step, n_of_predictors = 
+                      length(current_predictors)) )     
 
 }     
 
