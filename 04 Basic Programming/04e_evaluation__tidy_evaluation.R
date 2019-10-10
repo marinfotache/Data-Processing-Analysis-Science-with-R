@@ -224,6 +224,7 @@ studs <- read_excel(file, sheet = 1, col_names = TRUE, skip = 0)
 ## display the data frame structure
 glimpse(studs)
 
+
 ###################################################################
 ##                       Task no. 1
 # Print the frequency (of the values) for the following nominal
@@ -243,7 +244,7 @@ studs %>%
 
 
 #
-# We have to do the same for all the variables of interes
+# We have to do the same for all the variables of interest
 #    (which is bearable only when the number of variables is small)
 # ...
 # ...
@@ -467,7 +468,7 @@ result <- f_mean4(vars)
 
 
 ## If we want to call the function wihout including column names
-## wihin ` or ",  one must include function `enquos` 
+## within ` or ",  one must include function `enquos` 
 f_mean5 <- function(...) {
      
      # Use quos() to capture all the `...` as a list of formulas.
