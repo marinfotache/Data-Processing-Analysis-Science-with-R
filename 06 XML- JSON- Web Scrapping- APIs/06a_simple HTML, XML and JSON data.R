@@ -14,7 +14,7 @@
 ### See also the presentation:
 ### https://github.com/marinfotache/Data-Processing-Analysis-Science-with-R/blob/master/06%20XML-%20JSON-%20Web%20Scrapping-%20APIs/06_html_xml_json__web_scrap__apis.pptx
 ############################################################################
-## last update: 04.01.2019
+## last update: 30.10.2019
 
 
 # needed packages
@@ -61,7 +61,7 @@ setwd('/Users/marinfotache/Google Drive/R(Mac)/DataSets')
 ###            with `XML`/`XML2` packages                             ###
 ###       II.b. Import and manage simple XML files                    ###
 ###            with `flatxml` package                                 ###
-###  III. JSON data management with `jsonlite` and tidyjson` packages ###                                   ###
+###  III. JSON data management with `jsonlite` and tidyjson` packages ### 
 ###       III.1 Simple/rectangular data                               ###
 ###       III.2 Single-level nested data                              ###
 ###       III.3 Multi-level nested data                               ###            
@@ -96,11 +96,22 @@ head(exchange_rates)
 View(exchange_rates)
 names(exchange_rates)[1] <- 'Date'
 
+
 #########################################################################
-##                      Romanian family names frequency
-# http://www.name-statistics.org/ro/numedefamiliecomune.php
-url <- "http://www.name-statistics.org/ro/numedefamiliecomune.php"
-roNF <- htmltab::htmltab(url,which=1)
+##        Average daily maximum and minimum temperatures 
+##        for the eight largest cities in Romania
+##  source: Wikipedia
+url <- 'https://en.wikipedia.org/wiki/Romania'
+# the table of interest is the 2nd on the page
+main_cities_temperature <- htmltab::htmltab(url,which=2)
+
+
+#########################################################################
+##                        Administrative divisions of Romania
+##  source: Wikipedia
+url <- 'https://en.wikipedia.org/wiki/Romania'
+# the table of interest is the 3rd on the page
+main_admin_regions_ro <- htmltab::htmltab(url, which = 3)
 
 
 
@@ -110,11 +121,9 @@ roNF <- htmltab::htmltab(url,which=1)
 ###        (suitable for old-style, non-secure, `http` pages )        ###     
 #########################################################################
 
-#########################################################################
-##                      Romanian family names frequency
-# http://www.name-statistics.org/ro/numedefamiliecomune.php
-url <- "http://www.name-statistics.org/ro/numedefamiliecomune.php"
-roNF <- XML::readHTMLTable(url,which=1)
+##  Import montly earnings from the (Romanian) National Institute for Statistics
+url <- 'http://www.insse.ro/cms/ro/content/castiguri-salariale-din-1991-serie-lunara'
+test <- XML::readHTMLTable(url, which = 1, header = TRUE, encoding = "UTF-8")
 
 
 
@@ -130,9 +139,28 @@ roNF <- XML::readHTMLTable(url,which=1)
 ###            with `XML`/`XML2` packages                             ###
 #########################################################################
 
+
+#########################################################################
+##                       Romanian counties 
+url <- 'http://data.gov.ro/dataset/8ec29b07-1c5d-40a2-bfa7-a1f01d482d86/resource/16639504-4f56-423b-9188-85b103049437/download/nomjudete.xml'
+
+# in this case, function `xmlToDataFrame` works fine
+romanian_counties <- XML::xmlToDataFrame(url) %>%
+     arrange(DENUMIRE)
+
+View(romanian_counties)
+
+
 #########################################################################
 ##                                   CD catalog
 url <- 'https://www.w3schools.com/xml/cd_catalog.xml'
+
+# in this case, XML::xmlToDataFrame() does not work  
+cd_catalog <- XML::xmlToDataFrame(url) !!!!
+# Error: XML content does not seem to be XML: 'https://www.w3schools.com/xml/cd_catalog.xml'
+
+     
+# so, we'll need some features from `xml2` package
 cd_data <- xml2::read_xml(url)
 
 # some useful functions 
@@ -253,8 +281,7 @@ View(hamlet_flatxml_final)
 
 
 #########################################################################
-###  III. JSON data management with `jsonlite` and tidyjson` packages ###                                   ###
-#########################################################################
+###  III. JSON data management with `jsonlite` and tidyjson` packages ###                                 #########################################################################
 
 #########################################################################
 ###                     III.1 Simple/rectangular data                 ###
@@ -269,7 +296,8 @@ nobel_countries_df_jsonlite <- dplyr::bind_rows(nobel_countries_jsonlite)
 glimpse(nobel_countries_df_jsonlite)
 
 
-## with `tidyjson`
+## with `tidyjson`: NOTICE: this package was removed, so you want to use it, 
+## you have to install it from the archive
 nobel_countries_df_tydyjson <- paste(jsonlite::toJSON(
           jsonlite::fromJSON(nobel_countries_url)),
                                   collapse = ' ') %>%
@@ -293,7 +321,7 @@ test <- jsonlite::fromJSON(url)
 
 
 
-## with `jsonlite` - we'l use `unnest`
+## with `jsonlite` - we'll use `unnest`
 nobel_prizes_url <- 'http://api.nobelprize.org/v1/prize.json'
 nobel_prizes_jsonlite <- jsonlite::fromJSON(nobel_prizes_url, 
                flatten = TRUE)
