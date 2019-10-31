@@ -48,6 +48,9 @@ setwd('/Users/marinfotache/Google Drive/R(Mac)/DataSets')
 ###  II. Extract non-tabular data from web pages                      ###
 ###  III. Dealing with tables scattered on multiple web pages         ###
 #########################################################################
+## see also:
+## https://cran.r-project.org/web/views/WebTechnologies.html
+#########################################################################
 
 
 #########################################################################

@@ -155,8 +155,8 @@ View(romanian_counties)
 ##                                   CD catalog
 url <- 'https://www.w3schools.com/xml/cd_catalog.xml'
 
-# in this case, XML::xmlToDataFrame() does not work  
-cd_catalog <- XML::xmlToDataFrame(url) !!!!
+# in this case, XML::xmlToDataFrame() does not work  !!!!
+cd_catalog <- XML::xmlToDataFrame(url) 
 # Error: XML content does not seem to be XML: 'https://www.w3schools.com/xml/cd_catalog.xml'
 
      
@@ -274,7 +274,8 @@ hamlet_flatxml_final <- hamlet_flatxml_init %>%
             rowid_speaker_final, rowid_line_final,
             attribute = elem., value = value.) %>%
      spread(attribute, value) %>%
-     dplyr::select(ACT_TITLE, SCENE_TITLE, STAGEDIR, SPEAKER, LINE)
+     dplyr::select(ACT_TITLE, SCENE_TITLE, STAGEDIR, SPEAKER, LINE) %>%
+     mutate (row_number = row_number())
      
 View(hamlet_flatxml_final)
 
@@ -283,9 +284,15 @@ View(hamlet_flatxml_final)
 #########################################################################
 ###  III. JSON data management with `jsonlite` and tidyjson` packages ###                                 #########################################################################
 
+## see also:
+## https://cran.r-project.org/web/views/WebTechnologies.html
+## https://arxiv.org/pdf/1403.2805.pdf
+
+
 #########################################################################
 ###                     III.1 Simple/rectangular data                 ###
 #########################################################################
+
 
 ## with `jsonlite`
 nobel_countries_url <- 'http://api.nobelprize.org/v1/country.json'
@@ -296,7 +303,7 @@ nobel_countries_df_jsonlite <- dplyr::bind_rows(nobel_countries_jsonlite)
 glimpse(nobel_countries_df_jsonlite)
 
 
-## with `tidyjson`: NOTICE: this package was removed, so you want to use it, 
+## with `tidyjson`: NOTICE: this package was removed from CRAN, so you want to use it, 
 ## you have to install it from the archive
 nobel_countries_df_tydyjson <- paste(jsonlite::toJSON(
           jsonlite::fromJSON(nobel_countries_url)),
@@ -354,6 +361,7 @@ nobel_prizes_df_tydyjson <- paste(jsonlite::toJSON(jsonlite::fromJSON(nobel_priz
           laureate_motivation = jstring("motivation"),
           laureate_share = jstring("share")
           )   
+# !!! error !!!
 
 glimpse(nobel_prizes_df_tydyjson)
 
@@ -371,9 +379,10 @@ nobel_laureates_jsonlite <- jsonlite::fromJSON(nobel_laureates_url,
 nobel_laureates_jsonlite
 
 nobel_laureates_df_jsonlite <- dplyr::bind_rows(nobel_prizes_jsonlite, 
-                                                .id = 'laureates') %>%
-     unnest(prizes)
-### ... error
+                                                .id = 'laureates_data') %>%
+     unnest(laureates)
+
+View(nobel_laureates_df_jsonlite)
 
 
 ## with `tidyjson` - we'll multiple `enter_object`s  with additionals `gather_array`s 
@@ -405,7 +414,7 @@ nobel_laureates_df_tydyjson <- paste(jsonlite::toJSON(jsonlite::fromJSON(nobel_l
           afiliation_city = jstring("city"),
           afiliation_country = jstring("country")
           )
-          
+View(nobel_laureates_df_tydyjson)          
           
 
 
