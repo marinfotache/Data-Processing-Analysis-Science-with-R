@@ -14,7 +14,7 @@
 ### See also the presentation:
 ### https://github.com/marinfotache/Data-Processing-Analysis-Science-with-R/blob/master/06%20XML-%20JSON-%20Web%20Scrapping-%20APIs/06_html_xml_json__web_scrap__apis.pptx
 ############################################################################
-## last update: 05.01.2019
+## last update: 31.10.2019
 
 
 # needed packages
@@ -62,25 +62,29 @@ setwd('/Users/marinfotache/Google Drive/R(Mac)/DataSets')
 ###              I.a. Dealing with one table per web page             ###
 #########################################################################
 
+
+#########################################################################
+##                        Administrative divisions of Romania
 ###
-### Task: Extract the Romanian names frequency from the web page
-### below:
-url <- "http://www.name-statistics.org/ro/numedefamiliecomune.php"
+### Task: Extract the Romanian main Administrative divisions
 
-# remember that that the solution in script `06a` was...
-#roNF1 <- XML::readHTMLTable(url,which=1)
 
-# next solution is based on `rvest`
+##  source: Wikipedia
+url <- 'https://en.wikipedia.org/wiki/Romania'
+
+## one previous solution (script `06a...`)
+# the table of interest is the 3rd on the page
+# main_admin_regions_ro <- htmltab::htmltab(url, which = 3)
 
 # read the web page
-romanian_names_raw <- xml2::read_html("http://www.name-statistics.org/ro/numedefamiliecomune.php") 
+admin_raw <- xml2::read_html(url) 
 
 # extract the table
-romanian_names <- romanian_names_raw %>%
+main_admin_regions_ro <- admin_raw %>%
      rvest::html_nodes("table") %>%
-     .[[1]] %>%     # there one table within the page
+     .[[3]] %>%     # third table within the page
      rvest::html_table(, fill=TRUE ,header=TRUE)
-     
+
 
 
 #########################################################################
