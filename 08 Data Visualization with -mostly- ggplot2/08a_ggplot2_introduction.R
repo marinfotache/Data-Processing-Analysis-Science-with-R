@@ -103,9 +103,11 @@ glimpse(exchange_rates)
 
 
 ggplot(
-     exchange_rates %>% mutate (EUR = as.numeric(EUR)),     # the data source
-     aes (x = Date, y = EUR)) +                             # aestetics
-     geom_point()                                           # `geom`s 
+     exchange_rates %>% 
+          mutate (Date = lubridate::dmy(Date),
+                       EUR = as.numeric(EUR)),     # the data source
+     aes (x = Date, y = EUR)) +                    # aestetics
+     geom_point()                                  # `geom`s 
 
 # not so lisible (see next sections)
 
@@ -143,7 +145,7 @@ ggplot(
 
 
 
-## solution 2 - transform data from `wider` to `longoer` format and
+## solution 2 - transform data from `wider` to `longer` format and
 ##    use `color` aestetic
 
 # first, trasnform data
@@ -163,10 +165,10 @@ ggplot(
 
 ## solution 3 - facet_wrap (using the same transformed data)
 ggplot(
-     data,                                                     # the data source
-     aes (x = Date, y = exchange_rate, color = currency)) +    # general `aestetics`
-     geom_point() +                                            # a single `geom` 
-     facet_wrap( ~ currency)                 # display each currence in a separate panel  
+     data,                                                   # the data source
+     aes (x = Date, y = exchange_rate, color = currency)) +  # general `aestetics`
+     geom_point() +                                          # a single `geom` 
+     facet_wrap( ~ currency)   # display each currency in a separate panel  
 
 
 
@@ -193,9 +195,9 @@ glimpse(data)
 
 # ... `geom_line`
 ggplot(
-     data,                                                     # the data source
-     aes (x = Date, y = exchange_rate, color = currency)) +    # general `aestetics`
-     geom_line()                                               # `geom` for a line plot 
+     data,                                                   # the data source
+     aes (x = Date, y = exchange_rate, color = currency)) +  # general `aestetics`
+     geom_line()                                  # `geom` for a line plot 
 
 
 
@@ -222,7 +224,7 @@ ggplot(
 ggplot(
      data,                       
      aes (x = exchange_rate, fill = currency)) +
-     geom_histogram(alpha = 0.5)                   # `transparency/translucency`
+     geom_histogram(alpha = .5)                   # `transparency/translucency`
 
 # ... `geom_histogram` with `facets`
 ggplot(
@@ -276,18 +278,18 @@ ggplot(
 
 ## Setting the title and subtitle with `ggtitle`
 ggplot(
-     data,                                                     # the data source
-     aes (x = Date, y = exchange_rate, color = currency)) +    # general `aestetics`
-     geom_line() +                                              # `geom` for a line plot 
+     data,                                                   # the data source
+     aes (x = Date, y = exchange_rate, color = currency)) +  # general `aestetics`
+     geom_line() +                                # `geom` for a line plot 
      ggtitle("Exchange Rates - RON vs. EUR/USD/GBP", 
              subtitle = "October, 22 - November 02")
 
 
 ## Setting the title, subtitle and caption with `labs` (from `labels`)
 ggplot(
-     data,                                                     # the data source
-     aes (x = Date, y = exchange_rate, color = currency)) +    # general `aestetics`
-     geom_line() +                                              # `geom` for a line plot 
+     data,                                                   # the data source
+     aes (x = Date, y = exchange_rate, color = currency)) +  # general `aestetics`
+     geom_line() +  # `geom` for a line plot 
      labs(title = "Exchange Rates - RON vs. EUR/USD/GBP", 
              subtitle = "October, 22 - November 02",
              caption = "Source: BNR")
@@ -317,14 +319,14 @@ ggplot(
 
 # also notice `\n` for wrapping the title
 ggplot(
-     data,                                                     # the data source
-     aes (x = Date, y = exchange_rate, color = currency)) +    # general `aestetics`
-     geom_line() +                                              # `geom` for a line plot 
+     data,                                                   # the data source
+     aes (x = Date, y = exchange_rate, color = currency)) +  # general `aestetics`
+     geom_line() +                                # `geom` for a line plot 
      labs(title = "Exchange Rates \nRON vs. EUR/USD/GBP", 
              subtitle = "October, 22 - November 02",
              caption = "Source: BNR") +
      theme(
-        plot.title = element_text(color = "darkblue", size = 13, 
+        plot.title = element_text(color = "darkblue", size = 14, 
                                   face = "bold", hjust = 0.5, lineheight = 1.2),
         plot.subtitle = element_text(size = 12, hjust = 0.5),
         plot.caption = element_text(size = 8)
@@ -343,9 +345,9 @@ ggplot(
 
 # we continue the last example, changing the axis labels and text format
 ggplot(
-     data,                                                     # the data source
-     aes (x = Date, y = exchange_rate, color = currency)) +    # general `aestetics`
-     geom_line() +                                              # `geom` for a line plot 
+     data,                                                  # the data source
+     aes (x = Date, y = exchange_rate, color = currency)) + # general `aestetics`
+     geom_line() +                                          # `geom` for a line plot 
      labs(
           title = "Exchange Rates \nRON vs. EUR/USD/GBP", 
           subtitle = "October, 22 - November 02",
@@ -483,8 +485,7 @@ ggplot(
 
 
 #######################################################################
-###	                           II.3 Legend                         ###	                   
-#######################################################################
+###	                           II.3 Legend                         ###	    #######################################################################
 
 # remove the legend
 ggplot(
@@ -539,7 +540,7 @@ ggplot(
 
    
 #######################################################################
-###	                           II.4 Faceting                       ###	                   
+###	                           II.4 Faceting                       ###	    
 #######################################################################
 
  # we already saw the next plot:
@@ -567,13 +568,15 @@ data_earning <- net_earning %>%
      pivot_longer(-Year, names_to = 'month', values_to = "net_earning") %>%
      mutate (net_earning = map_chr(.x = .$net_earning, 
                ~ str_remove_all(.x, '\\.') )) %>%
-     mutate( net_earning = if_else(Year <= 2004, as.numeric(net_earning) / 10000, 
+     mutate( net_earning = if_else(Year <= 2004, 
+                                   as.numeric(net_earning) / 10000, 
                                    as.numeric(net_earning) )
      ) %>%
      group_by(Year) %>%
      mutate (new_month = paste0(
           str_pad(row_number(), width = 2, side = 'left', pad = '0'), 
-          '-', month))
+          '-', month)) %>%
+     ungroup()
      
 glimpse(data_earning)     
 
@@ -606,9 +609,10 @@ ggplot(data_earning,
 
 # add a scale on the y-axis
 ggplot(
-     data,                                                     # the data source
-     aes (x = Date, y = exchange_rate, color = currency)) +    # general `aestetics`
-     geom_line() +                                              # `geom` for a line plot 
+     data,                         # the data source
+     aes (x = Date, y = exchange_rate, 
+          color = currency)) +    # general `aestetics`
+     geom_line() +                # `geom` for a line plot 
      labs(
           title = "Exchange Rates \nRON vs. EUR/USD/GBP", 
           subtitle = "October, 22 - November 02",
@@ -624,7 +628,7 @@ ggplot(
      ylab("Exchange Rate (1 currency = ? RON)" ) +
      # here we change the angle of text on the x axis (45%)
      theme(axis.text.x = element_text(size = 9, angle = 45, hjust = 1)) +
-     scale_y_continuous(limits = c(4,6), breaks = seq(4, 6, 0.1)) 
+     scale_y_continuous(limits = c(4,5.5), breaks = seq(4, 5.5, 0.1)) 
 
 
 
