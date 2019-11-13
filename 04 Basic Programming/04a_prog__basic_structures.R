@@ -13,7 +13,7 @@
 ### See also the presentation:
 ### https://github.com/marinfotache/Data-Processing-Analysis-Science-with-R/blob/master/04%20Basic%20Programming/04_Programming_UDFs_eval_tidyeval.pptx
 ############################################################################
-## last update: 16.11.2018
+## last update: 13.11.2019
 
 library(tidyverse)
 library(readxl)
@@ -88,6 +88,8 @@ glimpse(studs)
 
 ## display variabile `YEAR_OF_STUDY` values
 studs$YEAR_OF_STUDY
+
+table(studs$YEAR_OF_STUDY)
 
 ##
 ## task: change the roman numbers (I, II, III) with 
@@ -189,6 +191,7 @@ fuel_economy_2018 <- fuel_economy_2018 %>%
 glimpse(fuel_economy_2018)
 names(fuel_economy_2018)
 
+fuel_economy_2018[[1]]
 
 # sol. 1 - `repeat`/`break`
 variable <- ""
@@ -322,7 +325,7 @@ for (j in 1:ncol(fuel_economy_2018)) {
 # now, get the result based on `cols`vector
 result_2 <-  fuel_economy_2018[cols]
 glimpse(result_2)
-
+View(result_2)
 
 
 #########################################################################
