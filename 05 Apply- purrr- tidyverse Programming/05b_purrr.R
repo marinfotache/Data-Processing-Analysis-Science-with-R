@@ -14,7 +14,7 @@
 ### See also the presentation:
 ### xxxxxxxx
 ############################################################################
-## last update: 13.11.2019
+## last update: 19.11.2019
 
 
 # needed packages
@@ -97,6 +97,12 @@ file <- "anonymized_students_FEAA_2014.xlsx"
 studs <- read_excel(file, sheet = 1, col_names = TRUE, skip = 0)
 ## display the data frame structure
 glimpse(studs)
+
+
+#########################################################################
+##             Chinook data base (imported from PostgreSQL)
+## example taken from script `03b_tidy-verse.R`
+load('chinook.RData')
 
 
 
@@ -216,7 +222,7 @@ print(result)
 glimpse(result)
 
 
-# in order to discplay the `mean` as a number, we'll need `unnest` function
+# in order to display the `mean` as a number, we'll need `unnest` function
 result <- fuel_economy_2018 %>%
      select (!!!vars) %>%
      map(., ~ mean(.x, na.rm = TRUE)) %>%
@@ -427,6 +433,27 @@ result <- file_names %>%
 
 
 #########################################################################
+###            Using anonymous functions inside `map`                 ###
+#########################################################################
+
+#########################################################################
+###                     Task 6 (taken from scripts `03b`)             ###
+### Display the number of NA values for each column of a data frame
+### Ex: data frame `customer` (`chinook` data base)
+
+## Solution 1: 
+temp1 <- map(customer, function(x) sum(is.na(x)))
+temp1
+
+## Solution 2: 
+temp2 <- map(customer, ~ sum(is.na(.)))
+temp2
+
+identical(temp1, temp2)
+
+
+
+#########################################################################
 ###                 I.b  `map_dfr` and `map_dfc`                      ###
 #########################################################################
 
@@ -618,6 +645,25 @@ result <- file_names %>%
                'MongoDB', 'MySQL'))
 
 glimpse(result)     
+
+
+#########################################################################
+###                     Task 6 (taken from scripts `03b`)             ###
+### Display, as a data frame, the number of NA values for each column 
+### of a data frame
+### Ex: data frame `customer` (`chinook` data base)
+
+
+##
+## Solution 1: 
+temp1 <- map_dfr(customer, function(x) sum(is.na(x)))
+temp1
+
+## Solution 2: 
+temp2 <- map_dfc(customer, ~ sum(is.na(.)))
+temp2
+
+identical(temp1, temp2)
 
 
 
