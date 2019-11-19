@@ -13,7 +13,7 @@
 ### See also the presentation:
 ### https://github.com/marinfotache/Data-Processing-Analysis-Science-with-R/blob/master/04%20Basic%20Programming/04_Programming_UDFs_eval_tidyeval.pptx
 ############################################################################
-## last update: 22.11.2018
+## last update: 13.11.2019
 
 # packages
 library(tidyverse)
@@ -72,6 +72,7 @@ string_authors <- 'Fotache, M.; Strimbei, C.; Cretu, L.'
           }) (string_authors)
 
 str_split(string_authors, ';')[[1]][[2]]
+
 
 
 #########################################################################
@@ -157,27 +158,42 @@ Position( function( x ) x > 10,
 
 ##############################################################################
 ###                 UDF for cleaning a string (in Romania)                 ###
-library(stringr)
 f_clean_string <- function (the_string) {
 	# remove punctuation characters (by replacing them with blanks)
-	the_string <- str_replace_all(the_string, pattern = "[[:punct:]]", " ")
-	# removing double (triple...) blanks
-	the_string <- str_replace_all(the_string, pattern = "\\s+", " ")
+	# the_string <- str_replace_all(the_string, pattern = "[[:punct:]]", " ")
+	
+     # removes whitespace from start and end of string; also reduces repeated 
+     #    whitespace inside a string.
+     #the_string <- str_squish(str_replace_all(the_string, "(\\n)|(\\r)", " " ))
+
 	# uniformization (lowercase)
-	the_string <- tolower(the_string)
+	# the_string <- tolower(the_string)
 
 	# transforming Romanian characters
 	the_string <- str_replace_all(the_string, pattern = "ă", "a")
+	the_string <- str_replace_all(the_string, pattern = "Ă", "A")
 	the_string <- str_replace_all(the_string, pattern = "â", "a")
+	the_string <- str_replace_all(the_string, pattern = "Â", "A")
 	the_string <- str_replace_all(the_string, pattern = "î", "i")
+	the_string <- str_replace_all(the_string, pattern = "Î", "I")
 	the_string <- str_replace_all(the_string, pattern = "ş", "s")
+	the_string <- str_replace_all(the_string, pattern = "ș", "s")
+	the_string <- str_replace_all(the_string, pattern = "Ş", "S")
+	the_string <- str_replace_all(the_string, pattern = "Ș", "S")
 	the_string <- str_replace_all(the_string, pattern = "ţ", "t")
+	the_string <- str_replace_all(the_string, pattern = "ț", "t")
+	the_string <- str_replace_all(the_string, pattern = "ț", "t")
+	
+	the_string <- str_replace_all(the_string, pattern = "Ţ", "T")
+	the_string <- str_replace_all(the_string, pattern = "Ț", "T")
+	the_string <- str_replace_all(the_string, pattern = "Ț", "T")
+
 
 	return (the_string)	
 }          
 
 # test the function
-f_clean_string('Cocostârcii     se ; Descocostârcăresc')   
+f_clean_string('Cocostârcii     se ; DescocostÂrcăresc')   
 
 
 ##############################################################################
@@ -213,9 +229,10 @@ temp <- descr_stats(fuel_economy_2018$combined_l100km)
 ### for this and other examples on linear regression, see scripts 11a and 11b
 # lm() function requires a data frame;state.x77 dataset is contained in a matrix, 
 #    so one must convert it:
-states_ <- as.tibble(state.x77) %>%
+states_ <- as_tibble(state.x77) %>%
      set_names(str_replace_all(names(.), '( |\\.)', '_'))
 glimpse(states_)
+
 
 # descriptive statistics about variables
 skimr::skim(states_)
@@ -308,6 +325,7 @@ glimpse(invoice_details)
 ##   - Use this function in another function that returns the amount of 
 ##        a given invoice (without joining the data frames)
 
+productid_ <- 2
 
 ## function `g_get_vatpercent` reveives a `productid` and returns
 ## the value of its `vatpercent`
@@ -320,12 +338,14 @@ f_get_vatpercent <- function (productid_) {
 }
 
 # test the function
-f_get_vatpercent(1)
+f_get_vatpercent(3)
 
 
 ##  function `f_invoice_amount` gets an `invoiceno` and 
 ##  returns its amount (without joining any data frames)
 invoiceno_ = 1112
+
+
 f_invoice_amount <- function (invoiceno_) {
      # `invoice_details` 
      invoice_details %>%
@@ -336,13 +356,16 @@ f_invoice_amount <- function (invoiceno_) {
           summarise (amount = sum(quantity * unitprice * (1 + vat))) %>%
           pull()
 }
-# test the function
+## test the function
+
+# this work!
 f_invoice_amount(1111)
 
+
+# this does not work (an error is triggered)
 f_invoice_amount(9999)
 
-invoiceno_ = 111999
-
+# modify the function:
 f_invoice_amount <- function (invoiceno_) {
      # `invoice_details` 
      df <- invoice_details %>%

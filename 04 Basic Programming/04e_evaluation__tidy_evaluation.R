@@ -13,12 +13,11 @@
 ### See also the presentation:
 ### https://github.com/marinfotache/Data-Processing-Analysis-Science-with-R/blob/master/04%20Basic%20Programming/04_Programming_UDFs_eval_tidyeval.pptx
 ############################################################################
-## last update: 27.11.2018
+## last update: 13.11.2019
 
 # needed packages
 library(tidyverse)
 library(rlang)
-library(purrr)
 library(readxl)
 library(rio)
 library(skimr)
@@ -43,7 +42,8 @@ setwd('/Users/marinfotache/Google Drive/R(Mac)/DataSets')
 ###  II. `get` function                                               ###
 ###  III. Introduction to tidy evalualuation                          ###
 ###       III.a. dynamic groups in `dplyr`                            ###
-###       III.b. quosures                                             ###
+###       III.b New(er) style (`curly-curly operator`) (2019)         ###
+###       III.c. quosures                                             ###
 ###            - function `quo`                                       ###
 ###            - operator `!!`                                        ###
 ###            - function `rlang::sym`                                ###
@@ -277,7 +277,8 @@ for (variable in variables) {
                mutate (foo = 1) %>%
                inner_join(
                     studs %>%
-                         group_by( value = .data[[variable]] ) %>%     ## notice `.data[[variable]]`
+                         ## notice `.data[[variable]]`
+                         group_by( value = .data[[variable]] ) %>%  
                          summarise (frequency = n()) %>%
                          ungroup() %>%
                     mutate (foo = 1)     
@@ -285,6 +286,74 @@ for (variable in variables) {
           select (-foo)  )   
 }     
 View(final_result)
+
+
+
+
+#########################################################################
+###       III.b New style (`curly-curly operator`) (2019)             ###
+#########################################################################
+
+
+# a simple functions for computing the frequency of a variable values
+count_groups <- function(df, groupvar){
+     df %>% 
+          group_by({{ groupvar }}) %>% 
+          summarise(frequency = n()) %>%
+          ungroup()
+}
+
+# simple call
+test <- count_groups(studs, LEVEL_OF_STUDY)
+test 
+
+
+# call the function and transform (a bit) the result
+test <- count_groups(studs, LEVEL_OF_STUDY) %>%
+     add_column(variable = names(.)[[1]], .before = TRUE) %>%
+     set_names(c('variable', 'value', 'frequency'))
+test
+
+
+# use the function and the above trasnsformation for getting `final_result`
+final_result2 <- bind_rows(
+     count_groups(studs, LEVEL_OF_STUDY) %>%
+          add_column(variable = names(.)[[1]], .before = TRUE) %>%
+          set_names(c('variable', 'value', 'frequency')),
+     count_groups(studs, ATTENDANCE) %>%
+          add_column(variable = names(.)[[1]], .before = TRUE) %>%
+          set_names(c('variable', 'value', 'frequency')),
+     count_groups(studs, YEAR_OF_STUDY) %>%
+          add_column(variable = names(.)[[1]], .before = TRUE) %>%
+          set_names(c('variable', 'value', 'frequency')),
+     count_groups(studs, PROGRAMME) %>%
+          add_column(variable = names(.)[[1]], .before = TRUE) %>%
+          set_names(c('variable', 'value', 'frequency')),
+     count_groups(studs, LOCATION) %>%
+          add_column(variable = names(.)[[1]], .before = TRUE) %>%
+          set_names(c('variable', 'value', 'frequency')),
+     count_groups(studs, FINANCIAL_SUPPORT) %>%
+          add_column(variable = names(.)[[1]], .before = TRUE) %>%
+          set_names(c('variable', 'value', 'frequency'))
+     ) 
+
+identical(final_result, final_result2)
+
+
+# there's a shorter version
+final_result3 <- bind_rows(
+     count_groups(studs, LEVEL_OF_STUDY),
+     count_groups(studs, ATTENDANCE),
+     count_groups(studs, YEAR_OF_STUDY),
+     count_groups(studs, PROGRAMME),
+     count_groups(studs, LOCATION),
+     count_groups(studs, FINANCIAL_SUPPORT)
+     ) %>%
+     # now, pivot_longer...
+     pivot_longer(-frequency, names_to = "variable",
+                  values_to = "value") %>%
+     filter (!is.na(value)) %>%
+     select (variable, value, frequency)
 
 
 

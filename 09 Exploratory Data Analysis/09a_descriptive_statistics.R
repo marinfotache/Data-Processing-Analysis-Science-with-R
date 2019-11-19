@@ -13,7 +13,7 @@
 ### See also the presentation:
 ### https://github.com/marinfotache/Data-Processing-Analysis-Science-with-R/blob/master/09%20Exploratory%20Data%20Analysis/09%20Exploratory%20Data%20Analysis.pptx
 ############################################################################
-## last update: 02.11.2018
+## last update: 13.11.2019
 
 
 ############################################################################
@@ -29,13 +29,11 @@
 setwd('/Users/marinfotache/Google Drive/R(Mac)/DataSets')
 
 # giving up scientific notation (1.6e+07)
-options("scipen"=30, "digits"=14)
+options("scipen"=999, "digits"=4)
 
 
 # needed packages
 library(tidyverse)
-#install.packages('modeest')  # for computing median 
-library(modeest)
 
 # install.packages('skimr')
 library(skimr) # for summary statistics
@@ -50,19 +48,18 @@ library(GGally) # for correlation plots
 library(corrplot) # # for correlation plots
 
 
-
 #######################################################################
 ###	                              Agenda                           ###	
 #######################################################################
-###	 I. Basic information about data (observations, variables)     ###                           ###
+###	 I. Basic information about data (observations, variables)     ###     
 ###	 II. Data locality/spread/shape                                ###
 ###	 II.1 Data locality/spread/shape for interval/ratio variables  ###
 ###	 II.2 Data locality/spread/shape for ordinal variables         ###
 ###	 II.3 Data locality/spread/shape for nominal variables         ###
-###	 II. Measure of association between variables                  ###
-###	 II.1 Association between interval/ratio variables             ###
-###	 II.2 Association between ordinal variables                    ###
-###	 II.3 Association between nominal variables                    ###
+###	 III. Measure of association between variables                  ###
+###	 III.1 Association between interval/ratio variables             ###
+###	 III.2 Association between ordinal variables                    ###
+###	 III.3 Association between nominal variables                    ###
 #######################################################################
 
 
@@ -233,8 +230,7 @@ table(vector.1)
 as.numeric(names(sort(table(vector.1), decreasing=TRUE)[1]))
 # so the mode is 23, and it oocurs 4 times in "vector.1"
 
-# wih `modest` package:
-modeest::mlv(vector.1)
+
 
 ###
 ### min, max, range
@@ -718,7 +714,7 @@ invoice_detailed %>%
 
 
 #######################################################################
-###	          II. Measure of association between variables         ###
+###	          III. Measure of association between variables        ###
 #######################################################################
 
 ## See also:
@@ -746,7 +742,7 @@ invoice_detailed %>%
 
 
 #######################################################################
-###        II.1 Association between interval/ratio variables        ###
+###        III.1 Association between interval/ratio variables       ###
 #######################################################################
 
 
@@ -787,7 +783,8 @@ cor.test(faithful$eruptions, faithful$waiting,
 ##  2) Visualize the correlation  
 
 # Solution with `scatterplotMatrix` function in `car` package. 
-# `scatterplotMatrix` provides scatter plots of the variables with each other in the off-diagonals and 
+# `scatterplotMatrix` provides scatter plots of the variables 
+#    with each other in the off-diagonals and 
 #    superimposes smoothed (loess) and linear fit lines on these plots; 
 # the principal diagonal contains density and rug plots for each variable.
 car::scatterplotMatrix(faithful, spread=FALSE, lty.smooth=2, 
@@ -883,7 +880,7 @@ corrplot(., order="hclust",
 
 
 #######################################################################
-###	          II.2 Association between ordinal variables           ###
+###	          III.2 Association between ordinal variables          ###
 #######################################################################
 
 ## For ordinal data, two of the three correlation coefficients are
@@ -922,7 +919,7 @@ cor (fuel_economy_2018[c('n_of_cyl', 'air_pollution',
 
 
 #######################################################################
-###	          II.3 Association between nominal variables           ###
+###	         III.3 Association between nominal variables           ###
 #######################################################################
 
 #    In order to estimate the strength of the relationships between

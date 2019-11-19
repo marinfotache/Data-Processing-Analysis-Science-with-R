@@ -134,7 +134,8 @@ ggplot(data = data, aes(x = PROGRAMME, y = n_of_studs,
 	geom_bar(colour="black", stat="identity")
 
 # Remove the legend, since in this case it is redundant
-ggplot(data = data, aes(x = PROGRAMME, y = n_of_studs, fill = PROGRAMME)) +
+ggplot(data = data, aes(x = PROGRAMME, y = n_of_studs, 
+                        fill = PROGRAMME)) +
     geom_bar(colour="black", stat="identity") +
     guides(fill=FALSE)
 
@@ -175,7 +176,8 @@ ggplot(data = data, aes(x = PROGRAMME, y = n_of_studs,
     theme(plot.title = element_text(hjust = 0.5))  # center the title
 
 # rotate the entire graph with 90 degrees
-ggplot(data = data, aes(x = PROGRAMME, y = n_of_studs, 
+ggplot(data = data, 
+     aes(x = PROGRAMME, y = n_of_studs, 
                         fill = PROGRAMME)) +
      geom_bar(stat="identity") +
      coord_flip()  +   # horizontal bars
@@ -218,7 +220,8 @@ ggplot(., aes (x = productname, y = freq, fill = productname)) +
      xlab("product name") + ylab("Number of occurences (frequency)") +
      ggtitle("Product Frequency (Overall)") +
      theme(plot.title = element_text(hjust = 0.5)) +  # center the title
-     scale_y_continuous( breaks = seq(0, 80, 5))
+     scale_y_continuous( breaks = seq(0, 80, 5)) +
+     theme_bw()
      
 
 

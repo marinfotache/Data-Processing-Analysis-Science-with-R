@@ -14,14 +14,14 @@
 ### See also the presentation:
 ### xxxxxxxx
 ############################################################################
-## last update: 05.12.2018
+## last update: 19.11.2019
 
 
 # needed packages
 library(tidyverse)
 library(readxl)
-library(purrr)
-library(stringr)
+#library(purrr)
+#library(stringr)
 
 
 ############################################################################
@@ -99,6 +99,12 @@ studs <- read_excel(file, sheet = 1, col_names = TRUE, skip = 0)
 glimpse(studs)
 
 
+#########################################################################
+##             Chinook data base (imported from PostgreSQL)
+## example taken from script `03b_tidy-verse.R`
+load('chinook.RData')
+
+
 
 #########################################################################
 ###      Create two versions of  descriptive statistics function      ###
@@ -153,6 +159,7 @@ descr_stats_long <- function(x, na.omit=FALSE) {
           ))
 }
 
+
 #########################################################################
 ###                           I.   `map_*`                            ###
 #########################################################################
@@ -172,7 +179,8 @@ descr_stats_long <- function(x, na.omit=FALSE) {
 ###                     Task 1 (taken from script `05a`):             ###
 ### Given the `fuel_economy_2018` data set...
 glimpse(fuel_economy_2018)
-### create a data frame with the means of the following variables
+
+### ...create a data frame with the means of the following variables
 vars <- c('cty_l100km', 'hwy_l100km', 'combined_l100km', 'air_pollution',
           'greenhouse', 'combined_CO2')
 
@@ -183,7 +191,8 @@ result <- fuel_economy_2018 %>%
      map(., mean, na.rm = TRUE) %>%
      tibble() %>%   # `map` result is a list, so we need `tibble`
      set_names('mean') %>%
-     mutate(variable = vars )
+     mutate(variable = vars ) %>%
+     transmute (variable, mean)
 
 # ... the same for the second solution
 result <- fuel_economy_2018 %>%
@@ -191,6 +200,45 @@ result <- fuel_economy_2018 %>%
      map(., mean, na.rm = TRUE) %>%
      tibble(variable = names(.), mean = .)
 
+result
+names(result)
+
+
+# the third second solution intoroduces another notation (`~`)
+result <- fuel_economy_2018 %>%
+     select (!!!vars) %>%
+     map(., ~ mean(.x, na.rm = TRUE)) %>%
+     tibble(variable = names(.), mean = .)
+
+
+# Comment:
+# Notice the observation between...
+View(result)
+# ... and
+print(result)
+
+
+# column `mean` of of type `named list`
+glimpse(result)
+
+
+# in order to display the `mean` as a number, we'll need `unnest` function
+result <- fuel_economy_2018 %>%
+     select (!!!vars) %>%
+     map(., ~ mean(.x, na.rm = TRUE)) %>%
+     tibble(variable = names(.), mean = .) %>%
+     unnest(mean)
+
+glimpse(result)
+print(result)
+
+# to be fair, function `unnest` may be avoided:
+result <- fuel_economy_2018 %>%
+     select (!!!vars) %>%
+     map(., ~ mean(.x, na.rm = TRUE)) %>%
+     tibble(variable = names(.), mean = as.numeric(.))
+
+glimpse(result)
 
 
 
@@ -206,6 +254,17 @@ glimpse(fuel_economy_2018)
 result <- fuel_economy_2018 %>% 
      select_if(is.numeric) %>%
      map(., sd, na.rm = TRUE) %>%
+     tibble(variable = names(.), sd = as.numeric(.)) %>%
+     transmute(variable, sd) %>%
+     top_n(1, sd)
+
+glimpse(result)
+
+
+# the second notation
+result <- fuel_economy_2018 %>% 
+     select_if(is.numeric) %>%
+     map(., ~ sd (.x, na.rm = TRUE)) %>%
      tibble(variable = names(.), sd = as.numeric(.)) %>%
      transmute(variable, sd) %>%
      top_n(1, sd)
@@ -232,13 +291,34 @@ glimpse(fuel_economy_2018)
 
 ## Solutions:
 
-## 3.a `result` will be a listn - using `descr_stats_wide`
-result_wide <- fuel_economy_2018 %>% 
+## 3.a `result` will be a list - using `descr_stats_wide`
+
+# first notation
+result_wide1 <- fuel_economy_2018 %>% 
      select_if(is.numeric) %>%
      map(., descr_stats_wide)
+
+
+# second notation
+result_wide2 <- fuel_economy_2018 %>% 
+     select_if(is.numeric) %>%
+     map(., ~ descr_stats_wide(.x))
                 
+
+# third notation
+result_wide3 <- fuel_economy_2018 %>% 
+     select_if(is.numeric) %>%
+     map(~ descr_stats_wide(.x))
+
+
+identical(result_wide1, result_wide2)
+identical(result_wide1, result_wide3)
+
+
 View(result_wide)
 result_wide
+glimpse(result_wide)
+
 
 
 ## 3.a - using `descr_stats_long` (`result` will be a list with a 
@@ -256,7 +336,7 @@ result_long
 ## 
 
 ## `descr_stats_wide` as argument of `map`
-result_wide <- fuel_economy_2018 %>% 
+result_wide_df1 <- fuel_economy_2018 %>% 
      select_if(is.numeric) %>%
      set_names(str_replace_all(names(.), '\\.| ', '_')) %>% ## fix the variable names
      map(., descr_stats_wide) %>%
@@ -266,19 +346,46 @@ result_wide <- fuel_economy_2018 %>%
                sep = "\\.") %>%
      spread(statistic, value)
 
-View(result_wide)
-result_wide
+View(result_wide_df1)
+result_wide_df1
+
+
+
+# the second solution is simpler (it uses `map` and `unnest`)
+result_wide_df2 <- fuel_economy_2018 %>% 
+     select_if(is.numeric) %>%
+     map(., descr_stats_wide) %>%
+     tibble(variable = names(.), df = .) %>%
+     unnest(df)
+
+View(result_wide_df2)
+result_wide_df2
+glimpse(result_wide_df2)
+
 
 
 ## for `descr_stats_long`, `map` will be combined with `bind_rows`
-result_long <- fuel_economy_2018 %>% 
+result_long_df1 <- fuel_economy_2018 %>% 
      select_if(is.numeric) %>%
      set_names(str_replace_all(names(.), '\\.| ', '_')) %>% ## fix the variable names
      map(., descr_stats_long) %>%
      bind_rows(.id = "variable")
 
-View(result_long)
-result_long
+View(result_long_df1)
+result_long_df1
+
+
+# the second solution is based on `unnest`
+result_long_df2 <- fuel_economy_2018 %>% 
+     select_if(is.numeric) %>%
+     set_names(str_replace_all(names(.), '\\.| ', '_')) %>% ## fix the variable names
+     map(., descr_stats_long) %>%
+     tibble(variable = names(.), df = .) %>%
+     unnest()
+     
+View(result_long_df2)
+result_long_df
+
 
 
 
@@ -299,6 +406,8 @@ result <- fuel_economy_2018 %>%
      select (-`.`)
      
 table(fuel_economy_2018$Displ, fuel_economy_2018$Drive)
+
+
 
 #########################################################################
 ###                     Task 5 (taken from scripts `02a`)             ###
@@ -324,6 +433,27 @@ result <- file_names %>%
 
 
 #########################################################################
+###            Using anonymous functions inside `map`                 ###
+#########################################################################
+
+#########################################################################
+###                     Task 6 (taken from scripts `03b`)             ###
+### Display the number of NA values for each column of a data frame
+### Ex: data frame `customer` (`chinook` data base)
+
+## Solution 1: 
+temp1 <- map(customer, function(x) sum(is.na(x)))
+temp1
+
+## Solution 2: 
+temp2 <- map(customer, ~ sum(is.na(.)))
+temp2
+
+identical(temp1, temp2)
+
+
+
+#########################################################################
 ###                 I.b  `map_dfr` and `map_dfc`                      ###
 #########################################################################
 
@@ -332,7 +462,7 @@ result <- file_names %>%
 ### Given the `fuel_economy_2018` data set...
 glimpse(fuel_economy_2018)
 
-### create a data framme with the means of the following variable
+### create a data frame with the mean of the following variables
 vars <- c('cty_l100km', 'hwy_l100km', 'combined_l100km', 'air_pollution',
           'greenhouse', 'combined_CO2')
 
@@ -515,6 +645,25 @@ result <- file_names %>%
                'MongoDB', 'MySQL'))
 
 glimpse(result)     
+
+
+#########################################################################
+###                     Task 6 (taken from scripts `03b`)             ###
+### Display, as a data frame, the number of NA values for each column 
+### of a data frame
+### Ex: data frame `customer` (`chinook` data base)
+
+
+##
+## Solution 1: 
+temp1 <- map_dfr(customer, function(x) sum(is.na(x)))
+temp1
+
+## Solution 2: 
+temp2 <- map_dfc(customer, ~ sum(is.na(.)))
+temp2
+
+identical(temp1, temp2)
 
 
 
@@ -725,14 +874,18 @@ result <- studs %>%
 # if we want to avoid `map` functions, `str_split` must be used in 
 #    conjuction with `rowwise` ...
 first_names_ok <- studs %>%
-     mutate(FIRST_NAME = str_trim(str_replace_all(FIRST_NAME, ' - ', '-'), side = 'both')) %>%
+     mutate(FIRST_NAME = 
+                 str_trim(str_replace_all(FIRST_NAME, ' - ', '-'), 
+                          side = 'both')) %>%
      select (STUD_ID, FIRST_NAME) %>%
      rowwise() %>%
      mutate (first_name_ok = str_split(FIRST_NAME, ' căs\\.| CĂS\\.')[[1]][1])
 
 #... but we do not want to avoid `map`, so `map` will be used along with `map_chr`
 first_names_ok <- studs %>%
-     mutate(FIRST_NAME = str_trim(str_replace_all(FIRST_NAME, ' - ', '-'), side = 'both')) %>%
+     mutate(FIRST_NAME = 
+                 str_trim(str_replace_all(FIRST_NAME, ' - ', '-'), 
+                          side = 'both')) %>%
      select (STUD_ID, FIRST_NAME) %>%
      mutate (first_name_list = map(.$FIRST_NAME, 
           function (x) unlist(str_split(x, ' căs\\.| CĂS\\.')) ) ) %>%
@@ -764,7 +917,9 @@ glimpse(studs)
 
 # 
 result <- studs %>%
-     mutate(FIRST_NAME = str_trim(str_replace_all(FIRST_NAME, ' - ', '-'), side = 'both')) %>%
+     mutate(FIRST_NAME = 
+                 str_trim(str_replace_all(FIRST_NAME, ' - ', '-'), 
+                          side = 'both')) %>%
      select (STUD_ID, FIRST_NAME) %>%
      mutate (first_name_list = map(.$FIRST_NAME, 
           function (x) unlist(str_split(x, ' căs\\.| CĂS\\.')) ) ) %>%
@@ -773,10 +928,12 @@ result <- studs %>%
           first_name_ok = str_trim(first_name_ok, side = 'both'),
           first_name_list = map(.$first_name_ok, 
           function (x) unlist(str_split(x, '-| ')) ) ) %>%
-     mutate(first_two_surnames = map_chr(.$first_name_list,   ## `map_chr` here extracts first two surname
+     mutate(first_two_surnames = map_chr(.$first_name_list,   
+                    ## `map_chr` here extracts first two surname
           function (x) paste(x[1], x[2])   ))                               
 
 # examine line 47 in the result
+
 
 
 
@@ -792,6 +949,7 @@ glimpse(fuel_economy_2018)
 ###  (each row will be associated to a variable)
 vars <- c('cty_l100km', 'hwy_l100km', 'combined_l100km', 'air_pollution',
           'greenhouse', 'combined_CO2')
+
 
 # a solution based on `map2` function
 result <- fuel_economy_2018 %>%
@@ -915,7 +1073,6 @@ readxl::excel_sheets(file_name) %>%
      walk2(.x = .$sheet_name,
         .y = .$df,
         .f = assign, envir = .GlobalEnv)
-
 
 
 

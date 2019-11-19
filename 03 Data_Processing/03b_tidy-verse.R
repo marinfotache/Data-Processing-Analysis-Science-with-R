@@ -13,9 +13,9 @@
 ### See also the presentation:
 ### https://github.com/marinfotache/Data-Processing-Analysis-Science-with-R/blob/master/03%20Data_Processing/03b_Tidy-verse.pptx
 ############################################################################
-## last update: 25.10.2018
+## last update: 23.10.2019
 
-library(tidyverse) # for `glimpse` and `read_tsv`
+library(tidyverse) 
 library(readxl)
 
 ############################################################################
@@ -460,6 +460,7 @@ studs %>%
      distinct(LAB_GROUP) %>%
      summarise (n_of_groups = n())
 
+
 # the same result, with `tally()` instead of `n()`
 studs %>%
      filter (LEVEL_OF_STUDY == 'undergraduate' & 
@@ -553,6 +554,22 @@ temp <- studs %>%
 temp
 
 
+## Display, for each programme, the study year with the largest number
+##   of enrolled students
+
+# notice two group operations and `slice` function
+temp <- studs %>%
+     group_by(LEVEL_OF_STUDY, PROGRAMME, YEAR_OF_STUDY) %>%
+     summarise (n_of_studs = n()) %>%
+     ungroup() %>%
+     arrange(LEVEL_OF_STUDY, PROGRAMME, desc(n_of_studs)) %>%
+     group_by(LEVEL_OF_STUDY, PROGRAMME) %>%
+     slice(1)
+
+temp
+
+
+
 ##    Display top 5 master programmes as total number of students
 temp <- studs %>%
      filter (LEVEL_OF_STUDY == 'master') %>%
@@ -575,6 +592,8 @@ temp <- studs %>%
      select (PROGRAMME, n_of_studs) %>%
      arrange(desc(n_of_studs))
 View(temp)
+
+
 
 
 
@@ -749,6 +768,8 @@ temp <- customer %>%
 temp
 
 names(temp)
+
+
 ########################################################################
 ###                             Self join
 ###            (joining two copies of the same table/data frame)
@@ -912,7 +933,6 @@ rm(list = ls())
 
 ## Aggregate all the data sets in DragosCogean directory into two
 ##  data frames, `all_inserts` and `all_reads`
-library(readr)
 all_inserts <- bind_rows(
      read_tsv("DragosCogean__InsertMongo_ALL.txt") %>%
           transmute (test_type = testtype, oper_type = optype, 
@@ -981,7 +1001,8 @@ temp2 <- bind_rows (
      arrange (PROGRAMME, YEAR_OF_STUDY)
 temp2
 
-# There's a problem: the total row is not displayed at the end of the report 
+# There could be a problem: the total row might be not displayed 
+# at the end of the report 
 # Solution: we might add a column showing the aggregation level:
 temp <- bind_rows (
      studs %>%   # extract rows for programmes and years of study
@@ -1002,7 +1023,7 @@ temp <- bind_rows (
      summarise (n_of_studs = n()) %>%
      transmute (LEVEL = 2, PROGRAMME = 'TOTAL', YEAR_OF_STUDY = '', n_of_studs) ) %>%
      arrange (LEVEL, PROGRAMME, YEAR_OF_STUDY)
-temp
+View(temp)
 
 
 #  Actually, there is a slightly simpler solution:
@@ -1023,6 +1044,7 @@ temp <- bind_rows (
           summarise (n_of_studs = n()) %>%
           mutate (PROGRAMME = 'TOTAL') )
 temp
+
 
 
 #######################################################################
@@ -1310,7 +1332,7 @@ library(tidyverse)
 
 
 ########################################################################
-###                             gather()
+###                          gather() / pivot_longer()
 # with gather() data can be converted from a `wide` format to a 
 #  `long` format
 
@@ -1320,7 +1342,8 @@ getwd()
 library(readxl)
 file.name <- "BD2_2013_SIA1_v2.xlsx"
 assessment <- read_excel(file.name, sheet = 'centralizator', 
-          col_names = TRUE, skip = 0)
+          col_names = TRUE, skip = 0) %>%
+          mutate_if (str_detect(names(.), "\\."), as.numeric)
 glimpse(assessment)
 View(assessment)
 
@@ -1343,6 +1366,17 @@ glimpse(assess_details_long)
 View(assess_details_long)
 
 
+# recent versions of `tidyr` propose `pivot_longer` function
+assess_details_longer <- assessment %>%
+     select (nr, nota.t.1:nota.pr.2) %>%
+     pivot_longer (-nr, names_to = "assess_part", values_to = "grade") %>%
+     arrange (nr, assess_part)
+
+
+# test if the result is identical
+identical(assess_details_long, assess_details_longer)
+
+
 ##  Import montly earnings from the (Romanian) National Institute for Statistics
 # install.packages ('htmltab')
 library(htmltab)
@@ -1352,8 +1386,20 @@ glimpse(net_earning)
 head(net_earning)
 names(net_earning)[1] <- 'Year'
 
+
 # backup this data frame, in case of the link will no longer be accesible
 #save (net_earning, file = 'net_earning.RData')
+
+# we have to remove the dots (separating the thousands) from the values
+# we alse have to divide by 10000 all the values before 2005 (when
+# `old` LEU was replaced by the new one, by cutting 4 zeros)
+
+net_earning <- net_earning %>%
+     mutate_all( ~ str_replace_all(., '\\.', '')) %>%
+     mutate_all (as.numeric)
+glimpse(net_earning)
+
+
 
 # convert the data into the long format
 net_earning_long <- net_earning %>%
@@ -1367,10 +1413,28 @@ month_recoding <-  net_earning_long %>%
      mutate (Month_No = row_number() )
 View(month_recoding)     
 
+
 # now add a column with the month number
 net_earning_long2 <- net_earning_long %>%
-     inner_join(month_recoding)
+     inner_join(month_recoding) %>%
+     arrange(Year, Month_No) %>%
+     mutate (Net_Earn = if_else(coalesce(Year, 2018) < 2005, Net_Earn / 10000, Net_Earn))
+
+glimpse(net_earning_long2)
 View(net_earning_long2)
+
+
+#... with `pivot_longer` instead of `gather`
+net_earning_longer2 <- net_earning %>%
+     pivot_longer (-Year, names_to = "Month", values_to = "Net_Earn") %>%
+     inner_join(month_recoding) %>%    
+     arrange(Year, Month_No) %>%
+     mutate (Net_Earn = if_else(coalesce(Year, 2018) < 2005, Net_Earn / 10000, Net_Earn))
+     
+
+glimpse(net_earning_longer2)
+View(net_earning_longer2)
+
 
 
 ###  Import the exchange rates published by National Bank of Romania (BNR)
@@ -1392,10 +1456,37 @@ exchange_rates_long <- exchange_rates %>%
 View(exchange_rates_long)
 
 
+#... with `pivot_longer` instead of `gather`
+exchange_rates_longer <- exchange_rates %>%
+     pivot_longer (-Date, names_to = "currency", values_to = "exchange_rate") 
+     
+View(exchange_rates_longer)
+
+
 
 
 ########################################################################
-###                             spread()
+### Task:
+### Display the number of NA values for each column of a data frame
+### Ex: data frame `customer` (`chinook` data base)
+########################################################################
+# load data frames imported from the `chinook` database tables
+load('chinook.RData')
+
+
+# Note: I wouldn't recommend this solution when the data frame is very
+# large, singe pivot_longer will get `n` x `m` rows
+temp <- customer %>%
+     mutate_all (as.character) %>%    # convert all variables into strings
+     pivot_longer(everything(),
+                  names_to = "variable", values_to = "value") %>%
+     group_by(variable) %>%   # 
+     summarise( n_of_NA = sum(is.na(value)), n_of_non_NA = sum(!is.na(value)))
+
+
+
+########################################################################
+###                      spread() / pivot_wider()
 ### with spread() data can be converted from a `long` format to a 
 ###  `wide` format; very useful for pivoting
 
@@ -1404,24 +1495,51 @@ View(exchange_rates_long)
 ##  sales for 2016, 2017 and 2018
 View(invoice_detailed)
 library(lubridate)
-sales_prods_2016_2018 <- invoice_detailed %>%
+
+# solution using `spread`
+sales_prods_2016_2018_spread <- invoice_detailed %>%
      filter (year(invoicedate) %in% c(2016, 2017, 2018)) %>%
      mutate (year = year(invoicedate)) %>%
      group_by(productname, year) %>%
      summarise (sales = sum(amount)) %>%
      spread(year, sales)
-View(sales_prods_2016_2018)
+View(sales_prods_2016_2018_spread)
+
+
+# solution using `pivot_wider`
+sales_prods_2016_2018_wider <- invoice_detailed %>%
+     filter (year(invoicedate) %in% c(2016, 2017, 2018)) %>%
+     mutate (year = year(invoicedate)) %>%
+     group_by(productname, year) %>%
+     summarise (sales = sum(amount)) %>%
+     pivot_wider(names_from = year, values_from = sales)     
+
 
 
 ## Display, for each product, separate variables (columns) containing
 ##  monthly sales for 2017  
-montly_sales_prods_2017 <- invoice_detailed %>%
+
+# with `spread`
+montly_sales_prods_2017_spread <- invoice_detailed %>%
      filter (year(invoicedate) == 2017) %>%
      mutate (month = month(invoicedate)) %>%
      group_by(productname, month) %>%
      summarise (sales = sum(amount)) %>%
      spread(month, sales, fill = 0)     # notice `fill = 0`
-View(montly_sales_prods_2017)
+
+View(montly_sales_prods_2017_spread)
+
+# with `pivot_wider`
+montly_sales_prods_2017_wider <- invoice_detailed %>%
+     filter (year(invoicedate) == 2017) %>%
+     mutate (month = month(invoicedate)) %>%
+     group_by(productname, month) %>%
+     summarise (sales = sum(amount)) %>%
+     pivot_wider(names_from = month, 
+                 values_from = sales, values_fill = list(sales = 0))    # notice `values_fill = 0` 
+     
+View(montly_sales_prods_2017_wider)
+
 
 
 ## Display, for 2016, a pivot table with product sales  by each client
@@ -1431,6 +1549,7 @@ prod_client_sales_2016 <- invoice_detailed %>%
      summarise (sales = sum(amount)) %>%
      spread(customername, sales, fill = 0)     # notice `fill = 0`
 prod_client_sales_2016
+
 
 
 ##  Display for each year starting with 2006 the monthly earnings, but with 
@@ -1550,9 +1669,10 @@ View(exchange_rates_longer)
 
 
 
-#####################################################################################
-###    III. (Slightly) more advanced stuff: working with lists (in tidyverse)    ###
-#####################################################################################
+######################################################################
+###                 III. (Slightly) more advanced stuff:           ###
+###                 working with lists (in tidyverse)              ###
+######################################################################
 
 # clear the environment
 rm(list = ls())
@@ -1560,6 +1680,11 @@ rm(list = ls())
 
 # load data frames loaded from the `chinook` database tables
 load('chinook.RData')
+
+
+
+######################################################################
+###       An equivalent of SQL `list_agg` function                 ###
 
 ## Display, as a string, the track names for each Led Zeppelin album
 album_track_list_LZ <- artist %>%
@@ -1573,6 +1698,10 @@ album_track_list_LZ <- artist %>%
 View(album_track_list_LZ)
 
 
+
+######################################################################
+###                    unnest() function                           ###
+
 ## Given data frame `album_track_list_LZ`, get a data frame in 
 ##     tidy format (title, track_no, track_name )
 
@@ -1580,23 +1709,52 @@ tidy_album_track_list_LZ <- album_track_list_LZ %>%
      # first, split in track list (track separator is `; `)
      mutate (track_list2 = str_split (track_list, '; ')) %>%
      # second, convert the list into a data frame row with `unnest`
-     unnest (track_name = track_list2) %>%
+     unnest (track_list2) %>%
      # add the track number for each album by a combination of
      #  `group_by` and `mutate`
      group_by(title) %>%
      mutate(track_no = row_number()) %>%
      # finally extract only variables of interest
-     select (title, track_no, track_name)
+     select (title, track_no, track_name = track_list2)
+
+
 
 View(tidy_album_track_list_LZ)
 
 
-## Another example taken from:
+######################################################################
+###                    rowwise() option                           ###
+###  (to be sure that a function applies on rows, not on columns  ###
+
+
+## Display on separate column the first three tracks on each Led Zeppelin album
+first3tracks_each_album_LZ <- album_track_list_LZ %>%
+     # first, split in track list (track separator is `; `)
+     mutate (track_list2 = str_split (track_list, '; ')) %>%
+     rowwise() %>%
+     summarise(title = title, first_track = track_list2[1], 
+          second_track = track_list2[2], third_track = track_list2[3] )
+
+View(first3tracks_each_album_LZ)
+
+
+
+######################################################################
+###                 list-column of data frames                     ###
+###               nest() and unnest() functions                    ###
+######################################################################
+
+
+######################################################################
+##  example taken from:
 # https://blog.rstudio.org/2015/01/09/dplyr-0-4-0/
 qs <- mtcars %>%
   group_by(cyl) %>%
   summarise(y = list(quantile(mpg)))
 
+qs
+
+# display a list-column content
 list1 <- qs[1,]$y
 list1
 
@@ -1610,19 +1768,45 @@ qs %>%
   summarise(q25 = y[2], q75 = y[4])
 
 
-## Display on separate column the first three tracks on each Led Zeppelin album
-first3tracks_each_album_LZ <- album_track_list_LZ %>%
-     # first, split in track list (track separator is `; `)
-     mutate (track_list2 = str_split (track_list, '; ')) %>%
-     rowwise() %>%
-     summarise(title = title, first_track = track_list2[1], 
-          second_track = track_list2[2], third_track = track_list2[3] )
+
+
+
+######################################################################
+###  get a data frame where each row describes an album,
+###       and, for each album there is a column of type
+###       data frame containing the album tracks (their name,
+###       composes and duration)
+
+# pay attention to `nest()` function
+album_tracks__list <- artist %>%
+     filter (name == 'Led Zeppelin') %>%
+     inner_join(album) %>%
+     select (albumid, title) %>%
+     inner_join(track, by = 'albumid') %>%
+     arrange (trackid) %>%
+     transmute(title, name, composer, milliseconds) %>%
+     group_by(title) %>%
+     # add a track number
+     mutate(track_no = row_number()) %>%
+     nest(track_df = c(track_no, name, composer, milliseconds)) %>%
+     ungroup()
+
+# display (the data frame) tracks from the first album
+album_tracks__list$track_df[1][[1]]    
      
 
+# extract the track list (as data frame) for album 'IV'
+temp <- album_tracks__list %>%
+     filter (title == 'IV') %>%
+     unnest(track_df)
+View(temp)
+
+
+     
+     
+     
+### Note:
 # list processing is considerably easier with `purrr` package   
 # (`map` family ) - see subsequent script/presentation on functional
 # programming   
-
-
-
 
