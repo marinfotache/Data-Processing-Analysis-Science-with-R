@@ -93,11 +93,8 @@ recipe2_prepped__states_1 <- recipe2__states_1(dataset = train_tbl__states_1)
 
 
 # In the `bake` step, all preprocessing operations are applied
-#    to the data sets.
-train1_baked__states_1 <- bake(recipe1_prepped__states_1, new_data = train_tbl__states_1)
+#    to the test data subsets.
 test1_baked__states_1  <- bake(recipe1_prepped__states_1, new_data = test_tbl__states_1)
-
-train2_baked__states_1 <- bake(recipe2_prepped__states_1, new_data = train_tbl__states_1)
 test2_baked__states_1  <- bake(recipe2_prepped__states_1, new_data = test_tbl__states_1)
 
 
@@ -117,12 +114,12 @@ test2_baked__states_1  <- bake(recipe2_prepped__states_1, new_data = test_tbl__s
 lm_model1__states_1 <- linear_reg() %>%
   set_engine("lm") %>%
   fit(Murder ~ Area + Frost + Illiteracy + Life_Exp + Population, 
-      data = train1_baked__states_1)
+      data = juice(recipe1_prepped__states_1))
 
 lm_model2__states_1 <- linear_reg() %>%
   set_engine("lm") %>%
   fit(Murder ~ HS_Grad + Income + Population, 
-      data = train2_baked__states_1)
+      data = juice(recipe2_prepped__states_1))
 
 
 #######################################################################
@@ -177,6 +174,41 @@ performance__states_1 <- bind_rows(
                      .metric, .estimate)
      ) %>%
      arrange(.metric, model)
+
+
+# check the RMSE 
+# 
+
+# model 1
+check_model1 <- lm(Murder ~ Area + Frost + Illiteracy + Life_Exp + Population, 
+                       data = train_tbl__states_1)
+summary(check_model1)
+
+pred1 <- predict (check_model1, newdata = test_tbl__states_1)
+SSE1 <- sum((test_tbl__states_1$Murder - pred1)^2)
+RMSE1 = sqrt(SSE1 / length(pred1))
+RMSE1
+
+performance__states_1 %>% 
+     filter (model == 'Murder ~ Area + Frost + Illiteracy + Life_Exp + Population' &
+                  .metric == 'rmse') %>%
+     pull(.estimate)
+
+
+# model 2
+check_model2 <- lm(Murder ~ HS_Grad + Income + Population, 
+                       data = train_tbl__states_1)
+summary(check_model2)
+
+pred2 <- predict (check_model2, newdata = test_tbl__states_1)
+SSE2 <- sum((test_tbl__states_1$Murder - pred2)^2)
+RMSE2 = sqrt(SSE2 / length(pred2))
+RMSE2
+
+performance__states_1 %>% 
+     filter (model == 'Murder ~ HS_Grad + Income + Population' &
+                  .metric == 'rmse') %>%
+     pull(.estimate)
 
 
 

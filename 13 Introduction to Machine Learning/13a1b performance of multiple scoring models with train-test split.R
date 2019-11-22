@@ -153,7 +153,7 @@ the_pipe__states_2 <- the_formulas__states %>%
      mutate (train = list(train_tbl__states_2), test = list(test_tbl__states_2)) %>%
      mutate (prep = map2( .x = .$the_formula, .y = train, .f =  simple_recipe__states_2 )) %>%
      mutate (
-          train_baked = map2(.x = .$prep, .y = .$train, .f = bake),
+          train_juiced = map(.x = .$prep, .f = juice),
           test_baked = map2(.x = .$prep, .y = .$test, .f = bake)
           )     
      
@@ -167,8 +167,9 @@ lm_model__states_2 <- function(formula, dataset) {
           fit(as.formula(formula), data = dataset)
 }
 
+# this could take some minutes
 the_pipe_with_models__states_2 <- the_pipe__states_2 %>%
-     mutate (the_model = map2(.x = .$the_formula, .y = .$train_baked,
+     mutate (the_model = map2(.x = .$the_formula, .y = .$train_juiced,
                               .f = lm_model__states_2))
 
 
@@ -210,6 +211,13 @@ temp2 <- performance__states_2 %>%
      filter (.metric == 'rsq') %>%
      arrange(desc(.estimate))
 
+
+# Remember :-) that in previous script for model 1 the RMSE was 1.981765
+# compare above value with the current results
+performance__states_2 %>%
+     filter (formula == 'Murder ~ Area + Frost + Illiteracy + Life_Exp + Population' &
+                  .metric == 'rmse') %>%
+     pull(.estimate)
 
 
 
