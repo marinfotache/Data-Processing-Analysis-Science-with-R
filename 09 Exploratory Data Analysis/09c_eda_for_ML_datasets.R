@@ -742,3 +742,39 @@ getwd()
 heart__na_omit <- heart %>%
      na.omit()
 
+
+
+
+
+#####################################################################
+###       II.2 Credit scoring (G.Sanchez version)                 ###
+#####################################################################
+### taken from 
+### https://github.com/gastonstat/CreditScoring
+
+##        Variables:
+## `Status` - credit status
+## `Seniority` - job seniority (years)
+## `Home` - type of home ownership
+## `Time` - time of requested loan
+## `Age` - client's age
+## `Marital` - marital status
+## `Records` - existance of records
+## `Job` - type of job
+## `Expenses` - amount of expenses
+## `Income` - amount of income
+## `Assets` - amount of assets
+## `Debt` - amount of debt
+## `Amount` - amount requested of loan
+## `Price` - price of good
+
+cs_sanchez <- readr::read_csv('CreditScoring_GastonSanchez.csv')
+
+
+##
+## to be completed during the labs!
+##
+
+
+
+
