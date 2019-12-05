@@ -288,6 +288,24 @@ insurance <- readr::read_csv('insurance.csv')
 ##
  
 #####################################################################
+###                I.3 House Prices (Ames, Iowa)                  ###
+#####################################################################
+### https://www.kaggle.com/c/house-prices-advanced-regression-techniques/data          
+#########################################################################
+
+kaggle_house_ames <- readr::read_csv('kaggle_house_ames_2_train.csv',
+          col_names = TRUE)
+glimpse(kaggle_house_ames)
+
+##
+## to be completed during the labs!
+##
+
+
+
+
+
+#####################################################################
 ###	     II. EDA for datasets to be used for classification      ###	
 #####################################################################
 
