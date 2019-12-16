@@ -14,7 +14,7 @@
 ### See also the presentation:
 ### https://github.com/marinfotache/Data-Processing-Analysis-Science-with-R/blob/master/06%20XML-%20JSON-%20Web%20Scrapping-%20APIs/06_html_xml_json__web_scrap__apis.pptx
 ############################################################################
-## last update: 30.10.2019
+## last update: 15.12.2019
 
 
 # needed packages
@@ -32,7 +32,7 @@ library(jsonlite)
 #install.packages('data.tree')
 library(data.tree)
 
-# devtools::install_github("sailthru/tidyjson")
+#install.packages('tidyjson')
 library(tidyjson)
 
 
@@ -282,7 +282,7 @@ View(hamlet_flatxml_final)
 
 
 #########################################################################
-###  III. JSON data management with `jsonlite` and tidyjson` packages ###                                 #########################################################################
+###  III. JSON data management with `jsonlite` and tidyjson` packages ###                      #########################################################################
 
 ## see also:
 ## https://cran.r-project.org/web/views/WebTechnologies.html
@@ -324,9 +324,6 @@ glimpse(nobel_countries_df_tydyjson)
 #########################################################################
 
 url <- 'http://api.nobelprize.org/v1/prize.json'
-test <- jsonlite::fromJSON(url)
-
-
 
 ## with `jsonlite` - we'll use `unnest`
 nobel_prizes_url <- 'http://api.nobelprize.org/v1/prize.json'
@@ -348,20 +345,19 @@ nobel_prizes_df_tydyjson <- paste(jsonlite::toJSON(jsonlite::fromJSON(nobel_priz
      tidyjson::gather_keys() %>%
      tidyjson::gather_array() %>%
      tidyjson::spread_values(
-          year = jnumber("year"),
+          year = jstring("year"),
           category = jstring("category"),
           overall_motivation = jstring("overallMotivation")
           )   %>%        
      enter_object("laureates") %>%
      tidyjson::gather_array() %>%
      tidyjson::spread_values(
-          laureate_id = jnumber("id"),
+          laureate_id = jstring("id"),
           laureate_firstname = jstring("firstname"),
           laureate_lastname = jstring("surname"),
           laureate_motivation = jstring("motivation"),
           laureate_share = jstring("share")
           )   
-# !!! error !!!
 
 glimpse(nobel_prizes_df_tydyjson)
 
