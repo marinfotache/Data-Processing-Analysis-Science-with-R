@@ -9,7 +9,7 @@
 ############################################################################
 ###
 ############################################################################
-###                 14b1. Bagginng for Regression Trees                  ###
+###                 14c1. Random Forests for Scoring                     ###
 ############################################################################
 
 ### See also the presentation:
@@ -17,15 +17,12 @@
 ############################################################################
 ## last update: 07.01.2020
 
-
 library(tidyverse)
-
-library(caret)     # for confusion matrix, ...
-#library(caTools) # for splitting the date set into train/test
-                  # and also for plotting the ROC curve
-library(ipred)
+library(caret)
+library(randomForest)
 library(ranger)
 library(tidymodels)
+
 
 ############################################################################
 ###            Download the necesary data sets for this script
@@ -41,117 +38,89 @@ library(tidymodels)
 setwd('/Users/marinfotache/Google Drive/R(Mac)/DataSets')
 
 
-
 #########################################################################
 ###                                Agenda                             ###
 #########################################################################
 ###  O. Import and prepare the data sets                              ###
-###  I. Bagging Regression Trees                                      ###
-###    I.1. Bagging Regression Trees with `ipred`,                    ###
-###    I.2. Bagging Regression Trees with `tidymodels`                ###
+###  I. Random Forests for Regression Trees                           ###
+###    I.1. Random Forests for Regression Trees with `randomForest`   ###
+###    and `ranger`                                                   ###
+###    I.2. Random Forests for Regression Trees with `tidymodels`     ###
 #########################################################################
 
 
-
-
 #########################################################################
-###  O. Import and prepare the data sets  (see also script 14a1)      ###
+###                 O. Import and prepare the data sets               ###
 #########################################################################
+
+### All the data sets and models (including variable importance plots
+### and performance metrics) were saved at the end of scripts `14a1`
+###  and `14b1`
+### We'll procees from this point
 load(file = '14a1_states.RData')
+load(file = '14b1_states.RData')
 load(file = '14a1_insurance.RData')
-
-
-
-#########################################################################
-###                    I. Bagging Regression Trees                    ###
-#########################################################################
-## package `ipred`
-## the main tuning parameter is `nbagg` - the number of bootstap samples
-## to aggregate. (Kuhn & Johnson, 2013, p.197) suggest using up to 50 
-## bagging ensembles
+load(file = '14b1_insurance.RData')
 
 
 #########################################################################
-###               I.1. Bagging Regression Trees with `ipred`          ###
+###              I. Random Forests for Regression Trees               ###
 #########################################################################
+## packages: `randomForest` and `ranger`
 
+## hyperparameter: `mtry` - number of randomly selected predictors
+##   to choose from at each split (node)
+## For regression setting, Breiman recommends setting `mtry` on 
+##   1/3 of the number of predictors (that is the default value
+##        chosen by `randomForest` and `ranger`) (Kuhn & Johnson, 213, p.199)
+
+## other parameter: `ntree` - number of trees for the forest
+## (Kuhn & Johnson, 213, p.200) suggest `ntree` at least 1000
+
+#########################################################################
+###           I.1. Random Forests for Regression Trees with           ###
+###                       `randomForest` and `ranger`                 ###
+#########################################################################
 
 #########################################################################
 ###                              I.1.a. `states`                      ###
 #########################################################################
 
 #########################################################################
-#                             The bagging model 
+##                       The random forests model 
 set.seed(123)
-states_bag_ipred <- ipred::bagging(Murder ~ ., data = train_tbl__states, 
-     nbagg = 50)
-
+states_rf_rf <- randomForest::randomForest(Murder ~ ., ntree = 1000,
+                          data = train_tbl__states)
+print(states_rf_rf)
+plot(states_rf_rf)
 
 #########################################################################
-#                             Display variables importance
-# this may take some time
-set.seed(123)
-vi_states_bag_ipred <- varImp(states_bag_ipred) %>%
-     tibble::rownames_to_column() %>%
-     rename(variable = rowname, importance = Overall) %>%
-     arrange(desc(importance))
-
-plot_vi_states_bag_ipred <- ggplot(data = vi_states_bag_ipred, 
-       aes(x = reorder(variable, importance), fill = variable)) +
-  	geom_bar(stat="identity", 
-  		aes(y=importance), position="dodge") +
-  	geom_text(aes(x=variable, y=importance,  
-  		label=variable, hjust=ifelse(importance > 0.75, 1.1, -0.1)), 
-      position = position_dodge(width=1)) +
-  	scale_y_continuous(labels = waiver()) + coord_flip() +
- 		ggtitle("Variable importance - States - Bagging - ipred") +
-		theme(axis.text.y = element_blank(), 
-			text=element_text(size=12)) +
-	   	xlab("variable") + ylab("importance") +
-		scale_fill_discrete(guide=FALSE)
-
-plot_vi_states_bag_ipred
-
-
-#########################################################################
-#         Evaluathe model performance on the test subset and compare 
-#         it with previous CART models
+#         Evaluathe model performance on the test subset 
 
 # predicting the test data sets
-predict_states_bag_ipred <- predict(states_bag_ipred, test_tbl__states)
+predict_states_rf_rf <- predict(states_rf_rf, test_tbl__states)
 
 # compute RMSE
-rmse_states_bag_ipred <- caret::RMSE(pred = predict_states_bag_ipred, 
+rmse_states_rf_rf <- caret::RMSE(pred = predict_states_rf_rf, 
                           obs = test_tbl__states$Murder)
-rmse_states_bag_ipred
+rmse_states_rf_rf
 
 # compute R2
-r2_states_bag_ipred <- caret::R2 (predict_states_bag_ipred, 
+r2_states_rf_rf <- caret::R2 (predict_states_rf_rf, 
                                   test_tbl__states$Murder)
-r2_states_bag_ipred
-
+r2_states_rf_rf
 
 
 #########################################################################
-###                              I.1.b. `insurance`                    ###
-#########################################################################
-
-#########################################################################
-#                             The bagging model 
+#                             Display variable's importance
 set.seed(123)
-insurance_bag_ipred <- ipred::bagging(charges ~ ., 
-     data = main_train__insurance, nbagg = 500)
-
-#########################################################################
-#                             Display variables importance
-# this may take some time
-set.seed(123)
-vi_insurance_bag_ipred <- varImp(insurance_bag_ipred) %>%
-     tibble::rownames_to_column() %>%
-     rename(variable = rowname, importance = Overall) %>%
+vi_states_rf_rf <- randomForest::importance(states_rf_rf) %>%
+     data.frame() %>% 
+     mutate(variable = row.names(.)) %>%
+     rename(importance = IncNodePurity) %>%
      arrange(desc(importance))
 
-plot_vi_insurance_bag_ipred <- ggplot(data = vi_insurance_bag_ipred, 
+plot_vi_states_rf_rf <- ggplot(data = vi_states_rf_rf, 
        aes(x = reorder(variable, importance), fill = variable)) +
   	geom_bar(stat="identity", 
   		aes(y=importance), position="dodge") +
@@ -159,47 +128,87 @@ plot_vi_insurance_bag_ipred <- ggplot(data = vi_insurance_bag_ipred,
   		label=variable, hjust=ifelse(importance > 0.75, 1.1, -0.1)), 
       position = position_dodge(width=1)) +
   	scale_y_continuous(labels = waiver()) + coord_flip() +
- 		ggtitle("Variable importance - insurance - Bagging - ipred") +
+ 		ggtitle("Variable importance - States - Random Forests") +
 		theme(axis.text.y = element_blank(), 
 			text=element_text(size=12)) +
 	   	xlab("variable") + ylab("importance") +
 		scale_fill_discrete(guide=FALSE)
 
-plot_vi_insurance_bag_ipred
+plot_vi_states_rf_rf
+
 
 
 
 #########################################################################
-#         Evaluath model performance on the test subset 
+###                            I.1.b. `insurance`                     ###
+#########################################################################
+
+#########################################################################
+##                       The random forests model 
+set.seed(123)
+insurance_rf_rf <- randomForest::randomForest(charges ~ ., 
+          ntree = 1000,data = main_train__insurance)
+## error ! `char` variables must be converted into factors
+
+set.seed(123)
+insurance_rf_rf <- randomForest::randomForest(charges ~ ., 
+          ntree = 1000,
+          data = main_train__insurance %>% 
+                mutate_if(is.character, as.factor))
+
+print(insurance_rf_rf)
+plot(insurance_rf_rf)
+
+
+#########################################################################
+#         Evaluathe model performance on the test subset 
 
 # predicting the test data sets
-predict_insurance_bag_ipred <- predict(insurance_bag_ipred, 
-          main_test__insurance)
+predict_insurance_rf_rf <- predict(insurance_rf_rf, 
+     main_test__insurance %>% 
+          mutate_if(is.character, as.factor))
 
 # compute RMSE
-rmse_insurance_bag_ipred <- caret::RMSE(pred = predict_insurance_bag_ipred, 
+rmse_insurance_rf_rf <- caret::RMSE(pred = predict_insurance_rf_rf, 
                           obs = main_test__insurance$charges)
-rmse_insurance_bag_ipred
+rmse_insurance_rf_rf
 
 # compute R2
-r2_insurance_bag_ipred <- caret::R2 (predict_insurance_bag_ipred, 
+r2_insurance_rf_rf <- caret::R2 (predict_insurance_rf_rf, 
                                   main_test__insurance$charges)
-r2_insurance_bag_ipred
+r2_insurance_rf_rf
 
 
-# compare performance with previous models
-rmse_insurance_rpart
-rmse_insurance_rpart_caret
-rmse_insurance_bag_ipred
+#########################################################################
+#                             Display variables importance
+set.seed(123)
+vi_insurance_rf_rf <- randomForest::importance(insurance_rf_rf) %>%
+     data.frame() %>% 
+     mutate(variable = row.names(.)) %>%
+     rename(importance = IncNodePurity) %>%
+     arrange(desc(importance))
 
-r2_insurance_rpart
-r2_insurance_rpart_caret
-r2_insurance_bag_ipred
+plot_vi_insurance_rf_rf <- ggplot(data = vi_insurance_rf_rf, 
+       aes(x = reorder(variable, importance), fill = variable)) +
+  	geom_bar(stat="identity", 
+  		aes(y=importance), position="dodge") +
+  	geom_text(aes(x=variable, y=importance,  
+  		label=variable, hjust=ifelse(importance > 5.0e+10, 1.1, -0.1)), 
+      position = position_dodge(width=1)) +
+  	scale_y_continuous(labels = waiver()) + coord_flip() +
+ 		ggtitle("Variable importance - insurance - Random Forests") +
+		theme(axis.text.y = element_blank(), 
+			text=element_text(size=12)) +
+	   	xlab("variable") + ylab("importance") +
+		scale_fill_discrete(guide=FALSE)
+
+plot_vi_insurance_rf_rf
+
 
 
 
 #########################################################################
-###         I.2. Bagging Regression Trees with `tidymodels`           ###
+###    I.2. Random Forests for Regression Trees with `tidymodels`     ###
 #########################################################################
 
 #########################################################################
@@ -215,10 +224,14 @@ recipe__states <- function(dataset) {
      prep(data = dataset)
 }
 
-# we'll search for best `bagging` model, varying only one  hyperparameter:
-#  `trees`
-grid <- tibble(trees = seq(10, 200, by = 20)) %>%
-     mutate(foo = 1)
+# we'll search for best `random forest` model, varying two  hyperparameters:
+#  `mtry`
+#  `ntree`
+grid <- tibble(mtry = seq(1,6, by = 1)) %>%
+     mutate (foo = 1) %>%
+     inner_join(
+          tibble(trees = seq(500, 2000, by = 500)) %>%
+               mutate (foo = 1)  ) 
 
 #
 #  start the pipe   
@@ -235,17 +248,17 @@ the_pipe__states <- cv_train__states %>%
           )     
 
 # fit the model
-bagg_model__states <- function(dataset, trees) {
-     rand_forest(trees = trees, mode = "regression") %>%
-     set_engine("ranger", importance = 'permutation') %>%
+rf_model__states <- function(dataset, mtry, trees) {
+     rand_forest( mtry = mtry, trees = trees, mode = "regression") %>%
+     set_engine("ranger") %>%
      fit(Murder ~ ., data = dataset)
 }
 
 # it may take many minutes...
 set.seed(12345)
 the_pipe__states <- the_pipe__states %>%
-     mutate (the_model = map2(analysis_juiced, trees, 
-                              bagg_model__states))
+     mutate (the_model = pmap(list(analysis_juiced, mtry, trees), 
+                              rf_model__states))
 
 # Performance assessment of the models
 perf_metrics__states <- metric_set(rmse, rsq, ccc)
@@ -268,41 +281,42 @@ names(the_pipe__states)
      
 # get the model performance as data frame for all folds
 performance__states <- the_pipe__states %>%
-     select (id, id2, trees, the_metrics) %>%
+     select (id, id2, mtry, trees, the_metrics) %>%
      unnest(the_metrics)
 glimpse(performance__states)
 
 # average the metrics 
-average_model_performance__states_bagg <- performance__states %>%
-     group_by(trees, .metric) %>%
+average_model_performance__states_rf <- performance__states %>%
+     group_by(mtry, trees, .metric) %>%
      summarise (average_estimate = mean(.estimate, na.rm = TRUE)) %>%
      ungroup()
 
 # display the best models, ranked by `ccc`
-top_states_ccc_bagg <- average_model_performance__states_bagg %>%
+top_states_ccc_rf <- average_model_performance__states_rf %>%
      filter (.metric == 'ccc') %>%
      arrange(desc(average_estimate))
 
-# model with best ccc (0.645)
-# trees = 90	
+# model with best ccc (0.641)
+# mtry = 3
+# trees = 1000	
 
 # fit the model for the entire training set
 set.seed(12345)
-bagg_model_states <- rand_forest( trees = 90, mode = "regression") %>% 
+rf_model_states <- rand_forest( mtry = 3, trees = 1000, mode = "regression") %>% 
      set_engine("ranger", importance = "permutation") %>%
      fit(Murder ~ ., data = juice(recipe__states(train_tbl__states)))
 
 ###
 ##                             Variables importance
-names(bagg_model_states$fit$variable.importance)
+names(rf_model_states$fit$variable.importance)
 
-vi_states_bagg_tidy <- bagg_model_states$fit$variable.importance %>%
+vi_states_rf_tidy <- rf_model_states$fit$variable.importance %>%
      as_tibble() %>%
-     transmute (variable = names(bagg_model_states$fit$variable.importance), 
+     transmute (variable = names(rf_model_states$fit$variable.importance), 
                 importance = value) %>%
      arrange(desc(importance))
 
-plot_vi_states_bagg_tidy <- ggplot(data = vi_states_bagg_tidy, 
+plot_vi_states_rf_tidy <- ggplot(data = vi_states_rf_tidy, 
        aes(x = reorder(variable, importance), fill = variable)) +
   	geom_bar(stat="identity", 
   		aes(y=importance), position="dodge") +
@@ -310,20 +324,20 @@ plot_vi_states_bagg_tidy <- ggplot(data = vi_states_bagg_tidy,
   		label=variable, hjust=ifelse(importance > 0.75, 1.1, -0.1)), 
       position = position_dodge(width=1)) +
   	scale_y_continuous(labels = waiver()) + coord_flip() +
- 		ggtitle("Variable importance - `states_bagging_tidymodels`") +
+ 		ggtitle("Variable importance - `states-random_forests-tidymodels`") +
 		theme(axis.text.y = element_blank(), 
 			text=element_text(size=12)) +
 	   	xlab("variable") + ylab("importance") +
 		scale_fill_discrete(guide=FALSE)
 
-plot_vi_states_bagg_tidy
+plot_vi_states_rf_tidy
 
 
 ###   save the final model for using in further scripts
-save(bagg_model_states, train_tbl__states, test_tbl__states,
-     average_model_performance__states_bagg,
-     vi_states_bagg_tidy, plot_vi_states_bagg_tidy,
-     file = '14b1_states.RData')
+save(rf_model_states, train_tbl__states, test_tbl__states,
+     average_model_performance__states_rf,
+     vi_states_rf_tidy, plot_vi_states_rf_tidy,
+     file = '14c1_states.RData')
 
 
 # compare `ccc` for best `rpart` and `bagging` models
@@ -339,12 +353,19 @@ average_model_performance__states_bagg %>%
      pull(average_estimate) %>%
      head(1)
      
+average_model_performance__states_rf %>%
+     filter (.metric == 'ccc') %>%
+     top_n(1, average_estimate) %>%
+     pull(average_estimate) %>%
+     head(1)
+
 # compare variable's importance     
      
 plot_vi_states_rpart_tidy
 
 plot_vi_states_bagg_tidy
 
+plot_vi_states_rf_tidy
 
 
 #########################################################################
@@ -361,11 +382,14 @@ recipe__insurance <- function(dataset) {
      prep(data = dataset)
 }
 
-
-# we'll search for best `bagging` model, varying only one  hyperparameter:
-#  `trees`
-grid <- tibble(trees = seq(10, 200, by = 20)) %>%
-     mutate(foo = 1)
+# we'll search for best `random forest` model, varying two  hyperparameters:
+#  `mtry`
+#  `ntree`
+grid <- tibble(mtry = seq(1,6, by = 1)) %>%
+     mutate (foo = 1) %>%
+     inner_join(
+          tibble(trees = seq(500, 2000, by = 500)) %>%
+               mutate (foo = 1)  ) 
 
 #
 #  start the pipe   
@@ -382,8 +406,8 @@ the_pipe__insurance <- cv_train__insurance %>%
           )     
 
 # fit the model
-bagg_model__insurance <- function(dataset, trees) {
-     rand_forest(trees = trees, mode = "regression") %>%
+rf_model__insurance <- function(dataset, mtry, trees) {
+     rand_forest( mtry = mtry, trees = trees, mode = "regression") %>%
      set_engine("ranger") %>%
      fit(charges ~ ., data = dataset)
 }
@@ -391,8 +415,8 @@ bagg_model__insurance <- function(dataset, trees) {
 # it may take many minutes...
 set.seed(12345)
 the_pipe__insurance <- the_pipe__insurance %>%
-     mutate (the_model = map2(analysis_juiced, trees, 
-                              bagg_model__insurance))
+     mutate (the_model = pmap(list(analysis_juiced, mtry, trees), 
+                              rf_model__insurance))
 
 # Performance assessment of the models
 perf_metrics__insurance <- metric_set(rmse, rsq, ccc)
@@ -403,7 +427,7 @@ f_assessment__insurance <- function(the_model, assessment_baked) {
           predict(new_data = assessment_baked) %>%
           # Add the baked assessment data back in
           bind_cols(assessment_baked) %>% 
-          perf_metrics__insurance(charges, .pred)
+          perf_metrics__states(charges, .pred)
 }
 
 # get the prediction and three performance metrics for each model
@@ -411,65 +435,63 @@ the_pipe__insurance <- the_pipe__insurance %>%
      mutate (the_metrics = map2(.x = .$the_model, .y = .$assessment_baked, 
                .f = f_assessment__insurance))
 
-names(the_pipe__insurance)
-     
 # get the model performance as data frame for all folds
 performance__insurance <- the_pipe__insurance %>%
-     select (id, id2, trees, the_metrics) %>%
+     select (id, id2, mtry, trees, the_metrics) %>%
      unnest(the_metrics)
 
 # average the metrics 
-average_model_performance__insurance_bagg <- performance__insurance %>%
-     group_by(trees, .metric) %>%
+average_model_performance__insurance_rf <- performance__insurance %>%
+     group_by(mtry, trees, .metric) %>%
      summarise (average_estimate = mean(.estimate, na.rm = TRUE)) %>%
      ungroup()
 
 # display the best models, ranked by `ccc`
-top_insurance_ccc_bagg <- average_model_performance__insurance_bagg %>%
+top_insurance_ccc_rf <- average_model_performance__insurance_rf %>%
      filter (.metric == 'ccc') %>%
      arrange(desc(average_estimate))
 
-# model with best ccc (0.91)
-# trees = 50	
+# model with best ccc (0.919)
+# mtry = 4
+# trees = 2000	
 
 # fit the model for the entire training set
 set.seed(12345)
-bagg_model_insurance <- rand_forest( trees = 50, mode = "regression") %>% 
+rf_model_insurance <- rand_forest( mtry = 4, trees = 2000, mode = "regression") %>% 
      set_engine("ranger", importance = "permutation") %>%
      fit(charges ~ ., data = juice(recipe__insurance(main_train__insurance)))
 
 ###
 ##                             Variables importance
-names(bagg_model_insurance$fit$variable.importance)
 
-vi_insurance_bagg_tidy <- bagg_model_insurance$fit$variable.importance %>%
+vi_insurance_rf_tidy <- rf_model_insurance$fit$variable.importance %>%
      as_tibble() %>%
-     transmute (variable = names(bagg_model_insurance$fit$variable.importance), 
+     transmute (variable = names(rf_model_insurance$fit$variable.importance), 
                 importance = value) %>%
      arrange(desc(importance))
 
-plot_vi_insurance_bagg_tidy <- ggplot(data = vi_insurance_bagg_tidy, 
+plot_vi_insurance_rf_tidy <- ggplot(data = vi_insurance_rf_tidy, 
        aes(x = reorder(variable, importance), fill = variable)) +
   	geom_bar(stat="identity", 
   		aes(y=importance), position="dodge") +
   	geom_text(aes(x=variable, y=importance,  
-  		label=variable, hjust=ifelse(importance > 50000000, 1.1, -0.1)), 
+  		label=variable, hjust=ifelse(importance > 0.75, 1.1, -0.1)), 
       position = position_dodge(width=1)) +
   	scale_y_continuous(labels = waiver()) + coord_flip() +
- 		ggtitle("Variable importance - `insurance_bagging_tidymodels`") +
+ 		ggtitle("Variable importance - `insurance-random_forests-tidymodels`") +
 		theme(axis.text.y = element_blank(), 
 			text=element_text(size=12)) +
 	   	xlab("variable") + ylab("importance") +
 		scale_fill_discrete(guide=FALSE)
 
-plot_vi_insurance_bagg_tidy
+plot_vi_insurance_rf_tidy
 
 
 ###   save the final model for using in further scripts
-save(bagg_model_insurance, main_train__insurance, main_test__insurance,
-     average_model_performance__insurance_bagg,
-     vi_insurance_bagg_tidy, plot_vi_insurance_bagg_tidy,
-     file = '14b1_insurance.RData')
+save(rf_model_insurance, main_train__insurance, main_test__insurance,
+     average_model_performance__insurance_rf,
+     vi_insurance_rf_tidy, plot_vi_insurance_rf_tidy,
+     file = '14c1_insurance.RData')
 
 
 # compare `ccc` for best `rpart` and `bagging` models
@@ -485,10 +507,17 @@ average_model_performance__insurance_bagg %>%
      pull(average_estimate) %>%
      head(1)
      
+average_model_performance__insurance_rf %>%
+     filter (.metric == 'ccc') %>%
+     top_n(1, average_estimate) %>%
+     pull(average_estimate) %>%
+     head(1)
+
 # compare variable's importance     
      
 plot_vi_insurance_rpart_tidy
 
 plot_vi_insurance_bagg_tidy
 
+plot_vi_insurance_rf_tidy
 
