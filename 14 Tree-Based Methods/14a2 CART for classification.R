@@ -634,8 +634,8 @@ cart_model__heart <- function(dataset, cost_complexity, min_n, tree_depth) {
 
 # it may take many minutes...
 the_pipe__heart <- the_pipe__heart %>%
-     mutate (the_model = pmap(list(analysis_juiced,cost_complexity, min_n, tree_depth), 
-                              cart_model__heart))
+     mutate (the_model = pmap(list(analysis_juiced,cost_complexity, 
+               min_n, tree_depth), cart_model__heart))
 
 ###                 Model predictions
 

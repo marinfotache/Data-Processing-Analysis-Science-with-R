@@ -115,7 +115,6 @@ plot_vi_states_bag_ipred
 
 #########################################################################
 #         Evaluathe model performance on the test subset and compare 
-#         it with previous CART models
 
 # predicting the test data sets
 predict_states_bag_ipred <- predict(states_bag_ipred, test_tbl__states)
@@ -236,7 +235,7 @@ the_pipe__states <- cv_train__states %>%
 
 # fit the model
 bagg_model__states <- function(dataset, trees) {
-     rand_forest(trees = trees, mode = "regression") %>%
+     rand_forest(trees = trees, mode = "regression", mtry = .preds()) %>%
      set_engine("ranger", importance = 'permutation') %>%
      fit(Murder ~ ., data = dataset)
 }
@@ -283,12 +282,13 @@ top_states_ccc_bagg <- average_model_performance__states_bagg %>%
      filter (.metric == 'ccc') %>%
      arrange(desc(average_estimate))
 
-# model with best ccc (0.645)
-# trees = 90	
+# model with best ccc (0.621)
+# trees = 110
 
 # fit the model for the entire training set
 set.seed(12345)
-bagg_model_states <- rand_forest( trees = 90, mode = "regression") %>% 
+bagg_model_states <- rand_forest( trees = 110, 
+                                  mode = "regression", mtry = .preds()) %>% 
      set_engine("ranger", importance = "permutation") %>%
      fit(Murder ~ ., data = juice(recipe__states(train_tbl__states)))
 
@@ -383,10 +383,11 @@ the_pipe__insurance <- cv_train__insurance %>%
 
 # fit the model
 bagg_model__insurance <- function(dataset, trees) {
-     rand_forest(trees = trees, mode = "regression") %>%
+     rand_forest(trees = trees, mtry = .preds(), mode = "regression") %>%
      set_engine("ranger") %>%
      fit(charges ~ ., data = dataset)
 }
+
 
 # it may take many minutes...
 set.seed(12345)
@@ -429,12 +430,13 @@ top_insurance_ccc_bagg <- average_model_performance__insurance_bagg %>%
      filter (.metric == 'ccc') %>%
      arrange(desc(average_estimate))
 
-# model with best ccc (0.91)
-# trees = 50	
+# model with best ccc (0.916)
+# trees = 150	
 
 # fit the model for the entire training set
 set.seed(12345)
-bagg_model_insurance <- rand_forest( trees = 50, mode = "regression") %>% 
+bagg_model_insurance <- rand_forest( trees = 150, mode = "regression", 
+                                      mtry = .preds()) %>% 
      set_engine("ranger", importance = "permutation") %>%
      fit(charges ~ ., data = juice(recipe__insurance(main_train__insurance)))
 

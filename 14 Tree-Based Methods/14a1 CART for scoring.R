@@ -343,7 +343,7 @@ plotcp(insurance_rpart_1_unpruned)
 insurance_rpart_1_unpruned$cptable[which.min(insurance_rpart_1_unpruned$cptable[,"xerror"]),"CP"]
 # 0.001883154
 
-as.tibble(insurance_rpart_1_unpruned$cptable) %>%
+as_tibble(insurance_rpart_1_unpruned$cptable) %>%
      top_n(1, -xerror) 
      
 
@@ -554,7 +554,8 @@ cart_model__states <- function(dataset, cost_complexity, min_n, tree_depth) {
 
 # it may take many minutes...
 the_pipe__states <- the_pipe__states %>%
-     mutate (the_model = pmap(list(analysis_juiced,cost_complexity, min_n, tree_depth), 
+     mutate (the_model = pmap(list(analysis_juiced,cost_complexity, 
+                                   min_n, tree_depth), 
                               cart_model__states))
 
 # Performance assessment of the models
