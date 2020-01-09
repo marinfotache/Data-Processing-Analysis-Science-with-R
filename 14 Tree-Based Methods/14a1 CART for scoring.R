@@ -18,15 +18,10 @@
 ## last update: 07.01.2020
 
 library(tidyverse)
-# install.packages('mice')
-# library(mice)   # for missing value treatment
 library(caret)   
 library(rpart)
 library(rpart.plot)
 library(partykit)
-#install.packages('party')
-#library(party) # for conditional inference tree (ctree)
-# library(caTools) # for plotting the ROC curve
 library(tidymodels)
 options(scipen = 999)
 
@@ -511,7 +506,7 @@ ls()
 #########################################################################
 
 
-## create 5 times a 5 fold cross-validation on the main train subset
+## create 3 times a 5 fold cross-validation on the main train subset
 set.seed(12345)
 cv_train__states <- vfold_cv(train_tbl__states, v = 5, repeats = 3)
 
