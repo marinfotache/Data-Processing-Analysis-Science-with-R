@@ -19,10 +19,7 @@
 
 
 library(tidyverse)
-
-library(caret)     # for confusion matrix, ...
-#library(caTools) # for splitting the date set into train/test
-                  # and also for plotting the ROC curve
+library(caret)     
 library(ipred)
 library(ranger)
 library(tidymodels)
