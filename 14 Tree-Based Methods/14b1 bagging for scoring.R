@@ -23,6 +23,7 @@ library(caret)
 library(ipred)
 library(ranger)
 library(tidymodels)
+options(scipen = 999)
 
 ############################################################################
 ###            Download the necesary data sets for this script

@@ -22,6 +22,7 @@ library(caret)
 library(randomForest)
 library(ranger)
 library(tidymodels)
+options(scipen = 999)
 
 
 ############################################################################
