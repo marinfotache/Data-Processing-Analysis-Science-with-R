@@ -215,7 +215,7 @@ recipe__states <- function(dataset) {
      prep(data = dataset)
 }
 
-# we'll search for best `random forest` model, 
+# we'll search for best `xgboost` model, 
 # varying (only) three  hyperparameters:
 #  `lear_rate`
 #  `mtry`
@@ -294,8 +294,8 @@ top_states_ccc_xgb <- average_model_performance__states_xgb %>%
      filter (.metric == 'ccc') %>%
      arrange(desc(average_estimate))
 
-# model with best ccc (0.669)
-# learn_rate = 0.26
+# model with best ccc (0.89)
+# learn_rate = 0.01
 # mtry = 3
 # trees = 100
 
@@ -315,7 +315,7 @@ xgb.importance(model=xgb_model_states$fit) %>% head()
 
 names(xgb_model_states$fit$variable.importance)
 
-# notice that the variable importance is extracted differenly (from
+# notice that the variable importance is extracted differently (from
 # random forests), using `xgboost` package
 vi_states_xgb_tidy <- xgboost::xgb.importance(model=xgb_model_states$fit) %>%
      as_tibble() %>%
