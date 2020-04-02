@@ -13,7 +13,7 @@
 ### See also the presentation:
 ### https://github.com/marinfotache/Data-Processing-Analysis-Science-with-R/blob/master/08%20Data%20Visualization%20with%20-mostly-%20ggplot2/08_ggplot2.pptx
 ############################################################################
-## last update: 30.10.2018
+## last update: 02.04.2020
 
 library(tidyverse) 
 library(readxl)
@@ -29,7 +29,7 @@ library(lubridate)
 # Please download the files in a local directory (such as 'DataSets') and  
 # set the directory where you dowloaded the data files as the 
 # default/working directory, ex:
-setwd('/Users/marinfotache/Google Drive/R(Mac)/DataSets')
+setwd('/Users/marinfotache/Google Drive/R(Mac)-1 googledrive/DataSets')
 
 # for giving up scientific notation (e.g. 1.6e+07), use:
 #options("scipen"=30, "digits"=14)
@@ -163,9 +163,6 @@ ggplot(ReadMongoALL,
 	ggtitle("Read Latency for MongoDB") +
      xlab('Latency (in seconds)')
 
-# supress the scientific notation
-# giving up scientific notation (1.6e+07)
-options("scipen"=30, "digits"=14)
 
 # now, try again
 ggplot(ReadMongoALL, 

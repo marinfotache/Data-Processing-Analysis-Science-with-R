@@ -13,7 +13,7 @@
 ### See also the presentation:
 ### https://github.com/marinfotache/Data-Processing-Analysis-Science-with-R/blob/master/08%20Data%20Visualization%20with%20-mostly-%20ggplot2/08_ggplot2.pptx
 ############################################################################
-## last update: 30.10.2018
+## last update: 02.04.2020
 
 library(tidyverse) 
 library(readxl)
@@ -30,10 +30,10 @@ library(lubridate)
 # Please download the files in a local directory (such as 'DataSets') and  
 # set the directory where you dowloaded the data files as the 
 # default/working directory, ex:
-setwd('/Users/marinfotache/Google Drive/R(Mac)/DataSets')
+setwd('/Users/marinfotache/Google Drive/R(Mac)-1 googledrive/DataSets')
 
 # giving up scientific notation (1.6e+07)
-#options("scipen"=30, "digits"=14)
+options("scipen"=999, "digits"=14)
 
 
 #######################################################################
@@ -55,6 +55,7 @@ setwd('/Users/marinfotache/Google Drive/R(Mac)/DataSets')
 ###                                Sales
 load (file = 'sales.RData')
 glimpse(invoice_detailed)
+library(tidyverse)
 
 ## Task:
 ## Display the overall product sales
