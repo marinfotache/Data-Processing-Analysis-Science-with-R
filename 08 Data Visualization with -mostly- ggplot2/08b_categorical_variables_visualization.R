@@ -13,14 +13,13 @@
 ### See also the presentation:
 ### https://github.com/marinfotache/Data-Processing-Analysis-Science-with-R/blob/master/08%20Data%20Visualization%20with%20-mostly-%20ggplot2/08_ggplot2.pptx
 #######################################################################
-## last update: 30.10.2018
+## last update: 02.04.2020
 
+#install.packages('vcd')
+library (vcd)
 library(tidyverse) 
 library(readxl)
 library(lubridate)
-library(stringr)
-#install.packages('vcd')
-library (vcd)
 
 #######################################################################
 ###           Download the necesary data sets for this script       ###
@@ -32,7 +31,7 @@ library (vcd)
 # Please download the files in a local directory (such as 'DataSets') and  
 # set the directory where you dowloaded the data files as the 
 # default/working directory, ex:
-setwd('/Users/marinfotache/Google Drive/R(Mac)/DataSets')
+setwd('/Users/marinfotache/Google Drive/R(Mac)-1 googledrive/DataSets')
 
 # check if the current directory is ok
 getwd()
@@ -106,7 +105,7 @@ glimpse(studs)
 data <- studs %>%
      filter (LEVEL_OF_STUDY == 'undergraduate' & !is.na(PROGRAMME) &
                   !str_detect(PROGRAMME, "^Common courses")) %>%
-     group_by(PROGRAMME) %>%
+     dplyr::group_by(PROGRAMME) %>%
      summarise(n_of_studs = n())
 data
 
