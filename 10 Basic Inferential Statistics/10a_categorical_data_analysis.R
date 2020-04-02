@@ -13,14 +13,21 @@
 ### See also the presentation:
 ### https://github.com/marinfotache/Data-Processing-Analysis-Science-with-R/blob/master/10%20Basic%20Inferential%20Statistics/10_basic_inferential_statistics.pptx
 ############################################################################
-## last update: 2019-03-25
+## last update: 2020-04-02
+
+### two R packages are particularly important for categorical data
+###    analysis, "vcd" and "vcdExtra"
+#install.packages("vcd", dependencies = T)
+#install.packages("vcdExtra")
+library(vcd)
+library(vcdExtra)
 
 
-library(tidyverse)
-library(readxl)
 #install.packages('ggmosaic')
 library(ggmosaic)
 library(scales)
+library(tidyverse)
+library(readxl)
 
 ############################################################################
 ###            Download the necesary data sets for this script
@@ -32,7 +39,7 @@ library(scales)
 # Please download the files in a local directory (such as 'DataSets') and  
 # set the directory where you dowloaded the data files as the 
 # default/working directory, ex:
-setwd('/Users/marinfotache/Google Drive/R(Mac)/DataSets')
+setwd('/Users/marinfotache/Google Drive/R(Mac)-1 googledrive/DataSets')
 
 # check if the current directory is ok
 getwd()
@@ -66,7 +73,7 @@ getwd()
 
 
 # giving up scientific notation (1.6e+07)
-options(scipen = 9)
+options(scipen = 999)
 
 
 
@@ -75,17 +82,26 @@ options(scipen = 9)
 ### Frequency/contingency tables, mosaic plots, independence tests, etc. ###
 ############################################################################
 
+############################################################################
+###  Before diving into the any statistical test, you have to 
+###  explore data. 
+###  See:
+###  - in section `08 Data Visualization with -mostly- ggplot2` (https://github.com/marinfotache/Data-Processing-Analysis-Science-with-R/tree/master/08%20Data%20Visualization%20with%20-mostly-%20ggplot2)
+### the script `08b_categorical_variables_visualization.R` 
+### 
+###  - in section
+###  `09 Exploratory Data Analysis` (https://github.com/marinfotache/Data-Processing-Analysis-Science-with-R/tree/master/09%20Exploratory%20Data%20Analysis)
+### the script `09a_descriptive_statistics.R` (mainly the sections `II.3` and `III.3`)
+
+############################################################################
+
+
+
 ###  There are two types of categorical variables:
 ###		* nominal (qualitative, no order implied): sex/gender, 
 ###			marital status, country, etc.
 ###       * ordinal: academic cycle (undergraduate, master, Ph.D. student), 
 ###			Likert scale (1-5), etc.
-
-### two R packages are particularly important, "vcd" and "vcdExtra"
-#install.packages("vcd", dependencies = T)
-#install.packages("vcdExtra")
-library(vcd)
-library(vcdExtra)
 
 
 ###
@@ -138,45 +154,51 @@ library(vcdExtra)
 ###  Theoretical example:
 ###  950  randomly selected people were asked the question: 
 ###     Are you pleased with Romanian politicians  (Yes or No)?
-###  424 responded yes (you realize this is not a real survey) 
+###  424 responded yes (you realize this is not a real survey :-))  
+
+424 / 950
+
 
 ### H0: the proportion of yes respondents is equal (0.5) to 
 ###    the proportion of "no" respondents
 
 # function "prop.test" tests the hypotheses of equality of proportion with 
 #  a specified threshold and produce confidence intervals
-prop.test(424,950)
+prop.test(424, 950)
 # or
-prop.test(424,950, p=.5, alternative="two.sided", 
-	conf.level=0.95, correct=TRUE)
+prop.test(424, 950, p = .5, alternative = "two.sided", 
+	conf.level = 0.95, correct = TRUE)
 # for the above test, 
 #   * H0: proportion is 0.5
 #   * a 95% confidence interval (CI) for the proportion is calculated
 #   * both the test and the CI incorporate a continuity correction
 
-# change the parameters:
-# * H0: proportion = 0.4 
-# * Ha: the one-sided alternative proportion > 0.4 
-# * a 99% (one-sided) CI for proportion
-# * all without continuity correction
-prop.test(424, 950, p=.4, alternative="greater",
-	conf.level=0.95,correct=FALSE)
 
 # change the parameters:
-# * H0:proportion = 0.4 
+# * H0: proportion = 0.4 
+# * Ha: the one-sided alternative  - proportion > 0.4 
+# * a 99% (one-sided) CI for proportion
+# * all without continuity correction
+prop.test(424, 950, p = .4, alternative = "greater",
+	conf.level = 0.95, correct=FALSE)
+
+
+# change the parameters:
+# * H0: proportion > 0.4 
 # * Ha: the one-sided alternative proportion < 0.4 
 # * a 95% (one-sided) CI for proportion
 # * all with continuity correction
-prop.test(424, 950, p=.4, alternative="less",
-	conf.level=0.95, correct=TRUE)
+prop.test(424, 950, p = .4, alternative = "less",
+	conf.level = 0.95, correct=TRUE)
+
 
 # change the parameters:
 # * H0:proportion < 0.4 
 # * Ha: the one-sided alternative proportion > 0.4 
 # * a 95% (one-sided) CI for proportion
 # * all with continuity correction
-prop.test(424, 950, p=.4, alternative="greater",
-     conf.level=0.99, correct=TRUE)
+prop.test(424, 950, p = .4, alternative = "greater",
+     conf.level = 0.99, correct = TRUE)
 
 
 
@@ -214,6 +236,16 @@ prop.test(424, 950, p=.4, alternative="greater",
 # the form of tha data set: data frame
 View(Arthritis)
 # each observation describes one person
+
+table(Arthritis$Treatment)
+
+
+table(Arthritis$Improved)
+
+Arthritis %>%
+     group_by(Improved) %>%
+     tally()
+
 
 # There are two explanatory factors: "Treatment" and "Sex". 
 # "Age" is a covariate, and "Improved" is the response (an 
@@ -379,9 +411,13 @@ thwt1
 
 
 # Visualize association between thow nominal variables with a spinogram
-spine(twt1, main="Spinogram Example - \nTreatment Results for Rheumatoid Arthritis")
+vcd::spine(twt1, main="Spinogram Example - \nTreatment Results for Rheumatoid Arthritis")
+# ..or
+vcd::spine(Treatment ~ Improved, data = Arthritis)
 
-# Visualize association between thow nominal variables with a mosaic plot
+
+
+# Visualize association between two nominal variables with a mosaic plot
 mosaicplot(twt1, color = seq(1:ncol(twt1)), 
 	main="Mosaic Graph - Treatment Results \nfor Rheumatoid Arthritis")
 
@@ -395,6 +431,7 @@ ggplot(data = Arthritis) +
      labs(x="Treatment", title='Treatment vs. Result') + 
      theme (plot.title = element_text (colour="black", size=17, hjust = 0.5))+
      guides(fill=guide_legend(title = "Treatment Result", reverse = TRUE))
+
 
 
 #######################################################################
@@ -415,7 +452,7 @@ qchisq(.95, df=2)
 
 
 # H0: Improved and Sex are independent
-mytable <- xtabs(~Improved+Sex, data=Arthritis)
+mytable <- xtabs(~Improved + Sex, data=Arthritis)
 chisq.test(mytable)
 qchisq(.95, df=2)
 
@@ -430,7 +467,8 @@ qchisq(.95, df=2)
 #   which may invalidate the chi-square approximation.
 
 
-##  fisher.test() function for computing Fisher’s exact test of independence
+##  fisher.test() function for computing Fisher’s exact 
+##  test of independence
 # Fisher’s exact test evaluates the null hypothesis of independence 
 #  of rows and columns in a contingency table with fixed marginals.
 mytable <- xtabs(~Treatment+Improved, data=Arthritis)
@@ -1000,4 +1038,37 @@ mosaic(twt4, main = "Sex & Race \n in Dayton Survey",
 # or
 mosaicplot(twt4, main = "Sex & Race \n in Dayton Survey", 
 	color = seq(1:ncol(twt4)))
+
+
+
+
+
+#########################################################################
+###                                
+###                      To do (during lab classes):
+###                      
+#########################################################################
+
+###  
+###  Given the `FEAA studs` data set:
+###  
+###  1. Is there any association between the level of study (undergraduate,
+###            master, ph.d.) and the financial support?
+###             
+###  2. Is there any association between the year of study and the financial support
+###       for the undegraduate students ?
+###
+###  3. Is there any association between the year of study and the financial support
+###       for the master students ?
+###       
+###  4. Is there any association between the programme and the financial support
+###       for the undegraduate students ?
+###
+###  5. Is there any association between the programme and the financial support
+###       for the master students ?
+###
+#########################################################################
+
+
+
 
