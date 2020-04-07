@@ -14,9 +14,9 @@
 ### See also the presentation:
 ### https://github.com/marinfotache/Data-Processing-Analysis-Science-with-R/blob/master/10%20Basic%20Inferential%20Statistics/10_basic_inferential_statistics.pptx
 ############################################################################
-## last update: 2019-03-25
+## last update: 2020-04-02
 
-
+library(vcd)
 library(tidyverse)
 library(readxl)
 #install.packages('ggmosaic')
@@ -33,7 +33,7 @@ library(scales)
 # Please download the files in a local directory (such as 'DataSets') and  
 # set the directory where you dowloaded the data files as the 
 # default/working directory, ex:
-setwd('/Users/marinfotache/Google Drive/R(Mac)/DataSets')
+setwd('/Users/marinfotache/Google Drive/R(Mac)-1 googledrive/DataSets')
 ############################################################################
 
 
@@ -70,7 +70,6 @@ setwd('/Users/marinfotache/Google Drive/R(Mac)/DataSets')
 
 #########################################################################
 ### 	                    I.1 Arthritis data set                 ###
-library(vcd)
 # Data set "Arthritis" dataset" is included in the "vcd" package 
 # (taken from the book "R in action" (by R. Kabacoff))
 # Data - Kock & Edward (1988) - represent a double-blind clinical trial 
@@ -125,6 +124,7 @@ ggplot(Arthritis, aes(x = Age)) +
      scale_x_continuous(breaks = seq(20,80, 5)) +
      scale_y_continuous(breaks = seq(0,15, 1)) +
      facet_grid( ~ Sex)
+
 
 #   Display overall distribution for variable `Age` with histogram 
 #   (3) separate histogram for each treatment group
@@ -888,7 +888,7 @@ tapply(tips$tip, tips$sex, shapiro.test)
 ## but we will do it
 
 
-# Two Sample Two Tail t-test
+#                Two Sample Two Tail t-test
 # H0: average tip for female payers is equal to the tip provided by males
 # Ha: average tip for female payers is significantly different than
 #    the tips provided by males
@@ -926,7 +926,7 @@ tapply(tips$tip, tips$smoker, shapiro.test)
 # 	Ha: average tip paid by smokers is NOT equal to the average tip paid by non-smokers  
 t.test(tip ~ smoker, data = tips)
 # t = -0.091844, df = 192.26, p-value = 0.9269
-# p-value > 0.05, so we faill to reject H0
+# p-value > 0.05, so we fail to reject H0
 # Non-Smokers and Smokers seem similarly generous in giving tip 
 
 
@@ -1083,7 +1083,7 @@ t.test(paired_results$duration_Hive,
 # One Tail t-test for Paired Data
 # H0: the mean query duration for Hive is less than or equal to 
 # the mean for PostgreSQL
-# # H0: the mean query duration for Hive is greater than 
+# # Ha: the mean query duration for Hive is greater than 
 # the mean for PostgreSQL
 with(paired_results, t.test(duration_Hive, duration_Pg, paired=TRUE, 
           alternative = 'greater'))
@@ -1146,6 +1146,7 @@ wilcox.test(score ~ smoking_status , data = smoke_mem, alternative="greater")
 # W = 76.5, p-value = 0.02358
 
 	
+
 #########################################################################
 ### 	                     VII.2  `tips` data set                       ###
 ###
@@ -1171,6 +1172,7 @@ wilcox.test(tip ~ sex , data = tips)
 # W = 6369.5, p-value = 0.3834
 # p-value > 0.05, so we faill to reject H0
 # Men and Women seem similarly generous in giving tip (in the restaurant)
+
 
 
 ###
@@ -1314,7 +1316,7 @@ with(paired_results, wilcox.test(duration_Hive, duration_Pg, paired=TRUE))
 # One Tail t-test for Paired Data
 # H0: the mean query duration for Hive is less than or equal to 
 # the mean for PostgreSQL
-# # H0: the mean query duration for Hive is greater than 
+# # Ha: the mean query duration for Hive is greater than 
 # the mean for PostgreSQL
 with(paired_results, t.test(duration_Hive, duration_Pg, paired=TRUE, 
           alternative = 'greater'))
@@ -1396,6 +1398,7 @@ wilcox.test(Result ~ Treatment, Arthritis_new, alternative="less")
 ### 	                     X.1  `tips` data set                       ###
 ###
 summary(tips)
+table(tips$day)
 
 ###
 ### RQ3: Does the amount of the tip vary significantly through the 
@@ -1563,19 +1566,23 @@ friedman.test(as.matrix(paired_results[,2:3]))
 ## Pairwise Comparisons
 # To find out which pairs are different, you will need to install 
 # the package ‘PMCMR’ and load the library after that:
+# install.packages('PMCMR')
+library(PMCMR)
 # install.packages('PMCMRplus')
 library(PMCMRplus)
 # You will then need to conduct the Nemenyi Post-hoc tests 
 # to compare all the pairs. They will be presented as a table.
-posthoc.friedman.nemenyi.test(as.matrix(paired_results[,2:3]))
+PMCMR::posthoc.friedman.nemenyi.test(as.matrix(paired_results[,2:3]))
 
 
 
 #########################################################################
 ### 	         XI.2 Alexandru Tica's data set (Exadata)                 ###
 ### we'll apply the test, even there are just two dependent groups
-load(file = 'Tica2018-03.RData')
-glimpse(df) 
+
+#?????????
+#load(file = 'Tica2018-03.RData')
+#glimpse(df) 
 
 # RQ:
 # Is the query performance significantly different among the six 

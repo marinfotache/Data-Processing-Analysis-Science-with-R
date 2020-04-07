@@ -95,8 +95,6 @@ options(scipen = 999)
 
 ############################################################################
 
-
-
 ###  There are two types of categorical variables:
 ###		* nominal (qualitative, no order implied): sex/gender, 
 ###			marital status, country, etc.
@@ -228,6 +226,7 @@ prop.test(424, 950, p = .4, alternative = "greater",
 ###	               II.1      "Arthritis" dataset" 
 ###  presentation, variables, visualization, tests of independence ###
 #######################################################################
+data(Arthritis, package = 'vcd')
 
 # Data set "Arthritis" dataset" is included in the "vcd" package 
 # (taken from the book "R in action" (by R. Kabacoff))
@@ -438,7 +437,7 @@ ggplot(data = Arthritis) +
 ###      Three tests of independence for nominal variables 
 
 # H0: Variables `Treatment` and `Improved` are independent
-mytable <- xtabs(~Treatment+Improved, data=Arthritis)
+mytable <- xtabs(~ Treatment + Improved, data = Arthritis)
 # The p-values are the probability of obtaining the sampled 
 #  results assuming independence of the row 
 #  and column variables in the population. 
@@ -452,7 +451,7 @@ qchisq(.95, df=2)
 
 
 # H0: Improved and Sex are independent
-mytable <- xtabs(~Improved + Sex, data=Arthritis)
+mytable <- xtabs(~ Improved + Sex, data = Arthritis)
 chisq.test(mytable)
 qchisq(.95, df=2)
 
@@ -1002,7 +1001,7 @@ UCBAdmissions
 # H0: The Result of the admission ("Admit") is independent of "Sex" (of
 #    the candidate/applicant) within each level "Department".
 mantelhaen.test(UCBAdmissions)       
-#  p-value = 0.2323, so for every UCBA department there is no enough evidence
+#  p-value = 0.2323, so for UCBA departments there is no enough evidence
 #  to support the claim of gender discrimination in the admission process
 
 
@@ -1051,21 +1050,26 @@ mosaicplot(twt4, main = "Sex & Race \n in Dayton Survey",
 
 ###  
 ###  Given the `FEAA studs` data set:
+#######################################################################
+setwd('/Users/marinfotache/Google Drive/R(Mac)-1 googledrive/DataSets')
+file <- "anonymized_students_FEAA_2014.xlsx"
+studs <- read_excel(file, sheet = 1, col_names = TRUE, skip = 0)
+
 ###  
 ###  1. Is there any association between the level of study (undergraduate,
 ###            master, ph.d.) and the financial support?
 ###             
 ###  2. Is there any association between the year of study and the financial support
-###       for the undegraduate students ?
+###       for the undegraduate students?
 ###
 ###  3. Is there any association between the year of study and the financial support
-###       for the master students ?
+###       for the master students?
 ###       
 ###  4. Is there any association between the programme and the financial support
-###       for the undegraduate students ?
+###       for the undegraduate students?
 ###
 ###  5. Is there any association between the programme and the financial support
-###       for the master students ?
+###       for the master students?
 ###
 #########################################################################
 
