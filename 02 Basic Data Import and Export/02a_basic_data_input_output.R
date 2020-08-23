@@ -13,16 +13,14 @@
 ### See also the presentation:
 ### https://github.com/marinfotache/Data-Processing-Analysis-Science-with-R/blob/master/02%20Basic%20Data%20Import%20and%20Export/02a_basic_data_input_output.pptx
 ############################################################################
-## last update: 09.10.2018
+## last update: 23.08.2020
 
 
 sessionInfo()
 
-# install.packages('stringr')
-#library(stringr)
-
 # install.packages('tidyverse')
 library(tidyverse)
+
 
 ############################################################################
 ###            Download the necesary data sets for this script
@@ -34,7 +32,7 @@ library(tidyverse)
 # Please download the files in a local directory (such as 'DataSets') and  
 # set the directory where you dowloaded the data files as the 
 # default/working directory, ex:
-setwd('/Users/marinfotache/Google Drive/R(Mac)/DataSets')
+setwd('/Users/marinfotache/Google Drive/R(Mac)-1 googledrive/DataSets')
 
 # check if the current directory is ok
 getwd()
@@ -53,6 +51,7 @@ rm(list = ls())
 ############################################################################
 
 # load the file containing all the data frames associated to `chinook` database tables
+getwd()
 load(file='chinook.RData')
 
 
@@ -96,6 +95,20 @@ rm(df1)
 
 # see what's happen in the case of...
 df3 <- edit(df3)
+
+
+## new (2020-08) - package `DataEditR`
+## https://github.com/DillonHammill/DataEditR
+#install.packages('devtools')
+library(devtools)
+install_github("DillonHammill/DataEditR")
+# Load required packages
+library(DataEditR)
+
+# Save output to R object & csv file
+mtcars_new <- data_edit(mtcars,
+                        save_as = "mtcars_new.csv")
+
 
 
 
@@ -164,12 +177,13 @@ head(births2006)
 
 # copy the attribute names into a vector
 df_names <- names(births2006)
-df_names
+print(df_names)
 class(df_names)
 
 # display some of the attribute names
 df_names[1]
 df_names[5] <- "TBO"
+df_names
 names(births2006)[5] <- "TBO"
 
 # display the number of attributes
@@ -563,8 +577,7 @@ invoice_detailed <- dbGetQuery(con,
 
 ###  E. Import (as a data frame) each PostgreSQL database table with 
 ###       just a loop
-for (i in 1:nrow(tables))
-{
+for (i in 1:nrow(tables)) {
      # extract data from table in PostgreSQL
      temp <- dbGetQuery(con, paste("select * from ", tables[i,1], sep=""))
      # create the data frame
