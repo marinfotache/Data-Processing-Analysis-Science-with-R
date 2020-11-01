@@ -13,7 +13,7 @@
 ### See also the presentation:
 ### https://github.com/marinfotache/Data-Processing-Analysis-Science-with-R/blob/master/02%20Basic%20Data%20Import%20and%20Export/02a_basic_data_input_output.pptx
 ############################################################################
-## last update: 23.08.2020
+## last update: 01.11.2020
 
 
 sessionInfo()
@@ -101,7 +101,7 @@ df3 <- edit(df3)
 ## https://github.com/DillonHammill/DataEditR
 #install.packages('devtools')
 library(devtools)
-install_github("DillonHammill/DataEditR")
+#install_github("DillonHammill/DataEditR")
 # Load required packages
 library(DataEditR)
 
