@@ -1,12 +1,12 @@
 ############################################################################
 ###                    (Simple) R Programming Case Study 1               ###
-###                   Master Programmes Admission                   ###
+###                       Master Programmes Admission                   ###
 ### for problem description see:
 ### https://github.com/marinfotache/Data-Processing-Analysis-Science-with-R/blob/master/04%20Basic%20Programming/04c1_CaseStudy1_R-Programming_1_Requirements.pdf                  
 ############################################################################
 ###
 
-# last update: 2018-11-23
+# last update: 2020-11-10
 library(readxl)
 library(tidyverse)
 
@@ -25,17 +25,73 @@ library(tidyverse)
 # Please download the files in a local directory (such as 'DataSets') and  
 # set the directory where you dowloaded the data files as the 
 # default/working directory, ex:
-setwd('/Users/marinfotache/Google Drive/R(Mac)/DataSets')
+setwd('/Users/marinfotache/Google Drive/R(Mac)-1 googledrive/DataSets')
 
 
 load('master_admiss1.Rdata')
 glimpse(master_progs)
 glimpse(applicants)
 
+#######################################################
+###             New solution: 2020-11-10
 
 ## 1 order applicants by admission average points
 applicants <- applicants %>%
      mutate (admin_avg_points = grades_avg * .6 + dissertation_avg * .4 ) %>%
+     mutate (prog_abbreviation_accepted = '') %>%        
+     arrange(desc(admin_avg_points))
+
+# 2 add a column in `master_progs` for keeping track of assigned applicants
+master_progs <- master_progs %>%
+     mutate (n_of_filled_positions = 0)
+
+glimpse(applicants)
+
+# i <- 1
+for (i in 1:nrow(applicants)) {
+        
+     # get as a data frame all the options for current applicant
+     crt_options <- applicants[i,]  %>%
+        select (applicant_id, prog1_abbreviation:prog6_abbreviation) %>%
+        pivot_longer(!applicant_id, names_to = "attribute", values_to = "option") %>%
+        filter(!is.na(option))
+     
+     # j <- 1
+     for (j in 1:nrow(crt_options)) {
+             crt_prog <- master_progs %>%
+                     filter (prog_abbreviation == crt_options$option[j])
+             
+             if (crt_prog$n_of_positions[1] > crt_prog$n_of_filled_positions[1]) {
+                     # there an available place
+                     #applicants$prog_abbreviation_accepted[i] <- crt_prog$prog_abbreviation[1]
+                     
+                     applicants <- applicants %>%
+                             mutate (prog_abbreviation_accepted = 
+                                if_else(applicant_id == applicants$applicant_id[i], 
+                                        crt_prog$prog_abbreviation[1], prog_abbreviation_accepted))
+                     
+                     
+                     # increment number of filled positions
+                     master_progs <- master_progs %>%
+                             mutate (n_of_filled_positions = n_of_filled_positions +
+                                ifelse (prog_abbreviation == crt_prog$prog_abbreviation[1], 1, 0))
+                     break
+             }
+             
+     }
+
+}
+
+
+
+
+#######################################################################
+###                   Previous solution
+
+## 1 order applicants by admission average points
+applicants <- applicants %>%
+     mutate (admin_avg_points = grades_avg * .6 + dissertation_avg * .4 ) %>%
+     mutate (prog_abbreviation_accepted = '') %>%        
      arrange(desc(admin_avg_points))
 
 # 2 add a column in `master_progs` for keeping track of assigned applicants
@@ -44,6 +100,8 @@ master_progs <- master_progs %>%
 
 # 3. set up the `results` tibble 
 results <- tibble()
+
+glimpse(applicants)
 
 # 4 main section: loop trough all applicants (in their average points 
 # descending order)
