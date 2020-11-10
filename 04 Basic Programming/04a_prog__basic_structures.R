@@ -131,7 +131,7 @@ studs <- mutate(studs,
           if_else(YEAR_OF_STUDY == 'III', 3, as.numeric(YEAR_OF_STUDY))))))
 table(studs$YEAR_OF_STUDY)
 typeof(studs$YEAR_OF_STUDY)
-
+glimpse(studs)
 
 
 #########################################################################
@@ -352,7 +352,7 @@ initial_wd <- getwd()
 
 ### 2. Set `/Users/marinfotache/Google Drive/R(Mac)/DataSets/Students`                                                                 
 ###       as default working directory
-main_dir <- '/Users/marinfotache/Google Drive/R(Mac)/DataSets/Students'
+main_dir <- '/Users/marinfotache/Google Drive/R(Mac)/DataSets/student'
 setwd(main_dir)
 getwd()
 
@@ -372,8 +372,7 @@ getwd()
 ### 5. Given that there for FRM master programme there are 10 teams of
 ###       students, create a separate directory for each team called 
 ###       `FRM101`, `FRM102`, ... `FRM110`     
-for (i in 101:110)
-{
+for (i in 101:110) {
      team_directory <- paste('FRM', i, sep='')
      if (!dir.exists(file.path(new_wd, team_directory)))
           dir.create(file.path(new_wd, team_directory))

@@ -243,7 +243,6 @@ modelA <- lm(Murder ~ Population + Illiteracy + Income +
 summary(modelA)
 
 
-
 # here is the function
 equation_lm <- function(the_lm_model) {
      return (paste(
