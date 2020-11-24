@@ -14,7 +14,7 @@
 ### See also the presentation:
 ### xxxxxxxx
 ############################################################################
-## last update: 19.11.2019
+## last update: 24.11.2020
 
 
 # needed packages
@@ -34,7 +34,7 @@ library(readxl)
 # Please download the files in a local directory (such as 'DataSets') and  
 # set the directory where you dowloaded the data files as the 
 # default/working directory, ex:
-setwd('/Users/marinfotache/Google Drive/R(Mac)/DataSets')
+setwd('/Users/marinfotache/Google Drive/R(Mac)-1 googledrive/DataSets')
 
 
 #########################################################################
@@ -114,16 +114,18 @@ load('chinook.RData')
 descr_stats_wide <- function(x, na.omit=FALSE) {
      if (na.omit)
           x <- x[!is.na(x)]
-          min = min(x, na.rm=T)
-          q_25 = quantile(x, names =F, na.rm=T)[2]
-          med = median(x, na.rm=T)
-          q_75 = quantile(x, names =F, na.rm=T)[4]
-          max = max(x, na.rm=T)	
-          n = length(x)
-          mean = mean(x, na.rm=T)
-          st_dev = sd(x, na.rm=T)
-          skew = PerformanceAnalytics::skewness(x)
-          kurt = PerformanceAnalytics::kurtosis(x)
+
+     min = min(x, na.rm=T)
+     q_25 = quantile(x, names =F, na.rm=T)[2]
+     med = median(x, na.rm=T)
+     q_75 = quantile(x, names =F, na.rm=T)[4]
+     max = max(x, na.rm=T)	
+     n = length(x)
+     mean = mean(x, na.rm=T)
+     st_dev = sd(x, na.rm=T)
+     skew = PerformanceAnalytics::skewness(x)
+     kurt = PerformanceAnalytics::kurtosis(x)
+     
      return(tibble(a__n=n, b___min=min, c__first_quartile=q_25, 
           d__median=med, e__third_quartile=q_75, f__max=max,  
           g__mean=mean, h__st_dev=st_dev, i__skew=skew, j__kurtosis=kurt))
@@ -134,16 +136,18 @@ descr_stats_wide <- function(x, na.omit=FALSE) {
 descr_stats_long <- function(x, na.omit=FALSE) {
      if (na.omit)
           x <- x[!is.na(x)]
-          min = min(x, na.rm=T)
-          q_25 = quantile(x, names =F, na.rm=T)[2]
-          med = median(x, na.rm=T)
-          q_75 = quantile(x, names =F, na.rm=T)[4]
-          max = max(x, na.rm=T)	
-          n = length(x)
-          mean = mean(x, na.rm=T)
-          st_dev = sd(x, na.rm=T)
-          skew = PerformanceAnalytics::skewness(x)
-          kurt = PerformanceAnalytics::kurtosis(x)
+
+     min = min(x, na.rm=T)
+     q_25 = quantile(x, names =F, na.rm=T)[2]
+     med = median(x, na.rm=T)
+     q_75 = quantile(x, names =F, na.rm=T)[4]
+     max = max(x, na.rm=T)	
+     n = length(x)
+     mean = mean(x, na.rm=T)
+     st_dev = sd(x, na.rm=T)
+     skew = PerformanceAnalytics::skewness(x)
+     kurt = PerformanceAnalytics::kurtosis(x)
+     
      return(
           bind_rows(
                tibble(statistic = "a__n", value = n),
@@ -187,7 +191,7 @@ vars <- c('cty_l100km', 'hwy_l100km', 'combined_l100km', 'air_pollution',
 # first solution based on `map` function results in a data frame
 # containing a list column
 result <- fuel_economy_2018 %>%
-     select (!!!vars) %>%
+     select ({{vars}}) %>%
      map(., mean, na.rm = TRUE) %>%
      tibble() %>%   # `map` result is a list, so we need `tibble`
      set_names('mean') %>%
@@ -202,6 +206,7 @@ result <- fuel_economy_2018 %>%
 
 result
 names(result)
+
 
 
 # the third second solution intoroduces another notation (`~`)
@@ -246,6 +251,7 @@ glimpse(result)
 ##                  Task 2 (taken from script `04a`):                 ###
 ##  Given the fuel efficiency data set (see above) ...                ###
 glimpse(fuel_economy_2018)
+
 ##  Which is the numeric variable with the largest                    ###
 ##       standard deviation?                                          ###
 #########################################################################
@@ -381,7 +387,7 @@ result_long_df2 <- fuel_economy_2018 %>%
      set_names(str_replace_all(names(.), '\\.| ', '_')) %>% ## fix the variable names
      map(., descr_stats_long) %>%
      tibble(variable = names(.), df = .) %>%
-     unnest()
+     unnest(df)
      
 View(result_long_df2)
 result_long_df
