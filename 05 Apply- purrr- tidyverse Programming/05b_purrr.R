@@ -341,7 +341,7 @@ result_long
 ## 3.b Get, as a data frame, all the variables statistics
 ## 
 
-## `descr_stats_wide` as argument of `map`
+## ## `descr_stats_wide` as argument of `map`+ old notation (`gather` & `spread`)
 result_wide_df1 <- fuel_economy_2018 %>% 
      select_if(is.numeric) %>%
      set_names(str_replace_all(names(.), '\\.| ', '_')) %>% ## fix the variable names
@@ -354,6 +354,23 @@ result_wide_df1 <- fuel_economy_2018 %>%
 
 View(result_wide_df1)
 result_wide_df1
+
+
+## `descr_stats_wide` as argument of `map` + new notation (`pivot_longer` & `pivot_wider`)
+result_wide_df1 <- fuel_economy_2018 %>% 
+     select_if(is.numeric) %>%
+     set_names(str_replace_all(names(.), '\\.| ', '_')) %>% ## fix the variable names
+     map(., descr_stats_wide) %>%
+     as.data.frame() %>%   # this will convert theh list into a data frame
+     mutate (row_num = row_number()) %>%
+     pivot_longer(!row_num, names_to = "variable_and_statistic", values_to = "value")  %>%
+     separate(variable_and_statistic, into = c('variable', 'statistic'),
+               sep = "\\.") %>%
+     pivot_wider(names_from = 'statistic', values_from = 'value')
+
+View(result_wide_df1)
+result_wide_df1
+glimpse(result_wide_df1)
 
 
 
