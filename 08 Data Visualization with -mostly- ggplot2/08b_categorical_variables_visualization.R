@@ -13,13 +13,14 @@
 ### See also the presentation:
 ### https://github.com/marinfotache/Data-Processing-Analysis-Science-with-R/blob/master/08%20Data%20Visualization%20with%20-mostly-%20ggplot2/08_ggplot2.pptx
 #######################################################################
-## last update: 02.04.2020
+## last update: 07.12.2020
 
 #install.packages('vcd')
 library (vcd)
 library(tidyverse) 
 library(readxl)
 library(lubridate)
+options(scipen = 999)
 
 #######################################################################
 ###           Download the necesary data sets for this script       ###
@@ -28,16 +29,14 @@ library(lubridate)
 # all the files needed o run this script are available at:
 # https://github.com/marinfotache/Data-Processing-Analysis-Science-with-R/tree/master/DataSets
 
+# check if the current directory is ok
+getwd()
+
 # Please download the files in a local directory (such as 'DataSets') and  
 # set the directory where you dowloaded the data files as the 
 # default/working directory, ex:
 setwd('/Users/marinfotache/Google Drive/R(Mac)-1 googledrive/DataSets')
 
-# check if the current directory is ok
-getwd()
-#######################################################################
-# giving up scientific notation (1.6e+07)
-#options("scipen"=30, "digits"=14)
 
 #######################################################################
 ###                                Agenda                           ###
@@ -162,6 +161,17 @@ ggplot(data = data, aes(x = PROGRAMME, y = n_of_studs,
                hjust = 1 )) # horizontal justification (align towards the bar)
 
 
+ggplot(data = data, aes(x = PROGRAMME, y = n_of_studs, 
+                        fill = PROGRAMME)) +
+    geom_bar(stat="identity") +
+    guides(fill=FALSE) +
+    xlab("Undergraduate Programme") + ylab("Number of students") +
+    ggtitle("Undergraduate Students Structure") +
+    theme(axis.text.x = element_text(angle = 45, # (not so good for the neck)
+               vjust = 1, # vertical justification (position near to bar center)
+               hjust = 1 )) # horizontal justification (align towards the bar)
+
+
 # try with another angle and center the title
 ggplot(data = data, aes(x = PROGRAMME, y = n_of_studs, 
                         fill = PROGRAMME)) +
@@ -188,6 +198,42 @@ ggplot(data = data,
                hjust = 1 )) 
 
 
+ggplot(data = data, 
+     aes(x = PROGRAMME, y = n_of_studs, 
+                        fill = PROGRAMME)) +
+     geom_bar(stat="identity") +
+     coord_flip()  +   # horizontal bars
+     guides(fill=FALSE) +
+     xlab("Programe de licență") + ylab("Nr. studenți") +
+     ggtitle("Structura programelor de licență") +
+     theme(axis.text.x = element_text(angle = 45, 
+               vjust = 1, 
+               hjust = 1 )) 
+
+
+data_ro <- data %>%
+     mutate (PROGRAMME = case_when(
+          PROGRAMME == 'Accounting and Information Systems' ~ 'Conta si informatica de gestiune',
+          PROGRAMME == 'Business Informatics' ~ 'Informatica economica',
+          
+          TRUE ~ PROGRAMME
+          
+          ))
+
+ggplot(data = data_ro, 
+     aes(x = PROGRAMME, y = n_of_studs, 
+                        fill = PROGRAMME)) +
+     geom_bar(stat="identity") +
+     coord_flip()  +   # horizontal bars
+     guides(fill=FALSE) +
+     xlab("Programe de licență") + ylab("Nr. studenți") +
+     ggtitle("Structura programelor de licență") +
+     theme(axis.text.x = element_text(angle = 45, 
+               vjust = 1, 
+               hjust = 1 )) 
+
+
+
 #######################################################################
 ###                                Sales
 load (file = 'sales.RData')
@@ -198,6 +244,7 @@ glimpse(invoice_detailed)
 invoice_detailed %>%
      group_by(productname) %>%
      summarise (freq = n()) %>%
+     ungroup() %>%
 ggplot(., aes (x = productname, y = freq, fill = productname)) +
      geom_bar(stat="identity") +
      guides(fill=FALSE) + # no legend
@@ -213,6 +260,7 @@ ggplot(., aes (x = productname, y = freq, fill = productname)) +
 invoice_detailed %>%
      group_by(productname) %>%
      summarise (freq = n()) %>%
+     ungroup() %>%
 ggplot(., aes (x = productname, y = freq, fill = productname)) +
      geom_bar(stat="identity") +
      guides(fill=FALSE) + # no legend
@@ -292,6 +340,7 @@ ggplot(Arthritis, aes(x = factor(Sex), fill = "yellow2")) +
 	theme(text=element_text(size=12)) +	
    	ylab("Number of cases") + xlab("Treatment Groups") +
 	guides(fill=FALSE)  # no legend
+
 
 
 #######################################################################
@@ -422,8 +471,9 @@ ggplot(data = studs %>%
      theme(axis.text.x = element_text(angle = 45, vjust = 1, hjust = 1 )) + 
      theme(legend.position="bottom")
 
-# here, the legend could appear truncatedly (as the graph title)
-# we can simply resize the figure using the mouse
+
+# here, the legend could appear truncated (as the graph title)
+# we can simply resize the chart using the mouse
 
 ## use side-by-side bars (instead of stacked bars)
 ggplot(data = studs %>%
@@ -1171,6 +1221,7 @@ ggplot(., aes(x = "", y = n, fill = result))   +
      coord_polar("y", start=0) +
      geom_text(aes(y = percent, label = paste(result, '\n', percent, '%')),
                size = 6)
+
 
 
 #######################################################################

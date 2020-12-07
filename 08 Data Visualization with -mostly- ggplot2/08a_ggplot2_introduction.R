@@ -13,13 +13,14 @@
 ### See also the presentation:
 ### https://github.com/marinfotache/Data-Processing-Analysis-Science-with-R/blob/master/08%20Data%20Visualization%20with%20-mostly-%20ggplot2/08_ggplot2.pptx
 ############################################################################
-## last update: 07.11.2019
 
+## last update: 07.12.2020
+## 
 library(tidyverse) 
 library(readxl)
 
 # giving up scientific notation (1.6e+07)
-options("scipen"=999, "digits"=4)
+options(scipen=999, digits=4)
 
 
 ############################################################################
@@ -32,7 +33,7 @@ options("scipen"=999, "digits"=4)
 # Please download the files in a local directory (such as 'DataSets') and  
 # set the directory where you dowloaded the data files as the 
 # default/working directory, ex:
-setwd('/Users/marinfotache/Google Drive/R(Mac)/DataSets')
+setwd('/Users/marinfotache/Google Drive/R(Mac)-1 googledrive/DataSets')
 
 # check if the current directory is ok
 getwd()
@@ -68,7 +69,7 @@ getwd()
 
 
 #######################################################################
-###	                    I. Basic syntax                            ###	
+###	                    I. Basic syntax                         ###	
 #######################################################################
 
 
@@ -101,6 +102,7 @@ glimpse(exchange_rates)
 ## Draw a plot with the evolution (by dates - `Date`) of 
 ## exchange rate for EUR (`EUR`)
 
+glimpse(exchange_rates)
 
 ggplot(
      exchange_rates %>% 
@@ -111,6 +113,13 @@ ggplot(
 
 # not so lisible (see next sections)
 
+
+ggplot(
+     exchange_rates %>% 
+          mutate (Date = lubridate::dmy(Date),
+                       EUR = as.numeric(EUR)),     # the data source
+     aes (x = Date, y = EUR)) +                    # aestetics
+     geom_line()                                  # `geom`s 
 
 
 ###########################################################################
@@ -148,7 +157,7 @@ ggplot(
 ## solution 2 - transform data from `wider` to `longer` format and
 ##    use `color` aestetic
 
-# first, trasnform data
+# first, transform data
 data <- exchange_rates %>%
      transmute (Date = lubridate::dmy(Date), EUR, USD, GBP) %>%
      mutate_if(is.character, as.numeric) %>%
@@ -215,7 +224,8 @@ ggplot(
 ggplot(
      data %>% 
           group_by (currency) %>% 
-          summarise (mean_rate = mean(exchange_rate)),                       
+          summarise (mean_rate = mean(exchange_rate)) %>%
+          ungroup(),                       
      aes (x = currency, y = mean_rate, fill = currency)) +
      geom_bar(stat="identity")
 
@@ -485,7 +495,8 @@ ggplot(
 
 
 #######################################################################
-###	                           II.3 Legend                         ###	    #######################################################################
+###	                        II.3 Legend                         ###	    
+#######################################################################
 
 # remove the legend
 ggplot(
@@ -634,12 +645,12 @@ ggplot(
 
 
 #######################################################################
-###	                         III.2 `ggrepel`	                  ###
+###	                         III.2 `ggrepel`	            ###
 #######################################################################
-
+### see next scripts
 
 #######################################################################
-###	                         IV. Saving charts                     ###
+###	                         IV. Saving charts                   ###
 #######################################################################
 
 getwd()
