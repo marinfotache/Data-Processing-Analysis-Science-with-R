@@ -18,6 +18,7 @@
 library(tidyverse) 
 library(readxl)
 library(lubridate)
+options(scipen = 999)
 
 ############################################################################
 ###            Download the necesary data sets for this script
@@ -30,9 +31,6 @@ library(lubridate)
 # set the directory where you dowloaded the data files as the 
 # default/working directory, ex:
 setwd('/Users/marinfotache/Google Drive/R(Mac)-1 googledrive/DataSets')
-
-# for giving up scientific notation (e.g. 1.6e+07), use:
-#options("scipen"=30, "digits"=14)
 
 
 #######################################################################
@@ -297,7 +295,7 @@ ggplot(fuel_economy_2018 %>%
             select (row_num, cty_l100km, hwy_l100km) %>%
             gather (parameter, value, -row_num), 
           aes(x = value, fill = parameter, col = parameter)) +  
-     geom_histogram(alpha = .5) +
+     geom_histogram(alpha = .4) +
   	xlab("liters per 100 km") +
 	ggtitle("Superimosed Histograms of City and Highway \nFuel Consumption") 
 
@@ -313,7 +311,7 @@ ggplot(fuel_economy_2018 %>%
             select (row_num, cty_l100km, hwy_l100km) %>%
             gather (parameter, value, -row_num), 
           aes(x = value, fill = parameter)) +  
-     geom_histogram( alpha = 0.7) +
+     geom_histogram( alpha = 0.5) +
   	xlab("liters per 100 km") +
 	ggtitle("Faceted Histograms of City and Highway \nFuel Consumption") +
      facet_wrap(~ parameter) +
@@ -477,7 +475,7 @@ fuel_economy_2018 %>%
                   !is.na(Displ) & Displ != 'N/A') %>%
      mutate (Displ = as.numeric(Displ)) %>%
 ggplot(. , aes(x = Displ, y = combined_l100km)) +
-     geom_point() +              
+     geom_point(alpha = 0.2) +              
      xlab("engine displacement (thousands of cubic centimetres)") + 
      ylab("liters per 100 Km") +
      ggtitle("Combined Fuel Consumption vs. Engine Displacement") +
@@ -497,7 +495,7 @@ fuel_economy_2018 %>%
                   !is.na(Displ) & Displ != 'N/A') %>%
      mutate (Displ = as.numeric(Displ)) %>%
 ggplot(. , aes(x = Displ, y = combined_l100km)) +
-     geom_point (position = position_jitter()) +              
+     geom_point (position = position_jitter(), alpha = 0.2) +              
      xlab("engine displacement (thousands of cubic centimetres)") + 
      ylab("liters per 100 Km") +
      ggtitle("Combined Fuel Consumption vs. Engine Displacement") +
@@ -516,7 +514,7 @@ fuel_economy_2018 %>%
                   !is.na(Displ) & Displ != 'N/A') %>%
      mutate (Displ = as.numeric(Displ)) %>%
 ggplot(. , aes(x = Displ, y = combined_l100km)) +
-     geom_jitter () +              
+     geom_jitter (alpha = 0.2) +              
      xlab("engine displacement (thousands of cubic centimetres)") + 
      ylab("liters per 100 Km") +
      ggtitle("Combined Fuel Consumption vs. Engine Displacement") +
@@ -538,7 +536,7 @@ fuel_economy_2018 %>%
                   !is.na(Displ) & Displ != 'N/A') %>%
      mutate (Displ = as.numeric(Displ)) %>%
 ggplot(. , aes(x = Displ, y = combined_l100km)) +
-     geom_jitter () + 
+     geom_jitter (alpha = 0.2) + 
      geom_rug() +
      xlab("engine displacement (thousands of cubic centimetres)") + 
      ylab("liters per 100 Km") +
@@ -559,7 +557,7 @@ fuel_economy_2018 %>%
                   !is.na(Displ) & Displ != 'N/A') %>%
      mutate (Displ = as.numeric(Displ)) %>%
 ggplot(. , aes(x = Displ, y = combined_l100km)) +
-     geom_jitter () + 
+     geom_jitter (alpha = 0.3) + 
      geom_rug() +
      xlab("engine displacement (thousands of cubic centimetres)") + 
      ylab("liters per 100 Km") +
@@ -633,7 +631,7 @@ fuel_economy_2018 %>%
      select (cty_l100km:combined_l100km, displacement:combined_CO2) %>%
      filter(complete.cases(.)) %>% # remove all observations with NA values
 cor(.) %>%
-corrplot.mixed(.)
+corrplot.mixed(., number.cex=0.75, tl.cex=0.6 )
 
 
 # another of of displaying the correlations
@@ -647,7 +645,7 @@ fuel_economy_2018 %>%
      select (cty_l100km:combined_l100km, displacement:combined_CO2) %>%
      filter(complete.cases(.)) %>% # remove all observations with NA values
 cor(.) %>%
-corrplot(., method = 'number', type = 'lower')
+corrplot(., method = 'number', type = 'lower', number.cex=0.75, tl.cex=0.6)
 
 
 

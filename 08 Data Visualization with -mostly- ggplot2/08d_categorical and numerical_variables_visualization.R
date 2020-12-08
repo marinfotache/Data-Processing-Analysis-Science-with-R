@@ -13,12 +13,14 @@
 ### See also the presentation:
 ### https://github.com/marinfotache/Data-Processing-Analysis-Science-with-R/blob/master/08%20Data%20Visualization%20with%20-mostly-%20ggplot2/08_ggplot2.pptx
 ############################################################################
-## last update: 02.04.2020
+## last update: 08.12.2020
 
 library(tidyverse) 
 library(readxl)
 library(scales) # need for thousands separation
 library(lubridate)
+# giving up scientific notation (1.6e+07)
+options(scipen = 999)
 
 ############################################################################
 ###            Download the necesary data sets for this script
@@ -32,8 +34,6 @@ library(lubridate)
 # default/working directory, ex:
 setwd('/Users/marinfotache/Google Drive/R(Mac)-1 googledrive/DataSets')
 
-# giving up scientific notation (1.6e+07)
-options("scipen"=999, "digits"=14)
 
 
 #######################################################################
@@ -95,6 +95,7 @@ ggplot(., aes(x = productname, y = sales, fill = productname)) +
 invoice_detailed %>%
      group_by(year = year (invoicedate), productname) %>%
      summarise (sales = sum(amount)) %>%
+     ungroup() %>%
 ggplot(., aes(x = year, y = sales, fill = factor(year))) +
      geom_bar(stat="identity") +
      xlab("year") + ylab("sales") +
@@ -430,7 +431,7 @@ fuel_economy_2018 %>%
                   !is.na(Displ) & Displ != 'N/A') %>%
      mutate (Displ = as.numeric(Displ), Cyl = factor(Cyl)) %>%
 ggplot(. , aes(x = Displ, y = combined_l100km, color = Cyl)) +
-     geom_point() +              
+     geom_point(alpha = .5) +              
      xlab("engine displacement (thousands of cubic centimetres)") + 
      ylab("liters per 100 Km") +
      ggtitle("Combined Fuel Consumption vs. Engine Displacement") +
@@ -447,7 +448,7 @@ fuel_economy_2018 %>%
                   !is.na(Displ) & Displ != 'N/A') %>%
      mutate (Displ = as.numeric(Displ), Cyl = factor(Cyl)) %>%
 ggplot(. , aes(x = Displ, y = combined_l100km, color = Cyl)) +
-     geom_point (position = position_jitter()) +              
+     geom_point (position = position_jitter(), alpha = 0.4) +              
      xlab("engine displacement (thousands of cubic centimetres)") + 
      ylab("liters per 100 Km") +
      ggtitle("Combined Fuel Consumption vs. Engine Displacement") +
@@ -464,7 +465,7 @@ fuel_economy_2018 %>%
                   !is.na(Displ) & Displ != 'N/A') %>%
      mutate (Displ = as.numeric(Displ), Cyl = factor(Cyl)) %>%
 ggplot(. , aes(x = Displ, y = combined_l100km, color = Cyl)) +
-     geom_jitter () +              
+     geom_jitter (alpha = 0.4) +              
      xlab("engine displacement (thousands of cubic centimetres)") + 
      ylab("liters per 100 Km") +
      ggtitle("Combined Fuel Consumption vs. Engine Displacement") +
