@@ -13,15 +13,17 @@
 ### See also the presentation:
 ### https://github.com/marinfotache/Data-Processing-Analysis-Science-with-R/blob/master/09%20Exploratory%20Data%20Analysis/09%20Exploratory%20Data%20Analysis.pptx
 ############################################################################
-## last update: 13.11.2019
+## last update: 08.12.2020
 
 library(tidyverse) 
 library(corrr)
 library(readxl)
+# giving up scientific notation (1.6e+07)
+options(scipen=999, digits=4)
 
 
 ############################################################################
-###            Download the necesary data sets for this script
+###            Download the necessary data sets for this script
 ############################################################################
 
 # all the files needed o run this script are available at:
@@ -30,9 +32,9 @@ library(readxl)
 # Please download the files in a local directory (such as 'DataSets') and  
 # set the directory where you dowloaded the data files as the 
 # default/working directory, ex:
-setwd('/Users/marinfotache/Google Drive/R(Mac)/DataSets')
+setwd('/Users/marinfotache/Google Drive/R(Mac)-1 googledrive/DataSets')
 
-
+############################################################################
 
 
 #######################################################################
@@ -92,13 +94,21 @@ missing_vals <- fuel_economy_2018 %>%
      mutate (percent_missing = round(n_missing * 100 / 
                nrow(fuel_economy_2018), 2))
 
+
+# or
+missing_vals2 <- fuel_economy_2018 %>%
+     purrr::map_df( ~ sum(is.na(.)))
+#... continue...
+
+
 # now, the plot
 ggplot(missing_vals, 
      aes (x = variable, y = n_missing, fill = variable)) +
      geom_col() +
      coord_flip() +
      geom_text(aes(label = paste0(percent_missing, '%'), size = 3.5, 
-               hjust = if_else(percent_missing > 3, 1.02, -0.03), vjust = 0.5))  +
+               hjust = if_else(percent_missing > 3, 1.02, -0.03), 
+               vjust = 0.5))  +
      theme(legend.position="none") + # this will remove the legend
      scale_y_continuous(limits = c(0,170), breaks = seq(0, 170, 20)) 
      
@@ -122,6 +132,8 @@ eda_factors <- fuel_economy_2018 %>%
      mutate (percent = round(n_value * 100 / nrow(fuel_economy_2018),2)) %>%
      arrange(variable, value)
 View(eda_factors)
+
+glimpse(eda_factors)
 
 test <- eda_factors %>%
      filter (is.na(value))
@@ -278,6 +290,16 @@ fuel_economy_2018 %>%
 #######################################################################
 ###	               II. EDA with `DataExplorer` package              ###	
 #######################################################################
+
+# currently (December 2020), `DataExplorer` package is not available 
+# on CRAN, so it is not possible to install it with 
+install.packages('DataExplorer') 
+
+# Instead, try:
+if (!require(devtools)) 
+    install.packages("devtools")
+devtools::install_github("boxuancui/DataExplorer")
+
 library(DataExplorer)
 
 
@@ -340,7 +362,7 @@ fuel_economy_2018 %>%
 
 # Create a report (on the default directory) as an HTML file (report.html)
 config <- configure_report(
-  add_plot_str = FALSE,
+  add_plot_str = TRUE,
   add_plot_qq = FALSE,
   add_plot_prcomp = FALSE
 )

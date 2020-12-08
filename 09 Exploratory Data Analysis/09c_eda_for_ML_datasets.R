@@ -13,7 +13,7 @@
 ###   further used in Inferential Statistics and Machine Learning        ###
 ###   (see next chapters/sections)                                       ###
 ############################################################################
-## last update: 21.11.2019
+## last update: 25.11.2019
 
 options(scipen = 999)
 library(tidyverse) 
@@ -34,7 +34,9 @@ library(inspectdf)
 # Please download the files in a local directory (such as 'DataSets') and  
 # set the directory where you dowloaded the data files as the 
 # default/working directory, ex:
-setwd('/Users/marinfotache/Google Drive/R(Mac)/DataSets')
+setwd('/Users/marinfotache/Google Drive/R(Mac)-1 googledrive/DataSets')
+
+############################################################################
 
 
 #####################################################################
@@ -42,9 +44,9 @@ setwd('/Users/marinfotache/Google Drive/R(Mac)/DataSets')
 #####################################################################
 ###	I. EDA for datasets to be used for scoring (regression)      ###	
 ###	     I.1 States(USA)                                         ###	
-### 	     I.2 Insurance                                           ###
-###       I.3 House Prices (Ames, Iowa)                           ###
-### 	     I.4 Hrubaru2015                                         ###
+### 	 I.2 Insurance                                           ###
+###      I.3 House Prices (Ames, Iowa)                           ###
+### 	 I.4 Hrubaru2015                                         ###
 ###	II. EDA for datasets to be used for classification           ###	
 ###       II.1 Heart disease                                      ###
 ###       II.2 Credit scoring (G.Sanchez version)                 ###
@@ -72,6 +74,7 @@ states <- as_tibble(state.x77, rownames = 'State')
 names(states) <- str_replace_all(names(states), ' |\\.', '_')
 head(states)
 class(states)
+glimpse(states)
 
 # descriptive statistics
 states %>%
@@ -260,6 +263,10 @@ ggplot(., aes(x = Value, y = Murder)) +
      theme(strip.text.x = element_text(size = 12)) +
      xlab("")  
 
+# save all the data sets in this script into single file for
+# further use     
+save(states, file = 'ml_datasets.RData')
+
 
 
 #####################################################################
@@ -283,10 +290,31 @@ ggplot(., aes(x = Value, y = Murder)) +
 ## `charges`: Individual medical costs billed by health insurance
 insurance <- readr::read_csv('insurance.csv')
 
-##
-## to be completed during the labs!
-##
- 
+# descriptive statistics
+insurance %>%
+     skimr::skim()
+
+# examine bivariate relationships
+insurance %>%
+     select_if(is.numeric) %>%
+     cor()
+
+corrplot::corrplot(cor(insurance %>%
+     select_if(is.numeric) , 
+             method = "spearman"), method = "number", type = "upper")
+
+corrgram::corrgram(insurance %>% select_if(is.numeric),
+     lower.panel=panel.pie, upper.panel=panel.pts,
+     diag.panel=panel.density)
+
+corrgram::corrgram(insurance %>% select_if(is.numeric),
+     lower.panel=panel.conf, upper.panel=panel.pts,
+     diag.panel=panel.density)
+
+insurance_lm1 <- lm(charges ~ ., data = insurance)
+summary(insurance_lm1)
+
+
 #####################################################################
 ###                I.3 House Prices (Ames, Iowa)                  ###
 #####################################################################
@@ -297,10 +325,91 @@ kaggle_house_ames <- readr::read_csv('kaggle_house_ames_2_train.csv',
           col_names = TRUE)
 glimpse(kaggle_house_ames)
 
-##
-## to be completed during the labs!
-##
+kaggle_house_ames %>%
+     skimr::skim()
 
+# remove variables without variability (with only two values and
+# one of these two values occurs only once)
+# (this is the case with `Utilities`)
+test <- kaggle_house_ames %>%
+     select_if (function (var) n_distinct(var) > 2 |
+          (tibble (col = var) %>%
+               group_by(col) %>%
+               summarise(n = n()) %>%
+               top_n(-1, n) %>%
+               ungroup() %>%
+               head(1) %>%
+               dplyr::select(n) %>%
+               pull()) > 1
+               )   
+
+# display the variables to be removed
+setdiff(names(kaggle_house_ames), names(test))
+
+kaggle_house_ames <- test
+names(kaggle_house_ames)
+
+
+## the analysis will be completed during lectures
+
+
+
+#####################################################################
+### 	                    I.4 Hrubaru2015                          ###
+#####################################################################
+### the data set prepared by Hrubaru & Fotache (see.
+### ....)
+
+
+load('Hrubaru_2016-02.RData')
+results_ih_2016 <- results_details.ok
+
+
+setwd('/Users/marinfotache/Dropbox/Hruby/Basic queries performance in SQL, NoSQL and Hadoop 2015/R/A - Single node')
+#load(file='results.RData')
+#load(file='details.RData')
+load(file='result_details.RData')
+results_details.ok <- results_details
+# divide avg_number of rows to 1000000
+results_details.ok$avg_nof_rows <- results_details.ok$avg_nof_rows / 1000000
+names(results_details.ok)
+save(results_details.ok, file = 'results_details.ok.RData')
+
+
+
+##############################################################################
+###       Separating queries executed in Hive and PostgreSQL               ###
+###  in order to avoid "independence" assumption violations
+##############################################################################
+
+row_to_be_selected <- c()
+for (i in unique(results_details.ok$queryId))
+     row_to_be_selected <- c(row_to_be_selected, 
+         paste(i, 
+          sample(c('Hive', 'PostgreSQL'), 1) , sep='-') )
+
+#row_to_be_selected
+
+results_details.ok_rand <- results_details.ok[row_to_be_selected,]
+
+### correlation plot (nonparametric)
+#citation('corrplot')
+library(corrplot)
+corrplot.mixed(corr=cor(data.A.rand[-5], method = "spearman"), 
+     upper = 'ellipse', tl.pos='lt')
+
+
+### Scatterplot Matrix
+#citation('car')
+library(car)
+scatterplotMatrix(data.A.rand[-5], spread=FALSE, smoother.args=list(lty=2),
+     main="Scatter Plot Matrix for Variables of the Randomized Model A ")
+
+### Linear model A
+lm.A.rand <- lm(duration ~ nof_attributes_select + nof_attributes_where + nof_joins, 
+     data=data.A.rand)
+summary(lm.A.rand)
+confint(lm.A.rand)
 
 
 
@@ -352,6 +461,10 @@ glimpse(kaggle_house_ames)
 #              0: < 50 
 #              1: > 50 
 #         (in any major vessel: attributes 59 through 68 are vessels)              
+
+# EDA for this data set is also available at:
+# https://rileyking.netlify.com/post/heart-disease-prediction-from-patient-data-in-r/
+
 heart_init <- read_csv('Heart.csv')
 glimpse(heart_init)
 
@@ -733,6 +846,8 @@ library(Rmisc)
 multiplot(plotlist = plots, cols = 3)
 
 
+
+
 #################################################################
 ##        Since there are a few missing values, we can
 ##        romove those observations; we'll keep both versions
@@ -742,6 +857,10 @@ getwd()
 heart__na_omit <- heart %>%
      na.omit()
 
+# add the current datasets to the file
+save(states, 
+     heart, heart__na_omit,
+     file = 'ml_datasets.RData')
 
 
 
@@ -769,11 +888,11 @@ heart__na_omit <- heart %>%
 ## `Price` - price of good
 
 cs_sanchez <- readr::read_csv('CreditScoring_GastonSanchez.csv')
+glimpse(cs_sanchez)
 
+cs_sanchez %>%
+     skimr::skim()
 
-##
-## to be completed during the labs!
-##
 
 
 

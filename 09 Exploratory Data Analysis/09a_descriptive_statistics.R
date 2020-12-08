@@ -13,7 +13,7 @@
 ### See also the presentation:
 ### https://github.com/marinfotache/Data-Processing-Analysis-Science-with-R/blob/master/09%20Exploratory%20Data%20Analysis/09%20Exploratory%20Data%20Analysis.pptx
 ############################################################################
-## last update: 13.11.2019
+## last update: 08.12.2020
 
 
 ############################################################################
@@ -26,10 +26,13 @@
 # Please download the files in a local directory (such as 'DataSets') and  
 # set the directory where you dowloaded the data files as the 
 # default/working directory, ex:
-setwd('/Users/marinfotache/Google Drive/R(Mac)/DataSets')
+setwd('/Users/marinfotache/Google Drive/R(Mac)-1 googledrive/DataSets')
+
+
+############################################################################
 
 # giving up scientific notation (1.6e+07)
-options("scipen"=999, "digits"=4)
+options(scipen=999, digits=4)
 
 
 # needed packages
@@ -970,5 +973,6 @@ Arthritis %>%
                      Improved == 'Some' ~ 1, 
                      TRUE ~ 2 )) %>%
 cor(., method = "kendall") 
+
 
 
