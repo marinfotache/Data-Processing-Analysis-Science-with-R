@@ -1,1 +1,1 @@
-Linear and Logistic Regression
+Buildind and Assessing Linear Regression Models.
