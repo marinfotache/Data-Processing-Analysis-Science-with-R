@@ -27,13 +27,10 @@ library(tidyverse)
 # Please download the files in a local directory (such as 'DataSets') and  
 # set the directory where you dowloaded the data files as the 
 # default/working directory, ex:
-setwd('/Users/marinfotache/Google Drive/R(Mac)/DataSets')
+setwd('/Users/marinfotache/Google Drive/R(Mac)-1 googledrive/DataSets')
 
-# check if the current directory is ok
-getwd()
 #######################################################################
-# giving up scientific notation (1.6e+07)
-#options("scipen"=30, "digits"=14)
+options(scipen=999, digits=4)
 
 #######################################################################
 ###                  Agenda of the previous scripts                 ###

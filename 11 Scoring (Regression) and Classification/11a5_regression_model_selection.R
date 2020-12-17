@@ -21,7 +21,9 @@ library(broom)
 # Please download the files in a local directory (such as 'DataSets') and  
 # set the directory where you dowloaded the data files as the 
 # default/working directory, ex:
-setwd('/Users/marinfotache/Google Drive/R(Mac)/DataSets')
+setwd('/Users/marinfotache/Google Drive/R(Mac)-1 googledrive/DataSets')
+
+options(scipen=999, digits=4)
 
 
 
@@ -346,7 +348,7 @@ while (!stop) {
                c(kept_predictors, remaining_predictors[i]), collapse = ' + '))
           # fit the model
           current_model <- lm(formula = formula_, data = states %>% select (-State))   
-
+          # summary(current_model)
           # get the generall information about the model
           model_info <- glance(current_model)
           names(model_info) <- paste0('model_', names(model_info))
@@ -395,7 +397,7 @@ while (!stop) {
      
      # update the remaining predictors
      remaining_predictors <- setdiff(remaining_predictors, 
-                                     the_most_significant_predictor[1,]$crt_predictor_term)
+                    the_most_significant_predictor[1,]$crt_predictor_term)
      
      # ... and store it in the `removed_predictors` data frame
      added_predictors <- bind_rows(added_predictors, 

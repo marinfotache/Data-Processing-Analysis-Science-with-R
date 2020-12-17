@@ -42,7 +42,7 @@ library(foreign)
 
 
 #######################################################################
-###           Download the necesary data sets for this script       ###
+###           Download the necessary data sets for this script       ###
 #######################################################################
 
 # all the files needed o run this script are available at:
@@ -51,13 +51,11 @@ library(foreign)
 # Please download the files in a local directory (such as 'DataSets') and  
 # set the directory where you dowloaded the data files as the 
 # default/working directory, ex:
-setwd('/Users/marinfotache/Google Drive/R(Mac)/DataSets')
+setwd('/Users/marinfotache/Google Drive/R(Mac)-1 googledrive/DataSets')
 
-# check if the current directory is ok
-getwd()
 #######################################################################
 # giving up scientific notation (1.6e+07)
-#options("scipen"=30, "digits"=14)
+options(scipen=999, digits=4)
 
 
 #######################################################################
@@ -160,13 +158,10 @@ faithful %>%
 
 # draw the scatterplots 
 
-# "pairsp" function from "pgirmess" package
-pgirmess::pairsrp(faithful, meth = "spearman")
+library(GGally) # for correlation plots
+# Solution with `ggpairs` function from package `GGally`
+GGally::ggpairs(faithful, title = "Scatter Plot for eruptions ~ waiting")
 
-# one can also use "scatterplotMatrix" function from package "car"
-# install.packages("car")
-car::scatterplotMatrix(faithful, spread=FALSE, 
-	main="Scatter Plot Matrix for eruptions ~ waiting")
 
 # or "scatterplot" function
 car::scatterplot( eruptions ~ waiting, data = faithful, pch=19,
@@ -308,6 +303,8 @@ head(women)
 
 # descriptive statistics about the two variables of the data set
 skimr::skim(women)
+
+GGally::ggpairs(women %>% dplyr::select (height, weight), title = "Women Age 30-39")
 
 # scatterplot of the relationship between "weight" and "height"
 car::scatterplot(weight ~ height, data=women, spread=FALSE, pch=19,
@@ -510,4 +507,5 @@ ggplot(women,aes( x = height, y = weight)) +
 	     subtitle = "lm(weight ~ height + I(height^2) +I(height^3), data=women)" ) +
 	theme (plot.title = element_text (colour="black", size="14", hjust = 0.5))+
      theme (plot.subtitle = element_text (colour="black", size="12", hjust = 0.5))
+
 
