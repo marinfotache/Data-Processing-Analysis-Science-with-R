@@ -340,13 +340,12 @@ nobel_countries_jsonlite
 nobel_countries_df_jsonlite <- dplyr::bind_rows(nobel_countries_jsonlite)
 glimpse(nobel_countries_df_jsonlite)
 
-
 ## with `tidyjson`
 nobel_countries_df_tydyjson <- paste(jsonlite::toJSON(
           jsonlite::fromJSON(nobel_countries_url)),
                                   collapse = ' ') %>%
      tidyjson::as.tbl_json() %>%
-     tidyjson::gather_keys() %>%
+     tidyjson::gather_object() %>%
      tidyjson::gather_array() %>%
      tidyjson::spread_values(
           country_name = jstring("name"),
@@ -379,7 +378,7 @@ glimpse(nobel_prizes_df_jsonlite)
 nobel_prizes_df_tydyjson <- paste(jsonlite::toJSON(jsonlite::fromJSON(nobel_prizes_url)),
                                   collapse = ' ') %>%
      tidyjson::as.tbl_json() %>%
-     tidyjson::gather_keys() %>%
+     tidyjson::gather_object() %>%
      tidyjson::gather_array() %>%
      tidyjson::spread_values(
           year = jstring("year"),
@@ -418,15 +417,15 @@ nobel_laureates_df_jsonlite <- dplyr::bind_rows(nobel_prizes_jsonlite,
 View(nobel_laureates_df_jsonlite)
 
 
-## with `tidyjson` - we'll multiple `enter_object`s  with additionals `gather_array`s 
+## with `tidyjson` - we'll multiple `enter_object`s  with additional `gather_array`s 
 ##   and `spread_values`s
 nobel_laureates_df_tydyjson <- paste(jsonlite::toJSON(jsonlite::fromJSON(nobel_laureates_url)),
                                   collapse = ' ') %>%
      tidyjson::as.tbl_json() %>%
-     tidyjson::gather_keys() %>%
+     tidyjson::gather_object() %>%
      tidyjson::gather_array() %>%
      tidyjson::spread_values(
-          laureate_id = jnumber("id"),
+          laureate_id = jstring("id"),
           laureate_firstname = jstring("firstname"),
           laureate_lastname = jstring("surname"),
           laureate_dob = jstring("born"),
@@ -436,7 +435,7 @@ nobel_laureates_df_tydyjson <- paste(jsonlite::toJSON(jsonlite::fromJSON(nobel_l
      enter_object("prizes") %>%
      tidyjson::gather_array() %>%
      tidyjson::spread_values(
-          prize_year = jnumber("year"),
+          prize_year = jstring("year"),
           prize_category = jstring("category"),
           prize_motivation = jstring("motivation")
           )  %>%
