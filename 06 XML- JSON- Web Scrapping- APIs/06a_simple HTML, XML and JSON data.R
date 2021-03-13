@@ -10,27 +10,35 @@
 ###
 ############################################################################
 ###       06a. HTML tables, simple XML and JSON Data Management in R     ###   
+############################################################################
 
 ### See also the presentation:
 ### https://github.com/marinfotache/Data-Processing-Analysis-Science-with-R/blob/master/06%20XML-%20JSON-%20Web%20Scrapping-%20APIs/06_html_xml_json__web_scrap__apis.pptx
 ############################################################################
-## last update: 15.12.2019
+## last update: 13.03.2021
 
 
 # needed packages
 library(tidyverse)
 library(htmltab)
-library(XML)
-library(methods)
+#library(methods)
 library(xml2)
+
 # install.packages('flatxml')
 library(flatxml)
 
+# install.packages("xml2relational", dependencies = TRUE)
+library(xml2relational)
+
+# install.packages("xmlconvert", dependencies = TRUE)
+library(xmlconvert)
+
+
 # install.packages('rjson')
-library(rjson)
+# library(rjson)
 library(jsonlite)
 #install.packages('data.tree')
-library(data.tree)
+#library(data.tree)
 
 #install.packages('tidyjson')
 library(tidyjson)
@@ -47,7 +55,7 @@ library(tidyjson)
 # Please download the files in a local directory (such as 'DataSets') and  
 # set the directory where you dowloaded the data files as the 
 # default/working directory, ex:
-setwd('/Users/marinfotache/Google Drive/R(Mac)/DataSets')
+setwd('/Users/marinfotache/Google Drive/R(Mac)-1 googledrive/DataSets')
 
 
 #########################################################################
@@ -117,17 +125,6 @@ main_admin_regions_ro <- htmltab::htmltab(url, which = 3)
 
 
 #########################################################################
-###              I.b. Import HTML tables with `XML` package           ###
-###        (suitable for old-style, non-secure, `http` pages )        ###     
-#########################################################################
-
-##  Import montly earnings from the (Romanian) National Institute for Statistics
-url <- 'http://www.insse.ro/cms/ro/content/castiguri-salariale-din-1991-serie-lunara'
-test <- XML::readHTMLTable(url, which = 1, header = TRUE, encoding = "UTF-8")
-
-
-
-#########################################################################
 ###                   II. Simple XML data management                  ###
 #########################################################################
 ###  By `simple` we mean data in a (quasi) rectangular format, i.e.   ###
@@ -136,38 +133,79 @@ test <- XML::readHTMLTable(url, which = 1, header = TRUE, encoding = "UTF-8")
 
 #########################################################################
 ###       II.a. Import and manage simple XML files                    ###
-###            with `XML`/`XML2` packages                             ###
+###          with `xml2relational` and  `xmlconvert` packages         ###
 #########################################################################
 
 
 #########################################################################
 ##                       Romanian counties 
-url <- 'http://data.gov.ro/dataset/8ec29b07-1c5d-40a2-bfa7-a1f01d482d86/resource/16639504-4f56-423b-9188-85b103049437/download/nomjudete.xml'
+url <- 'https://data.gov.ro/dataset/8ec29b07-1c5d-40a2-bfa7-a1f01d482d86/resource/16639504-4f56-423b-9188-85b103049437/download/nomjudete.xml'
 
-# in this case, function `xmlToDataFrame` works fine
-romanian_counties <- XML::xmlToDataFrame(url) %>%
-     arrange(DENUMIRE)
+romanian_counties_init <- xml2relational::toRelational(url)
+class(romanian_counties_init)
+romanian_counties_init
+romanian_counties <- romanian_counties_init[[2]]
 
-View(romanian_counties)
+names(romanian_counties)
+
+romanian_counties_init2 <- xmlconvert::xml_to_df(file = url, records.tags = "NOM_JUDETE")
+glimpse(romanian_counties_init2)
+
+romanian_counties2 <- romanian_counties_init2 %>%
+     mutate (id = row_number()) %>%
+     pivot_longer(-id) %>%
+     mutate (rec_list = str_split(value, '\\||\\|\\|')) %>%
+     rowwise() %>%
+     mutate (
+          COD = as.integer(str_remove(rec_list[[2]], 'COD~')),
+          DENUMIRE = str_remove(rec_list[[4]], 'DENUMIRE~'),
+          AUTO = str_remove(rec_list[[6]], 'AUTO~'),
+          ORDINE = as.integer(str_remove(rec_list[[8]], 'ORDINE~'))
+          )
+
+glimpse(romanian_counties2)
 
 
 #########################################################################
 ##                                   CD catalog
 url <- 'https://www.w3schools.com/xml/cd_catalog.xml'
+cd_init <- xml2relational::toRelational(url)
+cd <- cd_init[[2]]
 
-# in this case, XML::xmlToDataFrame() does not work  !!!!
-cd_catalog <- XML::xmlToDataFrame(url) 
-# Error: XML content does not seem to be XML: 'https://www.w3schools.com/xml/cd_catalog.xml'
 
-     
-# so, we'll need some features from `xml2` package
+cd_init2 <- xmlconvert::xml_to_df(file = url, records.tags = "CATALOG")
+glimpse(cd_init2)
+
+cd_2 <- cd_init2 %>%
+     mutate (id = 1) %>%
+     pivot_longer(-id) %>%
+     mutate (rec_list = str_split(value, '\\||\\|\\|')) %>%
+     rowwise() %>%
+     mutate (
+          TITLE = str_remove(rec_list[[2]], 'TITLE~'),
+          ARTIST = str_remove(rec_list[[4]], 'ARTIST~'),
+          COUNTRY = str_remove(rec_list[[6]], 'COUNTRY~'),
+          COMPANY = str_remove(rec_list[[8]], 'COMPANY~'),
+          PRICE = as.numeric(str_remove(rec_list[[10]], 'PRICE~')),
+          YEAR = as.integer(str_remove(rec_list[[12]], 'YEAR~'))
+          )
+
+
+
+#########################################################################
+###    II.b. Import and manage simple XML files with `xml2` package   ###
+#########################################################################
+
+# read the xml data
 cd_data <- xml2::read_xml(url)
 
-# some useful functions 
+
+## some useful functions 
 
 xml2::xml_name(cd_data)
 
 xml2::xml_children(cd_data)
+
 
 # Find all `CD` nodes anywhere in the document
 cds <- xml2::xml_find_all(cd_data, ".//CD")
@@ -208,7 +246,7 @@ View(cd_tibble)
 
 
 #########################################################################
-###       II.b. Import and manage simple XML files                    ###
+###       II.c. Import and manage simple XML files                    ###
 ###            with `flatxml` package                                 ###
 #########################################################################
 
@@ -303,8 +341,7 @@ nobel_countries_df_jsonlite <- dplyr::bind_rows(nobel_countries_jsonlite)
 glimpse(nobel_countries_df_jsonlite)
 
 
-## with `tidyjson`: NOTICE: this package was removed from CRAN, so you want to use it, 
-## you have to install it from the archive
+## with `tidyjson`
 nobel_countries_df_tydyjson <- paste(jsonlite::toJSON(
           jsonlite::fromJSON(nobel_countries_url)),
                                   collapse = ' ') %>%
