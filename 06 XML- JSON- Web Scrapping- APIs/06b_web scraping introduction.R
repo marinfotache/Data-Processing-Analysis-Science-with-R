@@ -10,21 +10,21 @@
 ###
 ############################################################################
 ###                06b. Introduction to web scraping with R              ###   
+############################################################################
 
 ### See also the presentation:
 ### https://github.com/marinfotache/Data-Processing-Analysis-Science-with-R/blob/master/06%20XML-%20JSON-%20Web%20Scrapping-%20APIs/06_html_xml_json__web_scrap__apis.pptx
 ############################################################################
-## last update: 31.10.2019
+## last update: 13.03.2021
 
 
 # needed packages
 library(tidyverse)
-# Activate the `XML` library
-#library(XML)
-#library(methods)
 library(htmltab)
 library(rvest)
 
+## for introduction and examples on `rvest`, see:
+## https://rvest.tidyverse.org/index.html
 
 ############################################################################
 ###            Download the necesary data sets for this script
@@ -36,7 +36,7 @@ library(rvest)
 # Please download the files in a local directory (such as 'DataSets') and  
 # set the directory where you dowloaded the data files as the 
 # default/working directory, ex:
-setwd('/Users/marinfotache/Google Drive/R(Mac)/DataSets')
+setwd('/Users/marinfotache/Google Drive/R(Mac)-1 googledrive/DataSets')
 
 
 #########################################################################
@@ -78,12 +78,26 @@ url <- 'https://en.wikipedia.org/wiki/Romania'
 
 # read the web page
 admin_raw <- xml2::read_html(url) 
+admin_raw
 
 # extract the table
 main_admin_regions_ro <- admin_raw %>%
      rvest::html_nodes("table") %>%
      .[[3]] %>%     # third table within the page
      rvest::html_table(, fill=TRUE ,header=TRUE)
+
+
+## Google countries
+url <- 'https://developers.google.com/public-data/docs/canonical/countries_csv'
+raw <- xml2::read_html(url) 
+raw
+
+# extract the table
+tab <- raw %>%
+     rvest::html_nodes("table") %>%
+     .[[1]] %>%     # third table within the page
+     rvest::html_table(, fill=TRUE ,header=TRUE)
+
 
 
 
@@ -183,6 +197,7 @@ View(links_and_titles)
 
 # build the tibble by looping through `links_and_titles`
 wikipedia_wars_df <- tibble()
+i <- 1
 for (i in 1:nrow(links_and_titles)) {
      
      # set the wikipedia page address
