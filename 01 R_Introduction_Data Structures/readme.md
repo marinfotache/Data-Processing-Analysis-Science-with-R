@@ -1,4 +1,5 @@
-This section covers:
+### This section covers:
+
 - (very) basic stuff about R 
 - a brief list of important references on R
 - links to tutorials on installing R and RStudio and working with R Studio
@@ -7,4 +8,7 @@ This section covers:
 - presentation and script on main R data structures (vectors, matrices, data frames, lists etc), 
   including useful base R options and some packages dealing with accessing, filtering and editing the data stucture variables.
 - data sets available in some R packages.
+
+### You can start with...
+- [An excellent course on R](https://stats220.earo.me/01-intro.html#1)
 
