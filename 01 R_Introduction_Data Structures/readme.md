@@ -9,6 +9,6 @@
   including useful base R options and some packages dealing with accessing, filtering and editing the data stucture variables.
 - data sets available in some R packages.
 
-## You can start (and continue) with and excellent course on R and DataScience
+### You can start (and continue) with and excellent course on R and DataScience
 - [Introduction to R](https://stats220.earo.me/01-intro.html#1)
 - [Slides 1-25 from `Data Import/Export` presentation](https://stats220.earo.me/02-import-export.html#1)
