@@ -13,9 +13,9 @@
 ### See also the presentation:
 ### https://github.com/marinfotache/Data-Processing-Analysis-Science-with-R/blob/master/08%20Data%20Visualization%20with%20-mostly-%20ggplot2/08_ggplot2.pptx
 ############################################################################
-## last update: 08.12.2020
+## last update: 06.06.2021
 
-library(tidyverse) 
+library(tidyverse)
 library(readxl)
 library(scales) # need for thousands separation
 library(lubridate)
@@ -29,15 +29,15 @@ options(scipen = 999)
 # all the files needed o run this script are available at:
 # https://github.com/marinfotache/Data-Processing-Analysis-Science-with-R/tree/master/DataSets
 
-# Please download the files in a local directory (such as 'DataSets') and  
-# set the directory where you dowloaded the data files as the 
+# Please download the files in a local directory (such as 'DataSets') and
+# set the directory where you dowloaded the data files as the
 # default/working directory, ex:
 setwd('/Users/marinfotache/Google Drive/R(Mac)-1 googledrive/DataSets')
 
 
 
 #######################################################################
-###	                              Agenda                           ###	
+###	                              Agenda                           ###
 #######################################################################
 ###	 I. Groups of Barcharts (of Values)                            ###
 ###	 II. Line charts                                               ###
@@ -82,14 +82,14 @@ ggplot(., aes(x = productname, y = sales, fill = productname)) +
      ggtitle("Yearly Sales, by Product") +
      theme(plot.title = element_text(hjust = 0.5)) +  # center the title
      theme(legend.position="none") +
-     theme(axis.text.x = element_text(angle = 45, 
-          vjust = 1, hjust = 1 )) + 
+     theme(axis.text.x = element_text(angle = 45,
+          vjust = 1, hjust = 1 )) +
      scale_y_continuous(labels = comma)  +  # separate thousands with comma
      facet_wrap( ~ year)
 
 
 ## Task:
-## Display the yearly sales for each product 
+## Display the yearly sales for each product
 
 # solution 1: with faceting
 invoice_detailed %>%
@@ -102,8 +102,8 @@ ggplot(., aes(x = year, y = sales, fill = factor(year))) +
      ggtitle("Product Sales, by Year") +
      theme(plot.title = element_text(hjust = 0.5)) +  # center the title
      theme(legend.position="none") +
-     theme(axis.text.x = element_text(angle = 45, 
-               vjust = 1, hjust = 1 )) + 
+     theme(axis.text.x = element_text(angle = 45,
+               vjust = 1, hjust = 1 )) +
      scale_y_continuous(labels = comma)  +  # separate thousands with comma
      facet_wrap( ~ productname)
 
@@ -116,17 +116,17 @@ ggplot(., aes(x = productname, y = sales, fill = year)) +
      xlab("year") + ylab("sales") +
      ggtitle("Product Sales, by Year") +
      theme(plot.title = element_text(hjust = 0.5)) +  # center the title
-     theme(axis.text.x = element_text(angle = 45, 
-          vjust = 1, hjust = 1 )) + 
+     theme(axis.text.x = element_text(angle = 45,
+          vjust = 1, hjust = 1 )) +
 	scale_y_continuous(labels = comma)    # separate thousands with comma
 
 
 ## Task:
-## Display monthly (within each year) product sales  
+## Display monthly (within each year) product sales
 
 # solution: `facet_wrap` on both year and month (notice `labeller`)
 invoice_detailed %>%
-     group_by(year = year (invoicedate), month = month (invoicedate), 
+     group_by(year = year (invoicedate), month = month (invoicedate),
               productname) %>%
      summarise (sales = sum(amount)) %>%
 ggplot(., aes(x = productname, y = sales, fill = productname)) +
@@ -135,10 +135,10 @@ ggplot(., aes(x = productname, y = sales, fill = productname)) +
      ggtitle("Monthly (Within Each Year) Product Sales ") +
      theme(plot.title = element_text(hjust = 0.5)) +  # center the title
      theme(legend.position="none") +
-     theme(axis.text.x = element_text(angle = 45, 
-          vjust = 1, hjust = 1 )) + 
+     theme(axis.text.x = element_text(angle = 45,
+          vjust = 1, hjust = 1 )) +
 	scale_y_continuous(labels = comma)  +  # separate thousands with comma
-     facet_wrap( year ~ month, labeller = label_both) 
+     facet_wrap( year ~ month, labeller = label_both)
 
 
 
@@ -146,9 +146,9 @@ ggplot(., aes(x = productname, y = sales, fill = productname)) +
 ###	                    II. Line charts                            ###
 #######################################################################
 
-#  For line graphs, the data points must be grouped so that it knows 
-#  which points to connect. For all points to be connected, 
-#  use `group = 1` 
+#  For line graphs, the data points must be grouped so that it knows
+#  which points to connect. For all points to be connected,
+#  use `group = 1`
 
 #######################################################################
 ###                                Sales
@@ -170,60 +170,60 @@ ggplot(., aes(x = date, y = daily_sales, group = 1)) +
      ggtitle("Daily Sales") +
      theme(plot.title = element_text(hjust = 0.5)) +  # center the title
      theme(legend.position="none") +
-     theme(axis.text.x = element_text(angle = 60, 
-          vjust = 1, hjust = 1 )) + 
-	scale_y_continuous(labels = comma) 
+     theme(axis.text.x = element_text(angle = 60,
+          vjust = 1, hjust = 1 )) +
+	scale_y_continuous(labels = comma)
 
 
 ## Task:
-## Display the sales monthly evolution within each yar 
+## Display the sales monthly evolution within each yar
 
 # Solution:
-#  To draw multiple lines, the points must be grouped by a variable; 
-#   otherwise all points will be connected by a single line. 
+#  To draw multiple lines, the points must be grouped by a variable;
+#   otherwise all points will be connected by a single line.
 #  In this case, we want them to be grouped by sex.
 
 invoice_detailed %>%
-     group_by(year = factor(year (invoicedate)), 
+     group_by(year = factor(year (invoicedate)),
                    month = factor(month (invoicedate))) %>%
      summarise (sales = sum(amount)) %>%
-ggplot(., aes(x = month, y = sales, group = year, 
+ggplot(., aes(x = month, y = sales, group = year,
                    colour = year, shape = year)) +
      geom_line() +
      geom_point() + # Add points to the extremities
      ggtitle("Monthly Sales Evolution, by Year") +
      theme(plot.title = element_text(hjust = 0.5)) +  # center the title
-     theme(axis.text.x = element_text(angle = 0, 
-               vjust = 1, hjust = 0.5 )) + 
-     scale_y_continuous(labels = comma) 
+     theme(axis.text.x = element_text(angle = 0,
+               vjust = 1, hjust = 0.5 )) +
+     scale_y_continuous(labels = comma)
 
 
 ## Task:
-## Display the sales monthly evolution for each product 
+## Display the sales monthly evolution for each product
 
 # Solution:
-#  To draw multiple lines, the points must be grouped by a variable; 
-#   otherwise all points will be connected by a single line. 
+#  To draw multiple lines, the points must be grouped by a variable;
+#   otherwise all points will be connected by a single line.
 #  In this case, we want them to be grouped by `productname`
 
 invoice_detailed %>%
-     group_by(year = factor(year (invoicedate)), 
-                   month = factor(month (invoicedate)), 
+     group_by(year = factor(year (invoicedate)),
+                   month = factor(month (invoicedate)),
               productname) %>%
      summarise (sales = sum(amount)) %>%
-     mutate(year_month = paste(year, 
+     mutate(year_month = paste(year,
                                str_pad(month, 2, side ='left' ,
                                        pad = "0") , sep = '-')) %>%
-ggplot(., aes(x = year_month, y = sales, 
+ggplot(., aes(x = year_month, y = sales,
               group = productname, colour = productname, shape = productname)) +
      geom_line() +
      geom_point() + # Add points to the extremities
      ggtitle("Product Monthly Sales Evolution") +
      xlab("year-month") + ylab("sales") +
      theme(plot.title = element_text(hjust = 0.5)) +  # center the title
-     theme(axis.text.x = element_text(angle = 45, 
-               vjust = 1, hjust = 1 )) + 
-     scale_y_continuous(labels = comma) 
+     theme(axis.text.x = element_text(angle = 45,
+               vjust = 1, hjust = 1 )) +
+     scale_y_continuous(labels = comma)
 
 
 
@@ -233,7 +233,7 @@ ggplot(., aes(x = year_month, y = sales,
 
 
 #######################################################################
-###                      Fuel Economy dataset(s) 
+###                      Fuel Economy dataset(s)
 fuel_economy_2018 <- read_tsv("all_alpha_18.txt") %>%
      mutate (cty_l100km = round(235.214583333333 / as.numeric(`City MPG`),2),
           hwy_l100km = round(235.214583333333 / as.numeric(`Hwy MPG`),2),
@@ -248,7 +248,7 @@ fuel_economy_2018 <- read_tsv("all_alpha_18.txt") %>%
           manufacturer %in% c( 'DODGE', 'JEEP', 'RAM') ~ 'CHRYSLER',
           manufacturer == 'GENESIS' ~ 'HYUNDAI',
           manufacturer == 'INFINITI' ~ 'NISSAN',
-          manufacturer == 'JAGUAR' |  
+          manufacturer == 'JAGUAR' |
                str_detect (manufacturer, '(^LAND|^RANGE)|ROVER') ~ 'TATA MOTORS',
           manufacturer == 'LEXUS' ~ 'TOYOTA',
           manufacturer == 'LINCOLN' ~ 'FORD',
@@ -269,14 +269,14 @@ fuel_economy_2018 %>%
      summarise(n = n()) %>%
      filter (n >= 50) %>%
      inner_join(fuel_economy_2018) %>%
-ggplot(., aes(x = combined_l100km, fill = `Veh Class`, col = `Veh Class`)) + 
+ggplot(., aes(x = combined_l100km, fill = `Veh Class`, col = `Veh Class`)) +
 	geom_density(alpha=.3, position="identity") +
-     ggtitle("Combined Fuel Consumption, by Vehicle Class") 
-     
+     ggtitle("Combined Fuel Consumption, by Vehicle Class")
+
 
 ## Task:
-## Display the histograms of combined fuel consumption for 
-## 100 Km (`combined_l100km`) for all vehicle classes (`Veh Class`) 
+## Display the histograms of combined fuel consumption for
+## 100 Km (`combined_l100km`) for all vehicle classes (`Veh Class`)
 ## that have at least 50 models;
 ## this time, every histogram will be displayes in a separate panel
 fuel_economy_2018 %>%
@@ -285,19 +285,19 @@ fuel_economy_2018 %>%
      summarise(n = n()) %>%
      filter (n >= 50) %>%
      inner_join(fuel_economy_2018) %>%
-ggplot(., aes(x = combined_l100km, fill = `Veh Class`, col = `Veh Class`)) + 
+ggplot(., aes(x = combined_l100km, fill = `Veh Class`, col = `Veh Class`)) +
 	geom_histogram(alpha=.3, position="identity") +
      ggtitle("Combined Fuel Consumption, by Vehicle Class") +
      facet_wrap (. ~ `Veh Class`, ncol = 1) + # display on a single column
                                               # for easying the comparison
-     theme(legend.position="none") 
-     
+     theme(legend.position="none")
+
 
 ############################################################################
-###            Dragos Cogean's Data Set (compare two cloud 
+###            Dragos Cogean's Data Set (compare two cloud
 ###                 database services, MongoDB and MySQL)
 
-# import the data on `read` operations for MongoDB and 
+# import the data on `read` operations for MongoDB and
 ReadMongoDB <- read_tsv("DragosCogean__ReadMongo_ALL.txt") %>%
      mutate (dbserver = 'MongoDB', latency_secs = latenta / 1000)
 ReadMySQL <- read_tsv("DragosCogean__ReadMySQL_ALL.txt") %>%
@@ -309,14 +309,14 @@ rm(ReadMongoDB, ReadMySQL)
 glimpse(AllRead)
 
 
-## Task (identical a task in script 08c, section II.2): 
-## Display two SUPERIMPOSED density curves for: 
+## Task (identical a task in script 08c, section II.2):
+## Display two SUPERIMPOSED density curves for:
 ## - the latency or read operations of type `100SEC`
 ## - the latency or read operations of type `LONG`
 ## only for MongoDB
 
-# New solution 
-ggplot (AllRead, aes(x = latency_secs, fill = testtype )) + 
+# New solution
+ggplot (AllRead, aes(x = latency_secs, fill = testtype )) +
      geom_density( alpha = .3) +
 	ggtitle("Superimposed Density Curves for the Latency of \nREAD operations \nof type `100SEC` and `LONG` in MongoDB") +
      theme(plot.title = element_text(hjust = 0.5)) +  # center the title
@@ -324,7 +324,7 @@ ggplot (AllRead, aes(x = latency_secs, fill = testtype )) +
      guides(fill = guide_legend(title = "Read Test Type")) # change the legend title
 
 # ... another way of changing the legend title
-ggplot (AllRead, aes(x = latency_secs, fill = testtype )) + 
+ggplot (AllRead, aes(x = latency_secs, fill = testtype )) +
      geom_density( alpha = .3) +
 	ggtitle("Superimposed Density Curves for the Latency of \nREAD operations \nof type `100SEC` and `LONG` in MongoDB") +
      theme(plot.title = element_text(hjust = 0.5)) +  # center the title
@@ -332,40 +332,40 @@ ggplot (AllRead, aes(x = latency_secs, fill = testtype )) +
      scale_fill_discrete(name="Read Test Type") # another way to change the legend title
 
 
-## Task : 
+## Task :
 ## Display in two separate panels, one for read operations of type `100SEC`
-## and the other for read operations of type `LONG`, 
+## and the other for read operations of type `LONG`,
 ## the recorded latencies for the two database servers (as interleaved
 ## density plots)
 
-ggplot (AllRead, aes(x = latency_secs, fill = dbserver )) + 
+ggplot (AllRead, aes(x = latency_secs, fill = dbserver )) +
      geom_density( alpha = .3) +
 	ggtitle("Superimposed Density Curves for the Latency of \nREAD operations \nof type `100SEC` and `LONG` in MongoDB") +
      theme(plot.title = element_text(hjust = 0.5)) +  # center the title
      theme(legend.position="top") +
-     scale_fill_discrete(name="database\nserver") + # change the legend title 
+     scale_fill_discrete(name="database\nserver") + # change the legend title
      facet_wrap( . ~ testtype)
 
 
-## Task : 
-## Display in four separate panels, the density plots of latency 
+## Task :
+## Display in four separate panels, the density plots of latency
 ## for read operations by both servers and test types
-ggplot (AllRead, aes(x = latency_secs, fill = dbserver )) + 
+ggplot (AllRead, aes(x = latency_secs, fill = dbserver )) +
      geom_density( alpha = .3) +
 	ggtitle("Latency of READ Pperations \nby Server and Test Type") +
      theme(plot.title = element_text(hjust = 0.5)) +  # center the title
      theme(legend.position="none") +
-     scale_fill_discrete(name="database\nserver") + # change the legend title 
+     scale_fill_discrete(name="database\nserver") + # change the legend title
      facet_wrap( dbserver ~ testtype)
 
 
 # with `facet_grid`, the chart is a bit more elegant
-ggplot (AllRead, aes(x = latency_secs, fill = dbserver )) + 
+ggplot (AllRead, aes(x = latency_secs, fill = dbserver )) +
      geom_density( alpha = .3) +
 	ggtitle("Latency of READ Pperations \nby Server and Test Type") +
      theme(plot.title = element_text(hjust = 0.5)) +  # center the title
      theme(legend.position="none") +
-     scale_fill_discrete(name="database\nserver") + # change the legend title 
+     scale_fill_discrete(name="database\nserver") + # change the legend title
      facet_grid( dbserver ~ testtype)
 
 
@@ -376,25 +376,25 @@ ggplot (AllRead, aes(x = latency_secs, fill = dbserver )) +
 
 
 ############################################################################
-###            Dragos Cogean's Data Set (compare two cloud 
+###            Dragos Cogean's Data Set (compare two cloud
 ###                 database services, MongoDB and MySQL)
 
 ## Task:
 ## Compare with boxplots the distribution of latency for read operations
 ## of type `100SEC` - Mongo vs. MySQL
-ggplot(subset(AllRead, testtype=="100SEC"), 
+ggplot(subset(AllRead, testtype=="100SEC"),
 	aes(x = dbserver, y = latency_secs)) +
 	geom_boxplot() +
 	ggtitle("Latency of `READ 100SEC` Operations \nMongo vs. MySQL") +
      theme(plot.title = element_text(hjust = 0.5)) +  # center the title
 	xlab("DB Server") + ylab("Latency (seconds)")
-	
+
 
 ## Task:
 # Compare using boxplots the distribution of latency for both types
 #  of insert operations - Mongo vs. MySQL
 #  on each boxplot, add a `+` signalling the mean
-ggplot(subset(AllRead), 
+ggplot(subset(AllRead),
 	aes(x = dbserver, y = latency_secs)) +
 	geom_boxplot() +
 	ggtitle("Latency of Read Operations \n by Server and Test Type") +
@@ -402,7 +402,7 @@ ggplot(subset(AllRead),
 	xlab("DB Server")+ylab("Latency (seconds)") +
 	facet_grid(testtype ~ .) +
 	stat_summary(fun.y=mean, geom="point", shape=3, size=1, color = "red")
-     
+
 
 
 #######################################################################
@@ -410,12 +410,12 @@ ggplot(subset(AllRead),
 #######################################################################
 
 #######################################################################
-###                      Fuel Economy dataset(s) 
+###                      Fuel Economy dataset(s)
 glimpse(fuel_economy_2018)
 
-## Task: 
-## Examine through a scatterplot the relationship between the 
-## combined (city and highway) fuel consumption (on the y-axis) and the 
+## Task:
+## Examine through a scatterplot the relationship between the
+## combined (city and highway) fuel consumption (on the y-axis) and the
 ## engine displacement (on x-axis), by the number of cylinders
 
 # Variables mapping:
@@ -431,49 +431,49 @@ fuel_economy_2018 %>%
                   !is.na(Displ) & Displ != 'N/A') %>%
      mutate (Displ = as.numeric(Displ), Cyl = factor(Cyl)) %>%
 ggplot(. , aes(x = Displ, y = combined_l100km, color = Cyl)) +
-     geom_point(alpha = .5) +              
-     xlab("engine displacement (thousands of cubic centimetres)") + 
+     geom_point(alpha = .5) +
+     xlab("engine displacement (thousands of cubic centimetres)") +
      ylab("liters per 100 Km") +
      ggtitle("Combined Fuel Consumption vs. Engine Displacement") +
      theme(plot.title = element_text(hjust = 0.5)) +  # center the title
-     theme(axis.text.x = element_text(angle = 45, 
-               vjust = 1, hjust = 1 )) + 
+     theme(axis.text.x = element_text(angle = 45,
+               vjust = 1, hjust = 1 )) +
      scale_y_continuous(breaks = seq(0, 25, 1))  +  #
      scale_x_continuous(breaks = seq(0.5, 8, 0.5))    #
-     
 
-# Solution 2 use `position_jitter` 
+
+# Solution 2 use `position_jitter`
 fuel_economy_2018 %>%
      filter (!is.na(cty_l100km) & !is.na(hwy_l100km) &
                   !is.na(Displ) & Displ != 'N/A') %>%
      mutate (Displ = as.numeric(Displ), Cyl = factor(Cyl)) %>%
 ggplot(. , aes(x = Displ, y = combined_l100km, color = Cyl)) +
-     geom_point (position = position_jitter(), alpha = 0.4) +              
-     xlab("engine displacement (thousands of cubic centimetres)") + 
+     geom_point (position = position_jitter(), alpha = 0.4) +
+     xlab("engine displacement (thousands of cubic centimetres)") +
      ylab("liters per 100 Km") +
      ggtitle("Combined Fuel Consumption vs. Engine Displacement") +
      theme(plot.title = element_text(hjust = 0.5)) +  # center the title
-     theme(axis.text.x = element_text(angle = 45, 
-               vjust = 1, hjust = 1 )) + 
-     scale_y_continuous(breaks = seq(0, 25, 1))  +  
-     scale_x_continuous(breaks = seq(0.5, 8, 0.5))   
+     theme(axis.text.x = element_text(angle = 45,
+               vjust = 1, hjust = 1 )) +
+     scale_y_continuous(breaks = seq(0, 25, 1))  +
+     scale_x_continuous(breaks = seq(0.5, 8, 0.5))
 
 
-# Solution 3 use `geom_jitter` 
+# Solution 3 use `geom_jitter`
 fuel_economy_2018 %>%
      filter (!is.na(cty_l100km) & !is.na(hwy_l100km) &
                   !is.na(Displ) & Displ != 'N/A') %>%
      mutate (Displ = as.numeric(Displ), Cyl = factor(Cyl)) %>%
 ggplot(. , aes(x = Displ, y = combined_l100km, color = Cyl)) +
-     geom_jitter (alpha = 0.4) +              
-     xlab("engine displacement (thousands of cubic centimetres)") + 
+     geom_jitter (alpha = 0.4) +
+     xlab("engine displacement (thousands of cubic centimetres)") +
      ylab("liters per 100 Km") +
      ggtitle("Combined Fuel Consumption vs. Engine Displacement") +
      theme(plot.title = element_text(hjust = 0.5)) +  # center the title
-     theme(axis.text.x = element_text(angle = 45, 
-               vjust = 1, hjust = 1 )) + 
-     scale_y_continuous(breaks = seq(0, 25, 1))  +  
-     scale_x_continuous(breaks = seq(0.5, 8, 0.5))   
+     theme(axis.text.x = element_text(angle = 45,
+               vjust = 1, hjust = 1 )) +
+     scale_y_continuous(breaks = seq(0, 25, 1))  +
+     scale_x_continuous(breaks = seq(0.5, 8, 0.5))
 
 
 # Solution 4 adds marginal rugs on axes
@@ -482,16 +482,16 @@ fuel_economy_2018 %>%
                   !is.na(Displ) & Displ != 'N/A') %>%
      mutate (Displ = as.numeric(Displ), Cyl = factor(Cyl)) %>%
 ggplot(. , aes(x = Displ, y = combined_l100km, color = Cyl)) +
-     geom_jitter () + 
+     geom_jitter () +
      geom_rug() +
-     xlab("engine displacement (thousands of cubic centimetres)") + 
+     xlab("engine displacement (thousands of cubic centimetres)") +
      ylab("liters per 100 Km") +
      ggtitle("Combined Fuel Consumption vs. Engine Displacement") +
      theme(plot.title = element_text(hjust = 0.5)) +  # center the title
-     theme(axis.text.x = element_text(angle = 45, 
-               vjust = 1, hjust = 1 )) + 
-     scale_y_continuous(breaks = seq(0, 25, 1))  +  
-     scale_x_continuous(breaks = seq(0.5, 8, 0.5))   
+     theme(axis.text.x = element_text(angle = 45,
+               vjust = 1, hjust = 1 )) +
+     scale_y_continuous(breaks = seq(0, 25, 1))  +
+     scale_x_continuous(breaks = seq(0.5, 8, 0.5))
 
 
 # Solution 5 adds a regression line for each
@@ -502,28 +502,28 @@ fuel_economy_2018 %>%
                   !is.na(Displ) & Displ != 'N/A') %>%
      mutate (Displ = as.numeric(Displ), Cyl = factor(Cyl)) %>%
 ggplot(. , aes(x = Displ, y = combined_l100km, color = Cyl)) +
-     geom_jitter () + 
+     geom_jitter () +
      geom_rug() +
-     xlab("engine displacement (thousands of cubic centimetres)") + 
+     xlab("engine displacement (thousands of cubic centimetres)") +
      ylab("liters per 100 Km") +
      ggtitle("Combined Fuel Consumption vs. Engine Displacement") +
      theme(plot.title = element_text(hjust = 0.5)) +  # center the title
-     theme(axis.text.x = element_text(angle = 45, 
-               vjust = 1, hjust = 1 )) + 
-     scale_y_continuous(breaks = seq(0, 25, 1))  +  
-     scale_x_continuous(breaks = seq(0.5, 8, 0.5))  + 
-     geom_smooth(method = lm)    # Add a (linear) regression line, 
+     theme(axis.text.x = element_text(angle = 45,
+               vjust = 1, hjust = 1 )) +
+     scale_y_continuous(breaks = seq(0, 25, 1))  +
+     scale_x_continuous(breaks = seq(0.5, 8, 0.5))  +
+     geom_smooth(method = lm)    # Add a (linear) regression line,
                       # including a confidence region for the curve
 
 
 ## Task:
-## Examine through a scatterplot the relationship between the 
-## combined (city and highway) fuel consumption (on the y-axis) and the 
-## engine displacement (on x-axis), by the number of cylinders, 
-## includin only the groups (built on number of cylinders) with 
+## Examine through a scatterplot the relationship between the
+## combined (city and highway) fuel consumption (on the y-axis) and the
+## engine displacement (on x-axis), by the number of cylinders,
+## includin only the groups (built on number of cylinders) with
 ## at least 50 observations
 
-# Apply a filter to the last solution's data set 
+# Apply a filter to the last solution's data set
 fuel_economy_2018 %>%
      filter (!is.na(cty_l100km) & !is.na(hwy_l100km) &
                   !is.na(Displ) & Displ != 'N/A') %>%
@@ -535,19 +535,15 @@ fuel_economy_2018 %>%
                   !is.na(Displ) & Displ != 'N/A') %>%
      mutate (Displ = as.numeric(Displ), Cyl = factor(Cyl)) %>%
 ggplot(. , aes(x = Displ, y = combined_l100km, color = Cyl)) +
-     geom_jitter () + 
+     geom_jitter () +
      geom_rug() +
-     xlab("engine displacement (thousands of cubic centimetres)") + 
+     xlab("engine displacement (thousands of cubic centimetres)") +
      ylab("liters per 100 Km") +
      ggtitle("Combined Fuel Consumption vs. Engine Displacement") +
      theme(plot.title = element_text(hjust = 0.5)) +  # center the title
-     theme(axis.text.x = element_text(angle = 45, 
-               vjust = 1, hjust = 1 )) + 
-     scale_y_continuous(breaks = seq(0, 25, 1))  +  
-     scale_x_continuous(breaks = seq(0.5, 8, 0.5))  + 
-     geom_smooth(method = lm)    # Add a (linear) regression line, 
+     theme(axis.text.x = element_text(angle = 45,
+               vjust = 1, hjust = 1 )) +
+     scale_y_continuous(breaks = seq(0, 25, 1))  +
+     scale_x_continuous(breaks = seq(0.5, 8, 0.5))  +
+     geom_smooth(method = lm)    # Add a (linear) regression line,
                       # including a confidence region for the curve
-
-
-
-
