@@ -6,7 +6,7 @@ Note: As R packages are published or updated every week, changes may occur frequ
 
 ### Main contributors:
 - [Marin Fotache](http://www.feaa.uaic.ro/faculty/marin-fotache/)
-- [Valerică Greavu-Șerban]
-- [George Talabă]
-- [Marius-Iulian Cluci]
+- Valerică Greavu-Șerban
+- George-Daniel Talabă
+- Marius-Iulian Cluci
 
