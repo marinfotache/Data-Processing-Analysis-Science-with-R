@@ -13,7 +13,7 @@
 ###   further used in Inferential Statistics and Machine Learning        ###
 ###   (see next chapters/sections)                                       ###
 ############################################################################
-## last update: 25.11.2019
+## last update: 31.08.2021
 
 options(scipen = 999)
 library(tidyverse) 
