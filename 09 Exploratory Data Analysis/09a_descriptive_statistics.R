@@ -1,9 +1,8 @@
-############################################################################
-###                         Al.I. Cuza University of Iași                ###
-###            Faculty of Economics and Business Administration          ###
-###       Department of Accounting, Information Systems and Statistics   ###
-############################################################################
-###
+###############################################################################
+### Document partially supported by research project: POC/398/1/1 nr. 124759 -
+### „Research As A Service – Iasi (RaaS-IS)”
+###############################################################################
+
 ############################################################################
 ###                         Al.I. Cuza University of Iași                ###
 ###            Faculty of Economics and Business Administration          ###
