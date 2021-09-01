@@ -13,7 +13,7 @@
 ### See also the presentation:
 ### https://github.com/marinfotache/Data-Processing-Analysis-Science-with-R/blob/master/10%20Basic%20Inferential%20Statistics/10_basic_inferential_statistics.pptx
 ############################################################################
-## last update: 2020-04-02
+## last update: 31.08.2021
 
 ### two R packages are particularly important for categorical data
 ###    analysis, "vcd" and "vcdExtra"
