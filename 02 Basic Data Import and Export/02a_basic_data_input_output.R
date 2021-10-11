@@ -13,7 +13,7 @@
 ### See also the presentation:
 ### https://github.com/marinfotache/Data-Processing-Analysis-Science-with-R/blob/master/02%20Basic%20Data%20Import%20and%20Export/02a_basic_data_input_output.pptx
 ############################################################################
-## last update: 01.11.2020
+## last update: 2021-10-11
 
 
 sessionInfo()
@@ -100,9 +100,13 @@ df3 <- edit(df3)
 ## new (2020-08) - package `DataEditR`
 ## https://github.com/DillonHammill/DataEditR
 #install.packages('devtools')
-library(devtools)
+#library(devtools)
 #install_github("DillonHammill/DataEditR")
-# Load required packages
+
+# since 2021 the package is available on CRAN
+#install.packages('DataEditR')
+
+# Load required package
 library(DataEditR)
 
 # Save output to R object & csv file
@@ -143,10 +147,9 @@ rm(list = ls())
 ############################################################################
 ###               4. Data input from local delimited text files		   ###
 ############################################################################
-##    readr 0.2.0 package
-#    http://blog.rstudio.org/2015/10/28/readr-0-2-0/
-#install.packages('readr')
-require(readr)
+
+# package `readr` is part of the `tidyverse`
+# require(readr)
 
 ############################################################################
 ##   Data frame "births2006" is contained in the text file "births2006.txt" 
@@ -275,7 +278,6 @@ rm(list = ls())
 #  file name `orase_cipy_ro(autor neidentificat).txt`
 
 # function `read_csv` from package `readr` deals with .csv files
-require(readr)
 
 city_town_village_2002 <- read_csv("orase_cipy_ro(autor neidentificat).txt")
 
@@ -298,6 +300,9 @@ str(comp)
 head(comp)
 # summary
 summary(comp)
+
+# glimpse (from tidyverse)
+glimpse(comp)
 
 ## clear the memory
 rm(list = ls())
@@ -324,7 +329,7 @@ rm(list = ls())
 #    * high. 
 smoker <- readr::read_csv("http://www.cyclismo.org/tutorial/R/_static/smoker.csv")
 head(smoker)
-str(smoker)
+glimpse(smoker)
 
 
 
@@ -333,7 +338,7 @@ str(smoker)
 # when a data set is large, instead of the direct import: ...
 dat.csv <- read_csv("http://www.cyclismo.org/tutorial/R/_static/smoker.csv")
 head(dat.csv)
-str(dat.csv)
+glimpse(dat.csv)
 
 # ... one can proceed in two steps:
 # 1. download the file
@@ -341,14 +346,14 @@ download.file("http://www.cyclismo.org/tutorial/R/_static/smoker.csv", destfile=
 # 2. read the downloaded file
 dat.csv <- read_csv("data.csv")
 head(dat.csv)
-str(dat.csv)
+glimpse(dat.csv)
 
 # see also
 # http://cran.r-project.org/web/packages/downloader/index.html
 
 
 ## A more relevant example, since the file size is larger (56MB):
-## Romanian Baccalaureate results - summer 2017 (national level)
+## Romanian Baccalaureate's results - summer 2017 (national level)
 # 1. download the file
 download.file("http://data.gov.ro/dataset/cb54fa0b-4d8c-4cef-b0d9-fe80e0c99743/resource/2b8d2567-2633-422a-a98b-4fb6cd9c0b09/download/2017-09-25-date-deschise-2017-i.csv", 
                destfile="bac_ro_2017.csv")
@@ -434,12 +439,8 @@ rm(list = ls())
 #     (of course, connection data could vary in case of remote database servers
 #     or other databases, tables and attributes)  
 
-# install.packages('RPostgreSQL')
-library(RPostgreSQL)
-
-## load the PostgreSQL driver
-drv <- dbDriver("PostgreSQL")
-
+# install.packages('RPostgres')
+library(RPostgres)
 
 #################################################################################
 ##              Import data from PostgreSQL database "sales" 
@@ -460,13 +461,12 @@ drv <- dbDriver("PostgreSQL")
 
 
 ## On Windows systems, PostgreSQL database service must already be started
-con <- dbConnect(drv, dbname="sales", user="postgres", 
+con <- dbConnect(RPostgres::Postgres(), dbname="sales", user="postgres", 
                  host = 'localhost', password="postgres")
 
 # On Mac OS
-con <- dbConnect(drv, host='localhost', port='5433', dbname='sales',
-                 user='postgres', password='postgres')
-
+con <- dbConnect(RPostgres::Postgres(), host='localhost', port='5434', 
+                 dbname='sales', user='postgres', password='postgres')
 
 
 ###  B. Display the table names in PostgreSQL database 
