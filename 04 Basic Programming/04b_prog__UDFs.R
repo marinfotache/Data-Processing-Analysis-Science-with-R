@@ -9,11 +9,11 @@
 ############################################################################
 ###
 ############################################################################
-###                           4b. User-Defined Functions                 ###   
+###                           4b. User-Defined Functions                 ###
 ### See also the presentation:
 ### https://github.com/marinfotache/Data-Processing-Analysis-Science-with-R/blob/master/04%20Basic%20Programming/04_Programming_UDFs_eval_tidyeval.pptx
 ############################################################################
-## last update: 13.11.2019
+## last update: 14.11.2021
 
 # packages
 library(tidyverse)
@@ -28,10 +28,10 @@ library(broom)
 # all the files needed o run this script are available at:
 # https://github.com/marinfotache/Data-Processing-Analysis-Science-with-R/tree/master/DataSets
 
-# Please download the files in a local directory (such as 'DataSets') and  
-# set the directory where you dowloaded the data files as the 
+# Please download the files in a local directory (such as 'DataSets') and
+# set the directory where you dowloaded the data files as the
 # default/working directory, ex:
-setwd('/Users/marinfotache/Google Drive/R(Mac)/DataSets')
+setwd('/Users/marinfotache/Google Drive/R(Mac)-1 googledrive/DataSets')
 
 
 #########################################################################
@@ -58,7 +58,7 @@ setwd('/Users/marinfotache/Google Drive/R(Mac)/DataSets')
 #########################################################################
 ## Task:
 ## Given a string with a list of authors separated by `;`
-## write an anonymous function that returns the string as 
+## write an anonymous function that returns the string as
 ## a tibble, with each author on a separate row
 
 # parameter of the function
@@ -67,8 +67,8 @@ string_authors <- 'Fotache, M.; Strimbei, C.; Cretu, L.'
 # the function
 (function (x) {
      y <- str_split(x,';') %>%
-          set_names('author')     
-     return (as_tibble(y))     
+          set_names('author')
+     return (as_tibble(y))
           }) (string_authors)
 
 str_split(string_authors, ';')[[1]][[2]]
@@ -80,7 +80,7 @@ str_split(string_authors, ';')[[1]][[2]]
 #########################################################################
 ##                       Fuel Economy dataset(s)                       ##
 ## example taken from script `03b_tidy-verse.R`
-fuel_economy_2018 <- read_tsv("all_alpha_18.txt") 
+fuel_economy_2018 <- read_tsv("all_alpha_18.txt")
 glimpse(fuel_economy_2018)
 
 ## Also add a variable about the (`approximate`) manufacturer
@@ -98,7 +98,7 @@ fuel_economy_2018 <- fuel_economy_2018 %>%
           manufacturer %in% c( 'DODGE', 'JEEP', 'RAM') ~ 'CHRYSLER',
           manufacturer == 'GENESIS' ~ 'HYUNDAI',
           manufacturer == 'INFINITI' ~ 'NISSAN',
-          manufacturer == 'JAGUAR' |  
+          manufacturer == 'JAGUAR' |
                str_detect (manufacturer, '(^LAND|^RANGE)|ROVER') ~ 'TATA MOTORS',
           manufacturer == 'LEXUS' ~ 'TOYOTA',
           manufacturer == 'LINCOLN' ~ 'FORD',
@@ -106,13 +106,13 @@ fuel_economy_2018 <- fuel_economy_2018 %>%
           manufacturer == 'SMART' ~ 'MERCEDES-BENZ',
           TRUE ~ manufacturer)
      ) %>%
-     mutate (displacement  = as.numeric(Displ), 
+     mutate (displacement  = as.numeric(Displ),
              n_of_cyl = as.numeric(Cyl),
              air_pollution = as.numeric(`Air Pollution Score`),
              greenhouse = as.numeric(`Greenhouse Gas Score`),
              combined_CO2 = as.numeric(`Comb CO2`)
-             ) 
-     
+             )
+
 
 # descriptive statistics
 glimpse(fuel_economy_2018)
@@ -120,30 +120,30 @@ skimr::skim(fuel_economy_2018)
 
 
 ## Tasks: For `fuel_economy_2018` data set:
-#    - display column means which exceed 10 
+#    - display column means which exceed 10
 #    - display first column mean  of the data frame which exceeds 10
 #    - display the position of the first column whose mean exceeds 10
 
-# for selecting only `numeric` columns from a tibble, use `select_if` 
-fuel_economy_2018 %>% 
+# for selecting only `numeric` columns from a tibble, use `select_if`
+fuel_economy_2018 %>%
      select_if (is.numeric)
 
-#    - display columns whose means which exceed 10 
+#    - display columns whose means which exceed 10
 # `Filter`
-Filter( function( x ) x > 10, 
-        colMeans (fuel_economy_2018 %>% 
+Filter( function( x ) x > 10,
+        colMeans (fuel_economy_2018 %>%
                        select_if (is.numeric), na.rm = TRUE ))
 
 #    - display first column mean  that exceeds 10
 # `Find`
-Find( function( x ) x > 10, 
+Find( function( x ) x > 10,
         colMeans (fuel_economy_2018 %>% select_if (is.numeric), na.rm = TRUE ))
 
 
-#    - display the position (among the numerical columns) of the first 
+#    - display the position (among the numerical columns) of the first
 #         column whose mean exceeds 10
 # `Position`
-Position( function( x ) x > 10, 
+Position( function( x ) x > 10,
         colMeans (fuel_economy_2018 %>% select_if (is.numeric), na.rm = TRUE ))
 
 
@@ -159,12 +159,12 @@ Position( function( x ) x > 10,
 ##############################################################################
 ###                 UDF for cleaning a string (in Romania)                 ###
 f_clean_string <- function (the_string) {
-	# remove punctuation characters (by replacing them with blanks)
+  # remove punctuation characters (by replacing them with blanks)
 	# the_string <- str_replace_all(the_string, pattern = "[[:punct:]]", " ")
-	
-     # removes whitespace from start and end of string; also reduces repeated 
-     #    whitespace inside a string.
-     #the_string <- str_squish(str_replace_all(the_string, "(\\n)|(\\r)", " " ))
+
+  # removes whitespace from start and end of string; also reduces repeated
+  #    whitespace inside a string.
+  #the_string <- str_squish(str_replace_all(the_string, "(\\n)|(\\r)", " " ))
 
 	# uniformization (lowercase)
 	# the_string <- tolower(the_string)
@@ -183,23 +183,23 @@ f_clean_string <- function (the_string) {
 	the_string <- str_replace_all(the_string, pattern = "ţ", "t")
 	the_string <- str_replace_all(the_string, pattern = "ț", "t")
 	the_string <- str_replace_all(the_string, pattern = "ț", "t")
-	
+
 	the_string <- str_replace_all(the_string, pattern = "Ţ", "T")
 	the_string <- str_replace_all(the_string, pattern = "Ț", "T")
 	the_string <- str_replace_all(the_string, pattern = "Ț", "T")
 
 
-	return (the_string)	
-}          
+	return (the_string)
+}
 
 # test the function
-f_clean_string('Cocostârcii     se ; DescocostÂrcăresc')   
+f_clean_string('Cocostârcii     se ; DescocostÂrcăresc')
 
 
 ##############################################################################
 ###                 UDF for descriptive statistics                         ###
-## for details about descriptive statistics - see script `09a...` 
-# 
+## for details about descriptive statistics - see script `09a...`
+#
 descr_stats <- function(x, na.omit=FALSE) {
      if (na.omit)
           x <- x[!is.na(x)]
@@ -207,14 +207,14 @@ descr_stats <- function(x, na.omit=FALSE) {
           q_25 = quantile(x, names =F, na.rm=T)[2]
           med = median(x, na.rm=T)
           q_75 = quantile(x, names =F, na.rm=T)[4]
-          max = max(x, na.rm=T)	
+          max = max(x, na.rm=T)
           n = length(x)
           mean = mean(x, na.rm=T)
           st_dev = sd(x, na.rm=T)
           skew = PerformanceAnalytics::skewness(x)
           kurt = PerformanceAnalytics::kurtosis(x)
-     return(tibble(n=n, min=min, first_quartile=q_25, median=med, 
-          third_quartile=q_75, max=max,  
+     return(tibble(n=n, min=min, first_quartile=q_25, median=med,
+          third_quartile=q_75, max=max,
           mean=mean, st_dev=st_dev, skew=skew, kurtosis=kurt))
 }
 
@@ -227,7 +227,7 @@ temp <- descr_stats(fuel_economy_2018$combined_l100km)
 ##############################################################################
 ###       UDF for displaying a liniar model as an equation                ###
 ### for this and other examples on linear regression, see scripts 11a and 11b
-# lm() function requires a data frame;state.x77 dataset is contained in a matrix, 
+# lm() function requires a data frame;state.x77 dataset is contained in a matrix,
 #    so one must convert it:
 states_ <- as_tibble(state.x77) %>%
      set_names(str_replace_all(names(.), '( |\\.)', '_'))
@@ -246,12 +246,12 @@ summary(modelA)
 # here is the function
 equation_lm <- function(the_lm_model) {
      return (paste(
-          the_lm_model$terms[[2]], the_lm_model$terms[[1]], 
-               paste0(round(coefficients(the_lm_model)[1],5), "  +  ", 
-                    paste(sprintf("%.5f * %s", 
-                  coefficients(the_lm_model)[-1],  
+          the_lm_model$terms[[2]], the_lm_model$terms[[1]],
+               paste0(round(coefficients(the_lm_model)[1],5), "  +  ",
+                    paste(sprintf("%.5f * %s",
+                  coefficients(the_lm_model)[-1],
                   names(coefficients(the_lm_model)[-1])), collapse=" + ")) ))
-}     
+}
 
 # test the function
 equation_lm(modelA)
@@ -265,16 +265,16 @@ broom::augment(modelA)
 
 # we will prefer using `broom` package (see scripts `11a` and `11b`)
 equation_lm2 <- function(the_lm_model) {
-     
+
      df <- broom::tidy(the_lm_model)
      return ( paste(
-               paste(names(augment(the_lm_model)) [1], '~', 
-                     round(df$estimate[1], 5)), 
-               paste( round(df$estimate[2:nrow(df)], 5), '*', 
-                      df$term[2:nrow(df)],  
-                         collapse = ' + '), 
+               paste(names(augment(the_lm_model)) [1], '~',
+                     round(df$estimate[1], 5)),
+               paste( round(df$estimate[2:nrow(df)], 5), '*',
+                      df$term[2:nrow(df)],
+                         collapse = ' + '),
                    sep = ' + '))
-}          
+}
 
 # test the function
 equation_lm2(modelA)
@@ -293,14 +293,14 @@ equation_lm2(modelA)
 f_create_teams_directories <- function (dest_directory, program,
           year_of_study, n_of_teams) {
           setwd(dest_directory)
-          
+
           for (i in 1:n_of_teams) {
-               subDir <- paste0(program, year_of_study, 10+i)    
-               ifelse(!dir.exists(file.path(dest_directory, subDir)), 
+               subDir <- paste0(program, year_of_study, 10+i)
+               ifelse(!dir.exists(file.path(dest_directory, subDir)),
                     dir.create(file.path(dest_directory, subDir)), FALSE)
           }
-	return ()	
-}          
+	return ()
+}
 
 # test the function
 f_create_teams_directories("/Users/marinfotache/Downloads/test", "SAAS", 1, 50)
@@ -321,7 +321,7 @@ glimpse(invoice_details)
 
 ## Tasks:
 ##   - Build a function for returning the vat percent for a given product
-##   - Use this function in another function that returns the amount of 
+##   - Use this function in another function that returns the amount of
 ##        a given invoice (without joining the data frames)
 
 productid_ <- 2
@@ -329,7 +329,7 @@ productid_ <- 2
 ## function `g_get_vatpercent` reveives a `productid` and returns
 ## the value of its `vatpercent`
 f_get_vatpercent <- function (productid_) {
-     # `products` 
+     # `products`
      products %>%
           filter (productid == productid_) %>%
           select (vatpercent) %>%
@@ -340,13 +340,13 @@ f_get_vatpercent <- function (productid_) {
 f_get_vatpercent(3)
 
 
-##  function `f_invoice_amount` gets an `invoiceno` and 
+##  function `f_invoice_amount` gets an `invoiceno` and
 ##  returns its amount (without joining any data frames)
 invoiceno_ = 1112
 
 
 f_invoice_amount <- function (invoiceno_) {
-     # `invoice_details` 
+     # `invoice_details`
      invoice_details %>%
           filter (invoiceno == invoiceno_) %>%
           rowwise() %>%
@@ -366,10 +366,10 @@ f_invoice_amount(9999)
 
 # modify the function:
 f_invoice_amount <- function (invoiceno_) {
-     # `invoice_details` 
+     # `invoice_details`
      df <- invoice_details %>%
-          filter (invoiceno == invoiceno_) 
-     
+          filter (invoiceno == invoiceno_)
+
      if (nrow(df) > 0) {
           df %>%
                rowwise() %>%
@@ -379,7 +379,7 @@ f_invoice_amount <- function (invoiceno_) {
                pull()
      } else {
           return (NA)
-     }     
+     }
 }
 # test the function
 f_invoice_amount(1111)
@@ -388,7 +388,7 @@ f_invoice_amount(111199)
 
 # in order to invoke function `f_invoice_amount` with `invoices` data frame...
 
-#... this does not work! 
+#... this does not work!
 temp <- invoices %>%
      mutate (amount = f_invoice_amount(invoiceno))
 
@@ -397,8 +397,3 @@ temp <- invoices %>%
 temp <- invoices %>%
      rowwise() %>%
      mutate (amount = f_invoice_amount(invoiceno))
-
-
-
-
-
