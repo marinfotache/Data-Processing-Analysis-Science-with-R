@@ -9,11 +9,11 @@
 ############################################################################
 ###
 ############################################################################
-###                      04d. Evaluation. Tidy evaluation                ###     
+###                      04d. Evaluation. Tidy evaluation                ###
 ### See also the presentation:
 ### https://github.com/marinfotache/Data-Processing-Analysis-Science-with-R/blob/master/04%20Basic%20Programming/04_Programming_UDFs_eval_tidyeval.pptx
 ############################################################################
-## last update: 13.11.2019
+## last update: 14.11.2021
 
 # needed packages
 library(tidyverse)
@@ -29,8 +29,8 @@ library(skimr)
 # all the files needed o run this script are available at:
 # https://github.com/marinfotache/Data-Processing-Analysis-Science-with-R/tree/master/DataSets
 
-# Please download the files in a local directory (such as 'DataSets') and  
-# set the directory where you dowloaded the data files as the 
+# Please download the files in a local directory (such as 'DataSets') and
+# set the directory where you dowloaded the data files as the
 # default/working directory, ex:
 setwd('/Users/marinfotache/Google Drive/R(Mac)/DataSets')
 
@@ -65,58 +65,56 @@ setwd('/Users/marinfotache/Google Drive/R(Mac)/DataSets')
 
 #########################################################################
 ##        Example 1 - import all tables from a `PostgreSQL` database
-## 
-## We already used `assign` function (script `02a`) when importing all 
-## the PostgreSQL tables in a database (subschema) as R data frames 
+##
+## We already used `assign` function (script `02a`) when importing all
+## the PostgreSQL tables in a database (subschema) as R data frames
 ## with identical name
 
-## Reminder: PostgreSQL - see script `02a` 
-##   It works if you have already created and populated the PostgreSQL 
+## Reminder: PostgreSQL - see script `02a`
+##   It works if you have already created and populated the PostgreSQL
 ##   database on your system !
-## You have to change the `host`, `port`, `dbname`, `user`, 
+## You have to change the `host`, `port`, `dbname`, `user`,
 ##   and `postgres` accordingly
 
 # taking the example of `northwind` database
-library(RPostgreSQL)
-## loads the PostgreSQL driver
-drv <- dbDriver("PostgreSQL")
-# open connection - Mac OS syntax
-con <- dbConnect(drv, host='localhost', port='5433', dbname='chinook',
-                 user='postgres', password='postgres')
+library(RPostgres)
+
+## On Windows systems, PostgreSQL database service must already be started
+con <- dbConnect(RPostgres::Postgres(), dbname="chinook", user="postgres",
+                 host = 'localhost', password="postgres")
+
+# On Mac OS
+con <- dbConnect(RPostgres::Postgres(), host='localhost', port='5434',
+                 dbname='chinook', user='postgres', password='postgres')
+
 # get the table names
-tables <- dbGetQuery(con, 
+tables <- dbGetQuery(con,
      "select table_name from information_schema.tables where table_schema = 'public'")
 tables
 
-#i <- 1
-# import each of the table as a data frame 
+#i <- 2
+# import each of the table as a data frame
 for (i in 1:nrow(tables)) {
      # extract data from table in PostgreSQL
-     temp <- dbGetQuery(con, 
+     temp <- dbGetQuery(con,
           paste("select * from ", tables[i,1], sep=""))
-     
-     # create the data frame: `assign` allows naming dynamically the data frame 
+
+     # create the data frame: `assign` allows naming dynamically the data frame
      assign(tables[i,1], temp)
 }
 
-# close all PostgreSQL connections 
-for (connection in dbListConnections(drv) ) {
-  dbDisconnect(connection)
-}
-## Frees all the resources on the driver
-dbUnloadDriver(drv)
+# close the PostgreSQL connection
+dbDisconnect(con)
 
 
 
 #########################################################################
-##  Example 2 - Import as data frames all the worksheets in an Excel file 
+##  Example 2 - Import as data frames all the worksheets in an Excel file
 
 ## 'northwind.xlsx'
-## 
-
+##
 ## remove (almost) everything in the working environment.
 rm(list = ls())
-
 file_name <- "northwind.xlsx"
 
 # display the worksheets names in a .xls(x) file
@@ -127,41 +125,41 @@ i <- 2
 for (i in 1:length(ws)) {
      # read the current worksheet
      temp <- readxl::read_excel(file_name, i)
-     
+
      # copy `temp` data frame into a data frame with the name of the
      #   worksheet
      assign(ws[i], temp)
-} 
+}
 
 
 #########################################################################
-##  Example 3 - Import as data frames the first worksheet of all 
-##  Excel (`.xlsx`) files) in the current directory 
+##  Example 3 - Import as data frames the first worksheet of all
+##  Excel (`.xlsx`) files) in the current directory
 
 ## clear the working environment.
 rm(list = ls())
 
 
-# create a vector with the name and extension of all .xls files in current directory 
-files <- list.files(pattern = "*.xlsx") 
+# create a vector with the name and extension of all .xls files in current directory
+files <- list.files(pattern = "*.xlsx")
 # or
-files <- dir(pattern = "*.xlsx") 
+files <- dir(pattern = "*.xlsx")
 
 i <- 3
-# now, loop through the files, but remove the `.xlsx` suffix in the data 
+# now, loop through the files, but remove the `.xlsx` suffix in the data
 #   frame name
 for (i in 1:length(files)) {
      # read the current worksheet
      temp <- readxl::read_excel(files[i], 1)
-     
+
      # copy `temp` data frame into a data frame with the name of the
      #   worksheet (remove `.xlsx`)
      assign(substr(files[i], 1, (nchar(files[i])-5)), temp)
-} 
+}
 
 # there is a shorter version of the loop
 for (i in 1:length(files))
-     assign(substr(files[i], 1, (nchar(files[i])-5)), 
+     assign(substr(files[i], 1, (nchar(files[i])-5)),
             readxl::read_excel(files[i], 1))
 
 
@@ -171,7 +169,7 @@ for (i in 1:length(files))
 ###                       II. `get` function                          ###
 #########################################################################
 ###  We'll use `get` to read a dynamically qualified (named)          ###
-###  object (data frame)                                              ### 
+###  object (data frame)                                              ###
 #########################################################################
 
 ## remove (almost) everything in the working environment.
@@ -191,14 +189,15 @@ if (!dir.exists( file.path(main_dir, 'to_be_deleted')))
 
 ### Export each data frame in the current environment as a separate .xlsx file
 tables <- ls()
+i <- 1
 for (i in 1:length(tables)) {
      # here we used `get` for naming dynamically the data frame from which
      # the data is taken
      temp <- get(tables[i])
      if (is.data.frame(temp) & nrow(data.frame(temp)) > 0)
-          rio::export(temp, file = paste0('to_be_deleted', '/', tables[i], ".xlsx"), 
+          rio::export(temp, file = paste0('to_be_deleted', '/', tables[i], ".xlsx"),
                  format='xlsx', sheetName=tables[i])
-}    
+}
 
 
 
@@ -216,7 +215,7 @@ rm(list = ls())
 
 
 #########################################################################
-## (Anonymized) FEAA students for 2014-2015 academic year 
+## (Anonymized) FEAA students for 2014-2015 academic year
 ## example taken from script `03b_tidy-verse.R`
 getwd()
 file <- "anonymized_students_FEAA_2014.xlsx"
@@ -228,7 +227,7 @@ glimpse(studs)
 ###################################################################
 ##                       Task no. 1
 # Print the frequency (of the values) for the following nominal
-#    variables: `LEVEL_OF_STUDY`, `ATTENDANCE`, `YEAR_OF_STUDY`, 
+#    variables: `LEVEL_OF_STUDY`, `ATTENDANCE`, `YEAR_OF_STUDY`,
 #    `PROGRAMME`, `LOCATION`, and `FINANCIAL_SUPPORT`
 
 # Currently, with `dplyr` we know to work with static variables,
@@ -253,7 +252,7 @@ studs %>%
 
 ##        Alternatively, we can loop using `tidy evaluation`
 ##   which was introduced in `dplyr` 0.7.0
-variables <- c('LEVEL_OF_STUDY', 'ATTENDANCE', 'YEAR_OF_STUDY', 
+variables <- c('LEVEL_OF_STUDY', 'ATTENDANCE', 'YEAR_OF_STUDY',
                'PROGRAMME', 'LOCATION', 'FINANCIAL_SUPPORT')
 # variable <- variables[1]
 
@@ -265,26 +264,26 @@ for (variable in variables) {
      print(variable)
      print(result)
      cat('', quote = FALSE, row.names = FALSE)
-}     
+}
 
 
 # as some values were lost (because the way tibbles are displayed),
 # we'll save the result as a tibble instead or printing
 final_result <- tibble()
 for (variable in variables) {
-     final_result <- bind_rows(final_result, 
+     final_result <- bind_rows(final_result,
           tibble(variable = variable) %>%
                mutate (foo = 1) %>%
                inner_join(
                     studs %>%
                          ## notice `.data[[variable]]`
-                         group_by( value = .data[[variable]] ) %>%  
+                         group_by( value = .data[[variable]] ) %>%
                          summarise (frequency = n()) %>%
                          ungroup() %>%
-                    mutate (foo = 1)     
+                    mutate (foo = 1)
           ) %>%
-          select (-foo)  )   
-}     
+          select (-foo)  )
+}
 View(final_result)
 
 
@@ -297,15 +296,15 @@ View(final_result)
 
 # a simple functions for computing the frequency of a variable values
 count_groups <- function(df, groupvar){
-     df %>% 
-          group_by({{ groupvar }}) %>% 
+     df %>%
+          group_by({{ groupvar }}) %>%
           summarise(frequency = n()) %>%
           ungroup()
 }
 
 # simple call
 test <- count_groups(studs, LEVEL_OF_STUDY)
-test 
+test
 
 
 # call the function and transform (a bit) the result
@@ -315,7 +314,7 @@ test <- count_groups(studs, LEVEL_OF_STUDY) %>%
 test
 
 
-# use the function and the above trasnsformation for getting `final_result`
+# use the function and the above transformation for getting `final_result`
 final_result2 <- bind_rows(
      count_groups(studs, LEVEL_OF_STUDY) %>%
           add_column(variable = names(.)[[1]], .before = TRUE) %>%
@@ -335,7 +334,7 @@ final_result2 <- bind_rows(
      count_groups(studs, FINANCIAL_SUPPORT) %>%
           add_column(variable = names(.)[[1]], .before = TRUE) %>%
           set_names(c('variable', 'value', 'frequency'))
-     ) 
+     )
 
 identical(final_result, final_result2)
 
@@ -362,26 +361,26 @@ final_result3 <- bind_rows(
 ###                           III.b. quosures                         ###
 #########################################################################
 
-### A quosure is a data structure that stores both an expression 
+### A quosure is a data structure that stores both an expression
 ### and an environment
 
 ### Some functions and operators:
 ###
-###  -    `quo()` - works like `"`: it quotes its input rather than 
+###  -    `quo()` - works like `"`: it quotes its input rather than
 ###            evaluating it; it returns a quosure
-###  -    `!!` operator unquotes an input so that it’s evaluated, 
-###            not quoted. 
+###  -    `!!` operator unquotes an input so that it’s evaluated,
+###            not quoted.
 ###  -    `rlang::sym()` takes strings as input and turn them into symbols                                ###
-###  -    `enquo()` examines the argument, see what the user typed, 
+###  -    `enquo()` examines the argument, see what the user typed,
 ###            and return that value as a quosure.
-###  -    `quos()`` captures all the `...` as a list of arguments/formulas      
+###  -    `quos()`` captures all the `...` as a list of arguments/formulas
 ###  -    `!!!` operator splices the arguments
 
 
 #########################################################################
 ##                       Fuel Economy dataset(s)                       ##
 ## example taken from script `03b_tidy-verse.R`
-fuel_economy_2018 <- read_tsv("all_alpha_18.txt") 
+fuel_economy_2018 <- read_tsv("all_alpha_18.txt")
 glimpse(fuel_economy_2018)
 
 ## Also add a variable about the (`approximate`) manufacturer
@@ -399,7 +398,7 @@ fuel_economy_2018 <- fuel_economy_2018 %>%
           manufacturer %in% c( 'DODGE', 'JEEP', 'RAM') ~ 'CHRYSLER',
           manufacturer == 'GENESIS' ~ 'HYUNDAI',
           manufacturer == 'INFINITI' ~ 'NISSAN',
-          manufacturer == 'JAGUAR' |  
+          manufacturer == 'JAGUAR' |
                str_detect (manufacturer, '(^LAND|^RANGE)|ROVER') ~ 'TATA MOTORS',
           manufacturer == 'LEXUS' ~ 'TOYOTA',
           manufacturer == 'LINCOLN' ~ 'FORD',
@@ -407,12 +406,12 @@ fuel_economy_2018 <- fuel_economy_2018 %>%
           manufacturer == 'SMART' ~ 'MERCEDES-BENZ',
           TRUE ~ manufacturer)
      ) %>%
-     mutate (displacement  = as.numeric(Displ), 
+     mutate (displacement  = as.numeric(Displ),
              n_of_cyl = as.numeric(Cyl),
              air_pollution = as.numeric(`Air Pollution Score`),
              greenhouse = as.numeric(`Greenhouse Gas Score`),
              combined_CO2 = as.numeric(`Comb CO2`)
-             ) 
+             )
 
 
 ####################################################################
@@ -420,7 +419,7 @@ fuel_economy_2018 <- fuel_economy_2018 %>%
 ## Create a function for computing the mean of `combined_l100km`
 ##   (combined (city + highway) fuel consumption for running 100Km)
 ## for the levels of a given variable (column) of type char
-## 
+##
 
 ## the initial function does not work
 f_mean <- function(the_column) {
@@ -430,11 +429,11 @@ f_mean <- function(the_column) {
 }
 
 f_mean(Drive)
-# Error in grouped_df_impl(data, unname(vars), drop) : 
+# Error in grouped_df_impl(data, unname(vars), drop) :
 #  Column `the_column` is unknown
-  
+
 f_mean('Drive')
-# Error in grouped_df_impl(data, unname(vars), drop) : 
+# Error in grouped_df_impl(data, unname(vars), drop) :
 #  Column `the_column` is unknown
 
 
@@ -463,19 +462,19 @@ f_mean(rlang::sym(var))
 
 
 
-## If we want to call the function without invoking it with `quo`, 
-##   one must include function `enquo` 
+## If we want to call the function without invoking it with `quo`,
+##   one must include function `enquo`
 f_mean2 <- function(the_column) {
      # `enquo`
      the_column <- enquo(the_column)
-     
+
      # nothing changes here
      fuel_economy_2018 %>%
           group_by(!! the_column) %>%
           summarise(mean = mean(combined_l100km, na.rm = TRUE))
 }
 
-# new, we simply include the column name 
+# new, we simply include the column name
 f_mean2(Drive)
 f_mean2(manufacturer)
 
@@ -486,20 +485,20 @@ f_mean2(manufacturer)
 ##   (combined (city + highway) fuel consumption for running 100Km)
 ## for any combination (group) of one, two or more (mainly)
 ## nominal variables
-## 
+##
 
-# as the function will have a variable number of parameters, 
-# we'll use `...` in its definition 
+# as the function will have a variable number of parameters,
+# we'll use `...` in its definition
 f_mean3 <- function(...) {
-     
+
      # Use quos() to capture all the `...` as a list of formulas.
      group_vars <- quos(...)
 
      # notice the `!!!` operator that splices the arguments
      # `!!!` is needed in `select`, but not when grouping due
-     # to `group_by_at` 
+     # to `group_by_at`
      fuel_economy_2018 %>%
-          select (!!! group_vars, combined_l100km) %>% 
+          select (!!! group_vars, combined_l100km) %>%
           group_by_at(., group_vars )  %>%
           summarise(mean = mean(combined_l100km, na.rm = TRUE))
 }
@@ -515,14 +514,14 @@ result <- f_mean3(c('Cyl', 'Trans', 'Drive', 'Fuel'))
 # using a variable requires `rlang::syms` function
 # inside the `f_means`
 f_mean4 <- function(...) {
-     
+
      # Use `rlang::syms(...)`` to capture all the `...` as a list of formulas.
      group_vars <- rlang::syms(...)
 
      # notice the `!!!` operator that splices the arguments
      # `!!!` is used also in `group_by`
      fuel_economy_2018 %>%
-          select (!!! group_vars, combined_l100km) %>% 
+          select (!!! group_vars, combined_l100km) %>%
           group_by(!!!group_vars )  %>%
           summarise(mean = mean(combined_l100km, na.rm = TRUE))
 }
@@ -537,17 +536,17 @@ result <- f_mean4(vars)
 
 
 ## If we want to call the function wihout including column names
-## within ` or ",  one must include function `enquos` 
+## within ` or ",  one must include function `enquos`
 f_mean5 <- function(...) {
-     
+
      # Use quos() to capture all the `...` as a list of formulas.
      group_vars <- enquos(...)
 
      # notice the `!!!` operator that splices the arguments
      # `!!!` is needed in `select`, but not when grouping due
-     # to `group_by_at` 
+     # to `group_by_at`
      fuel_economy_2018 %>%
-          select (!!! group_vars, combined_l100km) %>% 
+          select (!!! group_vars, combined_l100km) %>%
           group_by_at(., group_vars )  %>%
           summarise(mean = mean(combined_l100km, na.rm = TRUE))
 }
@@ -583,7 +582,7 @@ f_frequencies <- function(a_df, a_column) {
 
 
 variable = 'LEVEL_OF_STUDY'
-# when invoking the function, we can use `quo` 
+# when invoking the function, we can use `quo`
 f_frequencies(studs, quo(variable))
 
 # in this case, function `quo` is not compusory, so we can ommit it:
@@ -594,7 +593,7 @@ f_frequencies(studs, variable)
 ## incrementally the resulting tibble
 result <- tibble()
 for (column in studs %>% select_if(is.character) %>% names()) {
-     result <- bind_rows(result, 
+     result <- bind_rows(result,
                  f_frequencies(studs, column))
 }
 View(result)
@@ -610,7 +609,7 @@ result %>%
 ### Given the `stud` data frame:
 
 # Display the frequency table for the following pairs of nominal
-#         variables 
+#         variables
 #    - (`LEVEL_OF_STUDY`, `ATTENDANCE`)
 #    - (`PROGRAMME`, YEAR_OF_STUDY')
 #    - (`PROGRAMME`, `ATTENDANCE`)
@@ -639,7 +638,7 @@ studs %>%
      transmute (column_a  = !! first_column, value_column_a,
              column_b = !! second_column, value_column_b,
              frequency
-             ) 
+             )
 
 
 ## now, the function
@@ -652,7 +651,7 @@ f_frequencies2 <- function(a_df, first_column, second_column) {
           transmute (column_a  = !! first_column, value_column_a,
              column_b = !! second_column, value_column_b,
              frequency
-             ) 
+             )
 }
 
 # test the function
@@ -664,7 +663,7 @@ f_frequencies2(studs, first_column, second_column)
 # main loop
 result <- tibble()
 for (i in 1:length(pair_list)) {
-     result <- bind_rows(result, 
+     result <- bind_rows(result,
           f_frequencies2(studs, pair_list[[i]][1], pair_list[[i]][2] ))
 }
 View(result)
@@ -675,15 +674,15 @@ View(result)
 ### Given the `stud` data frame:
 
 # Display the frequency table for a list of :
-#    * nominal variables, 
+#    * nominal variables,
 #    * couples of nominal variables,
 #    * tuples of nominal variables
-#    
+#
 
 # example
 list_freq_table <- list (
-     'LEVEL_OF_STUDY', 
-     'ATTENDANCE',     
+     'LEVEL_OF_STUDY',
+     'ATTENDANCE',
      'PROGRAMME',
      c('LEVEL_OF_STUDY', 'ATTENDANCE'),
      c('PROGRAMME', 'YEAR_OF_STUDY'),
@@ -693,22 +692,22 @@ list_freq_table <- list (
      )
 
 
-## now, the function that uses `...` in the definition so that it 
+## now, the function that uses `...` in the definition so that it
 #    can accept any number of arguments.
 f_frequencies3 <- function(a_df, ...) {
-     
+
      # Use quos() to capture all the `...` as a list of formulas.
      group_vars <- quos(...)
 
      a_df %>%
           select ( !!! group_vars) %>%
           group_by_all( . ) %>%
-          summarise( frequency = n()) 
+          summarise( frequency = n())
 
 }
 
 # test the function
-result <- f_frequencies3(studs, 
+result <- f_frequencies3(studs,
      c('LEVEL_OF_STUDY', 'YEAR_OF_STUDY', 'ATTENDANCE', 'LOCATION'))
 
 
@@ -716,10 +715,10 @@ result <- f_frequencies3(studs,
 # main part of the solution
 result <- tibble()
 for (i in 1:length(list_freq_table)) {
-     result <- bind_rows(result, 
+     result <- bind_rows(result,
           f_frequencies3(studs, list_freq_table[[i]]) )
 }
-    
+
 View(result)
 
 
@@ -727,7 +726,7 @@ View(result)
 #########################################################################
 ###                 IV. `ggplot`and tidy evaluation                   ###
 #########################################################################
-     
+
 # for ggplot2  - see section `08` on GitHub:
 # https://github.com/marinfotache/Data-Processing-Analysis-Science-with-R/tree/master/08%20Data%20Visualization%20with%20-mostly-%20ggplot2
 
@@ -736,10 +735,10 @@ View(result)
 ##                        Task no. 1
 
 # Display the frequency (of the values) for the following nominal
-#    variables: `LEVEL_OF_STUDY`, `ATTENDANCE`, `YEAR_OF_STUDY`, 
+#    variables: `LEVEL_OF_STUDY`, `ATTENDANCE`, `YEAR_OF_STUDY`,
 #    `PROGRAMME`, `LOCATION`, and `FINANCIAL_SUPPORT`
 
-variables <- c('LEVEL_OF_STUDY', 'ATTENDANCE', 'YEAR_OF_STUDY', 
+variables <- c('LEVEL_OF_STUDY', 'ATTENDANCE', 'YEAR_OF_STUDY',
                'PROGRAMME', 'LOCATION', 'FINANCIAL_SUPPORT')
 
 
@@ -747,16 +746,16 @@ f_barplot <- function(df, column) {
      column <- enquo(column)
      # `dplyr::quo_name` changes the quosure into a string
      title_ <- paste("Value Frequency for Variable", quo_name(column))
-     
-     ggplot(df, 
+
+     ggplot(df,
           aes(x = !!column)) +
           geom_bar() +
           ggtitle(title_) +
           theme(axis.text.x = element_text(angle = 45, # text angle on x-axis
                vjust = 1, # vertical justification (position near to bar center)
                hjust = 1 )) # horizontal justification (align towards the bar)
-          
-     # save the plot into the current working directory     
+
+     # save the plot into the current working directory
      ggsave(file = paste0(title_, ".pdf"))
 }
 
@@ -766,14 +765,14 @@ f_barplot(studs, LEVEL_OF_STUDY)
 # using a variable as a parameter requires `rlang::sym` function
 var <- 'LEVEL_OF_STUDY'
 rlang::sym(var)
-var_transf <- rlang::sym(var) 
+var_transf <- rlang::sym(var)
 f_barplot(studs, !!var_transf)
 
 
 # main section
 for (i in 1:length(variables)) {
-     var = rlang::sym(variables[i])       
-     f_barplot(studs, !!var)  
+     var = rlang::sym(variables[i])
+     f_barplot(studs, !!var)
 }
 
 
@@ -781,13 +780,13 @@ for (i in 1:length(variables)) {
 ###################################################################
 ##                        Task no. 2
 
-# Given the `fuel_economy_2018` data set (imported above): 
+# Given the `fuel_economy_2018` data set (imported above):
 glimpse(fuel_economy_2018)
 
-# 2a. Display the histograms for the following variables: 
+# 2a. Display the histograms for the following variables:
 #    `n_of_cyl`, `air_pollution`, and `greenhouse`
 
-# 2b. Display the density curves for the following variables: 
+# 2b. Display the density curves for the following variables:
 #    `displacement`, `combined_CO2`, `cty_l100km`, `hwy_l100km`,
 #    and `combined_l100km`
 
@@ -796,86 +795,86 @@ glimpse(fuel_economy_2018)
 
 # create the variable list for histograms
 list_histogram <- list (
-     'n_of_cyl', 
-     'air_pollution',     
+     'n_of_cyl',
+     'air_pollution',
      'greenhouse'
      )
 
 list_density <- list (
-     'displacement', 
-     'combined_CO2',     
+     'displacement',
+     'combined_CO2',
      'cty_l100km',
      'hwy_l100km',
      'combined_l100km'
      )
 
-# create the function for displaying the either the histogram of a 
+# create the function for displaying the either the histogram of a
 #    density plot for a given variable
 f_histogram_or_density <- function(what_to_plot, df, column) {
      column <- enquo(column)
      # `dplyr::quo_name` changes the quosure into a string
      title_ <- paste(what_to_plot, "for Variable",
                      paste0('`', quo_name(column), '`'))
-     
-     graph <- ggplot(df, 
-          aes(x = !!column)) 
-     
+
+     graph <- ggplot(df,
+          aes(x = !!column))
+
      if (what_to_plot == 'Histogram')
           graph <- graph + geom_histogram()
      else
           graph <- graph + geom_density()
-          
+
      graph <- graph +
           ggtitle(title_) +
           theme(axis.text.x = element_text(angle = 45, # text angle on x-axis
                vjust = 1, # vertical justification (position near to bar center)
                hjust = 1 )) # horizontal justification (align towards the bar)
-     
+
      print(graph)
-          
-     # save the plot into the current working directory     
+
+     # save the plot into the current working directory
      ggsave(file = paste0(str_replace_all(title_, '`', '_'), ".pdf"))
 }
 
 # test the function
-f_histogram_or_density('Histogram', fuel_economy_2018, n_of_cyl)  
+f_histogram_or_density('Histogram', fuel_economy_2018, n_of_cyl)
 
-var = rlang::sym(list_histogram[[1]][1])       
+var = rlang::sym(list_histogram[[1]][1])
 var
-f_histogram(fuel_economy_2018, !!var)  
+f_histogram(fuel_economy_2018, !!var)
 
 
-f_histogram_or_density('Density', fuel_economy_2018, combined_l100km)  
+f_histogram_or_density('Density', fuel_economy_2018, combined_l100km)
 
-var = rlang::sym(list_density[[1]][1])       
+var = rlang::sym(list_density[[1]][1])
 var
-f_histogram_or_density('Density', fuel_economy_2018, !!var)  
+f_histogram_or_density('Density', fuel_economy_2018, !!var)
 
 
 
 ## main section
 
-# first, for the histograms... 
+# first, for the histograms...
 for (i in 1:length(list_histogram)) {
-     var = rlang::sym(list_histogram[[i]][1])       
-     f_histogram_or_density('Histogram', fuel_economy_2018, !!var)  
+     var = rlang::sym(list_histogram[[i]][1])
+     f_histogram_or_density('Histogram', fuel_economy_2018, !!var)
 }
 
-# second, for the Density plots... 
+# second, for the Density plots...
 for (i in 1:length(list_density)) {
-     var = rlang::sym(list_density[[i]][1])       
-     f_histogram_or_density('Density', fuel_economy_2018, !!var)  
+     var = rlang::sym(list_density[[i]][1])
+     f_histogram_or_density('Density', fuel_economy_2018, !!var)
 }
 
 
 
 ###################################################################
 ##                        Task no. 3
-## Given the `fuel_economy_2018` data set (imported above): 
+## Given the `fuel_economy_2018` data set (imported above):
 glimpse(fuel_economy_2018)
-## Display the scatter plot for any given pair of (numeric) variables 
+## Display the scatter plot for any given pair of (numeric) variables
 
-# create the list with pairs of variables for the scatterplots 
+# create the list with pairs of variables for the scatterplots
 list_scatterplots <- list (
      c('displacement', 'n_of_cyl'),
      c('displacement', 'combined_CO2'),
@@ -883,19 +882,19 @@ list_scatterplots <- list (
      c('combined_CO2', 'combined_l100km')
      )
 
-# # create the function for displaying the either the histogram of a 
+# # create the function for displaying the either the histogram of a
 #    density plot for a given variable
 f_scatterplot <- function(df, x, y) {
      x <- enquo(x)
      y <- enquo(y)
-     
+
      # `dplyr::quo_name` changes the quosure into a string
      title_ <- paste("Scatterplot:",
           paste0('`', quo_name(y), '`'),
           '~ ',
           paste0('`', quo_name(x), '`'))
 
-     ggplot(df, 
+     ggplot(df,
           aes(x = !!x, y = !!y)) +
           geom_point() +
           ggtitle(title_) +
@@ -903,22 +902,19 @@ f_scatterplot <- function(df, x, y) {
                vjust = 1, # vertical justification (position near to bar center)
                hjust = 1 )) # horizontal justification (align towards the bar)
 
-     # save the plot into the current working directory     
+     # save the plot into the current working directory
      ggsave(file = paste0(str_replace_all(title_, '`|~| |:', '_'), ".pdf"))
 }
 
 # test the function
-x = rlang::sym(list_scatterplots[[1]][1])       
-y = rlang::sym(list_scatterplots[[1]][2])       
-f_scatterplot(fuel_economy_2018, !!x, !!y)  
+x = rlang::sym(list_scatterplots[[1]][1])
+y = rlang::sym(list_scatterplots[[1]][2])
+f_scatterplot(fuel_economy_2018, !!x, !!y)
 
 
 ## main section
 for (i in 1:length(list_scatterplots)) {
-     x = rlang::sym(list_scatterplots[[i]][1])       
-     y = rlang::sym(list_scatterplots[[i]][2])       
-     f_scatterplot(fuel_economy_2018, !!x, !!y)  
+     x = rlang::sym(list_scatterplots[[i]][1])
+     y = rlang::sym(list_scatterplots[[i]][2])
+     f_scatterplot(fuel_economy_2018, !!x, !!y)
 }
-
-
-
