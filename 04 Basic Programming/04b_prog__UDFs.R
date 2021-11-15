@@ -18,7 +18,7 @@
 # packages
 library(tidyverse)
 library(skimr)
-# library(PerformanceAnalytics)
+library(PerformanceAnalytics)
 library(broom)
 
 ############################################################################
