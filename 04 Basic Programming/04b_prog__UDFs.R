@@ -13,12 +13,12 @@
 ### See also the presentation:
 ### https://github.com/marinfotache/Data-Processing-Analysis-Science-with-R/blob/master/04%20Basic%20Programming/04_Programming_UDFs_eval_tidyeval.pptx
 ############################################################################
-## last update: 14.11.2021
+## last update: 15.11.2021
 
 # packages
 library(tidyverse)
 library(skimr)
-library(PerformanceAnalytics)
+# library(PerformanceAnalytics)
 library(broom)
 
 ############################################################################
@@ -397,3 +397,4 @@ temp <- invoices %>%
 temp <- invoices %>%
      rowwise() %>%
      mutate (amount = f_invoice_amount(invoiceno))
+
