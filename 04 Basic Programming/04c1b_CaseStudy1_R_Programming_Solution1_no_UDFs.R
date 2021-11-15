@@ -6,7 +6,7 @@
 ############################################################################
 ###
 
-# last update: 2020-11-10
+# last update: 2021-11-15
 library(readxl)
 library(tidyverse)
 
@@ -16,7 +16,7 @@ library(tidyverse)
 ############################################################################
 
 ############################################################################
-###            Download the necesary data sets for this script
+###            Download the necessary data sets for this script
 ############################################################################
 
 # all the files needed o run this script are available at:
@@ -29,17 +29,18 @@ setwd('/Users/marinfotache/Google Drive/R(Mac)-1 googledrive/DataSets')
 
 
 load('master_admiss1.Rdata')
+
 glimpse(master_progs)
 glimpse(applicants)
 
 #######################################################
-###             New solution: 2020-11-10
+###             Solution written on 2020-11-10
 
 ## 1 order applicants by admission average points
 applicants <- applicants %>%
-     mutate (admin_avg_points = grades_avg * .6 + dissertation_avg * .4 ) %>%
+     mutate (admiss_avg_points = grades_avg * .6 + dissertation_avg * .4 ) %>%
      mutate (prog_abbreviation_accepted = '') %>%        
-     arrange(desc(admin_avg_points))
+     arrange(desc(admiss_avg_points))
 
 # 2 add a column in `master_progs` for keeping track of assigned applicants
 master_progs <- master_progs %>%
@@ -58,11 +59,13 @@ for (i in 1:nrow(applicants)) {
      
      # j <- 1
      for (j in 1:nrow(crt_options)) {
+             
              crt_prog <- master_progs %>%
                      filter (prog_abbreviation == crt_options$option[j])
              
              if (crt_prog$n_of_positions[1] > crt_prog$n_of_filled_positions[1]) {
-                     # there an available place
+                     
+                     # there is an available place
                      #applicants$prog_abbreviation_accepted[i] <- crt_prog$prog_abbreviation[1]
                      
                      applicants <- applicants %>%
@@ -75,6 +78,7 @@ for (i in 1:nrow(applicants)) {
                      master_progs <- master_progs %>%
                              mutate (n_of_filled_positions = n_of_filled_positions +
                                 ifelse (prog_abbreviation == crt_prog$prog_abbreviation[1], 1, 0))
+                     
                      break
              }
              
@@ -82,11 +86,16 @@ for (i in 1:nrow(applicants)) {
 
 }
 
+glimpse(applicants)
+applicants <- applicants %>%
+        select (admiss_avg_points, prog_abbreviation_accepted, prog1_abbreviation:prog6_abbreviation,
+                applicant_id, applicant_name) %>%
+        arrange(desc(admiss_avg_points))
 
 
 
 #######################################################################
-###                   Previous solution
+###                       A previous solution
 
 ## 1 order applicants by admission average points
 applicants <- applicants %>%

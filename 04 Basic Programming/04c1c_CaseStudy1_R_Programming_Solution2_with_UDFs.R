@@ -4,7 +4,7 @@
 ### for problem description see:
 ### https://github.com/marinfotache/Data-Processing-Analysis-Science-with-R/blob/master/04%20Basic%20Programming/04c1_CaseStudy1_R-Programming_1_Requirements.pdf                  
 ############################################################################
-### last update: 2018-11-23
+### last update: 2021-11-15
 library(readxl)
 library(tidyverse)
 
@@ -14,7 +14,7 @@ library(tidyverse)
 ############################################################################
 
 ############################################################################
-###            Download the necesary data sets for this script
+###            Download the necessary data sets for this script
 ############################################################################
 
 # all the files needed o run this script are available at:
@@ -23,7 +23,7 @@ library(tidyverse)
 # Please download the files in a local directory (such as 'DataSets') and  
 # set the directory where you dowloaded the data files as the 
 # default/working directory, ex:
-setwd('/Users/marinfotache/Google Drive/R(Mac)/DataSets')
+setwd('/Users/marinfotache/Google Drive/R(Mac)-1 googledrive/DataSets')
 
 
 load('master_admiss1.Rdata')
