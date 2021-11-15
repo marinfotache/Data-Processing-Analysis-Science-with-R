@@ -13,7 +13,7 @@
 ### See also the presentation:
 ### https://github.com/marinfotache/Data-Processing-Analysis-Science-with-R/blob/master/04%20Basic%20Programming/04_Programming_UDFs_eval_tidyeval.pptx
 ############################################################################
-## last update: 14.11.2021
+## last update: 15.11.2021
 
 library(tidyverse)
 library(readxl)
@@ -84,14 +84,14 @@ print(result)
 ## example taken from script `03b_tidy-verse.R`
 getwd()
 file <- "anonymized_students_FEAA_2014.xlsx"
-studs <- readxl::read_excel(file, sheet = 1, col_names = TRUE, skip = 0)
+studs_init <- readxl::read_excel(file, sheet = 1, col_names = TRUE, skip = 0)
 ## display the data frame structure
-glimpse(studs)
+glimpse(studs_init)
 
 ## display variabile `YEAR_OF_STUDY` values
-studs$YEAR_OF_STUDY
+studs_init$YEAR_OF_STUDY
 
-table(studs$YEAR_OF_STUDY)
+table(studs_init$YEAR_OF_STUDY)
 
 ##
 ## task: change the roman numbers (I, II, III) with
@@ -99,25 +99,26 @@ table(studs$YEAR_OF_STUDY)
 ##
 
 # Sol.1 - with `ifelse` (base R)
-studs <- mutate(studs,
+studs <- mutate(studs_init,
      YEAR_OF_STUDY = as.integer(
           ifelse(YEAR_OF_STUDY == 'I', 1,
                ifelse(YEAR_OF_STUDY == 'II', 2,
                     ifelse(YEAR_OF_STUDY == 'III', 3,
                            as.integer(YEAR_OF_STUDY))))))
 table(studs$YEAR_OF_STUDY)
+glimpse(studs)
 typeof(studs$YEAR_OF_STUDY)
 
 
 # Sol.2 - with `if_else` (`dplyr` package) - DOES NOT WORK!
-studs <- mutate(studs,
+studs <- mutate(studs_init,
      YEAR_OF_STUDY = as.integer(if_else(YEAR_OF_STUDY == 'I', 1,
           if_else(YEAR_OF_STUDY == 'II', 2,
           if_else(YEAR_OF_STUDY == 'III', 3, as.integer(YEAR_OF_STUDY))))))
 
 # Sol.3 - with `if_else` (`dplyr` package) - forcing the numeric values
 # `1`, `2`, and `3` to be integers (1L, 2L, 3L)
-studs <- mutate(studs,
+studs <- mutate(studs_init,
      YEAR_OF_STUDY = as.integer(if_else(YEAR_OF_STUDY == 'I', 1L,
           if_else(YEAR_OF_STUDY == 'II', 2L,
           if_else(YEAR_OF_STUDY == 'III', 3L, as.integer(YEAR_OF_STUDY))))))
@@ -128,7 +129,7 @@ glimpse(studs)
 
 # Sol.4 - with `if_else` (`dplyr` package) - getting the `YEAR_OF_STUDY`
 # as a real number (`double`) instead of `integer`
-studs <- mutate(studs,
+studs <- mutate(studs_init,
      YEAR_OF_STUDY = as.numeric(if_else(YEAR_OF_STUDY == 'I', 1,
           if_else(YEAR_OF_STUDY == 'II', 2,
           if_else(YEAR_OF_STUDY == 'III', 3, as.numeric(YEAR_OF_STUDY))))))
@@ -175,6 +176,7 @@ fuel_economy_2018 <- fuel_economy_2018 %>%
              )
 
 
+
 #########################################################################
 ###                                I.b Loops                          ###
 #########################################################################
@@ -199,7 +201,7 @@ fuel_economy_2018[[1]]
 # sol. 1 - `repeat`/`break`
 variable <- ""
 max_sd <- 0
-i <- 25
+i <- 1
 repeat {
      if (is.numeric(fuel_economy_2018[[i]])) {
           if (sd(fuel_economy_2018[[i]], na.rm = TRUE) > max_sd ) {
