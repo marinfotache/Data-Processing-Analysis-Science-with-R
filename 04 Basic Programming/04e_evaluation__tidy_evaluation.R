@@ -13,7 +13,7 @@
 ### See also the presentation:
 ### https://github.com/marinfotache/Data-Processing-Analysis-Science-with-R/blob/master/04%20Basic%20Programming/04_Programming_UDFs_eval_tidyeval.pptx
 ############################################################################
-## last update: 14.11.2021
+## last update: 15.11.2021
 
 # needed packages
 library(tidyverse)
@@ -23,7 +23,7 @@ library(rio)
 library(skimr)
 
 ############################################################################
-###            Download the necesary data sets for this script
+###            Download the necessary data sets for this script
 ############################################################################
 
 # all the files needed o run this script are available at:
@@ -32,7 +32,7 @@ library(skimr)
 # Please download the files in a local directory (such as 'DataSets') and
 # set the directory where you dowloaded the data files as the
 # default/working directory, ex:
-setwd('/Users/marinfotache/Google Drive/R(Mac)/DataSets')
+setwd('/Users/marinfotache/Google Drive/R(Mac)-1 googledrive/DataSets')
 
 
 #########################################################################
@@ -76,14 +76,16 @@ setwd('/Users/marinfotache/Google Drive/R(Mac)/DataSets')
 ## You have to change the `host`, `port`, `dbname`, `user`,
 ##   and `postgres` accordingly
 
-# taking the example of `northwind` database
+# taking the example of `chinook` database
 library(RPostgres)
 
 ## On Windows systems, PostgreSQL database service must already be started
+## your PostgreSQL settings might be different
 con <- dbConnect(RPostgres::Postgres(), dbname="chinook", user="postgres",
                  host = 'localhost', password="postgres")
 
 # On Mac OS
+## your PostgreSQL settings might be different
 con <- dbConnect(RPostgres::Postgres(), host='localhost', port='5434',
                  dbname='chinook', user='postgres', password='postgres')
 
@@ -189,21 +191,20 @@ if (!dir.exists( file.path(main_dir, 'to_be_deleted')))
 
 ### Export each data frame in the current environment as a separate .xlsx file
 tables <- ls()
-i <- 1
+i <- 6
 for (i in 1:length(tables)) {
      # here we used `get` for naming dynamically the data frame from which
      # the data is taken
      temp <- get(tables[i])
-     if (is.data.frame(temp) & nrow(data.frame(temp)) > 0)
+     if (is.data.frame(temp) & nrow(tibble(temp)) > 0)
           rio::export(temp, file = paste0('to_be_deleted', '/', tables[i], ".xlsx"),
                  format='xlsx', sheetName=tables[i])
 }
 
 
 
-
 #########################################################################
-###                 III. Introduction to tidy evalualuation           ###
+###                 III. Introduction to tidy evaluation           ###
 #########################################################################
 
 
