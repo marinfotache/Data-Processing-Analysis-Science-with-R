@@ -106,8 +106,11 @@ studs <- mutate(studs_init,
                     ifelse(YEAR_OF_STUDY == 'III', 3,
                            as.integer(YEAR_OF_STUDY))))))
 table(studs$YEAR_OF_STUDY)
+table(studs_init$YEAR_OF_STUDY)
+
 glimpse(studs)
 typeof(studs$YEAR_OF_STUDY)
+
 
 
 # Sol.2 - with `if_else` (`dplyr` package) - DOES NOT WORK!
@@ -136,6 +139,7 @@ studs <- mutate(studs_init,
 table(studs$YEAR_OF_STUDY)
 typeof(studs$YEAR_OF_STUDY)
 glimpse(studs)
+
 
 
 #########################################################################
@@ -201,16 +205,16 @@ fuel_economy_2018[[1]]
 # sol. 1 - `repeat`/`break`
 variable <- ""
 max_sd <- 0
-i <- 1
+j <- 1
 repeat {
-     if (is.numeric(fuel_economy_2018[[i]])) {
-          if (sd(fuel_economy_2018[[i]], na.rm = TRUE) > max_sd ) {
-               variable = names(fuel_economy_2018) [i]
-               max_sd <- sd(fuel_economy_2018[[i]], na.rm = TRUE)
+     if (is.numeric(fuel_economy_2018[[j]])) {
+          if (sd(fuel_economy_2018[[j]], na.rm = TRUE) > max_sd ) {
+               variable = names(fuel_economy_2018) [j]
+               max_sd <- sd(fuel_economy_2018[[j]], na.rm = TRUE)
           }
      }
-     i <- i + 1
-     if (i > ncol(fuel_economy_2018))
+     j <- j + 1
+     if (j > ncol(fuel_economy_2018))
           break
 }
 print(variable)

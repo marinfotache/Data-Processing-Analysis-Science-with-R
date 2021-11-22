@@ -26,12 +26,11 @@ library(tidyverse)
 # set the directory where you dowloaded the data files as the 
 # default/working directory, ex:
 setwd('/Users/marinfotache/Google Drive/R(Mac)-1 googledrive/DataSets')
-
-
 load('master_admiss1.Rdata')
 
 glimpse(master_progs)
 glimpse(applicants)
+
 
 #######################################################
 ###             Solution written on 2020-11-10
@@ -48,14 +47,15 @@ master_progs <- master_progs %>%
 
 glimpse(applicants)
 
-# i <- 1
+# i <- 2
 for (i in 1:nrow(applicants)) {
         
      # get as a data frame all the options for current applicant
      crt_options <- applicants[i,]  %>%
         select (applicant_id, prog1_abbreviation:prog6_abbreviation) %>%
         pivot_longer(!applicant_id, names_to = "attribute", values_to = "option") %>%
-        filter(!is.na(option))
+        filter(!is.na(option)) %>%
+        arrange(attribute)
      
      # j <- 1
      for (j in 1:nrow(crt_options)) {
@@ -95,7 +95,7 @@ applicants <- applicants %>%
 
 
 #######################################################################
-###                       A previous solution
+###                     A previous solution (2019)
 
 ## 1 order applicants by admission average points
 applicants <- applicants %>%

@@ -188,7 +188,6 @@ f_clean_string <- function (the_string) {
 	the_string <- str_replace_all(the_string, pattern = "Ț", "T")
 	the_string <- str_replace_all(the_string, pattern = "Ț", "T")
 
-
 	return (the_string)
 }
 
@@ -344,6 +343,8 @@ f_get_vatpercent(3)
 ##  returns its amount (without joining any data frames)
 invoiceno_ = 1112
 
+# invoiceno_ = 9999
+
 
 f_invoice_amount <- function (invoiceno_) {
      # `invoice_details`
@@ -359,6 +360,7 @@ f_invoice_amount <- function (invoiceno_) {
 
 # this work!
 f_invoice_amount(1111)
+f_invoice_amount(1112)
 
 
 # this does not work (an error is triggered)

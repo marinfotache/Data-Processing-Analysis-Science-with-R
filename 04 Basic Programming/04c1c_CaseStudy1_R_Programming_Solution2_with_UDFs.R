@@ -7,7 +7,7 @@
 ### last update: 2021-11-15
 library(readxl)
 library(tidyverse)
-
+library(rio)
 
 ############################################################################
 ###              4c3b  Solution 2 - with user defined function           ###
@@ -48,6 +48,8 @@ master_progs <- master_progs %>%
 ## 3 Create a function for checking if a given 
 ##        programme has still available positions
 abbrev_ <- 'xyz'
+abbrev_ <- 'DM'
+
 
 f_available <- function ( abbrev_ ) {
      test <- master_progs %>%
@@ -75,17 +77,24 @@ results <- tibble()
 # 5 main section: loop trough all applicants (in their average points 
 # descending order)
 master_progs$n_of_filled_positions <- 0
-for (i in 1:nrow(applicants))
-{
+
+# i <- 1
+for (i in 1:nrow(applicants)) {
      # store the current applicant's id
      crt_id <- applicants$applicant_id[i]
 
      # build a tibble with current applicant's options
-     options <- applicants %>%
-          filter(applicant_id == crt_id) %>%
-          gather(option_no, value, prog1_abbreviation:prog6_abbreviation) %>%
-          filter(!is.na(value))
+     # options <- applicants %>%
+     #      filter(applicant_id == crt_id) %>%
+     #      gather(option_no, value, prog1_abbreviation:prog6_abbreviation) %>%
+     #      filter(!is.na(value))
      
+     options <- applicants  %>%
+           filter(applicant_id == crt_id) %>%
+           select (applicant_id, prog1_abbreviation:prog6_abbreviation) %>%
+           pivot_longer(!applicant_id, names_to = "option_no", values_to = "value") %>%
+           filter(!is.na(value))
+
      j <- 1
      # now loop thrrough all applicant's options and try to assign it as 
      # early as possible 
@@ -103,7 +112,7 @@ for (i in 1:nrow(applicants))
                # increment `n_of_filled_positions` for the current option
                master_progs <- master_progs %>%
                     mutate (n_of_filled_positions = n_of_filled_positions +
-                         if_else(prog_abbreviation == current_option, 1L, 0L)                                 
+                         if_else(prog_abbreviation == current_option, 1L, 0L)   
                                  )
                
                # exit from the options loop, otherwise the applicant could
@@ -126,6 +135,7 @@ View(results_ok)
 
 
 # 8 export results in excel
+
 rio::export(results_ok2, file = '04c3b_CaseStudy1_Results.xlsx', 
        format = 'xlsx')
 
