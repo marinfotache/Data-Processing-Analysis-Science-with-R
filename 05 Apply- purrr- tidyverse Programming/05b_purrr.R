@@ -9,7 +9,7 @@
 ############################################################################
 ###
 ############################################################################
-###            05b. Functional Programming with `purrr` package          ###   
+###            05b. Functional Programming with `purrr` package          ###
 
 ### See also the presentation:
 ### xxxxxxxx
@@ -21,18 +21,16 @@
 library(tidyverse)
 library(readxl)
 #library(purrr)
-#library(stringr)
 
 
 ############################################################################
 ###            Download the necesary data sets for this script
 ############################################################################
-
 # all the files needed o run this script are available at:
 # https://github.com/marinfotache/Data-Processing-Analysis-Science-with-R/tree/master/DataSets
 
-# Please download the files in a local directory (such as 'DataSets') and  
-# set the directory where you dowloaded the data files as the 
+# Please download the files in a local directory (such as 'DataSets') and
+# set the directory where you dowloaded the data files as the
 # default/working directory, ex:
 setwd('/Users/marinfotache/Google Drive/R(Mac)-1 googledrive/DataSets')
 
@@ -56,7 +54,7 @@ setwd('/Users/marinfotache/Google Drive/R(Mac)-1 googledrive/DataSets')
 #########################################################################
 ##                       Fuel Economy dataset(s)                       ##
 ## example taken from script `03b_tidy-verse.R`
-fuel_economy_2018 <- read_tsv("all_alpha_18.txt") 
+fuel_economy_2018 <- read_tsv("all_alpha_18.txt")
 glimpse(fuel_economy_2018)
 
 ## Also add a variable about the (`approximate`) manufacturer
@@ -74,7 +72,7 @@ fuel_economy_2018 <- fuel_economy_2018 %>%
           manufacturer %in% c( 'DODGE', 'JEEP', 'RAM') ~ 'CHRYSLER',
           manufacturer == 'GENESIS' ~ 'HYUNDAI',
           manufacturer == 'INFINITI' ~ 'NISSAN',
-          manufacturer == 'JAGUAR' |  
+          manufacturer == 'JAGUAR' |
                str_detect (manufacturer, '(^LAND|^RANGE)|ROVER') ~ 'TATA MOTORS',
           manufacturer == 'LEXUS' ~ 'TOYOTA',
           manufacturer == 'LINCOLN' ~ 'FORD',
@@ -82,16 +80,20 @@ fuel_economy_2018 <- fuel_economy_2018 %>%
           manufacturer == 'SMART' ~ 'MERCEDES-BENZ',
           TRUE ~ manufacturer)
      ) %>%
-     mutate (displacement  = as.numeric(Displ), 
+     mutate (displacement  = as.numeric(Displ),
              n_of_cyl = as.numeric(Cyl),
              air_pollution = as.numeric(`Air Pollution Score`),
              greenhouse = as.numeric(`Greenhouse Gas Score`),
              combined_CO2 = as.numeric(`Comb CO2`)
-             ) 
-     
+             )
+
+glimpse(fuel_economy_2018)
+summary(fuel_economy_2018)
+summary(fuel_economy_2018$cty_l100km)
+
 
 #########################################################################
-##        (Anonymized) FEAA students for 2014-2015 academic year 
+##        (Anonymized) FEAA students for 2014-2015 academic year
 ## example taken from script `03b_tidy-verse.R`
 file <- "anonymized_students_FEAA_2014.xlsx"
 studs <- read_excel(file, sheet = 1, col_names = TRUE, skip = 0)
@@ -112,6 +114,7 @@ load('chinook.RData')
 
 # first version returns a tibble in the `wide` format
 descr_stats_wide <- function(x, na.omit=FALSE) {
+
      if (na.omit)
           x <- x[!is.na(x)]
 
@@ -119,17 +122,18 @@ descr_stats_wide <- function(x, na.omit=FALSE) {
      q_25 = quantile(x, names =F, na.rm=T)[2]
      med = median(x, na.rm=T)
      q_75 = quantile(x, names =F, na.rm=T)[4]
-     max = max(x, na.rm=T)	
+     max = max(x, na.rm=T)
      n = length(x)
      mean = mean(x, na.rm=T)
      st_dev = sd(x, na.rm=T)
      skew = PerformanceAnalytics::skewness(x)
      kurt = PerformanceAnalytics::kurtosis(x)
-     
-     return(tibble(a__n=n, b___min=min, c__first_quartile=q_25, 
-          d__median=med, e__third_quartile=q_75, f__max=max,  
+
+     return(tibble(a__n=n, b___min=min, c__first_quartile=q_25,
+          d__median=med, e__third_quartile=q_75, f__max=max,
           g__mean=mean, h__st_dev=st_dev, i__skew=skew, j__kurtosis=kurt))
 }
+
 
 
 # second version returns a tibble in the `long` format
@@ -141,13 +145,13 @@ descr_stats_long <- function(x, na.omit=FALSE) {
      q_25 = quantile(x, names =F, na.rm=T)[2]
      med = median(x, na.rm=T)
      q_75 = quantile(x, names =F, na.rm=T)[4]
-     max = max(x, na.rm=T)	
+     max = max(x, na.rm=T)
      n = length(x)
      mean = mean(x, na.rm=T)
      st_dev = sd(x, na.rm=T)
      skew = PerformanceAnalytics::skewness(x)
      kurt = PerformanceAnalytics::kurtosis(x)
-     
+
      return(
           bind_rows(
                tibble(statistic = "a__n", value = n),
@@ -168,11 +172,11 @@ descr_stats_long <- function(x, na.omit=FALSE) {
 ###                           I.   `map_*`                            ###
 #########################################################################
 
-### purrr::map() is a function for applying a function to each 
-### element of a list. 
+### purrr::map() is a function for applying a function to each
+### element of a list.
 
-###  Map functions in base R are the "applys": lapply(), sapply(), 
-###  vapply(), etc. 
+###  Map functions in base R are the "applys": lapply(), sapply(),
+###  vapply(), etc.
 
 
 #########################################################################
@@ -191,12 +195,13 @@ vars <- c('cty_l100km', 'hwy_l100km', 'combined_l100km', 'air_pollution',
 # first solution based on `map` function results in a data frame
 # containing a list column
 result <- fuel_economy_2018 %>%
-     select ({{vars}}) %>%
+     select ({{ vars }}) %>%
      map(., mean, na.rm = TRUE) %>%
      tibble() %>%   # `map` result is a list, so we need `tibble`
      set_names('mean') %>%
      mutate(variable = vars ) %>%
      transmute (variable, mean)
+
 
 # ... the same for the second solution
 result <- fuel_economy_2018 %>%
@@ -209,7 +214,7 @@ names(result)
 
 
 
-# the third second solution intoroduces another notation (`~`)
+# the third second solution introduces another notation (`~`)
 result <- fuel_economy_2018 %>%
      select (!!!vars) %>%
      map(., ~ mean(.x, na.rm = TRUE)) %>%
@@ -256,8 +261,29 @@ glimpse(fuel_economy_2018)
 ##       standard deviation?                                          ###
 #########################################################################
 
+
+# some basic programming ...
+result <- fuel_economy_2018 %>%
+     select_if(is.numeric)
+
+sd_max <- 0
+
+i <- 1
+for (i in 1:ncol(result)) {
+        crt_col <- result[,i] %>% set_names ('col')
+        crt_var_sd <- sd (crt_col$col, na.rm = TRUE)
+        if (crt_var_sd > sd_max) {
+                sd_max <- crt_var_sd
+                var_sd_max <- names(result) [i]
+        }
+}
+print(var_sd_max)
+print(sd_max)
+
+
+
 # solution based on `map`
-result <- fuel_economy_2018 %>% 
+result <- fuel_economy_2018 %>%
      select_if(is.numeric) %>%
      map(., sd, na.rm = TRUE) %>%
      tibble(variable = names(.), sd = as.numeric(.)) %>%
@@ -268,7 +294,7 @@ glimpse(result)
 
 
 # the second notation
-result <- fuel_economy_2018 %>% 
+result <- fuel_economy_2018 %>%
      select_if(is.numeric) %>%
      map(., ~ sd (.x, na.rm = TRUE)) %>%
      tibble(variable = names(.), sd = as.numeric(.)) %>%
@@ -288,7 +314,7 @@ glimpse(fuel_economy_2018)
 
 ##
 ## 3.a Get, as a list, all the variables statistics
-## 
+##
 ## 3.b (NEW) Get, as a data frame, all the variables statistics
 ##   (with variables on rows, and each statistic as a separate column)
 ##   - this is a new requierement (compared to the task in script `05a`)
@@ -300,19 +326,19 @@ glimpse(fuel_economy_2018)
 ## 3.a `result` will be a list - using `descr_stats_wide`
 
 # first notation
-result_wide1 <- fuel_economy_2018 %>% 
+result_wide1 <- fuel_economy_2018 %>%
      select_if(is.numeric) %>%
      map(., descr_stats_wide)
 
 
 # second notation
-result_wide2 <- fuel_economy_2018 %>% 
+result_wide2 <- fuel_economy_2018 %>%
      select_if(is.numeric) %>%
      map(., ~ descr_stats_wide(.x))
-                
+
 
 # third notation
-result_wide3 <- fuel_economy_2018 %>% 
+result_wide3 <- fuel_economy_2018 %>%
      select_if(is.numeric) %>%
      map(~ descr_stats_wide(.x))
 
@@ -327,22 +353,22 @@ glimpse(result_wide)
 
 
 
-## 3.a - using `descr_stats_long` (`result` will be a list with a 
-## different format) 
-result_long <- fuel_economy_2018 %>% 
+## 3.a - using `descr_stats_long` (`result` will be a list with a
+## different format)
+result_long <- fuel_economy_2018 %>%
      select_if(is.numeric) %>%
      map(., descr_stats_long)
-                
+
 View(result_long)
 result_long
 
 
 
 ## 3.b Get, as a data frame, all the variables statistics
-## 
+##
 
 ## ## `descr_stats_wide` as argument of `map`+ old notation (`gather` & `spread`)
-result_wide_df1 <- fuel_economy_2018 %>% 
+result_wide_df1 <- fuel_economy_2018 %>%
      select_if(is.numeric) %>%
      set_names(str_replace_all(names(.), '\\.| ', '_')) %>% ## fix the variable names
      map(., descr_stats_wide) %>%
@@ -357,7 +383,7 @@ result_wide_df1
 
 
 ## `descr_stats_wide` as argument of `map` + new notation (`pivot_longer` & `pivot_wider`)
-result_wide_df1 <- fuel_economy_2018 %>% 
+result_wide_df1 <- fuel_economy_2018 %>%
      select_if(is.numeric) %>%
      set_names(str_replace_all(names(.), '\\.| ', '_')) %>% ## fix the variable names
      map(., descr_stats_wide) %>%
@@ -375,7 +401,7 @@ glimpse(result_wide_df1)
 
 
 # the second solution is simpler (it uses `map` and `unnest`)
-result_wide_df2 <- fuel_economy_2018 %>% 
+result_wide_df2 <- fuel_economy_2018 %>%
      select_if(is.numeric) %>%
      map(., descr_stats_wide) %>%
      tibble(variable = names(.), df = .) %>%
@@ -388,7 +414,7 @@ glimpse(result_wide_df2)
 
 
 ## for `descr_stats_long`, `map` will be combined with `bind_rows`
-result_long_df1 <- fuel_economy_2018 %>% 
+result_long_df1 <- fuel_economy_2018 %>%
      select_if(is.numeric) %>%
      set_names(str_replace_all(names(.), '\\.| ', '_')) %>% ## fix the variable names
      map(., descr_stats_long) %>%
@@ -399,13 +425,13 @@ result_long_df1
 
 
 # the second solution is based on `unnest`
-result_long_df2 <- fuel_economy_2018 %>% 
+result_long_df2 <- fuel_economy_2018 %>%
      select_if(is.numeric) %>%
      set_names(str_replace_all(names(.), '\\.| ', '_')) %>% ## fix the variable names
      map(., descr_stats_long) %>%
      tibble(variable = names(.), df = .) %>%
      unnest(df)
-     
+
 View(result_long_df2)
 result_long_df
 
@@ -420,24 +446,24 @@ glimpse(fuel_economy_2018)
 ##    of type `character`                                             ###
 #########################################################################
 
-result <- fuel_economy_2018 %>% 
+result <- fuel_economy_2018 %>%
      select_if(is.character) %>%
      set_names(str_replace_all(names(.), '\\.| ', '_')) %>% ## fix the variable names
      map(table) %>%   # on each column `table` function will be applied
      map(., length) %>%
      tibble(variable = names(.), n_of_distinct_values = as.numeric(.)) %>%
      select (-`.`)
-     
+
 table(fuel_economy_2018$Displ, fuel_economy_2018$Drive)
 
 
 
 #########################################################################
 ###                     Task 5 (taken from scripts `02a`)             ###
-###                    
-### Import all text files whose names start with 
+###
+### Import all text files whose names start with
 ### `DragosDragosCogean__`
-### and gather them (as they share a common stucture) into a single 
+### and gather them (as they share a common stucture) into a single
 ### data frame
 getwd()
 
@@ -450,7 +476,7 @@ result <- file_names %>%
      bind_rows(.id = "file_number") %>%
      mutate (file_name = file_names[as.integer(file_number)]) %>%
      select (-file_number)  %>%
-     mutate (db_server = if_else( str_detect(file_name, 'Mongo'), 
+     mutate (db_server = if_else( str_detect(file_name, 'Mongo'),
                'MongoDB', 'MySQL'))
 
 
@@ -464,11 +490,11 @@ result <- file_names %>%
 ### Display the number of NA values for each column of a data frame
 ### Ex: data frame `customer` (`chinook` data base)
 
-## Solution 1: 
+## Solution 1:
 temp1 <- map(customer, function(x) sum(is.na(x)))
 temp1
 
-## Solution 2: 
+## Solution 2:
 temp2 <- map(customer, ~ sum(is.na(.)))
 temp2
 
@@ -527,7 +553,7 @@ glimpse(fuel_economy_2018)
 
 
 # solution based on `map_dfr` and `top_n`
-result <- fuel_economy_2018 %>% 
+result <- fuel_economy_2018 %>%
      select_if(is.numeric) %>%
      map_dfr(., sd, na.rm = TRUE) %>%
      gather(variable, sd) %>%
@@ -535,11 +561,11 @@ result <- fuel_economy_2018 %>%
 
 
 # solution based on `map_dfr` and a second `select_if`
-result <- fuel_economy_2018 %>% 
+result <- fuel_economy_2018 %>%
      select_if(is.numeric) %>%
      map_dfr(., sd, na.rm = TRUE) %>%
      select_if(. == max(.))
-     
+
 
 # solutions based on `map_dfc` will be identical with `map_dfr`
 
@@ -553,22 +579,22 @@ glimpse(fuel_economy_2018)
 #########################################################################
 
 # solution with `map_dfr` gets the result in the `wide` format...
-result <- fuel_economy_2018 %>% 
+result <- fuel_economy_2018 %>%
      select_if(is.character) %>%
      set_names(str_replace_all(names(.), '\\.| ', '_')) %>% ## fix the variable names
-     map_dfr(., n_distinct) 
+     map_dfr(., n_distinct)
 
 # so `gather` is needed ...
-result <- result %>% 
-     gather(variable_name, n_of_distinct_values) 
+result <- result %>%
+     gather(variable_name, n_of_distinct_values)
 
 
 # also in this case, solution with `map_dfc` gets the same result as `map_dfr`
-result <- fuel_economy_2018 %>% 
+result <- fuel_economy_2018 %>%
      select_if(is.character) %>%
      set_names(str_replace_all(names(.), '\\.| ', '_')) %>% ## fix the variable names
      map_dfc(., n_distinct) %>%
-     gather(variable_name, n_of_distinct_values) 
+     gather(variable_name, n_of_distinct_values)
 
 
 
@@ -580,21 +606,20 @@ glimpse(fuel_economy_2018)
 
 ##  Get, as a data frame, all the variables statistics
 
-# solution with `map_dfr` applied on `descr_stats_wide` 
-result_dfr_wide <- fuel_economy_2018 %>% 
+# solution with `map_dfr` applied on `descr_stats_wide`
+result_dfr_wide <- fuel_economy_2018 %>%
      select_if(is.numeric) %>%
      set_names(str_replace_all(names(.), '\\.| ', '_')) %>% ## fix the variable names
-     map_dfr(., descr_stats_wide, .id = "variable") 
+     map_dfr(., descr_stats_wide, .id = "variable")
 
-# solution with `map_dfr` applied on `descr_stats_long` 
-result_dfr_long <- fuel_economy_2018 %>% 
+# solution with `map_dfr` applied on `descr_stats_long`
+result_dfr_long <- fuel_economy_2018 %>%
      select_if(is.numeric) %>%
      set_names(str_replace_all(names(.), '\\.| ', '_')) %>% ## fix the variable names
-     map_dfr(., descr_stats_long, .id = "variable") 
-
+     map_dfr(., descr_stats_long, .id = "variable")
 
 # solution with `map_dfc` applied on `descr_stats_wide` extracts something like...
-result_dfc_wide <- fuel_economy_2018 %>% 
+result_dfc_wide <- fuel_economy_2018 %>%
      select_if(is.numeric) %>%
      set_names(str_replace_all(names(.), '\\.| ', '_')) %>% ## fix the variable names
      map_dfc(., descr_stats_wide)
@@ -604,56 +629,56 @@ View(result_dfc_wide)
 # so, it needs `gather`and also
 # a tweak for including the variable name
 
-result_dfc_wide <- fuel_economy_2018 %>% 
+result_dfc_wide <- fuel_economy_2018 %>%
      select_if(is.numeric) %>%
      set_names(str_replace_all(names(.), '\\.| ', '_')) %>% ## fix the variable names
      map_dfc(., descr_stats_wide) %>%
      gather(statistic, value) %>%
      transmute(variable = rep(
-               fuel_economy_2018 %>% 
+               fuel_economy_2018 %>%
                     select_if(is.numeric) %>%
                     set_names(str_replace_all(names(.), '\\.| ', '_')) %>%
                     names(), each = 10),
-               statistic, value     ) 
+               statistic, value     )
 
 
 # also solution with `map_dfc` applied on `descr_stats_long` needs
 # some processing
-result_dfc_long <- fuel_economy_2018 %>% 
+result_dfc_long <- fuel_economy_2018 %>%
      select_if(is.numeric) %>%
      set_names(str_replace_all(names(.), '\\.| ', '_')) %>% ## fix the variable names
-     map_dfc(., descr_stats_long) 
+     map_dfc(., descr_stats_long)
 
 View(result_dfc_long)
 
 # the result ...
-result_dfc_long <- fuel_economy_2018 %>% 
+result_dfc_long <- fuel_economy_2018 %>%
      select_if(is.numeric) %>%
      map_dfc(., descr_stats_long) %>%
      gather(init_statistic, init_value) %>%
      mutate (
-          statistic_ok = ifelse(is.na(as.numeric(init_value)), init_value, NA), 
-          value_ok = ifelse(!is.na(as.numeric(init_value)), as.numeric(init_value), NA) 
+          statistic_ok = ifelse(is.na(as.numeric(init_value)), init_value, NA),
+          value_ok = ifelse(!is.na(as.numeric(init_value)), as.numeric(init_value), NA)
           ) %>%
-     transmute (wrong_var_name = init_statistic, 
+     transmute (wrong_var_name = init_statistic,
                 statistic = statistic_ok,
-                value = lead(value_ok, 10))    %>% 
+                value = lead(value_ok, 10))    %>%
      filter (!is.na(value)) %>%
      transmute(variable = rep(
-               fuel_economy_2018 %>% 
+               fuel_economy_2018 %>%
                     select_if(is.numeric) %>%
                     set_names(str_replace_all(names(.), '\\.| ', '_')) %>%
                     names(), each = 10),
-               statistic, value     ) 
-     
+               statistic, value     )
+
 
 
 #########################################################################
 ###           Task 5: (taken from scripts `02a` and `05a`)            ###
-###                    
-### Import all text files whose names start with 
+###
+### Import all text files whose names start with
 ### `DragosDragosCogean__`
-### and gather them (as they share a common stucture) into a single 
+### and gather them (as they share a common stucture) into a single
 ### data frame
 getwd()
 
@@ -664,25 +689,25 @@ result <- file_names %>%
      map_dfr(., readr::read_tsv, .id = "file_number") %>%
      mutate (file_name = file_names[as.integer(file_number)]) %>%
      select (-file_number) %>%
-     mutate (db_server = if_else( str_detect(file_name, 'Mongo'), 
+     mutate (db_server = if_else( str_detect(file_name, 'Mongo'),
                'MongoDB', 'MySQL'))
 
-glimpse(result)     
+glimpse(result)
 
 
 #########################################################################
 ###                     Task 6 (taken from scripts `03b`)             ###
-### Display, as a data frame, the number of NA values for each column 
+### Display, as a data frame, the number of NA values for each column
 ### of a data frame
 ### Ex: data frame `customer` (`chinook` data base)
 
 
 ##
-## Solution 1: 
+## Solution 1:
 temp1 <- map_dfr(customer, function(x) sum(is.na(x)))
 temp1
 
-## Solution 2: 
+## Solution 2:
 temp2 <- map_dfc(customer, ~ sum(is.na(.)))
 temp2
 
@@ -694,15 +719,15 @@ identical(temp1, temp2)
 ###            I.c  `map_dbl`, `map_chr`, `map_lgl`                   ###
 #########################################################################
 
-###    - map() makes a list. 
+###    - map() makes a list.
 ###    - map_lgl() makes a logical vector.
 ###    - map_int() makes an integer vector.
 ###    - map_dbl() makes a double vector.
 ###    - map_chr() makes a character vector.
-###  Each function takes a vector as input, applies a function 
-###  to each element, and then returns a new vector that’s the same 
-###  length (and has the same names) as the input. 
-###  The type of the vector is determined by the suffix of 
+###  Each function takes a vector as input, applies a function
+###  to each element, and then returns a new vector that’s the same
+###  length (and has the same names) as the input.
+###  The type of the vector is determined by the suffix of
 ###       the map function.
 
 
@@ -724,7 +749,7 @@ result_map <- fuel_economy_2018 %>%
 # second solution, with `map_dbl`, get the result as a named vector
 result_map_dbl <- fuel_economy_2018 %>%
      select (!!!vars) %>%
-     map_dbl(., mean, na.rm = TRUE) 
+     map_dbl(., mean, na.rm = TRUE)
 
 class(result_map)
 class(result_map_dbl)
@@ -751,7 +776,7 @@ result_map_dbl <- fuel_economy_2018 %>%
      set_names('mean') %>%
      mutate(variable = vars )
 
-# Here you can see that `result_map` is a data frame where 
+# Here you can see that `result_map` is a data frame where
 #    column `mean` is a list...
 result_map
 
@@ -771,11 +796,11 @@ glimpse(fuel_economy_2018)
 
 # solution based on `map_dbl` combined with `map_lgl` and `tibble`
 # ok, it's a bit of a stretch here...
-result <- fuel_economy_2018 %>% 
+result <- fuel_economy_2018 %>%
      select_if(is.numeric) %>%
      map_dbl(., sd, na.rm = TRUE) %>%
      map_lgl(., function (x) if_else (x == max(.),  TRUE, FALSE)) %>%
-     tibble(variable = names(.), is_max = .)     
+     tibble(variable = names(.), is_max = .)
 
 result
 
@@ -784,11 +809,11 @@ result
 ###                                Task 3                             ###
 ##   Given the students data set (see above) ...                       ##
 glimpse(studs)
-##    Extract, for each student, only the first surname 
+##    Extract, for each student, only the first surname
 ##    (FIRST_NAME contains one or more surnames)
 ## Note:
 ##   The surnames could be separated either by:
-## * "-", as in "MARIANA-SIMONA", "GEORGIAN-VLĂDUŢ", 
+## * "-", as in "MARIANA-SIMONA", "GEORGIAN-VLĂDUŢ",
 ## * or by " ", as in "GEORGIANA ALEXANDRA"
 #########################################################################
 
@@ -796,7 +821,7 @@ glimpse(studs)
 first_surname <- studs %>%
      select (STUD_ID, FIRST_NAME) %>%
      mutate(first_surname = map_chr(str_split(FIRST_NAME, '-| '),1))
-     
+
 glimpse(first_surname)
 
 
@@ -829,7 +854,7 @@ result <- fuel_economy_2018 %>%
      tibble(variable = names(.), mean = .) %>%
      unnest()
 
-## ... will get the mean values properly 
+## ... will get the mean values properly
 result
 
 
@@ -855,18 +880,18 @@ glimpse(fuel_economy_2018)
 ##
 
 ## Solution below combines `map`, `tibble` and `unnest`
-result <- fuel_economy_2018 %>% 
+result <- fuel_economy_2018 %>%
      select_if(is.numeric) %>%
      map(., descr_stats_long) %>%
      tibble() %>%
      unnest() %>%
      transmute (variable = rep(
-               fuel_economy_2018 %>% 
+               fuel_economy_2018 %>%
                     select_if(is.numeric) %>%
                     set_names(str_replace_all(names(.), '\\.| ', '_')) %>%
-                    names(), each = 10), 
+                    names(), each = 10),
                statistic, value)
-                
+
 result
 
 
@@ -881,24 +906,24 @@ glimpse(studs)
 
 ## Note:
 ##   The surnames could be separated either by:
-## * "-", as in "MARIANA-SIMONA", "GEORGIAN-VLĂDUŢ", 
+## * "-", as in "MARIANA-SIMONA", "GEORGIAN-VLĂDUŢ",
 ## * or by " ", as in "GEORGIANA ALEXANDRA"
 #########################################################################
 
 ## When examining the first name...
 result <- studs %>%
-     select (FIRST_NAME) 
-#... we discover that this variable contains also the family name for 
+     select (FIRST_NAME)
+#... we discover that this variable contains also the family name for
 #    the married people, with `CĂS. ` prefix
 
 ## So, we need to remove that part
 
 
-# if we want to avoid `map` functions, `str_split` must be used in 
+# if we want to avoid `map` functions, `str_split` must be used in
 #    conjuction with `rowwise` ...
 first_names_ok <- studs %>%
-     mutate(FIRST_NAME = 
-                 str_trim(str_replace_all(FIRST_NAME, ' - ', '-'), 
+     mutate(FIRST_NAME =
+                 str_trim(str_replace_all(FIRST_NAME, ' - ', '-'),
                           side = 'both')) %>%
      select (STUD_ID, FIRST_NAME) %>%
      rowwise() %>%
@@ -906,11 +931,11 @@ first_names_ok <- studs %>%
 
 #... but we do not want to avoid `map`, so `map` will be used along with `map_chr`
 first_names_ok <- studs %>%
-     mutate(FIRST_NAME = 
-                 str_trim(str_replace_all(FIRST_NAME, ' - ', '-'), 
+     mutate(FIRST_NAME =
+                 str_trim(str_replace_all(FIRST_NAME, ' - ', '-'),
                           side = 'both')) %>%
      select (STUD_ID, FIRST_NAME) %>%
-     mutate (first_name_list = map(.$FIRST_NAME, 
+     mutate (first_name_list = map(.$FIRST_NAME,
           function (x) unlist(str_split(x, ' căs\\.| CĂS\\.')) ) ) %>%
      mutate(first_name_ok = map_chr(.$first_name_list, 1))
 
@@ -919,7 +944,7 @@ first_names_ok <- studs %>%
 result <- first_names_ok %>%
      mutate (
           first_name_ok = str_trim(first_name_ok, side = 'both'),
-          first_name_list = map(.$first_name_ok, 
+          first_name_list = map(.$first_name_ok,
           function (x) unlist(str_split(x, '-| ')) ) ) %>%
      group_by(STUD_ID, FIRST_NAME, first_name_ok) %>%
      unnest() %>%
@@ -935,25 +960,25 @@ result <- first_names_ok %>%
 glimpse(studs)
 
 ## For each student, get a separate column with a string containing
-## only first two surnames (in case there are more - 
+## only first two surnames (in case there are more -
 ## see row 47 in `studs` as example)
 
-# 
+#
 result <- studs %>%
-     mutate(FIRST_NAME = 
-                 str_trim(str_replace_all(FIRST_NAME, ' - ', '-'), 
+     mutate(FIRST_NAME =
+                 str_trim(str_replace_all(FIRST_NAME, ' - ', '-'),
                           side = 'both')) %>%
      select (STUD_ID, FIRST_NAME) %>%
-     mutate (first_name_list = map(.$FIRST_NAME, 
+     mutate (first_name_list = map(.$FIRST_NAME,
           function (x) unlist(str_split(x, ' căs\\.| CĂS\\.')) ) ) %>%
      mutate(first_name_ok = map_chr(.$first_name_list, 1)) %>%
      mutate (
           first_name_ok = str_trim(first_name_ok, side = 'both'),
-          first_name_list = map(.$first_name_ok, 
+          first_name_list = map(.$first_name_ok,
           function (x) unlist(str_split(x, '-| ')) ) ) %>%
-     mutate(first_two_surnames = map_chr(.$first_name_list,   
+     mutate(first_two_surnames = map_chr(.$first_name_list,
                     ## `map_chr` here extracts first two surname
-          function (x) paste(x[1], x[2])   ))                               
+          function (x) paste(x[1], x[2])   ))
 
 # examine line 47 in the result
 
@@ -993,19 +1018,19 @@ glimpse(fuel_economy_2018)
 ##       standard deviation?                                          ###
 #########################################################################
 
-# solution based on `map_dbl` combined with `map2`, `keep` and `pluck` 
-result <- fuel_economy_2018 %>% 
+# solution based on `map_dbl` combined with `map2`, `keep` and `pluck`
+result <- fuel_economy_2018 %>%
      select_if(is.numeric) %>%
      map_dbl(., sd, na.rm = TRUE) %>%
      map2(., max(.), c) %>%   # `map2` adds to each list element another
-                              #  component containinf the max sd 
+                              #  component containinf the max sd
      keep(., function(x) x[1] == x[2]) %>%  # `keep` filters the list elements
-     map(., pluck(1))    # `pluck extracts only the first component` of 
+     map(., pluck(1))    # `pluck extracts only the first component` of
                          #  list's each element
 
 
 result
-     
+
 
 #########################################################################
 ##                                 Task 3                             ###
@@ -1015,13 +1040,13 @@ glimpse(fuel_economy_2018)
 ##   than of variable `hwy_l100km`?                                   ###
 #########################################################################
 
-# solution based on `map` , `map2`, `keep` and `pluck` 
-result <- fuel_economy_2018 %>% 
+# solution based on `map` , `map2`, `keep` and `pluck`
+result <- fuel_economy_2018 %>%
      select_if(is.numeric) %>%
      map(., sd, na.rm = TRUE) %>%
      map2(.x = ., .y = .$hwy_l100km, .f = c) %>%
      keep(., function(x) x[1] > x[2]) %>%  # `keep` filters the list elements
-     map(., pluck(1))    # `pluck extracts only the first component` of 
+     map(., pluck(1))    # `pluck extracts only the first component` of
                          #  list's each element
 
 result
@@ -1033,13 +1058,13 @@ result
 ###                 III.   `walk` and `walk2`                         ###
 #########################################################################
 
-#  Walk is an alternative to map that you use when you want 
-#  to call a function for its side effects, rather than for 
-#  its returned value. 
-#  
+#  Walk is an alternative to map that you use when you want
+#  to call a function for its side effects, rather than for
+#  its returned value.
+#
 #  Examples of usage:
-#   - render output to the screen 
-#   - save files to disk 
+#   - render output to the screen
+#   - save files to disk
 #
 
 
@@ -1052,16 +1077,16 @@ f_barplot_stud <- function(column) {
      column <- enquo(column)
      # `dplyr::quo_name` changes the quosure into a string
      title_ <- paste("Value Frequency for Variable", quo_name(column))
-     
-     ggplot(studs, 
+
+     ggplot(studs,
           aes(x = !!column)) +
           geom_bar() +
           ggtitle(title_) +
           theme(axis.text.x = element_text(angle = 45, # text angle on x-axis
                vjust = 1, # vertical justification (position near to bar center)
                hjust = 1 )) # horizontal justification (align towards the bar)
-          
-     # save the plot into the current working directory     
+
+     # save the plot into the current working directory
      ggsave(file = paste0(title_, ".pdf"))
 }
 
@@ -1096,11 +1121,3 @@ readxl::excel_sheets(file_name) %>%
      walk2(.x = .$sheet_name,
         .y = .$df,
         .f = assign, envir = .GlobalEnv)
-
-
-
-
-
-
-
-
