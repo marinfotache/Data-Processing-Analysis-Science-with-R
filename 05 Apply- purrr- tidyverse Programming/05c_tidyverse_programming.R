@@ -11,11 +11,11 @@
 ############################################################################
 ###                    05c. More on tidyverse programming                ###
 ### See also the presentation:
-### xxxxxxxx
+### https://github.com/marinfotache/Data-Processing-Analysis-Science-with-R/blob/master/05%20Apply-%20purrr-%20tidyverse%20Programming/05_apply__purrr__tidyverse_programming.pptx
 ############################################################################
-## last update: 19.11.2019
+## last update: 27.11.2021
 
-# needed packages
+# required packages
 library(tidyverse)
 library(readxl)
 

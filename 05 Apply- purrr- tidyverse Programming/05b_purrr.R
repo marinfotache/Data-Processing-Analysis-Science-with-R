@@ -12,9 +12,9 @@
 ###            05b. Functional Programming with `purrr` package          ###
 
 ### See also the presentation:
-### xxxxxxxx
+### https://github.com/marinfotache/Data-Processing-Analysis-Science-with-R/blob/master/05%20Apply-%20purrr-%20tidyverse%20Programming/05_apply__purrr__tidyverse_programming.pptx
 ############################################################################
-## last update: 24.11.2020
+## last update: 27.11.2021
 
 
 # needed packages
