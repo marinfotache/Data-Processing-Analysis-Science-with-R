@@ -13,9 +13,9 @@
 ### See also the presentation:
 ### https://github.com/marinfotache/Data-Processing-Analysis-Science-with-R/blob/master/04%20Basic%20Programming/04_Programming_UDFs_eval_tidyeval.pptx
 ############################################################################
-## last update: 15.11.2021
+## last update: 27.11.2021
 
-# needed packages
+# required packages
 library(tidyverse)
 library(rlang)
 library(readxl)
@@ -58,8 +58,8 @@ setwd('/Users/marinfotache/Google Drive/R(Mac)-1 googledrive/DataSets')
 #########################################################################
 ###                      I. `assign` function                         ###
 #########################################################################
-###  We'll use `assign` to storing the result in a dynamically        ###
-###  qualified (named) object (data frame)                            ###
+###  We'll use `assign` for storing the result into a dynamically     ###
+###  qualified (named) object (data frame/tibble)                     ###
 #########################################################################
 
 

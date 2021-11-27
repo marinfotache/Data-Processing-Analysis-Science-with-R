@@ -68,6 +68,8 @@ states <- state.x77 %>%
 glimpse (states)
 
 
+
+
 # Get a comprehensive report about variables distribution and correlation
 config <- configure_report(
      add_introduce = TRUE,
@@ -84,6 +86,7 @@ config <- configure_report(
 
 
 DataExplorer::create_report(states, config = config)
+
 
 # examine bivariate relationships
 cor(states %>% select (-state))
@@ -120,7 +123,7 @@ states_lm1$coefficients
 ## with the `broom` package, we can collect simply
 ##    and rigurously the main model parameters
 
-model_overall <- glance(states_lm1)
+model_overall <- broom::glance(states_lm1)
 model_overall
 model_predictors <- tidy(states_lm1)
 model_predictors
