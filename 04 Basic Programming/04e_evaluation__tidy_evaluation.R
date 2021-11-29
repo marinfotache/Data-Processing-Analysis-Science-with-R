@@ -13,7 +13,7 @@
 ### See also the presentation:
 ### https://github.com/marinfotache/Data-Processing-Analysis-Science-with-R/blob/master/04%20Basic%20Programming/04_Programming_UDFs_eval_tidyeval.pptx
 ############################################################################
-## last update: 27.11.2021
+## last update: 29.11.2021
 
 # required packages
 library(tidyverse)
@@ -99,10 +99,10 @@ tables
 for (i in 1:nrow(tables)) {
      # extract data from table in PostgreSQL
      temp <- dbGetQuery(con,
-          paste("select * from ", tables[i,1], sep=""))
+          paste("select * from ", tables$table_name[i], sep=""))
 
      # create the data frame: `assign` allows naming dynamically the data frame
-     assign(tables[i,1], temp)
+     assign(tables$table_name[i], temp)
 }
 
 # close the PostgreSQL connection
@@ -142,12 +142,13 @@ for (i in 1:length(ws)) {
 rm(list = ls())
 
 
-# create a vector with the name and extension of all .xls files in current directory
-files <- list.files(pattern = "*.xlsx")
+# create a vector with the name and extension of all .xls or .xlsx files in current directory
+files <- list.files(pattern = "*.xls(|x)")
 # or
-files <- dir(pattern = "*.xlsx")
+files <- dir(pattern = "*.xls(|x)")
 
-i <- 3
+
+# i <- 1
 # now, loop through the files, but remove the `.xlsx` suffix in the data
 #   frame name
 for (i in 1:length(files)) {
@@ -156,14 +157,20 @@ for (i in 1:length(files)) {
 
      # copy `temp` data frame into a data frame with the name of the
      #   worksheet (remove `.xlsx`)
-     assign(substr(files[i], 1, (nchar(files[i])-5)), temp)
+     #assign(substr(files[i], 1, (nchar(files[i])-5)), temp)
+     file_name <- str_remove_all(files[i], '\\..+$')
+     assign(file_name, temp)
+
 }
 
 # there is a shorter version of the loop
-for (i in 1:length(files))
-     assign(substr(files[i], 1, (nchar(files[i])-5)),
-            readxl::read_excel(files[i], 1))
+# for (i in 1:length(files))
+#      assign(substr(files[i], 1, (nchar(files[i])-5)),
+#             readxl::read_excel(files[i], 1))
 
+for (i in 1:length(files))
+     assign(str_remove_all(files[i], '\\..+$'),
+            readxl::read_excel(files[i], 1))
 
 
 
@@ -204,8 +211,11 @@ for (i in 1:length(tables)) {
 
 
 #########################################################################
-###                 III. Introduction to tidy evaluation           ###
+###                    III. Introduction to tidy evaluation           ###
 #########################################################################
+### Note: the tidyevaluation must also be combines with functional
+### programming (`apply` family, `purrr` package) - see also:
+### https://github.com/marinfotache/Data-Processing-Analysis-Science-with-R/tree/master/05%20Apply-%20purrr-%20tidyverse%20Programming
 
 
 #########################################################################
@@ -289,7 +299,6 @@ View(final_result)
 
 
 
-
 #########################################################################
 ###       III.b New style (`curly-curly operator`) (2019)             ###
 #########################################################################
@@ -362,7 +371,7 @@ final_result3 <- bind_rows(
 ###                           III.b. quosures                         ###
 #########################################################################
 
-### A quosure is a data structure that stores both an expression
+### A `quosure` is a data structure that stores both an expression
 ### and an environment
 
 ### Some functions and operators:
@@ -480,6 +489,7 @@ f_mean2(Drive)
 f_mean2(manufacturer)
 
 
+
 ####################################################################
 ##                            Task 2:
 ## Create a function for computing the mean of `combined_l100km`
@@ -536,7 +546,7 @@ result <- f_mean4(vars)
 
 
 
-## If we want to call the function wihout including column names
+## If we want to call the function without including column names
 ## within ` or ",  one must include function `enquos`
 f_mean5 <- function(...) {
 
@@ -842,7 +852,7 @@ f_histogram_or_density('Histogram', fuel_economy_2018, n_of_cyl)
 
 var = rlang::sym(list_histogram[[1]][1])
 var
-f_histogram(fuel_economy_2018, !!var)
+f_histogram_or_density('Histogram', fuel_economy_2018, !!var)
 
 
 f_histogram_or_density('Density', fuel_economy_2018, combined_l100km)
