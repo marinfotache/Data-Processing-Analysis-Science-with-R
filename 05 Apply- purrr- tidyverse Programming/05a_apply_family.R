@@ -13,11 +13,12 @@
 ### See also the presentation:
 ### https://github.com/marinfotache/Data-Processing-Analysis-Science-with-R/blob/master/05%20Apply-%20purrr-%20tidyverse%20Programming/05_apply__purrr__tidyverse_programming.pptx
 ############################################################################
-## last update: 27.11.2021
+## last update: 29.11.2021
 
 # required packages
 library(tidyverse)
 library(readxl)
+library(janitor)
 
 ############################################################################
 ###            Download the necesary data sets for this script
@@ -249,7 +250,7 @@ result <- apply(fuel_economy_2018[vars], 2, mean, na.rm = TRUE) %>%
      mutate(variable = vars)
 
 # check the type of the result
-is.tibble(result)
+is_tibble(result)
 is.data.frame(result)
 glimpse(result)
 result
@@ -257,11 +258,11 @@ result
 
 ## solution with `apply` and `as.tibble`
 result <- apply(fuel_economy_2018[vars], 2, mean, na.rm = TRUE) %>%
-     as.tibble() %>%
+     as_tibble() %>%
      mutate(variable = vars)
 
 # check the type of the result
-is.tibble(result)
+is_tibble(result)
 is.data.frame(result)
 glimpse(result)
 result
@@ -269,12 +270,12 @@ result
 
 ## solution with `apply` and `as_data_frame`
 apply(fuel_economy_2018[vars], 2, mean, na.rm = TRUE) %>%
-     as_data_frame() %>%
+     as.data.frame() %>%
      set_names('mean') %>%
      mutate(variable = rownames(.))
 
 # check the type of the result
-is.tibble(result)
+is_tibble(result)
 is.data.frame(result)
 glimpse(result)
 result
@@ -294,17 +295,17 @@ result
 
 
 
-# if you prefer the long format...
-
+# if you prefer the wide format...
 result <- apply(fuel_economy_2018[vars], 2, mean, na.rm = TRUE) %>%
      tibble(variable = names(.), mean = .) %>%
-     spread(variable, mean)
+     pivot_wider(names_from = 'variable', values_from = 'mean')
+   
 result
 
 # or ...
 result <- apply(fuel_economy_2018[vars], 2, mean, na.rm = TRUE) %>%
      t() %>%
-     as.tibble()
+     as_tibble()
 result
 
 
@@ -340,7 +341,7 @@ glimpse(fuel_economy_2018)
 ## `as.tibble` solution triggers an error!!!
 result <- apply(fuel_economy_2018 %>% select_if(is.numeric), 2,
                 descr_stats) %>%
-     as.tibble()
+     as_tibble()
 
 
 ## `tibble` solution gets a data frame of lists...
@@ -372,7 +373,8 @@ result <- apply(fuel_economy_2018 %>% select_if(is.numeric), 2,
                                                                # variable names
      separate(variable, into = c('variable_name', 'statistic'),
                sep = "\\.") %>%
-     spread(statistic, value)
+     #spread(statistic, value)
+     pivot_wider(names_from = "statistic", values_from = "value")
 
 
 
@@ -403,6 +405,18 @@ result <- apply(fuel_economy_2018 %>% select_if(is.numeric) %>%
      separate(variable, into = c('variable_name', 'statistic'),
                sep = "\\.") %>%
      spread(statistic, value)
+
+
+# ... of course, with package `janitor`, naming the columns is easier
+result <- apply(fuel_economy_2018 %>% select_if(is.numeric) %>%
+     janitor::clean_names(),
+                2,
+                descr_stats) %>%
+     as.data.frame() %>%
+     pivot_longer(names(.)) %>%
+     separate(name, into = c('variable_name', 'statistic'),
+               sep = "\\.") %>%
+     pivot_wider(names_from = 'statistic', values_from = 'value')
 
 
 
@@ -472,7 +486,7 @@ the_df <- the_df %>%
 #########################################################################
 ###                                Task 2:                            ###
 ###
-### After importing (as a list) all text files whose names start with
+### After importing (as a list) all the text files whose names start with
 ### `DragosDragosCogean__`
 ##    extract/display first 10 elements in each subset
 
@@ -521,6 +535,7 @@ lapply(short_list, nrow)
 sapply(short_list, nrow)
 
 
+
 #########################################################################
 ##                            Task1:                                   ##
 ##  Extract/display in a separate data frame only the numeric columns  ##
@@ -533,6 +548,7 @@ result <- fuel_economy_2018 %>%
 
 # ... one the most elegant solution was based on `sapply`
 result <- fuel_economy_2018[, sapply(fuel_economy_2018, is.numeric)]
+
 
 
 #########################################################################
@@ -595,3 +611,12 @@ fuel_economy_2018 %>%
      group_by(var, n_of_cyl) %>%
      summarise(mean = mean(value, na.rm = TRUE)) %>%
      spread(var, mean)
+
+
+# ... a (more) updated version...
+fuel_economy_2018 %>%
+     select(!!vars, n_of_cyl) %>%
+     pivot_longer(-n_of_cyl, names_to = "var", values_to = "value") %>%
+     group_by(var, n_of_cyl) %>%
+     summarise(mean = mean(value, na.rm = TRUE)) %>%
+     pivot_wider(names_from = "var", values_from =  "mean")
