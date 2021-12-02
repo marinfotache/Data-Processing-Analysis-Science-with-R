@@ -1,8 +1,3 @@
-###############################################################################
-### Document partially supported by research project: POC/398/1/1 nr. 124759 -
-### „Research As A Service – Iasi (RaaS-IS)”
-###############################################################################
-
 ############################################################################
 ###                         Al.I. Cuza University of Iași                ###
 ###            Faculty of Economics and Business Administration          ###
@@ -18,11 +13,11 @@
 ### See also the presentation:
 ### https://github.com/marinfotache/Data-Processing-Analysis-Science-with-R/blob/master/09%20Exploratory%20Data%20Analysis/09%20Exploratory%20Data%20Analysis.pptx
 ############################################################################
-## last update: 31.08.2021
+## last update: 02.12.2021
 
 
 ############################################################################
-###            Download the necesary data sets for this script
+###            Download the necessary data sets for this script
 ############################################################################
 
 # all the files needed o run this script are available at:
@@ -42,6 +37,7 @@ options(scipen=999, digits=4)
 
 # needed packages
 library(tidyverse)
+library(tidymodels) # fot the `corrr` package
 
 # install.packages('skimr')
 library(skimr) # for summary statistics
@@ -434,7 +430,7 @@ fuel_economy_2018 %>%
           n_distinct = n_distinct(combined_l100km),   # the number of distinct values
           n_na = sum( if_else (is.na(combined_l100km), 1L, 0L)), # number of NA values
           min = min(combined_l100km), 
-          first_quartile = quantile( combined_l100km, .25),
+          first_quartile = quantile(combined_l100km, .25),
           mean = mean(combined_l100km), 
           median = median(combined_l100km), 
           third_quartile = quantile( combined_l100km, .75),
@@ -545,14 +541,14 @@ library(PerformanceAnalytics)
 ##   compute skewness and kurtosis
 ##   
 
-# fistly, the chart...
+# firstly, the chart...
 ggplot(fuel_economy_2018 %>% filter (!is.na(combined_l100km)), 
           aes(x = combined_l100km)) + 
      geom_density(color = "white", fill = 'red', alpha = .5) +
 	ggtitle("Density Plot of Combined Fuel Consumption") +
   	xlab("liters per 100 km") 
 
-# ... and then statistics
+# ... and now, the statistics
 fuel_economy_2018 %>%
      select (combined_l100km) %>%
      summarise(
@@ -836,6 +832,17 @@ cor (fuel_economy_2018[c('cty_l100km', 'hwy_l100km',
           'combined_l100km', 'displacement', 'combined_CO2')],
      method = 'kendall',
      use = "pairwise.complete.obs")
+
+
+# `correlate` function in package `corrr` (part of the tidymodels ecosystem)
+corrr::correlate (fuel_economy_2018[c('cty_l100km', 'hwy_l100km', 
+          'combined_l100km', 'displacement', 'combined_CO2')],
+     method = 'kendall',
+     use = "pairwise.complete.obs",
+     diagonal = NA,
+     quiet = TRUE
+)
+
 
 
 ##  2) Visualize the correlation  
