@@ -1,8 +1,3 @@
-###############################################################################
-### Document partially supported by research project: POC/398/1/1 nr. 124759 -
-### „Research As A Service – Iasi (RaaS-IS)”
-###############################################################################
-
 ############################################################################
 ###                         Al.I. Cuza University of Iași                ###
 ###            Faculty of Economics and Business Administration          ###
@@ -18,10 +13,11 @@
 ### See also the presentation:
 ### https://github.com/marinfotache/Data-Processing-Analysis-Science-with-R/blob/master/09%20Exploratory%20Data%20Analysis/09%20Exploratory%20Data%20Analysis.pptx
 ############################################################################
-## last update: 31.08.2021
+## last update: 02.12.2021
 
 library(tidyverse) 
 library(corrr)
+library(tidymodels) 
 library(readxl)
 # giving up scientific notation (1.6e+07)
 options(scipen=999, digits=4)
@@ -160,10 +156,10 @@ ggplot(., aes(x = value, y = n_value, fill = value)) +
      geom_text (aes(label = paste0(round(percent,0), '%'), 
                   vjust = if_else(n_value > 300, 1.5, -0.5))) +
     facet_wrap(~ variable, scale = "free") +
-    guides(fill=FALSE) +
     theme(axis.text.x = element_text(size = 10, angle = 45, hjust = 1)) +
     theme(strip.text.x = element_text(size = 14)) +
-    xlab("") + ylab("frequency") 
+    xlab("") + ylab("frequency") +
+    theme(legend.position = 'none')
 
 
 
@@ -186,7 +182,7 @@ num_variables %>%
 ggplot(., aes(x = value, fill = variable)) +
      geom_histogram() +
      facet_wrap(~ variable, scale = "free") +
-     guides(fill=FALSE) +
+     theme(legend.position = 'none') +
      theme(axis.text.x = element_text(size = 9)) +
      theme(strip.text.x = element_text(size = 12)) +
      xlab("") + ylab("frequency") 
@@ -197,7 +193,7 @@ num_variables %>%
 ggplot(., aes(y = value)) +
      geom_boxplot() +
      facet_wrap(~ variable, nrow = 1) +
-     guides(fill=FALSE) +
+     theme(legend.position = 'none') +
      xlab("") + ylab("value") +
      theme(axis.text.x = element_blank()) +
      scale_y_continuous(breaks = seq(0, 30, 1))
@@ -230,7 +226,7 @@ df %>%
 ggplot(., aes(x = value, fill = variable)) +
      geom_histogram() +
      facet_wrap(. ~ variable + vehicle_class, ncol = 10) +
-     guides(fill=FALSE) +
+     theme(legend.position = 'none') +
      theme(axis.text.x = element_text(size = 8)) +
      theme(strip.text.x = element_text(size = 8)) +
      xlab("") + ylab("frequency") 
@@ -296,14 +292,13 @@ fuel_economy_2018 %>%
 ###	               II. EDA with `DataExplorer` package              ###	
 #######################################################################
 
-# currently (December 2020), `DataExplorer` package is not available 
-# on CRAN, so it is not possible to install it with 
 install.packages('DataExplorer') 
 
-# Instead, try:
+# If this does not work (in December 2020) `DataExplorer` package was 
+# not available  on CRAN, so it could be installed only with:
 if (!require(devtools)) 
     install.packages("devtools")
-devtools::install_github("boxuancui/DataExplorer")
+devtools::install_github("boxuancui/DataExplorer", force = TRUE)
 
 library(DataExplorer)
 
@@ -327,6 +322,10 @@ plot_missing(fuel_economy_2018)
 
 #  Plot information about categorial/factor variables
 DataExplorer::plot_bar(fuel_economy_2018)
+
+fuel_economy_2018 %>%
+    select (Displ, Cyl, Trans) %>%
+    plot_bar()
 
 
 
@@ -373,8 +372,7 @@ config <- configure_report(
 )
 
 getwd()
-create_report(fuel_economy_2018 %>% na.omit(.), 
-              config = config)
+create_report(fuel_economy_2018 %>% na.omit(.), config = config)
 
 
 
