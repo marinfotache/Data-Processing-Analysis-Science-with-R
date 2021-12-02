@@ -1,2 +1,2 @@
-Exploratory Data Analysis with ggplot2, descriptive statistics and some specialized packages (`DataExplorer`, `inspectdf`, ...).
+Exploratory Data Analysis with ggplot2 and some specialized packages (`DataExplorer`, `inspectdf`, ...).
 
