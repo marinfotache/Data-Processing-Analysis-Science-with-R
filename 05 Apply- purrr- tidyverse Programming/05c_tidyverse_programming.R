@@ -388,84 +388,11 @@ result <- first_names_ok %>%
 
 
 
-# https://r4ds.had.co.nz/iteration.html
-# 21.9 Other patterns of for loops
-
-
-
 ###  IV.  `map_*` and models                                          ###
 
-  # https://towardsdatascience.com/functional-programming-in-r-with-purrr-469e597d0229
+# https://towardsdatascience.com/functional-programming-in-r-with-purrr-469e597d0229
 
 # https://www.youtube.com/watch?v=b0ozKTUho0A
 
 
 
-
-list(A = list("a1","a2"),
-     B = list("b1", "b2"),
-     C = list("c1", "c2"),
-     D = list("d1", "d2", "d3")) %>%
-  pluck(1)
-
-list(A = list("a1","a2"),
-     B = list("b1", "b2"),
-     C = list("c1", "c2"),
-     D = list("d1", "d2", "d3")) %>%
- map(., pluck(1))
-
-
-sample(x = 1:6, size =  50, replace = TRUE) %>%
-  table %>%
-  sort %>%
-  names()
-
-dice1 <- function(n) sample(size = n, x = 1:6, replace = TRUE)
-dice_rank <- compose(names, sort, table, dice1)
-dice_rank(40)
-
-
-
-Garrett Grolemund, Hadley Wickham - R for Data Science, O’Reilly, 2017 (Section 21 Iteration)
-https://r4ds.had.co.nz/iteration.html
-There are a few shortcuts that you can use with .f in order to save a little typing. Imagine you want to fit a linear model to each group in a dataset. The following toy example splits the up the mtcars dataset in to three pieces (one for each value of cylinder) and fits the same linear model to each piece:
-
-models <- mtcars %>%
-  split(.$cyl) %>%
-  map(function(df) lm(mpg ~ wt, data = df))
-The syntax for creating an anonymous function in R is quite verbose so purrr provides a convenient shortcut: a one-sided formula.
-
-models <- mtcars %>%
-  split(.$cyl) %>%
-  map(~lm(mpg ~ wt, data = .))
-Here I’ve used . as a pronoun: it refers to the current list element (in the same way that i referred to the current index in the for loop).
-
-When you’re looking at many models, you might want to extract a summary statistic like the
-R
-2
- . To do that we need to first run summary() and then extract the component called r.squared. We could do that using the shorthand for anonymous functions:
-
-models %>%
-  map(summary) %>%
-  map_dbl(~.$r.squared)
-#>     4     6     8
-#> 0.509 0.465 0.423
-But extracting named components is a common operation, so purrr provides an even shorter shortcut: you can use a string.
-
-models %>%
-  map(summary) %>%
-  map_dbl("r.squared")
-#>     4     6     8
-#> 0.509 0.465 0.423
-You can also use an integer to select elements by position:
-
-x <- list(list(1, 2, 3), list(4, 5, 6), list(7, 8, 9))
-x %>% map_dbl(2)
-#> [1] 2 5 8
-#
-#
-#
-#
-#
-#
-#
