@@ -14,13 +14,13 @@
 ### See also the presentation:
 ### https://github.com/marinfotache/Data-Processing-Analysis-Science-with-R/blob/master/05%20Apply-%20purrr-%20tidyverse%20Programming/05_apply__purrr__tidyverse_programming.pptx
 ############################################################################
-## last update: 27.11.2021
+## last update: 02.12.2021
 
 
-# needed packages
+# required packages (`purrr` is included in the tidyverse meta-package)
 library(tidyverse)
 library(readxl)
-#library(purrr)
+library(janitor)
 
 
 ############################################################################
@@ -175,8 +175,8 @@ descr_stats_long <- function(x, na.omit=FALSE) {
 ### purrr::map() is a function for applying a function to each
 ### element of a list.
 
-###  Map functions in base R are the "applys": lapply(), sapply(),
-###  vapply(), etc.
+###  Map functions in base R are the "apply-s": lapply(), sapply(),
+###  vapply(), etc. (see script `05a...`)
 
 
 #########################################################################
@@ -214,9 +214,9 @@ names(result)
 
 
 
-# the third second solution introduces another notation (`~`)
+# the third solution introduces another notation (`~`)
 result <- fuel_economy_2018 %>%
-     select (!!!vars) %>%
+     select (all_of(vars)) %>%
      map(., ~ mean(.x, na.rm = TRUE)) %>%
      tibble(variable = names(.), mean = .)
 
@@ -227,14 +227,13 @@ View(result)
 # ... and
 print(result)
 
-
 # column `mean` of of type `named list`
 glimpse(result)
 
 
 # in order to display the `mean` as a number, we'll need `unnest` function
 result <- fuel_economy_2018 %>%
-     select (!!!vars) %>%
+     select ({{vars}}) %>%
      map(., ~ mean(.x, na.rm = TRUE)) %>%
      tibble(variable = names(.), mean = .) %>%
      unnest(mean)
@@ -244,7 +243,7 @@ print(result)
 
 # to be fair, function `unnest` may be avoided:
 result <- fuel_economy_2018 %>%
-     select (!!!vars) %>%
+     select ({{vars}}) %>%
      map(., ~ mean(.x, na.rm = TRUE)) %>%
      tibble(variable = names(.), mean = as.numeric(.))
 
@@ -262,7 +261,7 @@ glimpse(fuel_economy_2018)
 #########################################################################
 
 
-# some basic programming ...
+# remember some basic programming ...
 result <- fuel_economy_2018 %>%
      select_if(is.numeric)
 
@@ -316,8 +315,8 @@ glimpse(fuel_economy_2018)
 ## 3.a Get, as a list, all the variables statistics
 ##
 ## 3.b (NEW) Get, as a data frame, all the variables statistics
-##   (with variables on rows, and each statistic as a separate column)
-##   - this is a new requierement (compared to the task in script `05a`)
+##   (with variables on the rows, and each statistic as a separate column)
+##   - this is a new requirement (compared to the task in script `05a`)
 ##
 
 
@@ -385,11 +384,10 @@ result_wide_df1
 ## `descr_stats_wide` as argument of `map` + new notation (`pivot_longer` & `pivot_wider`)
 result_wide_df1 <- fuel_economy_2018 %>%
      select_if(is.numeric) %>%
-     set_names(str_replace_all(names(.), '\\.| ', '_')) %>% ## fix the variable names
+     janitor::clean_names() %>% ## fix the variable names
      map(., descr_stats_wide) %>%
      as.data.frame() %>%   # this will convert theh list into a data frame
-     mutate (row_num = row_number()) %>%
-     pivot_longer(!row_num, names_to = "variable_and_statistic", values_to = "value")  %>%
+     pivot_longer(names(.), names_to = "variable_and_statistic", values_to = "value")  %>%
      separate(variable_and_statistic, into = c('variable', 'statistic'),
                sep = "\\.") %>%
      pivot_wider(names_from = 'statistic', values_from = 'value')
@@ -397,6 +395,8 @@ result_wide_df1 <- fuel_economy_2018 %>%
 View(result_wide_df1)
 result_wide_df1
 glimpse(result_wide_df1)
+
+
 
 
 
@@ -414,9 +414,15 @@ glimpse(result_wide_df2)
 
 
 ## for `descr_stats_long`, `map` will be combined with `bind_rows`
+# result_long_df1 <- fuel_economy_2018 %>%
+#      select_if(is.numeric) %>%
+#      set_names(str_replace_all(names(.), '\\.| ', '_')) %>% ## fix the variable names
+#      map(., descr_stats_long) %>%
+#      bind_rows(.id = "variable")
+
 result_long_df1 <- fuel_economy_2018 %>%
      select_if(is.numeric) %>%
-     set_names(str_replace_all(names(.), '\\.| ', '_')) %>% ## fix the variable names
+     janitor::clean_names() %>% ## fix the variable names
      map(., descr_stats_long) %>%
      bind_rows(.id = "variable")
 
@@ -427,13 +433,13 @@ result_long_df1
 # the second solution is based on `unnest`
 result_long_df2 <- fuel_economy_2018 %>%
      select_if(is.numeric) %>%
-     set_names(str_replace_all(names(.), '\\.| ', '_')) %>% ## fix the variable names
+     janitor::clean_names()  %>% ## fix the variable names
      map(., descr_stats_long) %>%
      tibble(variable = names(.), df = .) %>%
      unnest(df)
 
 View(result_long_df2)
-result_long_df
+result_long_df2
 
 
 
@@ -448,7 +454,7 @@ glimpse(fuel_economy_2018)
 
 result <- fuel_economy_2018 %>%
      select_if(is.character) %>%
-     set_names(str_replace_all(names(.), '\\.| ', '_')) %>% ## fix the variable names
+     janitor::clean_names() %>% ## fix the variable names
      map(table) %>%   # on each column `table` function will be applied
      map(., length) %>%
      tibble(variable = names(.), n_of_distinct_values = as.numeric(.)) %>%
@@ -520,15 +526,15 @@ vars <- c('cty_l100km', 'hwy_l100km', 'combined_l100km', 'air_pollution',
 # result in the `wide` form
 
 result1 <- fuel_economy_2018 %>%
-     select (!!!vars) %>%
+     select ({{vars}}) %>%
      map_df(., mean, na.rm = TRUE)
 
 result2 <- fuel_economy_2018 %>%
-     select (!!!vars) %>%
+     select ({{vars}}) %>%
      map_dfr(., mean, na.rm = TRUE)
 
 result3 <- fuel_economy_2018 %>%
-     select (!!!vars) %>%
+     select ({{vars}}) %>%
      map_dfc(., mean, na.rm = TRUE)
 
 identical(result1, result2)
@@ -537,7 +543,7 @@ identical(result1, result3)
 
 # if we want the result in the `wide` format, then `gather` is needed
 result <- fuel_economy_2018 %>%
-     select (!!!vars) %>%
+     select ({{vars}}) %>%
      map_dfr(., mean, na.rm = TRUE) %>%
      gather(variable, mean)
 
@@ -581,20 +587,22 @@ glimpse(fuel_economy_2018)
 # solution with `map_dfr` gets the result in the `wide` format...
 result <- fuel_economy_2018 %>%
      select_if(is.character) %>%
-     set_names(str_replace_all(names(.), '\\.| ', '_')) %>% ## fix the variable names
+     janitor::clean_names() %>% ## fix the variable names
      map_dfr(., n_distinct)
 
-# so `gather` is needed ...
+# so `pivot_longer` is needed ...
 result <- result %>%
-     gather(variable_name, n_of_distinct_values)
+     pivot_longer( names(.),
+             names_to = 'variable_name', values_to = 'n_of_distinct_values')
 
 
 # also in this case, solution with `map_dfc` gets the same result as `map_dfr`
 result <- fuel_economy_2018 %>%
      select_if(is.character) %>%
-     set_names(str_replace_all(names(.), '\\.| ', '_')) %>% ## fix the variable names
+     janitor::clean_names() %>% ## fix the variable names
      map_dfc(., n_distinct) %>%
-     gather(variable_name, n_of_distinct_values)
+     pivot_longer( names(.),
+             names_to = 'variable_name', values_to = 'n_of_distinct_values')
 
 
 
@@ -609,19 +617,19 @@ glimpse(fuel_economy_2018)
 # solution with `map_dfr` applied on `descr_stats_wide`
 result_dfr_wide <- fuel_economy_2018 %>%
      select_if(is.numeric) %>%
-     set_names(str_replace_all(names(.), '\\.| ', '_')) %>% ## fix the variable names
+     janitor::clean_names() %>% ## fix the variable names
      map_dfr(., descr_stats_wide, .id = "variable")
 
 # solution with `map_dfr` applied on `descr_stats_long`
 result_dfr_long <- fuel_economy_2018 %>%
      select_if(is.numeric) %>%
-     set_names(str_replace_all(names(.), '\\.| ', '_')) %>% ## fix the variable names
+     janitor::clean_names() %>% ## fix the variable names
      map_dfr(., descr_stats_long, .id = "variable")
 
 # solution with `map_dfc` applied on `descr_stats_wide` extracts something like...
 result_dfc_wide <- fuel_economy_2018 %>%
      select_if(is.numeric) %>%
-     set_names(str_replace_all(names(.), '\\.| ', '_')) %>% ## fix the variable names
+     janitor::clean_names() %>% ## fix the variable names
      map_dfc(., descr_stats_wide)
 
 View(result_dfc_wide)
@@ -743,12 +751,12 @@ vars <- c('cty_l100km', 'hwy_l100km', 'combined_l100km', 'air_pollution',
 
 # first solution (taken from section `I.a`), with `map`, get the result as a list
 result_map <- fuel_economy_2018 %>%
-     select (!!!vars) %>%
+     select ({{vars}}) %>%
      map(., mean, na.rm = TRUE)
 
 # second solution, with `map_dbl`, get the result as a named vector
 result_map_dbl <- fuel_economy_2018 %>%
-     select (!!!vars) %>%
+     select ({{vars}}) %>%
      map_dbl(., mean, na.rm = TRUE)
 
 class(result_map)
@@ -762,7 +770,7 @@ result_map_dbl
 # with `tibble` and `set_names`
 
 result_map <- fuel_economy_2018 %>%
-     select (!!!vars) %>%
+     select ({{vars}}) %>%
      map(., mean, na.rm = TRUE) %>%
      tibble() %>%
      set_names('mean') %>%
@@ -770,7 +778,7 @@ result_map <- fuel_economy_2018 %>%
 
 
 result_map_dbl <- fuel_economy_2018 %>%
-     select (!!!vars) %>%
+     select ({{vars}}) %>%
      map_dbl(., mean, na.rm = TRUE) %>%
      tibble() %>%
      set_names('mean') %>%
@@ -842,17 +850,17 @@ vars <- c('cty_l100km', 'hwy_l100km', 'combined_l100km', 'air_pollution',
 
 ## in section `I.a`, column `mean` is a list
 result <- fuel_economy_2018 %>%
-     select (!!!vars) %>%
+     select ({{vars}}) %>%
      map(., mean, na.rm = TRUE) %>%
      tibble(variable = names(.), mean = .)
 result
 
 ## simply adding am `unnest` function at the end of solution above...
 result <- fuel_economy_2018 %>%
-     select (!!!vars) %>%
+     select ({{vars}}) %>%
      map(., mean, na.rm = TRUE) %>%
      tibble(variable = names(.), mean = .) %>%
-     unnest()
+     unnest(mean)
 
 ## ... will get the mean values properly
 result
@@ -861,7 +869,7 @@ result
 # there is also a solution that instead of `unnest` uses
 #    a combination of `map_dbl` and `pluck`
 result <- fuel_economy_2018 %>%
-     select (!!!vars) %>%
+     select ({{vars}}) %>%
      map(., mean, na.rm = TRUE) %>%
      tibble(variable = names(.), mean = .) %>%
      mutate(mean = map_dbl(.$mean, pluck(1)) )
@@ -1001,7 +1009,7 @@ vars <- c('cty_l100km', 'hwy_l100km', 'combined_l100km', 'air_pollution',
 
 # a solution based on `map2` function
 result <- fuel_economy_2018 %>%
-     select (!!!vars) %>%
+     select ({{vars}}) %>%
      map(., mean, na.rm = TRUE) %>%    # this computes mean for each column/variable
      map2(., names(.), c) %>%   # `map_2` concatenates the mean with the variable name
      tibble(variable = map_chr(., 2),     # first `map_chr` extracts the second component

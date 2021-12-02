@@ -21,7 +21,7 @@ library(readxl)
 library(janitor)
 
 ############################################################################
-###            Download the necesary data sets for this script
+###            Download the necessary data sets for this script
 ############################################################################
 
 # all the files needed o run this script are available at:
@@ -236,6 +236,7 @@ vars <- c('cty_l100km', 'hwy_l100km', 'combined_l100km', 'air_pollution',
 ## solution with `apply` and `tibble`
 result <- apply(fuel_economy_2018[vars], 2, mean, na.rm = TRUE) %>%
      tibble(variable = names(.), mean = .)
+names(result)
 
 # check the type of the result
 is.tibble(result)
