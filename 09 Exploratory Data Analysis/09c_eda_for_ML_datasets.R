@@ -1,8 +1,3 @@
-###############################################################################
-### Document partially supported by research project: POC/398/1/1 nr. 124759 -
-### „Research As A Service – Iasi (RaaS-IS)”
-###############################################################################
-
 ############################################################################
 ###                         Al.I. Cuza University of Iași                ###
 ###            Faculty of Economics and Business Administration          ###
@@ -18,7 +13,7 @@
 ###   further used in Inferential Statistics and Machine Learning        ###
 ###   (see next chapters/sections)                                       ###
 ############################################################################
-## last update: 31.08.2021
+## last update: 06.12.2021
 
 options(scipen = 999)
 library(tidyverse) 
@@ -30,7 +25,7 @@ library(inspectdf)
 
 
 ############################################################################
-###            Download the necesary data sets for this script
+###            Download the necessary data sets for this script
 ############################################################################
 
 # all the files needed o run this script are available at:
@@ -142,7 +137,7 @@ ggplot(., aes(x = value, y = n_value, fill = value)) +
      geom_text (aes(label = paste0(round(percent,0), '%'), 
                   vjust = if_else(n_value > 300, 1.5, -0.5))) +
     facet_wrap(~ variable, scale = "free") +
-    guides(fill=FALSE) +
+    theme(legend.position="none") + # this will remove the legend
     theme(axis.text.x = element_text(size = 10, angle = 45, hjust = 1)) +
     theme(strip.text.x = element_text(size = 14)) +
     xlab("") + ylab("frequency") 
@@ -165,7 +160,7 @@ num_variables %>%
 ggplot(., aes(x = value, fill = variable)) +
      geom_histogram() +
      facet_wrap(~ variable, scale = "free") +
-     guides(fill=FALSE) +
+     theme(legend.position="none") + # this will remove the legend
      theme(axis.text.x = element_text(size = 9)) +
      theme(strip.text.x = element_text(size = 12)) +
      xlab("") + ylab("frequency") 
@@ -176,10 +171,11 @@ num_variables %>%
 ggplot(., aes(x = value, fill = variable, alpha = 0.5)) +
      geom_density() +
      facet_wrap(~ variable, scale = "free") +
-     guides(fill=FALSE) +
+     theme(legend.position="none") + # this will remove the legend
      theme(axis.text.x = element_text(size = 9)) +
      theme(strip.text.x = element_text(size = 12)) +
      xlab("") + ylab("frequency") 
+
 
 
 # boxplot (free scale)
@@ -187,7 +183,7 @@ num_variables %>%
 ggplot(., aes(y = value)) +
      geom_boxplot() +
      facet_wrap(~ variable, scales = 'free') +
-     guides(fill=FALSE) +
+     theme(legend.position="none") + # this will remove the legend
      xlab("") + ylab("value") +
      theme(axis.text.x = element_blank()) 
 
@@ -275,7 +271,7 @@ save(states, file = 'ml_datasets.RData')
 
 
 #####################################################################
-### 	                      I.2 Insurance                          ###
+### 	                      I.2 Insurance                       ###
 #####################################################################
 ### data available on 
 ### https://github.com/stedy/Machine-Learning-with-R-datasets
@@ -320,6 +316,7 @@ insurance_lm1 <- lm(charges ~ ., data = insurance)
 summary(insurance_lm1)
 
 
+
 #####################################################################
 ###                I.3 House Prices (Ames, Iowa)                  ###
 #####################################################################
@@ -360,27 +357,18 @@ names(kaggle_house_ames)
 
 
 #####################################################################
-### 	                    I.4 Hrubaru2015                          ###
+### 	                    I.4 Hrubaru 2016                      ###
 #####################################################################
 ### the data set prepared by Hrubaru & Fotache (see.
 ### ....)
 
 
 load('Hrubaru_2016-02.RData')
-results_ih_2016 <- results_details.ok
+rm(results_details.ok_rand)
+glimpse(results_ih_2016)
 
-
-setwd('/Users/marinfotache/Dropbox/Hruby/Basic queries performance in SQL, NoSQL and Hadoop 2015/R/A - Single node')
-#load(file='results.RData')
-#load(file='details.RData')
-load(file='result_details.RData')
-results_details.ok <- results_details
-# divide avg_number of rows to 1000000
-results_details.ok$avg_nof_rows <- results_details.ok$avg_nof_rows / 1000000
-names(results_details.ok)
-save(results_details.ok, file = 'results_details.ok.RData')
-
-
+results_ih_2016 <- results_ih_2016 %>%
+    select (duration, scale)
 
 ##############################################################################
 ###       Separating queries executed in Hive and PostgreSQL               ###
@@ -388,35 +376,26 @@ save(results_details.ok, file = 'results_details.ok.RData')
 ##############################################################################
 
 row_to_be_selected <- c()
-for (i in unique(results_details.ok$queryId))
+for (i in unique(results_ih_2016$queryId))
      row_to_be_selected <- c(row_to_be_selected, 
          paste(i, 
           sample(c('Hive', 'PostgreSQL'), 1) , sep='-') )
 
 #row_to_be_selected
-
-results_details.ok_rand <- results_details.ok[row_to_be_selected,]
+results_details.ok_rand <- results_ih_2016[row_to_be_selected,]
+glimpse(results_details.ok_rand)
 
 ### correlation plot (nonparametric)
 #citation('corrplot')
 library(corrplot)
-corrplot.mixed(corr=cor(data.A.rand[-5], method = "spearman"), 
+corrplot.mixed(corr=cor(results_details.ok_rand %>% select_if(., is.numeric), 
+                        method = "spearman"), 
      upper = 'ellipse', tl.pos='lt')
 
 
-### Scatterplot Matrix
-#citation('car')
-library(car)
-scatterplotMatrix(data.A.rand[-5], spread=FALSE, smoother.args=list(lty=2),
-     main="Scatter Plot Matrix for Variables of the Randomized Model A ")
-
-### Linear model A
-lm.A.rand <- lm(duration ~ nof_attributes_select + nof_attributes_where + nof_joins, 
-     data=data.A.rand)
-summary(lm.A.rand)
-confint(lm.A.rand)
-
-
+##
+## to be continued dureing lectures with the removal of highly correlated predictors.
+##
 
 
 #####################################################################
@@ -477,7 +456,7 @@ glimpse(heart_init)
 # and recoding the factors (also convertinf the character
 # variables into factor)
 heart <- heart_init %>%
-     select (-X1) %>%
+     select (-`...1`) %>%
      mutate(
           Sex = recode (Sex, `0` = "Female", `1` = "Male"),
           Fbs = recode (Fbs, `0` = "No", `1` = "Yes"),
@@ -548,7 +527,7 @@ ggplot(., aes(x = value, y = n_value, fill = value)) +
      geom_text (aes(label = paste0(round(percent,0), '%'), 
                   vjust = if_else(n_value > 100, 1.5, -0.5))) +
     facet_wrap(~ variable, scale = "free") +
-    guides(fill=FALSE) +
+     theme(legend.position="none") + # this will remove the legend
     theme(axis.text.x = element_text(size = 10, angle = 45, hjust = 1)) +
     theme(strip.text.x = element_text(size = 12)) +
     xlab("") + ylab("frequency") 
@@ -570,7 +549,7 @@ num_variables %>%
 ggplot(., aes(x = value, fill = variable)) +
      geom_histogram() +
      facet_wrap(~ variable, scale = "free") +
-     guides(fill=FALSE) +
+     theme(legend.position="none") + # this will remove the legend
      theme(axis.text.x = element_text(size = 9)) +
      theme(strip.text.x = element_text(size = 12)) +
      xlab("") + ylab("frequency") 
@@ -599,7 +578,7 @@ ggplot(., aes(x = value, fill = variable )) +
      theme(axis.text.x = element_text(size = 9)) +
      theme(strip.text.x = element_text(size = 12)) +
      xlab("") + ylab("frequency") +
-     guides(fill=FALSE) 
+     theme(legend.position="none")  # this will remove the legend
 
 
 # boxplot (free scale)
@@ -607,7 +586,7 @@ num_variables %>%
 ggplot(., aes(y = value)) +
      geom_boxplot() +
      facet_wrap(~ variable, scales = 'free') +
-     guides(fill=FALSE) +
+     theme(legend.position="none") + # this will remove the legend
      xlab("") + ylab("value") +
      theme(axis.text.x = element_blank()) 
 
@@ -735,7 +714,7 @@ ggplot(., aes(x = value, y = n_value, fill = value)) +
      geom_text (aes(label = paste0(round(percent,0), '%'), 
                   vjust = if_else(n_value > 100, 1.5, -0.5))) +
     facet_wrap(~ variable + AHD, scale = "free", labeller = 'label_both') +
-    guides(fill=FALSE) +
+     theme(legend.position="none") + # this will remove the legend
     theme(axis.text.x = element_text(size = 10, angle = 45, hjust = 1)) +
     theme(strip.text.x = element_text(size = 12)) +
     xlab("") + ylab("frequency") 
@@ -753,11 +732,11 @@ ggplot(., aes(x = value, y = n_value, fill = value)) +
      geom_col() +
      geom_text (aes(label = paste0(round(percent,0), '%'), 
                   vjust = if_else(n_value > 100, 1.5, -0.5))) +
-    facet_grid(AHD ~ variable, scale = "free", labeller = 'label_both') +
-    guides(fill=FALSE) +
-    theme(axis.text.x = element_text(size = 10, angle = 45, hjust = 1)) +
-    theme(strip.text = element_text(size = 12)) +
-    xlab("") + ylab("frequency") 
+     facet_grid(AHD ~ variable, scale = "free", labeller = 'label_both') +
+     theme(legend.position="none") + # this will remove the legend
+     theme(axis.text.x = element_text(size = 10, angle = 45, hjust = 1)) +
+     theme(strip.text = element_text(size = 12)) +
+     xlab("") + ylab("frequency") 
 
 
 #################################################################
@@ -775,8 +754,8 @@ View(num_variables)
 num_variables %>%
 ggplot(., aes(x = value, fill = variable)) +
      geom_histogram() +
-    facet_grid(AHD ~ variable, scale = "free", labeller = 'label_both') +
-     guides(fill=FALSE) +
+     facet_grid(AHD ~ variable, scale = "free", labeller = 'label_both') +
+     theme(legend.position="none") + # this will remove the legend
      theme(axis.text.x = element_text(size = 9)) +
      theme(strip.text = element_text(size = 12)) +
      xlab("") + ylab("frequency") 
@@ -807,7 +786,7 @@ ggplot(., aes(x = value, fill = variable )) +
      theme(axis.text.x = element_text(size = 9)) +
      theme(strip.text = element_text(size = 12)) +
      xlab("") + ylab("frequency") +
-     guides(fill=FALSE) 
+     theme(legend.position="none")  # this will remove the legend
 
 
 # boxplot (free scale)
@@ -815,7 +794,7 @@ num_variables %>%
 ggplot(., aes(y = value)) +
      geom_boxplot() +
      facet_grid(variable ~ AHD, scale = "free") +
-     guides(fill=FALSE) +
+     theme(legend.position="none") + # this will remove the legend
      xlab("") + ylab("value") +
      theme(axis.text.x = element_blank()) 
 
@@ -831,14 +810,16 @@ vars <- setdiff(names(heart %>% select_if (is.factor)), 'AHD')
 
 plots <- list()
 
+var <- vars[1]
 for (var in vars) {
      temp <- heart %>%
           transmute (AHD, var1 = heart[[var]]) 
+     glimpse(temp)
      
      plot <- ggplot(data = temp) + 
      geom_mosaic (aes(weight = 1, x = product(AHD, var1), 
-                   fill=factor(AHD))) +
-     guides(fill=FALSE) +
+                   fill=AHD)) +
+     theme(legend.position="none") + # this will remove the legend
      xlab(var) + ylab("AHD") +
      theme(axis.text.x=element_text(angle=45, hjust= 1, size = 10)) 
           
@@ -849,7 +830,6 @@ for (var in vars) {
 #install.packages('Rmisc')
 library(Rmisc)
 multiplot(plotlist = plots, cols = 3)
-
 
 
 
