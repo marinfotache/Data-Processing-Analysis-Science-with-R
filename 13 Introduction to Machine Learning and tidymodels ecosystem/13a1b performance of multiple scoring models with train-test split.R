@@ -15,15 +15,16 @@
 ### See also the presentation:
 ### https://github.com/marinfotache/Data-Processing-Analysis-Science-with-R/blob/master/13%20Introduction%20to%20Machine%20Learning/13_Introduction%20to%20Machine%20Learning.pptx
 ############################################################################
-## last update: 21.11.2019
+## last update: 06.12.2021
 
 options(scipen = 999)
 library(tidyverse)
 library(tidymodels)
 
 
+
 ############################################################################
-###            Download the necesary data sets for this script
+###            Download the necessary data sets for this script
 ############################################################################
 
 # all the files needed o run this script are available at:
@@ -32,7 +33,8 @@ library(tidymodels)
 # Please download the files in a local directory (such as 'DataSets') and  
 # set the directory where you dowloaded the data files as the 
 # default/working directory, ex:
-setwd('/Users/marinfotache/Google Drive/R(Mac)/DataSets')
+setwd('/Users/marinfotache/Google Drive/R(Mac)-1 googledrive/DataSets')
+
 
 
 #########################################################################
@@ -67,17 +69,17 @@ previous_df_predictors <- df_one_predictor %>%
 
 df_all_possible_predictors <- df_one_predictor %>%
      transmute (model_id = 1000000 + row_number(), predictor_1 = predictor)
-     
+
 # i <- 2
 for (i in 2:length(predictors)) {
-     # we cross join `previous_df_predictors` with `preod`
+     # we cross join `previous_df_predictors` with `pred`
      col_name_ <- paste0('predictor_', i)
           
      crt_df_predictors <- previous_df_predictors %>%
           mutate (foo = 1) %>%
-          full_join(df_one_predictor %>% mutate (foo = 1)) %>%
+          inner_join(df_one_predictor %>% mutate (foo = 1)) %>%
           select (-foo) %>%
-          mutate (!!col_name_ := predictor) %>%
+          mutate ("{col_name_}" := predictor) %>%
           select (-predictor) %>%
           mutate (model_id = i * 1000000 + row_number()) %>%
           pivot_longer(-model_id, names_to = "predictor_series", 
@@ -125,7 +127,7 @@ save(states, the_formulas__states, file = 'df_and_the_formulas__states.RData')
 
 #########################################################################
 ###                        1. Train and test split                   ###
-# rsample provides a streamlined way to create a randomised 
+# rsample provides a streamlined way to create a randomized 
 #    training and test split of the original data.
 set.seed(seed = 1234) 
 train_test_split__states_2 <-
@@ -135,8 +137,10 @@ train_test_split__states_2 <-
   ) 
 train_test_split__states_2
 
-train_tbl__states_2 <- train_test_split__states_2 %>% training() 
-test_tbl__states_2  <- train_test_split__states_2 %>% testing()
+train_tbl__states_2 <- train_test_split__states_2 %>% 
+     training() 
+test_tbl__states_2  <- train_test_split__states_2 %>% 
+     testing()
 
 
 #########################################################################
@@ -150,8 +154,10 @@ simple_recipe__states_2 <- function(formula, dataset) {
 
 #  we build incrementally data frames containing the main ingredients of the models
 the_pipe__states_2 <- the_formulas__states %>% 
-     mutate (train = list(train_tbl__states_2), test = list(test_tbl__states_2)) %>%
-     mutate (prep = map2( .x = .$the_formula, .y = train, .f =  simple_recipe__states_2 )) %>%
+     mutate (train = list(train_tbl__states_2), 
+             test = list(test_tbl__states_2)) %>%
+     mutate (prep = map2( .x = .$the_formula, .y = train, 
+                          .f =  simple_recipe__states_2 )) %>%
      mutate (
           train_juiced = map(.x = .$prep, .f = juice),
           test_baked = map2(.x = .$prep, .y = .$test, .f = bake)

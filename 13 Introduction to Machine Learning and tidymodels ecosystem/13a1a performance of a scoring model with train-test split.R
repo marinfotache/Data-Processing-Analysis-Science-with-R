@@ -15,15 +15,16 @@
 ### See also the presentation:
 ### https://github.com/marinfotache/Data-Processing-Analysis-Science-with-R/blob/master/13%20Introduction%20to%20Machine%20Learning/13_Introduction%20to%20Machine%20Learning.pptx
 ############################################################################
-## last update: 22.11.2019
+## last update: 06.12.2021
 
 options(scipen = 999)
 library(tidyverse)
+# install.packages('tidymodels')
 library(tidymodels)
 
 
 ############################################################################
-###            Download the necesary data sets for this script
+###            Download the necessary data sets for this script
 ############################################################################
 
 # all the files needed o run this script are available at:
@@ -32,7 +33,7 @@ library(tidymodels)
 # Please download the files in a local directory (such as 'DataSets') and  
 # set the directory where you dowloaded the data files as the 
 # default/working directory, ex:
-setwd('/Users/marinfotache/Google Drive/R(Mac)/DataSets')
+setwd('/Users/marinfotache/Google Drive/R(Mac)-1 googledrive/DataSets')
 
 
 
@@ -55,52 +56,32 @@ states <- states %>%
 
 #########################################################################
 ###                         1 Train and test split                   ###
-# rsample provides a streamlined way to create a randomised 
+# rsample provides a streamlined way to create a randomized 
 #    training and test split of the original data.
 set.seed(seed = 1234) 
-train_test_split__states_1 <-
-  rsample::initial_split(
+train_test_split__states_1 <- rsample::initial_split(
     data = states,     
     prop = 0.66
   ) 
 train_test_split__states_1
 
-train_tbl__states_1 <- train_test_split__states_1 %>% training() 
-test_tbl__states_1  <- train_test_split__states_1 %>% testing()
-
-
-#########################################################################
-###                            2. Two simple recipes
-
-recipe1__states_1 <- function(dataset) {
-     recipe(Murder ~ Area + Frost + Illiteracy + Life_Exp + Population, 
-            data = dataset) %>%
-     prep(data = dataset)
-}
-     
-recipe2__states_1 <- function(dataset) {
-     recipe(Murder ~ HS_Grad + Income + Population, 
-            data = dataset) %>%
-     prep(data = dataset)
-}
-
-
-# Note that in order to avoid data leakage (e.g: transferring 
-#    information from the train set into the test set), 
-#    data should be “prepped” using the train_tbl__states_1 only.
-recipe1_prepped__states_1 <- recipe1__states_1(dataset = train_tbl__states_1)
-recipe2_prepped__states_1 <- recipe2__states_1(dataset = train_tbl__states_1)
-
-
-# In the `bake` step, all preprocessing operations are applied
-#    to the test data subsets.
-test1_baked__states_1  <- bake(recipe1_prepped__states_1, new_data = test_tbl__states_1)
-test2_baked__states_1  <- bake(recipe2_prepped__states_1, new_data = test_tbl__states_1)
+train_tbl__states_1 <- train_test_split__states_1 %>%  training() 
+test_tbl__states_1  <- train_test_split__states_1 %>%  testing()
 
 
 
 #########################################################################
-###                      3. Fit the models
+###                         2. Two simple recipes
+
+recipe1__states_1 <- recipes::recipe(Murder ~ Area + Frost + Illiteracy + 
+  Life_Exp + Population, data = train_tbl__states_1) 
+
+recipe2__states_1 <- recipes::recipe(Murder ~ HS_Grad + Income + Population, 
+            data = train_tbl__states_1) 
+
+
+#########################################################################
+###                      3. Create the models
 
 # `parsnip` offers a unified API that allows access to 
 #    several machine learning packages without the need 
@@ -111,15 +92,41 @@ test2_baked__states_1  <- bake(recipe2_prepped__states_1, new_data = test_tbl__s
 #    linear regression)
 #    -  decide which computational engine to use (`lm` in this case)
 #    -  spell out the exact model specification to fit 
+# lm_model1__states_1 <- linear_reg() %>%
+#   set_engine("lm") %>%
+#   fit(Murder ~ Area + Frost + Illiteracy + Life_Exp + Population, 
+#       data = juice(recipe1_prepped__states_1))
+# 
+# lm_model2__states_1 <- linear_reg() %>%
+#   set_engine("lm") %>%
+#   fit(Murder ~ HS_Grad + Income + Population, 
+#       data = juice(recipe2_prepped__states_1))
+
 lm_model1__states_1 <- linear_reg() %>%
   set_engine("lm") %>%
   fit(Murder ~ Area + Frost + Illiteracy + Life_Exp + Population, 
-      data = juice(recipe1_prepped__states_1))
+      data = train_tbl__states_1)
 
 lm_model2__states_1 <- linear_reg() %>%
   set_engine("lm") %>%
   fit(Murder ~ HS_Grad + Income + Population, 
-      data = juice(recipe2_prepped__states_1))
+      data = train_tbl__states_1)
+
+
+# model results
+lm_model1__states_1 %>% extract_fit_engine() %>% summary()
+lm_model2__states_1 %>% extract_fit_engine() %>% summary()
+
+
+# extract predictors coefficients in the tidy format
+lm_model1__states_1 %>% extract_fit_engine() %>% tidy()
+lm_model2__states_1 %>% extract_fit_engine() %>% tidy()
+
+# model overall statistics in the tidy format
+lm_model1__states_1 %>% extract_fit_engine() %>% glance()
+lm_model2__states_1 %>% extract_fit_engine() %>% glance()
+
+
 
 
 #######################################################################
@@ -133,20 +140,33 @@ lm_model2__states_1 <- linear_reg() %>%
 #    the `test_baked` data to the `predict` function.
 
 
+
+
 ######################################################################
 ###                      4.1 Model predictions
 
 # Numeric predictions always in a df
 # with column `.pred`
-test1_pred__states_1 <- lm_model1__states_1 %>%
-  predict(test1_baked__states_1) %>%
-  bind_cols(test1_baked__states_1) %>% 
-  dplyr::select(Murder, .pred) 
+# test1_pred__states_1 <- lm_model1__states_1 %>%
+#   predict(test1_baked__states_1) %>%
+#   bind_cols(test1_baked__states_1) %>% 
+#   dplyr::select(Murder, .pred) 
+#   
+# test2_pred__states_1 <- lm_model2__states_1 %>%
+#   predict(test2_baked__states_1) %>%
+#   bind_cols(test2_baked__states_1) %>%
+#   dplyr::select(Murder, .pred) 
+
+
+test1_pred__states_1 <- predict(lm_model1__states_1, new_data = test_tbl__states_1) %>%
+    bind_cols(test_tbl__states_1) %>% 
+    select(Murder, .pred) 
   
-test2_pred__states_1 <- lm_model2__states_1 %>%
-  predict(test2_baked__states_1) %>%
-  bind_cols(test2_baked__states_1) %>%
-  dplyr::select(Murder, .pred) 
+test2_pred__states_1 <- predict(lm_model2__states_1, new_data = test_tbl__states_1) %>%
+    bind_cols(test_tbl__states_1) %>%
+    dplyr::select(Murder, .pred) 
+
+
 
 
 ######################################################################
