@@ -9,73 +9,58 @@
 ############################################################################
 ###
 ############################################################################
-###           13.a. The simplest (and more recent) way to build          ###
-###                 and compare scoring models with `tidymodels`         ### 
+###         13.b. The simplest (and more recent) way to build            ###
+###           and compare classification models with `tidymodels`        ### 
 ############################################################################
 
-############################################################################
-### See also the presentation:
-### https://github.com/marinfotache/Data-Processing-Analysis-Science-with-R/blob/master/13%20Introduction%20to%20Machine%20Learning/13_Introduction%20to%20Machine%20Learning.pptx
-############################################################################
-## last update: 08.12.2021
-
-#install.packages('ranger')
 library(ranger)
 library(tidyverse)
 library(broom)
 library(tidymodels)
 options(scipen = 999)
 
-############################################################################
-###            Download the necessary data sets for this script
-############################################################################
-
 # all the files needed o run this script are available at:
 # https://github.com/marinfotache/Data-Processing-Analysis-Science-with-R/tree/master/DataSets
 
 # Please download the files in a local directory (such as 'DataSets') and  
-# set the directory where you dowloaded the data files as the 
+# set the directory where you downloaded the data files as the 
 # default/working directory, ex:
 setwd('/Users/marinfotache/Google Drive/R(Mac)-1 googledrive/DataSets')
 
 
-
 #####################################################################
-### 	   Insurance data set (for EDA, see script `09_c_eda_...`)  ###
+###                      Heart disease data set                   ###
 #####################################################################
-## Variables
-## `age`: age of primary beneficiary
-## `sex`: insurance contractor gender, female, male
-## `bmi`: Body mass index, providing an understanding of body, 
-##   weights that are relatively high or low relative to height, 
-##   objective index of body weight (kg / m ^ 2) using the ratio 
-##   of height to weight, ideally 18.5 to 24.9
-## `children`: Number of children covered by health insurance / Number 
-##   of dependents
-## `smoker`: Smoking
-## `region`: the beneficiary's residential area in the US, northeast, southeast, 
-##        southwest, northwest.
-## `charges`: Individual medical costs billed by health insurance
+## for the description and EDA - see script `09c...``
+## for logistic regression models fit - see scripts `11b...` 
+## for validation based on simple train-test split - 
+##             see scripts `13b1a...` and `13b1b...` 
+load('ml_datasets.RData')
+rm(states)
 
-insurance <- readr::read_csv('insurance.csv')
+glimpse(heart)
 
-# are there any missing values ?
-any(is.na(insurance))
+# check missing values 
+any(is.na(heart))
+# there are!!!
 
-table(insurance$region)
+table(heart$AHD)
+
+139 / (164 + 139)
+
 
 
 ##########################################################################
 ###                             Main split of the data                 ###
 set.seed(1234)
-splits   <- initial_split(insurance, prop = 0.75)
+splits   <- initial_split(heart, prop = 0.75, strata = AHD)
 train_tbl <- training(splits)
 test_tbl  <- testing(splits)
 
 
 ## cross-validation folds
 set.seed(1234)
-cv_train <- vfold_cv(train_tbl, v = 5, repeats = 5)
+cv_train <- vfold_cv(train_tbl, v = 5, repeats = 5, strata = AHD)
 cv_train
 
 
@@ -84,36 +69,35 @@ cv_train
 ###                        The recipe for data preparation             ###
 ### not all steps (in the following recipe) are really necessary 
 ### in this case, but in many other situations they are really useful
-the_recipe <- recipe(charges ~ ., data = train_tbl) %>%
+the_recipe <- recipe(AHD ~ ., data = train_tbl) %>%
+    step_knnimpute(all_predictors(), neighbors = 3) %>%   # .missing values impoutation
     step_dummy(all_nominal(), -all_outcomes()) %>% # dummification of the predictors
-    step_knnimpute(all_predictors(), neighbors = 3) %>%   # ... when having missing values
     step_zv(all_predictors()) # this removes predictors with zero variance
 
 
 #########################################################################
 ###                           Models Specification
-lm_spec <- linear_reg() %>%
-  set_engine("lm") %>%
-  set_mode("regression")
+lr_spec <- logistic_reg(mode = "classification") %>%
+          set_engine("glm") 
 
 rf_spec <- rand_forest() %>%
      set_engine("ranger") %>%
-     set_mode("regression")
+     set_mode("classification")
 
 
 #########################################################################
 ###                   Assemble the workflows and fit the models
 
 set.seed(1234)
-lm_resamples <- workflow() %>%
+lr_resamples <- workflow() %>%
     add_recipe(the_recipe) %>%
-    add_model(lm_spec) %>%
+    add_model(lr_spec) %>%
     fit_resamples(resamples = cv_train, 
                   control = control_resamples(save_pred = TRUE))
 
 
 # examine the resulted tibble
-View(lm_resamples)
+View(lr_resamples)
 
 
 set.seed(1234)
@@ -123,7 +107,6 @@ rf_resamples <- workflow() %>%
     fit_resamples(resamples = cv_train, 
                   control = control_resamples(save_pred = TRUE))
 
-
 # examine the resulted tibble
 View(rf_resamples)
 
@@ -132,17 +115,12 @@ View(rf_resamples)
 ###                        Explore the results 
 
 # performance metrics (mean) across folds for each grid line
-lm_resamples %>% collect_metrics()
+lr_resamples %>% collect_metrics()
 
 #  get the metrics for each resample
-detailed_metrics_lm <- lm_resamples %>% collect_metrics(summarize = FALSE)
-View(detailed_metrics_lm)  
+detailed_metrics_lr <- lr_resamples %>% collect_metrics(summarize = FALSE)
+View(detailed_metrics_lr)  
 
-ggplot(detailed_metrics_lm %>% mutate (id = row_number()), 
-       aes (x = id, y = `.estimate`)) +
-    geom_point() +
-    facet_wrap(~ `.metric`, scales = 'free')
- 
 
 # performance metrics (mean) across folds for each grid line
 rf_resamples %>% collect_metrics()
@@ -150,12 +128,6 @@ rf_resamples %>% collect_metrics()
 #  get the metrics for each resample
 detailed_metrics_rf <- rf_resamples %>% collect_metrics(summarize = FALSE)
 View(detailed_metrics_rf)  
-
-ggplot(detailed_metrics_rf %>% mutate (id = row_number()), 
-       aes (x = id, y = `.estimate`)) +
-    geom_point() +
-    facet_wrap(~ `.metric`, scales = 'free')
-
 
 
 
@@ -166,12 +138,13 @@ ggplot(detailed_metrics_rf %>% mutate (id = row_number()),
 ### to the training data and evaluates one last time on the testing data.
 
 set.seed(1234)
-test__lm <- workflow() %>%
+test__lr <- workflow() %>%
     add_recipe(the_recipe) %>%
-    add_model(lm_spec) %>%
+    add_model(lr_spec) %>%
     last_fit(splits) 
 
-test__lm %>% collect_metrics() 
+test__lr %>% collect_metrics() 
+
 
 
 set.seed(1234)
@@ -184,22 +157,47 @@ test__rf %>% collect_metrics()
 
 
 
+### ROC Curves
+### 
+test__lr %>%
+    unnest(`.predictions`) %>%
+    roc_curve(truth = AHD, estimate = .pred_No) %>%
+    autoplot()
+
+test__rf %>%
+    unnest(`.predictions`) %>%
+    roc_curve(truth = AHD, estimate = .pred_No) %>%
+    autoplot()
+
+
 
 #########################################################################
 ###                 Variable importance (for Random Forest)
 #########################################################################
 
+
 ### Examine the regression coefficients
 
 set.seed(1234)
-lm_fit <- workflow() %>%
+lr_fit <- workflow() %>%
     add_recipe(the_recipe) %>%
-    add_model(lm_spec) %>%
+    add_model(lr_spec) %>%
     fit(data = train_tbl)
-lm_fit
+lr_fit
 
-coeffs <- tidy(extract_fit_parsnip(lm_fit))
+coeffs <- tidy(extract_fit_parsnip(lr_fit))
 coeffs
+
+lr_fit %>%
+    tidy() %>%
+    mutate(term = fct_reorder(term, estimate)) %>%
+    ggplot(aes(estimate, term, fill = estimate > 0)) +
+    geom_col() +
+    theme(legend.position = "none")
+
+
+coeffs_exp <- tidy(extract_fit_parsnip(lr_fit), exponentiate = TRUE)
+coeffs_exp
 
 
 library(vip)
