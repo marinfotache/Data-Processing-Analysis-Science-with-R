@@ -65,6 +65,7 @@ the_recipe <- recipe(AHD ~ ., data = train_tbl) %>%
     step_zv(all_predictors()) # this removes predictors with zero variance
 
 
+
 #########################################################################
 ###                           Models Specification
 lr_spec <- logistic_reg(mode = "classification") %>%
@@ -75,9 +76,9 @@ rf_spec <- rand_forest() %>%
      set_mode("classification")
 
 
+
 #########################################################################
 ###                   Assemble the workflows and fit the models
-
 
 ### the logistic regression model
 set.seed(1234)
@@ -101,6 +102,7 @@ lr_fit_coefficients2 <- tidy(extract_fit_parsnip(lr_fit))
 lr_fit_coefficients_exp <- broom::tidy (lr_fit, exponentiate = TRUE)
 # ..or...
 coeffs_exp <- tidy(extract_fit_parsnip(lr_fit), exponentiate = TRUE)
+
 
 ## model predictions on the training set
 

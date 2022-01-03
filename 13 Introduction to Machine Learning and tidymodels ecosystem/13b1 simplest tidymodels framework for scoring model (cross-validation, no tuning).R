@@ -9,8 +9,8 @@
 ############################################################################
 ###
 ############################################################################
-###     13.a.1 The simplest (and more recent) way to build and compare   ###
-###         scoring models with `tidymodels`  (train-test, no tuning)    ### 
+###     13.b.1 The simplest (and more recent) way to build and compare   ###
+###    scoring models with `tidymodels`  (cross-validation, no tuning)   ### 
 ############################################################################
 
 ############################################################################
@@ -22,7 +22,7 @@
 #install.packages('ranger')
 library(ranger)
 library(tidyverse)
-#library(broom)
+library(broom)
 library(tidymodels)
 options(scipen = 999)
 
@@ -41,7 +41,7 @@ setwd('/Users/marinfotache/Google Drive/R(Mac)-1 googledrive/DataSets')
 
 
 #####################################################################
-### 	   Insurance data set (for EDA, see script `09_c_eda_...`)   ###
+### 	   Insurance data set (for EDA, see script `09_c_eda_...`)  ###
 #####################################################################
 ## Variables
 ## `age`: age of primary beneficiary
@@ -59,14 +59,10 @@ setwd('/Users/marinfotache/Google Drive/R(Mac)-1 googledrive/DataSets')
 
 insurance <- readr::read_csv('insurance.csv')
 
-lm1 <- lm(charges ~ ., data = insurance)
-summary(lm1)
-
 # are there any missing values ?
 any(is.na(insurance))
 
 table(insurance$region)
-
 
 
 ##########################################################################
@@ -75,6 +71,12 @@ set.seed(1234)
 splits   <- initial_split(insurance, prop = 0.75)
 train_tbl <- training(splits)
 test_tbl  <- testing(splits)
+
+
+## cross-validation folds
+set.seed(1234)
+cv_train <- vfold_cv(train_tbl, v = 5, repeats = 5)
+cv_train
 
 
 
@@ -99,97 +101,109 @@ rf_spec <- rand_forest() %>%
      set_mode("regression")
 
 
+
 #########################################################################
 ###                   Assemble the workflows and fit the models
 
-### the liniar regression model
 set.seed(1234)
-lm_fit <- workflow() %>%
+lm_resamples <- workflow() %>%
     add_recipe(the_recipe) %>%
     add_model(lm_spec) %>%
-    fit(data = train_tbl)
+    fit_resamples(resamples = cv_train, 
+                  control = control_resamples(save_pred = TRUE))
+
 
 # examine the resulted tibble
-lm_fit
-
-lm_fit_summary <- broom::glance(lm_fit)
-lm_fit_coefficients <- broom::tidy (lm_fit)
-# model predictions on the training set
-lm_fit_predictions <- broom::augment (lm_fit, new_data = train_tbl)
-# ..or
-lm_fit_predictions2 <- bind_cols(train_tbl,
-     predict (lm_fit, new_data = train_tbl))
-
-identical(lm_fit_predictions, lm_fit_predictions2)
+View(lm_resamples)
 
 
-
-### the random forest regression model
 set.seed(1234)
-rf_fit <- workflow() %>%
+rf_resamples <- workflow() %>%
     add_recipe(the_recipe) %>%
     add_model(rf_spec) %>%
-    fit(data = train_tbl)
+    fit_resamples(resamples = cv_train, 
+                  control = control_resamples(save_pred = TRUE))
+
 
 # examine the resulted tibble
-rf_fit
-
-# no model summary and coefficients for random forests models
-# ...
-
-# rf model predictions
-rf_fit_predictions <- broom::augment(rf_fit, new_data = train_tbl)
+View(rf_resamples)
 
 
 
 #########################################################################
 ###                        Explore the results 
 
-broom::augment (lm_fit, new_data = train_tbl) %>%
-     ggplot( aes (x = charges, y = `.pred`)) +
-     geom_abline(lty = 2) + 
-     geom_point(alpha = 0.5) +
-     labs(y = "Predicted values of Charges", x = "Charges (observed values)") +
-     ggtitle('Predicted vs. Real Values - the linear model')
+# performance metrics (mean) across folds for each grid line
+lm_resamples %>% collect_metrics()
 
-broom::augment(rf_fit, new_data = train_tbl) %>%
-     ggplot( aes (x = charges, y = `.pred`)) +
-     geom_abline(lty = 2) + 
-     geom_point(alpha = 0.5) +
-     labs(y = "Predicted values of Charges", x = "Charges (observed values)") +
-     ggtitle('Predicted vs. Real Values - the random forest model')
+#  get the metrics for each resample
+detailed_metrics_lm <- lm_resamples %>% collect_metrics(summarize = FALSE)
+View(detailed_metrics_lm)  
+
+ggplot(detailed_metrics_lm %>% mutate (id = row_number()), 
+       aes (x = id, y = `.estimate`)) +
+    geom_point() +
+    facet_wrap(~ `.metric`, scales = 'free')
+ 
+
+# performance metrics (mean) across folds for each grid line
+rf_resamples %>% collect_metrics()
+
+#  get the metrics for each resample
+detailed_metrics_rf <- rf_resamples %>% collect_metrics(summarize = FALSE)
+View(detailed_metrics_rf)  
+
+ggplot(detailed_metrics_rf %>% mutate (id = row_number()), 
+       aes (x = id, y = `.estimate`)) +
+    geom_point() +
+    facet_wrap(~ `.metric`, scales = 'free')
+
 
 
 
 #########################################################################
 ###     The moment of truth: model performance on the test data set
 
-scoring_metrics <- metric_set(rmse, rsq, mae, ccc)
+### Function last_fit() fits the finalized workflow one last time 
+### to the training data and evaluates one last time on the testing data.
 
 set.seed(1234)
-test__lm <- broom::augment(lm_fit, new_data = test_tbl)
-scoring_metrics(test__lm, truth = charges, estimate = .pred)
+test__lm <- workflow() %>%
+    add_recipe(the_recipe) %>%
+    add_model(lm_spec) %>%
+    last_fit(splits) 
+
+test__lm %>% collect_metrics() 
+
 
 set.seed(1234)
-test__rf <- broom::augment(rf_fit, new_data = test_tbl)
-scoring_metrics(test__rf, truth = charges, estimate = .pred)
+test__rf <- workflow() %>%
+    add_recipe(the_recipe) %>%
+    add_model(rf_spec) %>%
+    last_fit(splits) 
+
+test__rf %>% collect_metrics() 
+
 
 
 
 #########################################################################
-###                        Variable importance 
+###                 Variable importance (for Random Forest)
 #########################################################################
 
 ### Examine the regression coefficients
+
+set.seed(1234)
+lm_fit <- workflow() %>%
+    add_recipe(the_recipe) %>%
+    add_model(lm_spec) %>%
+    fit(data = train_tbl)
 lm_fit
-lm_fit_coefficients <- broom::tidy (lm_fit)
-lm_fit_coefficients
-# ...or...
-lm_fit_coefficients2 <- broom::tidy(extract_fit_parsnip(lm_fit))
-identical(lm_fit_coefficients, lm_fit_coefficients2)
+
+coeffs <- tidy(extract_fit_parsnip(lm_fit))
+coeffs
 
 
-### Variable importance  for the Random Forest modsl
 library(vip)
 
 set.seed(1234)
