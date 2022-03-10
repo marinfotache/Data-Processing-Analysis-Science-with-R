@@ -1,8 +1,3 @@
-###############################################################################
-### Document partially supported by research project: POC/398/1/1 nr. 124759 -
-### „Research As A Service – Iasi (RaaS-IS)”
-###############################################################################
-
 #######################################################################
 ###                    Al.I. Cuza University of Iași                ###
 ###       Faculty of Economics and Business Administration          ###
@@ -18,7 +13,7 @@
 ### See also the presentation:
 ### https://github.com/marinfotache/Data-Processing-Analysis-Science-with-R/blob/master/08%20Data%20Visualization%20with%20-mostly-%20ggplot2/08_ggplot2.pptx
 #######################################################################
-## last update: 31.08.2021
+## last update: 10.02.2022
 
 #install.packages('vcd')
 library (vcd)
@@ -103,7 +98,7 @@ glimpse(studs)
 
 
 ## Task:
-## Display the undergraduate student structure, by programmes
+## Display the undergraduate student structure, by programs
 
 # ... first, we aggregate the data (removing the `Commomon courses`
 # which is not a programme)
@@ -142,8 +137,8 @@ ggplot(data = data, aes(x = PROGRAMME, y = n_of_studs,
 # Remove the legend, since in this case it is redundant
 ggplot(data = data, aes(x = PROGRAMME, y = n_of_studs,
                         fill = PROGRAMME)) +
-    geom_bar(colour="black", stat="identity") +
-    guides(fill=FALSE)
+    geom_bar(stat="identity") +
+     theme(legend.position="none")  # this will remove the legend
 
 # Add title, narrow the bars, use a gray fill, and change axis labels
 # notice that `fill` in `geom_bar` overwrites `fill` in the main aestetics
@@ -152,7 +147,7 @@ ggplot(data = data, aes(x = PROGRAMME, y = n_of_studs,
                         fill = PROGRAMME)) +
     geom_bar(colour="black", fill="#DD8888",
              width=.7, stat="identity") +
-    guides(fill=FALSE) +
+    theme(legend.position="none") + # this will remove the legend
     xlab("Undergraduate Programme") + ylab("Number of students") +
     ggtitle("Undergraduate Students Structure")
 
@@ -161,7 +156,7 @@ ggplot(data = data, aes(x = PROGRAMME, y = n_of_studs,
 ggplot(data = data, aes(x = PROGRAMME, y = n_of_studs,
                         fill = PROGRAMME)) +
     geom_bar(stat="identity") +
-    guides(fill=FALSE) +
+    theme(legend.position="none") + # this will remove the legend
     xlab("Undergraduate Programme") + ylab("Number of students") +
     ggtitle("Undergraduate Students Structure") +
     theme(axis.text.x = element_text(angle = 90, # (not so good for the neck)
@@ -172,10 +167,10 @@ ggplot(data = data, aes(x = PROGRAMME, y = n_of_studs,
 ggplot(data = data, aes(x = PROGRAMME, y = n_of_studs,
                         fill = PROGRAMME)) +
     geom_bar(stat="identity") +
-    guides(fill=FALSE) +
+    theme(legend.position="none") + # this will remove the legend
     xlab("Undergraduate Programme") + ylab("Number of students") +
     ggtitle("Undergraduate Students Structure") +
-    theme(axis.text.x = element_text(angle = 45, # (not so good for the neck)
+    theme(axis.text.x = element_text(angle = 30, # (not so good for the neck)
                vjust = 1, # vertical justification (position near to bar center)
                hjust = 1 )) # horizontal justification (align towards the bar)
 
@@ -184,7 +179,7 @@ ggplot(data = data, aes(x = PROGRAMME, y = n_of_studs,
 ggplot(data = data, aes(x = PROGRAMME, y = n_of_studs,
                         fill = PROGRAMME)) +
     geom_bar(stat="identity") +
-    guides(fill=FALSE) +
+    theme(legend.position="none") + # this will remove the legend
     xlab("Undergraduate Programme") + ylab("Number of students") +
     ggtitle("Structure of the Undergraduate Students") +
     theme(axis.text.x = element_text(angle = 60, # (better for the neck)
@@ -198,12 +193,12 @@ ggplot(data = data,
                         fill = PROGRAMME)) +
      geom_bar(stat="identity") +
      coord_flip()  +   # horizontal bars
-     guides(fill=FALSE) +
+     theme(legend.position="none") + # this will remove the legend
      xlab("Undergraduate Programme") + ylab("Number of students") +
      ggtitle("Structure of the Undergraduate Students") +
-     theme(axis.text.x = element_text(angle = 45,
+     theme(axis.text.x = element_text(angle = 0,
                vjust = 1,
-               hjust = 1 ))
+               hjust = .5 ))
 
 
 ggplot(data = data,
@@ -211,7 +206,7 @@ ggplot(data = data,
                         fill = PROGRAMME)) +
      geom_bar(stat="identity") +
      coord_flip()  +   # horizontal bars
-     guides(fill=FALSE) +
+     theme(legend.position="none") + # this will remove the legend
      xlab("Programe de licență") + ylab("Nr. studenți") +
      ggtitle("Structura programelor de licență") +
      theme(axis.text.x = element_text(angle = 45,
@@ -233,7 +228,7 @@ ggplot(data = data_ro,
                         fill = PROGRAMME)) +
      geom_bar(stat="identity") +
      coord_flip()  +   # horizontal bars
-     guides(fill=FALSE) +
+     theme(legend.position="none") + # this will remove the legend
      xlab("Programe de licență") + ylab("Nr. studenți") +
      ggtitle("Structura programelor de licență") +
      theme(axis.text.x = element_text(angle = 45,
@@ -255,7 +250,7 @@ invoice_detailed %>%
      ungroup() %>%
 ggplot(., aes (x = productname, y = freq, fill = productname)) +
      geom_bar(stat="identity") +
-     guides(fill=FALSE) + # no legend
+     theme(legend.position="none") + # this will remove the legend
      xlab("product name") + ylab("Number of occurences (frequency)") +
      ggtitle("Product Frequency (Overall)") +
      theme(plot.title = element_text(hjust = 0.5))  # center the title
@@ -271,7 +266,7 @@ invoice_detailed %>%
      ungroup() %>%
 ggplot(., aes (x = productname, y = freq, fill = productname)) +
      geom_bar(stat="identity") +
-     guides(fill=FALSE) + # no legend
+     theme(legend.position="none") + # no legend
      xlab("product name") + ylab("Number of occurences (frequency)") +
      ggtitle("Product Frequency (Overall)") +
      theme(plot.title = element_text(hjust = 0.5)) +  # center the title
@@ -334,7 +329,7 @@ ggplot(Arthritis,
      theme (plot.subtitle = element_text (colour="black", size="12", hjust = 0.5))+
 	theme(text=element_text(size=12)) +
    	ylab("Number of cases") + xlab("Result") +
-	guides(fill=FALSE)  # no legend
+     theme(legend.position="none")  # no legend
 
 
 ## Task:
@@ -349,7 +344,7 @@ ggplot(Arthritis, aes(x = factor(Sex), fill = "yellow2")) +
      theme (plot.subtitle = element_text (colour="black", size="12", hjust = 0.5))+
 	theme(text=element_text(size=12)) +
    	ylab("Number of cases") + xlab("Treatment Groups") +
-	guides(fill=FALSE)  # no legend
+     theme(legend.position="none")  # no legend
 
 
 
@@ -367,7 +362,7 @@ ggplot(data = studs %>%
      aes(x = PROGRAMME, fill = PROGRAMME)) +
      geom_bar(stat="count") +
      coord_flip()  +   # horizontal bars
-     guides(fill=FALSE) +
+     theme(legend.position="none") + # no legend
      xlab("Undergraduate Programme") + ylab("Number of students") +
      ggtitle("Structure of the Undergraduate Students") +
      theme(axis.text.x = element_text(angle = 45,
@@ -388,7 +383,7 @@ glimpse(invoice_detailed)
 ggplot(invoice_detailed,
      aes (x = productname, fill = productname)) +
      geom_bar() +
-     guides(fill=FALSE) + # no legend
+     theme(legend.position="none") + # no legend
      xlab("product name") + ylab("Number of occurences (frequency)") +
      ggtitle("Product Frequency (Overall)") +
      theme(plot.title = element_text(hjust = 0.5)) + # center the title
@@ -429,7 +424,7 @@ ggplot(fuel_economy_2018,
      aes (x = manufacturer, fill = manufacturer)) +
      geom_bar() +
      coord_flip() + # there are many manufactures, so we'll use horizontal bars
-     guides(fill=FALSE) + # no legend
+     theme(legend.position="none") + # no legend
      xlab("manufacturer") + ylab("number of car models") +
      ggtitle("Number of Car Models, by Manufacturer") +
      theme(plot.title = element_text(hjust = 0.5)) + # center the title
@@ -791,7 +786,7 @@ ggplot(data = studs %>%
      coord_flip()  +   # horizontal bars
      geom_text(aes(x = PROGRAMME, y = n_of_studs, label = n_of_studs),
                hjust = 0, size = 3) + # display the text outside the bar
-     guides(fill=FALSE) +
+     theme(legend.position="none") + # no legend
      xlab("Undergraduate Programme") + ylab("Number of students") +
      ggtitle("Structure of the Undergraduate Students") +
      theme(axis.text.x = element_text(angle = 45, vjust = 1, hjust = 1 ))
@@ -808,7 +803,7 @@ ggplot(data = studs %>%
      coord_flip()  +   # horizontal bars
      geom_text(aes(x = PROGRAMME, y = n_of_studs, label = n_of_studs),
                hjust = 1.1, size = 3) + # display the text inside the bar
-     guides(fill=FALSE) +
+     theme(legend.position="none") + # no legend
      xlab("Undergraduate Programme") + ylab("Number of students") +
      ggtitle("Structure of the Undergraduate Students") +
      theme(axis.text.x = element_text(angle = 45, vjust = 1, hjust = 1 ))
@@ -827,7 +822,7 @@ ggplot(data = studs %>%
      geom_text(stat = "count",
                aes(x = PROGRAMME, y = ..count.., label = ..count..),
                hjust = 1.1, size = 3) + # display the text inside the bar
-     guides(fill=FALSE) +
+     theme(legend.position="none") + # no legend
      xlab("Undergraduate Programme") + ylab("Number of students") +
      ggtitle("Structure of the Undergraduate Students") +
      theme(axis.text.x = element_text(angle = 45, vjust = 1, hjust = 1 ))
@@ -836,7 +831,6 @@ ggplot(data = studs %>%
 #######################################################################
 ###                                Sales
 glimpse(invoice_detailed)
-library(lubridate)
 
 ## Task:
 ## Display the yearly frequency of products sold (number of invoice
@@ -898,7 +892,7 @@ ggplot(Arthritis,
      theme (plot.subtitle = element_text (colour="black", size="12", hjust = 0.5))+
 	theme(text=element_text(size=12)) +
    	ylab("Number of cases") + xlab("Result") +
-	guides(fill=FALSE)  # no legend
+     theme(legend.position="none")  # no legend
 
 
 # second solution - wit pre-aggregation and horizontar bars
@@ -919,7 +913,7 @@ ggplot(Arthritis %>%
      theme(axis.text.y = element_blank(),    # here we remove the text on the Y-axis
 		text=element_text(size=12)) +
    	ylab("Number of cases") + xlab("Result") +
-	guides(fill=FALSE)  # no legend
+     theme(legend.position="none")  # no legend
 
 
 
@@ -960,7 +954,7 @@ ggplot(data = studs %>%
                hjust = 1.1, size = 3) + # display the text inside the bar
      geom_text(aes(x = PROGRAMME, y = n_of_studs, label = n_of_studs),
                hjust = 0, size = 3) + # display the text outside the bar
-     guides(fill=FALSE) +
+     theme(legend.position="none") + # no legend
      xlab("Undergraduate Programme") + ylab("Number of students") +
      ggtitle("Structure of the Undergraduate Students") +
      theme(plot.title = element_text(hjust = 0.5))  + # center the title
@@ -970,7 +964,7 @@ ggplot(data = studs %>%
 # ... problem with the small bars (and long program titles)
 
 
-# first solution: write programme names outside the bar and
+# first solution: write program names outside the bar and
 #    the number of students inside the bar
 ggplot(data = studs %>%
           filter (LEVEL_OF_STUDY == 'undergraduate' & !is.na(PROGRAMME) &
@@ -987,7 +981,7 @@ ggplot(data = studs %>%
                hjust = 0, size = 3) + # display the text outside the bar
      geom_text(aes(x = PROGRAMME, y = n_of_studs, label = n_of_studs),
                hjust = 1.1, size = 3) + # display the text inside the bar
-     guides(fill=FALSE) +
+     theme(legend.position="none") + # no legend
      xlab("Undergraduate Programme") + ylab("Number of students") +
      ggtitle("Structure of the Undergraduate Students") +
      theme(plot.title = element_text(hjust = 0.5))  + # center the title
@@ -1011,7 +1005,7 @@ ggplot(data = studs %>%
                hjust = -0.01, size = 3.5) + # display the text outside the bar
      geom_text(aes(x = PROGRAMME, y = n_of_studs, label = n_of_studs),
                hjust = 1.1, size = 3.5) + # display the text inside the bar
-     guides(fill=FALSE) +
+     theme(legend.position="none") + # no legend
      xlab("Undergraduate Programme") + ylab("Number of students") +
      ggtitle("Structure of the Undergraduate Students") +
      theme(plot.title = element_text(hjust = 0.5))  + # center the title
@@ -1040,7 +1034,7 @@ ggplot(data = studs %>%
                    hjust = if_else( n_of_studs > 300, 1, 0) # !!!!!
                    ),
                size = 3.5) +
-     guides(fill=FALSE) +
+     theme(legend.position="none") + # no legend
      xlab("Undergraduate Programme") + ylab("Number of students") +
      ggtitle("Structure of the Undergraduate Students") +
      theme(plot.title = element_text(hjust = 0.5))  + # center the title
@@ -1080,7 +1074,7 @@ ggplot(data = studs %>%
                    hjust = if_else( n_of_studs > 300, 1, 0) # !!!!!
                    ),
                size = 3.5) +
-     guides(fill=FALSE) +
+     theme(legend.position="none") + # no legend
      xlab("Undergraduate Programme") + ylab("Number of students") +
      ggtitle("Structure of the Undergraduate Students") +
      theme(plot.title = element_text(hjust = 0.5))  + # center the title
@@ -1145,7 +1139,7 @@ ggplot(data = studs %>%
                    y = n_of_studs,
                    label = paste0(PROGRAMME, ' (', n_of_studs, ')' ) ),
                size = 4) +
-     guides(fill=FALSE) +
+     theme(legend.position="none") + # no legend
      xlab("Undergraduate Programme") + ylab("Number of students") +
      ggtitle("Structure of the Undergraduate Students") +
      theme(plot.title = element_text(hjust = 0.5))  + # center the title
@@ -1170,7 +1164,7 @@ ggplot(data = studs %>%
                    y = n_of_studs,
                    label = paste0(PROGRAMME, ' (', n_of_studs, ')' )),
                size = 3.5) +
-     guides(fill=FALSE) +
+     theme(legend.position="none") + # no legend
      xlab("Undergraduate Programme") + ylab("Number of students") +
      ggtitle("Structure of the Undergraduate Students") +
      theme(plot.title = element_text(hjust = 0.5))  + # center the title
@@ -1259,9 +1253,9 @@ glimpse(Arthritis)
 # The visual solution (for statistical tests - see script 11a  )
 # is based on `ggplot` and `ggmosaic` packages
 library(ggmosaic)
-ggplot(data = Arthritis) +
-     geom_mosaic(aes(weight = 1, x = product(Improved, Treatment),
-                   fill=factor(Improved)), na.rm=TRUE) +
+ggplot(data = Arthritis %>% mutate (Improved = factor(Improved))) +
+     geom_mosaic(aes(x = product(Improved, Treatment),
+                   fill=Improved), na.rm=TRUE) +
      theme(axis.text.x=element_text(angle=0, hjust= 0.5, size = 12)) +
      labs(x = "Treatment", y = "Result", title='Treatment vs. Result') +
      theme (plot.title = element_text (colour="black", size=17, hjust = 0.5)) +
@@ -1277,9 +1271,9 @@ glimpse((fuel_economy_2018))
 ## variables `Drive` (2WD/4WD) and `Trans` (transmission)
 
 # Solution 1 - consider all observations:
-ggplot(data = fuel_economy_2018) +
-     geom_mosaic(aes(weight = 1, x = product(Drive, Trans),
-                   fill=factor(Drive)), na.rm=TRUE) +
+ggplot(data = fuel_economy_2018 %>% mutate (Drive = factor(Drive))) +
+     geom_mosaic(aes(x = product(Drive, Trans),
+                   fill=Drive), na.rm=TRUE) +
      theme(axis.text.x=element_text(angle=-90, hjust= .1)) +
      labs(x="transmission type",
           title='Association between variables `Drive` and `Trans`') +
@@ -1299,7 +1293,7 @@ fuel_economy_2018 %>%
      mutate (transmission_categ = word(Trans, 1, sep='-')) %>%
 ggplot(.) +
      geom_mosaic(aes(weight = 1, x = product(Drive, transmission_categ),
-                   fill=factor(Drive)), na.rm=TRUE) +
+                   fill=Drive), na.rm=TRUE) +
      theme(axis.text.x=element_text(angle = 45, hjust= 1, vjust = 1)) +
      labs(x="transmission type", y = 'Drive',
           title='Association between `Drive` and `Transmission Type`') +
@@ -1325,7 +1319,7 @@ fuel_economy_2018  %>%
           TRUE ~ `Veh Class`)) %>%
 ggplot(.) +
      geom_mosaic(aes(weight = 1, x = product(Drive, vehicle_class),
-                   fill=factor(Drive)), na.rm=TRUE) +
+                   fill=Drive), na.rm=TRUE) +
      theme(axis.text.x=element_text(angle = 45, hjust= 1, vjust = 1)) +
      labs(x="vehicle category", y = 'Drive',
           title='Association between Drive and Main Vehicle Category') +
@@ -1407,3 +1401,4 @@ ggplot(., aes (x = vehicle_class, y = transmission, fill = frequency)) +
      theme (plot.title = element_text (colour="black", size=14, hjust = 0.5)) +
      theme(axis.text.x=element_text(angle = 45, hjust= 1, vjust = 1)) +
      scale_fill_gradient(low = "white", high = "steelblue")
+
