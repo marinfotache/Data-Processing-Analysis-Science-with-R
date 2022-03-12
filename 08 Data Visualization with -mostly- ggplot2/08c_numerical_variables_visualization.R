@@ -13,7 +13,7 @@
 ### See also the presentation:
 ### https://github.com/marinfotache/Data-Processing-Analysis-Science-with-R/blob/master/08%20Data%20Visualization%20with%20-mostly-%20ggplot2/08_ggplot2.pptx
 ############################################################################
-## last update: 06.06.2021
+## last update: 12.03.2022
 
 library(tidyverse)
 library(readxl)
@@ -646,3 +646,4 @@ fuel_economy_2018 %>%
      filter(complete.cases(.)) %>% # remove all observations with NA values
 cor(.) %>%
 corrplot(., method = 'number', type = 'lower', number.cex=0.75, tl.cex=0.6)
+

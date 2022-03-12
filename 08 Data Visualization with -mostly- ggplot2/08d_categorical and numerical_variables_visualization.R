@@ -13,7 +13,7 @@
 ### See also the presentation:
 ### https://github.com/marinfotache/Data-Processing-Analysis-Science-with-R/blob/master/08%20Data%20Visualization%20with%20-mostly-%20ggplot2/08_ggplot2.pptx
 ############################################################################
-## last update: 06.06.2021
+## last update: 12.03.2022
 
 library(tidyverse)
 library(readxl)
@@ -401,7 +401,7 @@ ggplot(subset(AllRead),
      theme(plot.title = element_text(hjust = 0.5)) +  # center the title
 	xlab("DB Server")+ylab("Latency (seconds)") +
 	facet_grid(testtype ~ .) +
-	stat_summary(fun.y=mean, geom="point", shape=3, size=1, color = "red")
+	stat_summary(fun=mean, geom="point", shape=3, size=1, color = "red")
 
 
 
@@ -547,3 +547,4 @@ ggplot(. , aes(x = Displ, y = combined_l100km, color = Cyl)) +
      scale_x_continuous(breaks = seq(0.5, 8, 0.5))  +
      geom_smooth(method = lm)    # Add a (linear) regression line,
                       # including a confidence region for the curve
+
