@@ -32,8 +32,7 @@ setwd('/Users/marinfotache/Google Drive/R(Mac)-1 googledrive/DataSets')
 ############################################################################
 
 # giving up scientific notation (1.6e+07)
-options(scipen=999, digits=4)
-
+options(scipen=999, digits=3)
 
 # needed packages
 library(tidyverse)

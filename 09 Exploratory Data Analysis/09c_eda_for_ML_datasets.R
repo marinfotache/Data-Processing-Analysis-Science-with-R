@@ -13,7 +13,7 @@
 ###   further used in Inferential Statistics and Machine Learning        ###
 ###   (see next chapters/sections)                                       ###
 ############################################################################
-## last update: 06.12.2021
+## last update: 22.02.2022
 
 options(scipen = 999)
 library(tidyverse) 
@@ -295,10 +295,129 @@ insurance <- readr::read_csv('insurance.csv')
 insurance %>%
      skimr::skim()
 
+
+
+#################################################################
+##     Display the number missing values for each variable     ## 
+
+missing_vals <- insurance %>%
+     map_int(., ~ sum(is.na(.) | . == 'N/A')) %>%
+     tibble(variable = names(.), n_missing = .) %>%
+     mutate (percent_missing = round(n_missing * 100 / 
+               nrow(insurance), 2))
+
+
+# now, the plot
+ggplot(missing_vals, 
+     aes (x = variable, y = n_missing, fill = variable)) +
+     geom_col() +
+     coord_flip() +
+     geom_text(aes(label = paste0(percent_missing, '%'), size = 3.5, 
+               hjust = if_else(percent_missing > 3, 1.02, -0.03), 
+               vjust = 0.5))  +
+     theme(legend.position="none") + # this will remove the legend
+     scale_y_continuous(limits = c(0,170), breaks = seq(0, 170, 20)) 
+
+
+#################################################################
+##     Display the frequency (and the percent) of the  ##
+##           values for each character/factor variable         ##
+
+# first, compute the frequencies for each categorical variables and values
+eda_factors <- insurance %>%
+     mutate_if(is.factor, as.character) %>%
+     select_if(., is.character ) %>%
+     mutate (id = row_number()) %>%
+     pivot_longer(-id, names_to = "variable", values_to = "value" ) %>%
+     mutate (value = coalesce(value, 'N/A')) %>%
+     group_by(variable, value) %>%
+     summarise (n_value = n()) %>%
+     ungroup() %>%
+     mutate (percent = round(n_value * 100 / nrow(insurance),2)) %>%
+     arrange(variable, value)
+View(eda_factors)
+
+glimpse(eda_factors)
+
+
+# plot the factors values 
+eda_factors %>%
+     group_by(variable) %>%
+     summarise(n_of_values = n()) %>%
+#     filter (n_of_values < 20) %>%    
+     ungroup() %>%
+     dplyr::select (variable) %>%
+     inner_join(eda_factors) %>%
+ggplot(., aes(x = value, y = n_value, fill = value)) +
+     geom_col() +
+     geom_text (aes(label = paste0(round(percent,0), '%'), 
+                  vjust = if_else(n_value > 300, 1.5, -0.5))) +
+    facet_wrap(~ variable, scale = "free") +
+    theme(legend.position="none") + # this will remove the legend
+    theme(axis.text.x = element_text(size = 10, angle = 45, hjust = 1)) +
+    theme(strip.text.x = element_text(size = 14)) +
+    xlab("") + ylab("frequency") 
+
+
+
+
+
+#################################################################
+##    Display the distribution (as histograms,                 ##
+##   density plots and boxplots) of each numeric variable      ##
+
+num_variables <- insurance %>%
+     select_if(., is.numeric ) %>%
+     mutate (id = row_number()) %>%
+     pivot_longer(-id, names_to = "variable", values_to = "value" ) 
+View(num_variables)
+
+table(insurance$children)
+
+insurance %>%
+     group_by(children) %>%
+     tally()
+
+
+# separate histogram for each numeric value; free scale
+num_variables %>%
+     filter (variable == 'children') %>%
+ggplot(., aes(x = value, fill = variable)) +
+     geom_histogram(bins = 5, col = 'black') +
+     facet_wrap(~ variable, scale = "free") +
+     theme(legend.position="none") + # this will remove the legend
+     theme(axis.text.x = element_text(size = 9)) +
+     theme(strip.text.x = element_text(size = 12)) +
+     xlab("") + ylab("frequency") 
+
+
+# separate density plot for each numeric value; free scale
+num_variables %>%
+     filter (variable != 'children') %>%
+ggplot(., aes(x = value, fill = variable, alpha = 0.5)) +
+     geom_density() +
+     facet_wrap(~ variable, scale = "free") +
+     theme(legend.position="none") + # this will remove the legend
+     theme(axis.text.x = element_text(size = 9)) +
+     theme(strip.text.x = element_text(size = 12)) +
+     xlab("") + ylab("frequency") 
+
+# boxplot (free scale)
+num_variables %>%
+ggplot(., aes(y = value)) +
+     geom_boxplot() +
+     facet_wrap(~ variable, scales = 'free') +
+     theme(legend.position="none") + # this will remove the legend
+     xlab("") + ylab("value") +
+     theme(axis.text.x = element_blank()) 
+
+
+
 # examine bivariate relationships
 insurance %>%
      select_if(is.numeric) %>%
      cor()
+
 
 corrplot::corrplot(cor(insurance %>%
      select_if(is.numeric) , 
@@ -311,6 +430,22 @@ corrgram::corrgram(insurance %>% select_if(is.numeric),
 corrgram::corrgram(insurance %>% select_if(is.numeric),
      lower.panel=panel.conf, upper.panel=panel.pts,
      diag.panel=panel.density)
+
+
+# scatter plots of the outcome vs. all other valiables
+insurance %>%
+     select_if(is.numeric) %>%
+     pivot_longer(-charges, names_to = 'Predictor', 
+                  values_to = "Value") %>%
+ggplot(., aes(x = Value, y = charges)) +
+     facet_wrap(~ Predictor, scale = "free_x") +
+     geom_point() +
+     geom_smooth(col = "darkgreen") +
+     geom_smooth(method = "lm", col = "red") +
+     theme_bw() +
+     theme(strip.text.x = element_text(size = 12)) +
+     xlab("")  
+
 
 insurance_lm1 <- lm(charges ~ ., data = insurance)
 summary(insurance_lm1)
@@ -367,28 +502,11 @@ load('Hrubaru_2016-02.RData')
 rm(results_details.ok_rand)
 glimpse(results_ih_2016)
 
-results_ih_2016 <- results_ih_2016 %>%
-    select (duration, scale)
-
-##############################################################################
-###       Separating queries executed in Hive and PostgreSQL               ###
-###  in order to avoid "independence" assumption violations
-##############################################################################
-
-row_to_be_selected <- c()
-for (i in unique(results_ih_2016$queryId))
-     row_to_be_selected <- c(row_to_be_selected, 
-         paste(i, 
-          sample(c('Hive', 'PostgreSQL'), 1) , sep='-') )
-
-#row_to_be_selected
-results_details.ok_rand <- results_ih_2016[row_to_be_selected,]
-glimpse(results_details.ok_rand)
 
 ### correlation plot (nonparametric)
 #citation('corrplot')
 library(corrplot)
-corrplot.mixed(corr=cor(results_details.ok_rand %>% select_if(., is.numeric), 
+corrplot.mixed(corr=cor(results_ih_2016 %>% select_if(., is.numeric), 
                         method = "spearman"), 
      upper = 'ellipse', tl.pos='lt')
 
@@ -396,6 +514,7 @@ corrplot.mixed(corr=cor(results_details.ok_rand %>% select_if(., is.numeric),
 ##
 ## to be continued dureing lectures with the removal of highly correlated predictors.
 ##
+
 
 
 #####################################################################
@@ -453,8 +572,11 @@ heart_init <- read_csv('Heart.csv')
 glimpse(heart_init)
 
 # prepare the data set, by removing the first column 
-# and recoding the factors (also convertinf the character
+# and recoding the factors (also converting the character
 # variables into factor)
+# 
+# 
+# to be updated....
 heart <- heart_init %>%
      select (-`...1`) %>%
      mutate(

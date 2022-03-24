@@ -107,18 +107,20 @@ ggplot(missing_vals,
      aes (x = variable, y = n_missing, fill = variable)) +
      geom_col() +
      coord_flip() +
-     geom_text(aes(label = paste0(percent_missing, '%'), size = 3.5, 
+     geom_text(aes(label = paste0(percent_missing, '%'), 
                hjust = if_else(percent_missing > 3, 1.02, -0.03), 
-               vjust = 0.5))  +
+               vjust = 0.5), size = 4 ) +
      theme(legend.position="none") + # this will remove the legend
      scale_y_continuous(limits = c(0,170), breaks = seq(0, 170, 20)) 
      
+
 
 
 #################################################################
 ##     Task 2: Display the frequency (and the percent) of the  ##
 ##           values for each character/factor variable         ##
 #################################################################
+glimpse(fuel_economy_2018)
 
 # first, compute the frequencies for each categorical variables and values
 eda_factors <- fuel_economy_2018 %>%
@@ -147,7 +149,7 @@ test <- eda_factors %>%
 eda_factors %>%
      group_by(variable) %>%
      summarise(n_of_values = n()) %>%
-     filter (n_of_values < 20) %>%    
+     filter (n_of_values <= 20) %>%    
      ungroup() %>%
      select (variable) %>%
      inner_join(eda_factors) %>%
@@ -157,7 +159,24 @@ ggplot(., aes(x = value, y = n_value, fill = value)) +
                   vjust = if_else(n_value > 300, 1.5, -0.5))) +
     facet_wrap(~ variable, scale = "free") +
     theme(axis.text.x = element_text(size = 10, angle = 45, hjust = 1)) +
-    theme(strip.text.x = element_text(size = 14)) +
+    theme(strip.text.x = element_text(size = 13)) +
+    xlab("") + ylab("frequency") +
+    theme(legend.position = 'none')
+
+
+# plot only the manufacturers
+eda_factors %>%
+     filter (variable == 'manufacturer') %>%    
+     select (variable) %>%
+     inner_join(eda_factors) %>%
+ggplot(., aes(x = value, y = n_value, fill = value)) +
+     geom_col() +
+     geom_text (aes(label = paste0(round(percent,0), '%'), 
+                  vjust = if_else(n_value > 300, 1.5, -0.5))) +
+     coord_flip() +
+    facet_wrap(~ variable, scale = "free") +
+    theme(axis.text.x = element_text(size = 10, angle = 45, hjust = 1)) +
+    theme(strip.text.x = element_text(size = 13)) +
     xlab("") + ylab("frequency") +
     theme(legend.position = 'none')
 
@@ -236,7 +255,7 @@ ggplot(., aes(x = value, fill = variable)) +
 # plot superimposed density curves
 df %>%
 ggplot(., aes(x = value, fill = vehicle_class, color = vehicle_class)) +
-     geom_density(aes(alpha = 0.5)) +
+     geom_density(aes(alpha = 0.1)) +
      facet_wrap(. ~ variable, scales = "free") +
      theme(axis.text.x = element_text(size = 8)) +
      theme(strip.text.x = element_text(size = 12)) +
@@ -292,7 +311,7 @@ fuel_economy_2018 %>%
 ###	               II. EDA with `DataExplorer` package              ###	
 #######################################################################
 
-install.packages('DataExplorer') 
+# install.packages('DataExplorer') 
 
 # If this does not work (in December 2020) `DataExplorer` package was 
 # not available  on CRAN, so it could be installed only with:
