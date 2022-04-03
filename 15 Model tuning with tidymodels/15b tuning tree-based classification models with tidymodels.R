@@ -69,7 +69,6 @@ cv_train
 
 
 
-
 ##########################################################################
 ###                        The recipe for data preparation             ###
 the_recipe <- recipe(AHD ~ ., data = train_tbl) %>%
@@ -132,7 +131,7 @@ xgb_grid <- dials::grid_random(
     sample_size = sample_prop(),
     finalize(mtry(), train_tbl %>% select (-AHD)),
     learn_rate(),
-    size = 10   # the number should be larger, but it would take longer
+    size = 30   # the number should be larger, but it would take longer
 )
 xgb_grid
 

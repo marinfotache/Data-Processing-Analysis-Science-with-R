@@ -13,7 +13,7 @@
 ###                           with `tidymodels`                          ###  
 ############################################################################
 ## last update: 07.01.2022
-
+# install.packages('ranger')
 library(ranger)   # for Random Forest models
 library(xgboost)  # for XGBoost models
 library(tidyverse)
@@ -58,19 +58,17 @@ insurance <- readr::read_csv('insurance.csv')
 # are there any missing values ?
 any(is.na(insurance))
 
-
-
-
-insurance <- readr::read_csv('insurance.csv')
-
-# are there any missing values ?
-any(is.na(insurance))
-
 table(insurance$region)
 
 
+lm_insur <- lm(charges ~ ., data = insurance)
+summary(lm_insur)
+
+
+
 ##########################################################################
-###                             Main split of the data                 ###
+###                             Main split of the data           
+###
 set.seed(1234)
 splits   <- initial_split(insurance, prop = 0.75)
 train_tbl <- training(splits)
@@ -195,7 +193,7 @@ xgb_resamples
 
 
 # performance metrics (mean) across folds for each grid line
-rf_resamples %>% collect_metrics()
+temp <- rf_resamples %>% collect_metrics()
 autoplot(rf_resamples)
 
 rf_resamples %>% 
