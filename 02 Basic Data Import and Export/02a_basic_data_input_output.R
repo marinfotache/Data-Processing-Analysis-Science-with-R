@@ -13,7 +13,7 @@
 ### See also the presentation:
 ### https://github.com/marinfotache/Data-Processing-Analysis-Science-with-R/blob/master/02%20Basic%20Data%20Import%20and%20Export/02a_basic_data_input_output.pptx
 ############################################################################
-## last update: 2021-10-11
+## last update: 2022-11-05
 
 
 sessionInfo()
@@ -873,16 +873,23 @@ convert("p004.sav", 'spss1.json')
 #################################################################################
 ###         15. Write R data frames as tables in PostgreSQL databases
 #################################################################################
-
 ## clear the memory
 rm(list = ls())
 
-library(RPostgreSQL)
-drv <- dbDriver("PostgreSQL")
-# on the local PostgreSQL server, we already created a database called `test`
-# open connection - Mac OS syntax
-con <- dbConnect(drv, host='localhost', port='5432', dbname='test',
-                 user='postgres', password='postgres')
+# install.packages('RPostgres')
+library(RPostgres)
+
+
+
+## On Windows systems, PostgreSQL database service must already be started
+con <- dbConnect(RPostgres::Postgres(), dbname="covid220925",
+                 host = 'localhost', port='5432', user="postgres", password="postgres")
+
+# On Mac OS
+con <- dbConnect(RPostgres::Postgres(), host='localhost', port='5433',
+                 dbname='covid220925', user='postgres', password='postgres')
+
+
 # get the table names as a vector using function `dbListTables(con)` 
 dbListTables(con)
 
