@@ -681,4 +681,41 @@ imageFile <- paste(imageDirectory, "exchange rates.png",sep="/")
 ggsave(file = imageFile)
 
 # for including multiple charts on the same figure, see package `patchwork`
+library(scales)
+library(patchwork)
+
+g1 <- ggplot(
+     data,                         # the data source
+     aes (x = Date, y = exchange_rate,
+          color = currency)) +    # general `aestetics`
+     geom_line() +                # `geom` for a line plot
+     labs(
+          title = "Exchange Rates \nRON vs. EUR/USD/GBP",
+          subtitle = paste(min(data$Date), max(data$Date), sep = ' - '),
+          caption = "Source: BNR") +
+     theme(
+        plot.title = element_text(color = "darkblue", size = 13,
+                                  face = "bold", hjust = 0.5, lineheight = 1.2),
+        plot.subtitle = element_text(size = 12, hjust = 0.5),
+        plot.caption = element_text(size = 8)
+        ) +
+     # here we change the laxes labels
+     xlab("Day of the exchange rates") +
+     ylab("Exchange Rate (1 currency = ? RON)" ) +
+     # here we change the angle of text on the x axis (45%)
+     theme(axis.text.x = element_text(size = 9, angle = 45, hjust = 1)) +
+     scale_y_continuous(limits = c(4,6), breaks = seq(4, 6, 0.1))
+
+g2 <- ggplot(
+     data,
+     aes (x = exchange_rate, fill = currency)) +
+     geom_density(alpha = 0.5)   +
+     facet_wrap( ~ currency, scales = "free") +
+     theme(legend.position="none") + # this will remove the legend
+     theme(strip.text = element_text(size = 14) )
+
+x <- g1 + g2 + plot_layout(nrow = 1, byrow = FALSE)
+ggsave("a_plot.pdf", plot = x,  device = "pdf") 
+ggsave("a_plot.png", plot = x,  device = "png") 
+
 
