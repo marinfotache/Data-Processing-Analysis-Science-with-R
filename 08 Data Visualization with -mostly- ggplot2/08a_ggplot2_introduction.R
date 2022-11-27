@@ -14,17 +14,19 @@
 ### https://github.com/marinfotache/Data-Processing-Analysis-Science-with-R/blob/master/08%20Data%20Visualization%20with%20-mostly-%20ggplot2/08_ggplot2.pptx
 ############################################################################
 
-## last update: 06.06.2021
+## last update: 27.11.2022
 ##
 library(tidyverse)
 library(readxl)
+library(htmltab)
+library(xml2)
 
 # giving up scientific notation (1.6e+07)
 options(scipen=999, digits=4)
 
 
 ############################################################################
-###            Download the necesary data sets for this script
+###            Download the necessary data sets for this script
 ############################################################################
 
 # all the files needed o run this script are available at:
@@ -44,20 +46,20 @@ getwd()
 #######################################################################
 ###                                Agenda                           ###
 #######################################################################
-###	  I. Basic syntax                                           ###
+###	  I. Basic syntax                                              ###
 ###       I.1 (At least) Three layers                               ###
 ###       I.2 Main `geom`s                                          ###
 ###       I.3 Main title and the subtitle                           ###
-###   	I.4 Axis labels/text                                        ###
-###	 II. Beyond the basics                                      ###
-###	     II.1 Chart rotation                                    ###
-###	     II.2 Text on the plot	                            ###
-###		II.3 Legend                                         ###
-###		II.4 Faceting                                       ###
-###	 III. Useful companions to ggplot2                          ###
-###	     III.1 `scales`                                         ###
-###	     III.2 `ggrepel`	                                    ###
-###	IV. Saving charts                                           ###
+###   	I.4 Axis labels/text                                      ###
+###	 II. Beyond the basics                                         ###
+###	     II.1 Chart rotation                                       ###
+###	     II.2 Text on the plot	                                 ###
+###		II.3 Legend                                               ###
+###		II.4 Faceting                                             ###
+###	 III. Useful companions to ggplot2                             ###
+###	     III.1 `scales`                                            ###
+###	     III.2 `ggrepel`	                                      ###
+###	IV. Saving charts                                              ###
 #######################################################################
 ###
 
@@ -69,7 +71,7 @@ getwd()
 
 
 #######################################################################
-###	                    I. Basic syntax                         ###
+###	                    I. Basic syntax                            ###
 #######################################################################
 
 
@@ -93,8 +95,16 @@ getwd()
 ##   * boxplot (geom_boxplot
 
 
-load('exchange_rates.RData')
-glimpse(exchange_rates)
+###  Import the exchange rates published by National Bank of Romania (BNR)
+# see also script `06a`
+#load('exchange_rates.RData')
+
+url <- 'http://www.bnr.ro/Exchange-rates-15192.aspx'
+exchange_rates <- htmltab::htmltab(doc = url, which = 1, 
+          encoding = "UTF-8")
+head(exchange_rates)
+View(exchange_rates)
+names(exchange_rates)[1] <- 'Date'
 
 
 ###########################################################################
@@ -256,7 +266,7 @@ ggplot(
 ggplot(
      data,
      aes (x = exchange_rate, fill = currency)) +
-     geom_density()   +
+     geom_density(alpha = 0.5)   +
      facet_wrap( ~ currency, scales = 'free')
 
 
@@ -292,7 +302,7 @@ ggplot(
      aes (x = Date, y = exchange_rate, color = currency)) +  # general `aestetics`
      geom_line() +                                # `geom` for a line plot
      ggtitle("Exchange Rates - RON vs. EUR/USD/GBP",
-             subtitle = "October, 22 - November 02")
+             subtitle = paste(min(data$Date), max(data$Date), sep = ' - '))
 
 
 ## Setting the title, subtitle and caption with `labs` (from `labels`)
@@ -301,7 +311,7 @@ ggplot(
      aes (x = Date, y = exchange_rate, color = currency)) +  # general `aestetics`
      geom_line() +  # `geom` for a line plot
      labs(title = "Exchange Rates - RON vs. EUR/USD/GBP",
-             subtitle = "October, 22 - November 02",
+             subtitle = paste(min(data$Date), max(data$Date), sep = ' - '),
              caption = "Source: BNR")
 
 
@@ -333,7 +343,7 @@ ggplot(
      aes (x = Date, y = exchange_rate, color = currency)) +  # general `aestetics`
      geom_line() +                                # `geom` for a line plot
      labs(title = "Exchange Rates \nRON vs. EUR/USD/GBP",
-             subtitle = "October, 22 - November 02",
+             subtitle = paste(min(data$Date), max(data$Date), sep = ' - '),
              caption = "Source: BNR") +
      theme(
         plot.title = element_text(color = "darkblue", size = 14,
@@ -360,7 +370,7 @@ ggplot(
      geom_line() +                                          # `geom` for a line plot
      labs(
           title = "Exchange Rates \nRON vs. EUR/USD/GBP",
-          subtitle = "October, 22 - November 02",
+          subtitle = paste(min(data$Date), max(data$Date), sep = ' - '),
           caption = "Source: BNR") +
      theme(
         plot.title = element_text(color = "darkblue", size = 13,
@@ -573,7 +583,17 @@ ggplot(
 
 
 
-load('net_earning.RData')
+
+
+# see also script `06a`
+##  Import montly earnings from the (Romanian) National Institute for Statistics
+url <- 'http://www.insse.ro/cms/ro/content/castiguri-salariale-din-1991-serie-lunara'
+net_earning <- htmltab::htmltab(doc = url, which = 1, encoding = "UTF-8")
+glimpse(net_earning)
+head(net_earning)
+names(net_earning)[1] <- 'Year'
+
+# load('net_earning.RData')
 data_earning <- net_earning %>%
      pivot_longer(-Year, names_to = 'month', values_to = "net_earning") %>%
      mutate (net_earning = map_chr(.x = .$net_earning,
@@ -608,6 +628,7 @@ ggplot(data_earning,
      theme(axis.text.x = element_text(angle = 45, hjust = 1)) #
 
 
+
 #######################################################################
 ###	            III. Useful companions to ggplot2                  ###
 #######################################################################
@@ -625,7 +646,7 @@ ggplot(
      geom_line() +                # `geom` for a line plot
      labs(
           title = "Exchange Rates \nRON vs. EUR/USD/GBP",
-          subtitle = "October, 22 - November 02",
+          subtitle = paste(min(data$Date), max(data$Date), sep = ' - '),
           caption = "Source: BNR") +
      theme(
         plot.title = element_text(color = "darkblue", size = 13,
@@ -658,3 +679,6 @@ getwd()
 imageDirectory <- getwd()
 imageFile <- paste(imageDirectory, "exchange rates.png",sep="/")
 ggsave(file = imageFile)
+
+# for including multiple charts on the same figure, see package `patchwork`
+
