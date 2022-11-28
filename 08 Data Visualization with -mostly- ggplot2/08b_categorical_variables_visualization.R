@@ -23,7 +23,7 @@ library(lubridate)
 options(scipen = 999)
 
 #######################################################################
-###           Download the necessary data sets for this script       ###
+###           Download the necessary data sets for this script      ###
 #######################################################################
 
 # all the files needed o run this script are available at:
@@ -1281,7 +1281,7 @@ ggplot(data = fuel_economy_2018 %>% mutate (Drive = factor(Drive))) +
      guides(fill=guide_legend(title = "Drive", reverse = TRUE))
 
 
-# Solution 2 - recode the trasmission type, by fusioning subcategories
+# Solution 2 - recode the transmission type, by fusioning subcategories
 # of transmission type (we'll extract the first word from `Trans`):
 table(fuel_economy_2018$Trans)
 

@@ -23,7 +23,7 @@ library(lubridate)
 options(scipen = 999)
 
 ############################################################################
-###            Download the necesary data sets for this script
+###            Download the necessary data sets for this script
 ############################################################################
 
 # all the files needed o run this script are available at:

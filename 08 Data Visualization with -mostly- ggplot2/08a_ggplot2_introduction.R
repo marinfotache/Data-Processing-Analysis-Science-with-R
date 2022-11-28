@@ -18,6 +18,7 @@
 ##
 library(tidyverse)
 library(readxl)
+# install.packages('htmltab')
 library(htmltab)
 library(xml2)
 
@@ -100,12 +101,11 @@ getwd()
 #load('exchange_rates.RData')
 
 url <- 'http://www.bnr.ro/Exchange-rates-15192.aspx'
-exchange_rates <- htmltab::htmltab(doc = url, which = 1, 
-          encoding = "UTF-8")
+exchange_rates <- htmltab::htmltab(doc = url, which = 1, encoding = "UTF-8")
 head(exchange_rates)
 View(exchange_rates)
 names(exchange_rates)[1] <- 'Date'
-
+names(exchange_rates)
 
 ###########################################################################
 ## Task 1:
@@ -244,7 +244,7 @@ ggplot(
 ggplot(
      data,
      aes (x = exchange_rate, fill = currency)) +
-     geom_histogram(alpha = .5)                   # `transparency/translucency`
+     geom_histogram(alpha = 0.6)                   # `transparency/translucency`
 
 # ... `geom_histogram` with `facets`
 ggplot(
@@ -349,7 +349,7 @@ ggplot(
         plot.title = element_text(color = "darkblue", size = 14,
                                   face = "bold", hjust = 0.5, lineheight = 1.2),
         plot.subtitle = element_text(size = 12, hjust = 0.5),
-        plot.caption = element_text(size = 8)
+        plot.caption = element_text(size = 8, hjust = 1)
         )
 
 
@@ -659,7 +659,7 @@ ggplot(
      ylab("Exchange Rate (1 currency = ? RON)" ) +
      # here we change the angle of text on the x axis (45%)
      theme(axis.text.x = element_text(size = 9, angle = 45, hjust = 1)) +
-     scale_y_continuous(limits = c(4,5.5), breaks = seq(4, 5.5, 0.1))
+     scale_y_continuous(limits = c(4.5,6), breaks = seq(4.5, 6, 0.1))
 
 
 
@@ -717,5 +717,7 @@ g2 <- ggplot(
 x <- g1 + g2 + plot_layout(nrow = 1, byrow = FALSE)
 ggsave("a_plot.pdf", plot = x,  device = "pdf") 
 ggsave("a_plot.png", plot = x,  device = "png") 
+ggsave("a_plot.tiff", plot = x,  device = "tiff") 
 
+getwd()
 
