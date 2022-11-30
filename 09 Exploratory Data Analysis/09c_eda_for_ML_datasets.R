@@ -13,7 +13,7 @@
 ###   further used in Inferential Statistics and Machine Learning        ###
 ###   (see next chapters/sections)                                       ###
 ############################################################################
-## last update: 22.02.2022
+## last update: 30.09.2022
 
 options(scipen = 999)
 library(tidyverse) 
@@ -221,7 +221,8 @@ states %>%
 # another series of correlation plot
 
 corrplot::corrplot(cor(states %>% dplyr::select (-State), 
-             method = "spearman"), method = "number", type = "upper")
+             method = "spearman"), method = "number", type = "upper",
+             tl.cex = 0.75, number.cex = .75)
 
 corrgram::corrgram(states %>% dplyr::select (-State) %>% select_if(is.numeric),
      lower.panel=panel.conf, upper.panel=panel.pts,
@@ -251,7 +252,7 @@ config <- configure_report(
 DataExplorer::create_report(states, config = config)
 
 
-# scatter plots of the outcome vs. all other valiables
+# scatter plots of the outcome vs. all other variables
 states %>%
      dplyr::select (-State) %>%
      pivot_longer(-Murder, names_to = 'Predictor', values_to = "Value") %>%
@@ -421,7 +422,8 @@ insurance %>%
 
 corrplot::corrplot(cor(insurance %>%
      select_if(is.numeric) , 
-             method = "spearman"), method = "number", type = "upper")
+          method = "spearman"), method = "number", type = "upper",
+          tl.cex = 0.75, number.cex = .75)
 
 corrgram::corrgram(insurance %>% select_if(is.numeric),
      lower.panel=panel.pie, upper.panel=panel.pts,
@@ -746,7 +748,8 @@ heart %>%
 # another series of correlation plot
 
 corrplot::corrplot(cor(heart %>% select_if (is.numeric) %>% na.omit(), 
-             method = "spearman"), method = "number", type = "upper")
+             method = "spearman"), method = "number", type = "upper",
+             tl.cex = 0.95, number.cex = .85)
 
 # the network plot
 heart %>%
@@ -957,7 +960,7 @@ multiplot(plotlist = plots, cols = 3)
 
 #################################################################
 ##        Since there are a few missing values, we can
-##        romove those observations; we'll keep both versions
+##        remove these observations; we'll keep both versions
 ##        of the data set
 #################################################################
 getwd()
