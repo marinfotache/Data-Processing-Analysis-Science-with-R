@@ -13,7 +13,7 @@
 ### See also the presentation:
 ### https://github.com/marinfotache/Data-Processing-Analysis-Science-with-R/blob/master/09%20Exploratory%20Data%20Analysis/09%20Exploratory%20Data%20Analysis.pptx
 ############################################################################
-## last update: 02.12.2021
+## last update: 30.11.2022
 
 library(tidyverse) 
 library(corrr)
@@ -21,6 +21,7 @@ library(tidymodels)
 library(readxl)
 # giving up scientific notation (1.6e+07)
 options(scipen=999, digits=4)
+
 
 
 ############################################################################
@@ -155,8 +156,8 @@ eda_factors %>%
      inner_join(eda_factors) %>%
 ggplot(., aes(x = value, y = n_value, fill = value)) +
      geom_col() +
-     geom_text (aes(label = paste0(round(percent,0), '%'), 
-                  vjust = if_else(n_value > 300, 1.5, -0.5))) +
+     geom_text (aes(label = paste0(round(percent,0), '%'),
+                  vjust = if_else(n_value > 300, 1.5, -0.5)), size = 3) +
     facet_wrap(~ variable, scale = "free") +
     theme(axis.text.x = element_text(size = 10, angle = 45, hjust = 1)) +
     theme(strip.text.x = element_text(size = 13)) +
@@ -164,17 +165,25 @@ ggplot(., aes(x = value, y = n_value, fill = value)) +
     theme(legend.position = 'none')
 
 
-# plot only the manufacturers
+# plot only the manufacturers ??????????
+temp <- eda_factors %>%
+     filter (variable == 'manufacturer') %>%    
+     distinct (variable) %>%
+     inner_join(eda_factors)
+
 eda_factors %>%
      filter (variable == 'manufacturer') %>%    
-     select (variable) %>%
+     distinct (variable) %>%
      inner_join(eda_factors) %>%
 ggplot(., aes(x = value, y = n_value, fill = value)) +
      geom_col() +
-     geom_text (aes(label = paste0(round(percent,0), '%'), 
-                  vjust = if_else(n_value > 300, 1.5, -0.5))) +
-     coord_flip() +
-    facet_wrap(~ variable, scale = "free") +
+     geom_text (aes(x = value, y = n_value, 
+                    label = n_value, hjust = 1.1), size = 3) +
+     geom_text (aes(x = value, y = n_value, 
+                    label = paste0('(', round(percent,0), '%)'), 
+                  hjust = -0.05), size = 3.25) +
+    coord_flip() +
+    # facet_wrap(~ variable, scale = "free") +
     theme(axis.text.x = element_text(size = 10, angle = 45, hjust = 1)) +
     theme(strip.text.x = element_text(size = 13)) +
     xlab("") + ylab("frequency") +
@@ -317,8 +326,8 @@ fuel_economy_2018 %>%
 # not available  on CRAN, so it could be installed only with:
 if (!require(devtools)) 
     install.packages("devtools")
-devtools::install_github("boxuancui/DataExplorer", force = TRUE)
-
+#devtools::install_github("boxuancui/DataExplorer", force = TRUE)
+install.packages('DataExplorer')
 library(DataExplorer)
 
 
