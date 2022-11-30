@@ -13,7 +13,7 @@
 ### See also the presentation:
 ### https://github.com/marinfotache/Data-Processing-Analysis-Science-with-R/blob/master/09%20Exploratory%20Data%20Analysis/09%20Exploratory%20Data%20Analysis.pptx
 ############################################################################
-## last update: 02.12.2021
+## last update: 30.11.2022
 
 
 ############################################################################
@@ -36,7 +36,7 @@ options(scipen=999, digits=3)
 
 # needed packages
 library(tidyverse)
-library(tidymodels) # fot the `corrr` package
+library(tidymodels) # for the `corrr` package
 
 # install.packages('skimr')
 library(skimr) # for summary statistics
@@ -874,7 +874,8 @@ fuel_economy_2018 %>%
      select (cty_l100km:combined_l100km, displacement:combined_CO2) %>%
      filter(complete.cases(.)) %>% # remove all observations with NA values
 cor(.) %>%
-corrplot(., method = 'number', type = 'lower')
+corrplot(., method = 'number', type = 'lower', 
+         tl.cex = 0.75, number.cex = .75)     # reduce the size of text and coeffs
 
 
 # Third solution based on `corrplot` package 
@@ -889,7 +890,7 @@ fuel_economy_2018 %>%
      filter(complete.cases(.)) %>% # remove all observations with NA values
 cor(., method = "spearman") %>%
 corrplot(., order="hclust",
-         method = "number", type = "upper")
+         method = "number", type = "upper", tl.cex = 0.75, number.cex = .75)
 
 
 
