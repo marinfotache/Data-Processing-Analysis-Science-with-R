@@ -1,9 +1,3 @@
-###############################################################################
-### Document partially supported by research project: POC/398/1/1 nr. 124759 -
-### „Research As A Service – Iasi (RaaS-IS)”
-###############################################################################
-
-
 ############################################################################
 ###                         Al.I. Cuza University of Iași                ###
 ###            Faculty of Economics and Business Administration          ###
@@ -19,24 +13,24 @@
 ### See also the presentation:
 ### https://github.com/marinfotache/Data-Processing-Analysis-Science-with-R/blob/master/10%20Basic%20Inferential%20Statistics/10_basic_inferential_statistics.pptx
 ############################################################################
-## last update: 31.08.2021
+## last update: 2022-12-01
 
-### two R packages are particularly important for categorical data
-###    analysis, "vcd" and "vcdExtra"
+# giving up scientific notation (1.6e+07)
+options(scipen = 999)
+
 #install.packages("vcd", dependencies = T)
 #install.packages("vcdExtra")
 library(vcd)
 library(vcdExtra)
-
-
 #install.packages('ggmosaic')
 library(ggmosaic)
 library(scales)
 library(tidyverse)
 library(readxl)
 
+
 ############################################################################
-###            Download the necesary data sets for this script
+###            Download the necessary data sets for this script
 ############################################################################
 
 # all the files needed o run this script are available at:
@@ -47,40 +41,6 @@ library(readxl)
 # default/working directory, ex:
 setwd('/Users/marinfotache/Google Drive/R(Mac)-1 googledrive/DataSets')
 
-# check if the current directory is ok
-getwd()
-############################################################################
-
-
-
-###############################################################################
-###                                Tutorials
-###############################################################################
-
-# Vassarstats - Chi Square Analyses
-# https://www.youtube.com/watch?v=AdeCanzDw3E&feature=em-subs_digest
-
-
-#https://www.youtube.com/watch?v=WXPBoFDqNVk&feature=em-subs_digest-vrecs
-
-#    Chi-Square Test, Fishers Exact Test, and Cross Tabulations in R (R Tutorial 4.7)
-# https://www.youtube.com/watch?v=POiHEJqmiC0&list=PLqzoL9-eJTNBDdKgJgJzaQcY6OXmsXAHU&index=31
-
-#    Relative Risk, Odds Ratio and Risk Difference (aka Attributable Risk) in R (R Tutorial 4.8)
-# https://www.youtube.com/watch?v=V_YNPQoAyCc&index=34&list=PLqzoL9-eJTNBDdKgJgJzaQcY6OXmsXAHU
-
-# https://extension.usu.edu/evaluation/files/uploads/Start%20Your%20Engine/Study%20the%20Route/Analyze%20the%20Data/Interpreting_Chi_Square_Printouts.pdf
-
-# https://onlinecourses.science.psu.edu/stat504/book/export/html/102
-
-# http://www.statsdirect.com/help/default.htm#chi_square_tests/rc.htm
-
-# https://www.youtube.com/watch?v=vtUXsmOIi9g
-
-
-# giving up scientific notation (1.6e+07)
-options(scipen = 999)
-
 
 
 ############################################################################
@@ -89,18 +49,6 @@ options(scipen = 999)
 ############################################################################
 
 ############################################################################
-###  Before diving into the any statistical test, you have to 
-###  explore data. 
-###  See:
-###  - in section `08 Data Visualization with -mostly- ggplot2` (https://github.com/marinfotache/Data-Processing-Analysis-Science-with-R/tree/master/08%20Data%20Visualization%20with%20-mostly-%20ggplot2)
-### the script `08b_categorical_variables_visualization.R` 
-### 
-###  - in section
-###  `09 Exploratory Data Analysis` (https://github.com/marinfotache/Data-Processing-Analysis-Science-with-R/tree/master/09%20Exploratory%20Data%20Analysis)
-### the script `09a_descriptive_statistics.R` (mainly the sections `II.3` and `III.3`)
-
-############################################################################
-
 ###  There are two types of categorical variables:
 ###		* nominal (qualitative, no order implied): sex/gender, 
 ###			marital status, country, etc.
@@ -209,17 +157,6 @@ prop.test(424, 950, p = .4, alternative = "greater",
 #########################################################################
 ### 	               II. Tests of independence                         ###
 #########################################################################
-# You Tube tutorials
-
-# Statistics 101: Introduction to the Chi-square Test
-# https://www.youtube.com/watch?v=SvKv375sacA
-
-# How to calculate Chi Square Test for Independence (two way)
-# https://www.youtube.com/watch?v=xEiQn6sGM20
-
-#
-#http://www.r-bloggers.com/the-chi-squared-test-of-independence-an-example-in-both-r-and-sas/
-
 
 ##            Chi-square test of independence
 # Function chisq.test() can be applied to a two-way table in order 
@@ -243,7 +180,6 @@ View(Arthritis)
 # each observation describes one person
 
 table(Arthritis$Treatment)
-
 
 table(Arthritis$Improved)
 
@@ -430,13 +366,12 @@ mosaicplot(twt1, color = seq(1:ncol(twt1)),
 # suggested version with ggplot and ggmosaic
 # library(ggmosaic)
 ggplot(data = Arthritis) +
-     geom_mosaic(aes(weight = 1, x = product(Improved, Treatment), 
-                   fill=factor(Improved)), na.rm=TRUE) +    
-     theme(axis.text.x=element_text(angle=0, hjust= 0.5, size = 12)) + 
-     labs(x="Treatment", title='Treatment vs. Result') + 
+     geom_mosaic(aes(x = product(Improved, Treatment), fill=Improved)) +    
+     theme(axis.text=element_text(angle=0, hjust= 0.5, size = 12)) + 
+     labs(x="Treatment", y = "Result",  title='Treatment vs. Result') + 
      theme (plot.title = element_text (colour="black", size=17, hjust = 0.5))+
-     guides(fill=guide_legend(title = "Treatment Result", reverse = TRUE))
-
+     theme(legend.position="none")  # this will remove the legend
+     
 
 
 #######################################################################
@@ -559,12 +494,13 @@ ggplot(GSS, aes(x = sex, fill = sex)) +
 
 # mosaic plot
 ggplot(data = GSS) +
-     geom_mosaic(aes(weight = count, x = product(sex, party), # notice `weight = count`
-                   fill=factor(sex)), na.rm=TRUE) +    
-     theme(axis.text.x=element_text(angle=0, hjust= 0.5, size = 12)) + 
+     geom_mosaic(aes(weight = count, x = product(party, sex), 
+                     fill=party)) +  ## notice `weight`
+     theme(axis.text=element_text(angle=0, hjust= 0.5, size = 12)) + 
      labs(x="Party", title='Party Identification, by Genre') + 
      theme (plot.title = element_text (colour="black", size=17, hjust = 0.5))+
-     guides(fill=guide_legend(title = "Genre", reverse = TRUE))
+     theme(legend.position="none")  # this will remove the legend
+
 
 
 #######################################################################
@@ -615,11 +551,11 @@ str(dfJobSat)
 # mosaic plot
 ggplot(data = dfJobSat) +
      geom_mosaic(aes(weight = Freq, x = product(satisfaction, income), 
-                   fill=factor(satisfaction)), na.rm=TRUE) +    
+                     fill=satisfaction)) +    
      theme(axis.text.x=element_text(angle=0, hjust= 0.5, size = 12)) + 
      labs(x="Income", title='Job Satisfaction, by Income') + 
      theme (plot.title = element_text (colour="black", size=17, hjust = 0.5))+
-     guides(fill=guide_legend(title = "Satisfaction Level", reverse = TRUE))
+     theme(legend.position="none")  # this will remove the legend
 
 
 #######################################################################
@@ -718,10 +654,9 @@ structable(HairEyeColor)
 structable(Hair+Sex ~ Eye, HairEyeColor) 
 
 
-# mosaic plot
+# mosaic plot 1
 ggplot(data = HairEyeColor_df) +
-     geom_mosaic(aes(weight = Freq, x = product(Eye, Hair), 
-                   fill=factor(Eye)), na.rm=TRUE) +    
+     geom_mosaic(aes(weight = Freq, x = product(Eye, Hair), fill=Eye)) +    
      theme(axis.text.x=element_text(angle=45, hjust= 1, size = 12)) + 
      labs(x="Hair", title='Eye Colour vs. Hair Colour, by Genre') + 
      theme (plot.title = element_text (colour="black", size=17, hjust = 0.5))+
@@ -729,10 +664,10 @@ ggplot(data = HairEyeColor_df) +
      facet_wrap(~ Sex)
 
 
-# mosaic plot
+# mosaic plot 2
 ggplot(data = HairEyeColor_df) +
      geom_mosaic(aes(weight = Freq, x = product(Eye, Sex), 
-                   fill=factor(Eye)), na.rm=TRUE) +    
+                   fill=Eye)) +    
      theme(axis.text.x=element_text(angle=45, hjust= 1, size = 12)) + 
      labs(x="Genre", title='Eye Colour vs. Genre, by Hair Colour') + 
      theme (plot.title = element_text (colour="black", size=17, hjust = 0.5))+
@@ -788,7 +723,6 @@ mytable <- xtabs(~ Hair + Eye + Sex, data = HairEyeColor_df)
 mantelhaen.test(mytable)
 # p-value = 1, so we fail to reject H0 (Hair and Eye seem independent
 # for both Females and Males)
-
 
 
 
@@ -899,7 +833,7 @@ mosaicplot(st1.UCBA, color = seq(1:ncol(st1.UCBA)),
 #  ...or
 ggplot(data = UCBAdmissions_df) +
      geom_mosaic(aes(weight = Freq, x = product(Admit, Dept), 
-                   fill=factor(Admit)), na.rm=TRUE) +    
+                   fill=Admit)) +    
      theme(axis.text.x=element_text(angle=45, hjust= 1, size = 12)) + 
      labs(x="Admitted", title='Admitted, by Departments') + 
      theme (plot.title = element_text (colour="black", size=17, hjust = 0.5))+
@@ -918,7 +852,7 @@ mosaicplot(st2.UCBA, color = seq(1:ncol(st2.UCBA)),
 # ... or
 ggplot(data = UCBAdmissions_df) +
      geom_mosaic(aes(weight = Freq, x = product(Admit, Gender), 
-                   fill=factor(Admit)), na.rm=TRUE) +    
+                   fill=Admit)) +    
      theme(axis.text.x=element_text(angle=45, hjust= 1, size = 12)) + 
      labs(x="Genre", title='Admitted, by Gender') + 
      theme (plot.title = element_text (colour="black", size=17, hjust = 0.5))+
@@ -930,7 +864,7 @@ ggplot(data = UCBAdmissions_df) +
 # mosaic plot `Admit` vs 'Gender` - by `Dept`
 ggplot(data = UCBAdmissions_df) +
      geom_mosaic(aes(weight = Freq, x = product(Admit, Gender), 
-                   fill=factor(Admit)), na.rm=TRUE) +    
+                   fill=Admit)) +    
      theme(axis.text.x=element_text(angle=45, hjust= 1, vjust = 1, size = 12)) + 
      labs(x="Genre", title='Admitted vs. Gender, by Departments') + 
      theme (plot.title = element_text (colour="black", size=17, hjust = 0.5))+
@@ -1009,42 +943,6 @@ UCBAdmissions
 mantelhaen.test(UCBAdmissions)       
 #  p-value = 0.2323, so for UCBA departments there is no enough evidence
 #  to support the claim of gender discrimination in the admission process
-
-
-
-
-##########################################################################
-###                         V. Other Case Studies                      ###
-##########################################################################
-
-##
-# Data set: "DaytonSurvey" in "vcdExtra" package
-# Taken from Friendly, M. - Working with categorical data 
-#   with R and the vcd and vcdExtra packages
-# downloaded on December 2013 from 
-# http://cran.us.r-project.org/web/packages/vcdExtra/vignettes/vcd-tutorial.pdf
-#
-# Table with the frequencies of reported use ("ever used?") of alcohol, 
-#    cigarettes and  marijuana in a sample of high school seniors, 
-#     also classied by sex and race.
-DaytonSurvey
-str(DaytonSurvey)
-head(DaytonSurvey)
-class(DaytonSurvey)
-
-
-## Data frame "DaytonSurvey": the sex and race structure of the respondents 
-DaytonSurvey
-twt4 = xtabs(Freq ~ sex + race, data=DaytonSurvey)
-# the graphics
-spine(twt4, main = "Sex & Race \n in Dayton Survey")
-mosaic(twt4, main = "Sex & Race \n in Dayton Survey", 
-	shade=TRUE, legend=TRUE )
-# or
-mosaicplot(twt4, main = "Sex & Race \n in Dayton Survey", 
-	color = seq(1:ncol(twt4)))
-
-
 
 
 
