@@ -1,8 +1,3 @@
-###############################################################################
-### Document partially supported by research project: POC/398/1/1 nr. 124759 -
-### „Research As A Service – Iasi (RaaS-IS)”
-###############################################################################
-
 ############################################################################
 ###                         Al.I. Cuza University of Iași                ###
 ###            Faculty of Economics and Business Administration          ###
@@ -19,27 +14,26 @@
 ### See also the presentation:
 ### https://github.com/marinfotache/Data-Processing-Analysis-Science-with-R/blob/master/10%20Basic%20Inferential%20Statistics/10_basic_inferential_statistics.pptx
 ############################################################################
-## last update: 31.08.2021
+## last update: 2022-12-02
 
 library(vcd)
 library(tidyverse)
 library(readxl)
 #install.packages('ggmosaic')
-library(ggmosaic)
+#library(ggmosaic)
 library(scales)
 
 ############################################################################
-###            Download the necesary data sets for this script
+###            Download the necessary data sets for this script
 ############################################################################
 
 # all the files needed o run this script are available at:
 # https://github.com/marinfotache/Data-Processing-Analysis-Science-with-R/tree/master/DataSets
 
 # Please download the files in a local directory (such as 'DataSets') and  
-# set the directory where you dowloaded the data files as the 
+# set the directory where you downloaded the data files as the 
 # default/working directory, ex:
 setwd('/Users/marinfotache/Google Drive/R(Mac)-1 googledrive/DataSets')
-############################################################################
 
 
 
@@ -834,31 +828,11 @@ ggplot(smoke_mem, aes(sample=score)) +
 # Ha: the distribution of nonsmokers performance  does NOT follow 
 #    a normal distribution
 shapiro.test(nonsmokers)
-# p-value = 0.295, so H0 is NOT rejected (the distribution seems 
-#   to be close to normal)
+# p-value = 0.295, so H0 is rejected (the distribution sos not normal)
 
-# H0: the distribution of smokers performance is normally distributed
-# Ha: the distribution of smokers performance  does NOT follow a 
-#   normal distribution
-shapiro.test(smokers)
-# p-value = 0.3521, so H0 is NOT rejected (the distribution seems 
-#  to be close to normal)
 
-# Two Sample Two Tail t-test
-# H0: average performance of nonsmokers is equal to the
-#    average performance of smokers
-# Ha: average performance of nonsmokers is not equal the 
-#    average performance of smokers
-t.test(nonsmokers, smokers, alternative="two.side")	
-# t = 2.2573, df = 16.376, p-value = 0.03798, so H0 is rejected
 
-# Two Sample One Tail t-test
-# H0: average performance of nonsmokers is less or equal to the
-#    average performance of smokers
-# Ha: average performance of nonsmokers is greater than the 
-#    average performance of smokers
-t.test(nonsmokers, smokers, alternative="greater")	
-# p-value = 0.01899, so H0 is rejected
+
 
 
 	
@@ -1578,36 +1552,6 @@ library(PMCMRplus)
 # You will then need to conduct the Nemenyi Post-hoc tests 
 # to compare all the pairs. They will be presented as a table.
 PMCMR::posthoc.friedman.nemenyi.test(as.matrix(paired_results[,2:3]))
-
-
-
-#########################################################################
-### 	         XI.2 Alexandru Tica's data set (Exadata)                 ###
-### we'll apply the test, even there are just two dependent groups
-
-#?????????
-#load(file = 'Tica2018-03.RData')
-#glimpse(df) 
-
-# RQ:
-# Is the query performance significantly different among the six 
-# Exadata scenarious ? 
-
-# H0: distributions of the results are similar among scenarious
-# (there is no difference among all scanarios)
-# Ha: distributions of the results differ significantly 
-# among scenarious (there are significant differences among scanarios)
-
-friedman.test(as.matrix(df[,2:7]))
-# Friedman chi-squared = 1473.2, df = 5, p-value < 2.2e-16
-# H0 is rejected! The differences are significant
-
-## Pairwise Comparisons
-# install.packages('PMCMRplus')
-library(PMCMRplus)
-# You will then need to conduct the Nemenyi Post-hoc tests 
-# to compare all the pairs. They will be presented as a table.
-posthoc.friedman.nemenyi.test(as.matrix(df[,2:7]))
 
 
 
