@@ -37,7 +37,7 @@ library(readxl)
 # https://github.com/marinfotache/Data-Processing-Analysis-Science-with-R/tree/master/DataSets
 
 # Please download the files in a local directory (such as 'DataSets') and  
-# set the directory where you dowloaded the data files as the 
+# set the directory where you downloaded the data files as the 
 # default/working directory, ex:
 setwd('/Users/marinfotache/Google Drive/R(Mac)-1 googledrive/DataSets')
 
