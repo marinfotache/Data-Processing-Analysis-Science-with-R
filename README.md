@@ -9,4 +9,5 @@ Note: As R packages are published or updated every week, changes may occur frequ
 - Valerică Greavu-Șerban
 - George-Daniel Talabă
 - Marius-Iulian Cluci
-
+- Irina-Cristina Teodorescu (Cojocariu)
+- Nicolai Romanov
