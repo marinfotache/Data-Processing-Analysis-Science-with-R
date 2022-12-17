@@ -9,10 +9,10 @@
 ############################################################################
 ###
 ############################################################################
-###       15.b. Building and tuning tree-based classification models     ###
+###       15.b. Building and Tuning Tree-Based Classification Models     ###
 ###                           with `tidymodels`                          ###  
 ############################################################################
-## last update: 07.01.2022
+## last update: 17.12.2022
 
 options(java.parameters = "-Xmx12g")
 options(scipen = 999)
@@ -206,7 +206,7 @@ rf_resamples %>%
   group_by(id) %>%
   roc_curve(AHD, .pred_No) %>%
   ggplot(aes(1 - specificity, sensitivity, color = id)) +
-  geom_abline(lty = 2, color = "gray80", size = 1) +
+  geom_abline(lty = 2, color = "gray80", linewidth = 1) +
   geom_path(show.legend = FALSE, alpha = 0.5, size = 1) +
   coord_equal()
 
@@ -224,7 +224,7 @@ df_auc <- bind_rows(
         mutate (model = 'xgboost')
   ) %>%
   ggplot(aes(1 - specificity, sensitivity, color = id)) +
-  geom_abline(lty = 2, color = "gray80", size = 1) +
+  geom_abline(lty = 2, color = "gray80", linewidth = 1) +
   geom_path(show.legend = FALSE, alpha = 0.5, size = 1) +
   coord_equal() +
   facet_wrap(~ model)

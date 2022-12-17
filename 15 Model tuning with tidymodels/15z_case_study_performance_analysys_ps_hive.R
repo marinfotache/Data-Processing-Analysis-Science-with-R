@@ -1,7 +1,7 @@
 ########################################################################
 ### Case study: EDA + ML - Performance analysis PostgreSQL-Hadoop/Hive 
 ########################################################################
-## last update: 31.03.2022
+## last update: 17.12.2022
 
 options(scipen = 999)
 library(tidyverse) 
