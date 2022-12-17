@@ -9,10 +9,10 @@
 ############################################################################
 ###
 ############################################################################
-###           15.a. Building and tuning tree-based scoring models        ###
+###           15.a. Building and Tuning Tree-Based Scoring Models        ###
 ###                           with `tidymodels`                          ###  
 ############################################################################
-## last update: 07.01.2022
+## last update: 17.12.2022
 # install.packages('ranger')
 library(ranger)   # for Random Forest models
 library(xgboost)  # for XGBoost models
@@ -298,3 +298,4 @@ workflow() %>%
 final_xgb_train %>% 
     extract_fit_parsnip() %>% 
     vip()
+
