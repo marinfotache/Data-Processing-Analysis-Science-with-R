@@ -71,7 +71,7 @@ cv_train
 ### not all steps (in the following recipe) are really necessary 
 ### in this case, but in many other situations they are really useful
 the_recipe <- recipe(AHD ~ ., data = train_tbl) %>%
-    step_knnimpute(all_predictors(), neighbors = 3) %>%   # .missing values impoutation
+    step_impute_knn(all_predictors(), neighbors = 3) %>%   # .missing values impoutation
     step_dummy(all_nominal(), -all_outcomes()) %>% # dummification of the predictors
     step_zv(all_predictors()) # this removes predictors with zero variance
 
