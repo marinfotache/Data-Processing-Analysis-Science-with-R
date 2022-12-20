@@ -20,6 +20,8 @@ library(tidyverse)
 library(broom)
 library(tidymodels)
 library(vip)
+# install.packages('DALEXtra')
+library(DALEXtra)
 options(scipen = 999)
 
 
@@ -60,7 +62,7 @@ any(is.na(insurance))
 
 table(insurance$region)
 
-
+# the liniear model, just as a baseline
 lm_insur <- lm(charges ~ ., data = insurance)
 summary(lm_insur)
 
@@ -114,7 +116,7 @@ xgb_spec <- boost_tree(
     tree_depth = tune(), min_n = tune(), 
     loss_reduction = tune(),                     ## model complexity
     sample_size = tune(), mtry = tune(),         ## randomness
-    learn_rate = tune()                         ## step size
+    learn_rate = tune()                          ## step size
     ) %>% 
     set_engine("xgboost") %>% 
     set_mode("regression")
@@ -142,7 +144,7 @@ set.seed(1234)
 rf_grid <- dials::grid_random(
     finalize(mtry(), train_tbl %>% select (-charges)),
     min_n(),  
-    size = 10)  # the number should be larger, but it would take longer
+    size = 20)  # the number should be larger, but it would take longer
 rf_grid
 
 
@@ -154,7 +156,7 @@ xgb_grid <- dials::grid_random(
     sample_size = sample_prop(),
     finalize(mtry(), train_tbl %>% select (-charges)),
     learn_rate(),
-    size = 10   # the number should be larger, but it would take longer
+    size = 50   # the number should be larger, but it would take longer
 )
 xgb_grid
 
@@ -182,7 +184,7 @@ xgb_resamples <- wf_xgb %>%
     )
 xgb_resamples
 
-# In case of errors, one can extract addtional information with ...
+# In case of errors, one can extract additional information as follows ...
 #temp <- xgb_resamples$.notes[[1]][1]
 #temp$.notes[1]
 
@@ -194,6 +196,7 @@ xgb_resamples
 
 # performance metrics (mean) across folds for each grid line
 temp <- rf_resamples %>% collect_metrics()
+View(temp)
 autoplot(rf_resamples)
 
 rf_resamples %>% 
@@ -209,7 +212,6 @@ xgb_resamples %>%
     collect_metrics() %>%
     filter(`.metric` == 'rsq') %>%
     summarise(avg_rsq = mean(mean))
-
 
 
 
@@ -247,7 +249,7 @@ final_xgb_train
 
 
 #########################################################################
-###     The moment of truth: model performance on the test data set
+###             Model performance on the test data set
 
 ### Function last_fit() fits the finalized workflow one last time 
 ### to the training data and evaluates one last time on the testing data.
@@ -265,7 +267,7 @@ test__xgb %>% collect_metrics()
 #########################################################################
 ###                        Variable importance
 #########################################################################
-library(vip)
+#library(vip)
 
 set.seed(1234)
 rf_imp_spec <- rf_spec %>%
@@ -299,3 +301,91 @@ final_xgb_train %>%
     extract_fit_parsnip() %>% 
     vip()
 
+
+
+#########################################################################
+###              Interpretable (Explainable) Models
+#########################################################################
+
+# Creating a pre-processed dataframe of the train dataset
+imp_data <- the_recipe |>
+     prep() |>
+     bake(new_data = NULL)
+
+
+# Final model with the best parameters
+set.seed(1234)
+df_spec_final_rf <- rf_spec |>
+     finalize_model(best_rf) |>
+     set_engine("ranger", importance = "permutation")
+
+#building the explainer-object
+explainer_rf <- DALEXtra::explain_tidymodels(
+     df_spec_final_rf |> 
+          fit(charges ~ ., data = imp_data),
+          data = imp_data %>% select(-charges), 
+          y = train_tbl$charges,
+     verbose = FALSE
+     )
+
+# Calculates the variable-importance measure
+set.seed(1234)
+vip_df <- model_parts( 
+     explainer = explainer_rf, 
+     loss_function = loss_root_mean_square, 
+     B = 100, #the number of permutations
+     type = "difference",
+     label =""
+  )
+
+# Plotting ranking of the importance of explanatory variables
+plot(vip_df) +
+     ggtitle("Mean variable-importance over 100 permutations", "\nRandom Forests")+
+     theme(plot.title = element_text(hjust = 0.5, size = 14),
+        axis.title.x = element_text(size=13),
+        axis.text = element_text(size=12)) 
+
+
+# Partial dependence profiles for smokers
+set.seed(1234)
+pdp_smoker <- model_profile(explainer_rf, variables = "smoker_yes")
+ 
+as_tibble(pdp_smoker$agr_profiles) |>
+     ggplot(aes(`_x_`, `_yhat_`)) +
+     geom_line(data = as_tibble(pdp_smoker$cp_profiles),
+            aes(x = smoker_yes, group = `_ids_`),
+            size = 0.5, alpha = 0.05, color = "gray50")+
+     geom_line(color = "midnightblue", size = 1.2, alpha = 0.8)+
+     labs(title= "Charges vs. Smoker_yes")+
+     theme(plot.title = element_text(hjust = 0.5),
+        panel.grid.minor.x = element_line(color="grey"))
+
+
+# Partial dependence profiles for bmi
+set.seed(1234)
+pdp_bmi <- model_profile(explainer_rf, variables = "bmi")
+ 
+as_tibble(pdp_bmi$agr_profiles) |>
+     ggplot(aes(`_x_`, `_yhat_`)) +
+     geom_line(data = as_tibble(pdp_bmi$cp_profiles),
+            aes(x = bmi, group = `_ids_`),
+            size = 0.5, alpha = 0.05, color = "gray50")+
+     geom_line(color = "midnightblue", size = 1.2, alpha = 0.8)+
+     labs(title= "Charges vs. bmi")+
+     theme(plot.title = element_text(hjust = 0.5),
+        panel.grid.minor.x = element_line(color="grey"))
+
+
+# Partial dependence profiles for age
+set.seed(1234)
+pdp_age <- model_profile(explainer_rf, variables = "age")
+ 
+as_tibble(pdp_age$agr_profiles) |>
+     ggplot(aes(`_x_`, `_yhat_`)) +
+     geom_line(data = as_tibble(pdp_age$cp_profiles),
+            aes(x = age, group = `_ids_`),
+            size = 0.5, alpha = 0.05, color = "gray50")+
+     geom_line(color = "midnightblue", size = 1.2, alpha = 0.8)+
+     labs(title= "Charges vs. age")+
+     theme(plot.title = element_text(hjust = 0.5),
+        panel.grid.minor.x = element_line(color="grey"))
