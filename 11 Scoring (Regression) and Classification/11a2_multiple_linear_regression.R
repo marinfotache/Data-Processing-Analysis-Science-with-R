@@ -13,7 +13,7 @@
 ### See also the presentation:
 ### https://github.com/marinfotache/Data-Processing-Analysis-Science-with-R/blob/master/11%20Scoring%20(Regression)%20and%20Classification/11_scoring%20and%20clasisification.pptx
 #######################################################################
-## last update: 19.11.2019
+## last update: 08.03.2023
 
 library(tidyverse) 
 library(skimr)
@@ -25,6 +25,9 @@ library(corrgram)
 
 library(car)
 library(QuantPsyc)
+
+# this package helps interpreting the model results
+library(report)
 
 
 #######################################################################
@@ -184,6 +187,9 @@ glance(states_lm2)
 # Multiple R-squared:  0.567, so, taken together, the predictor variables account for
 #       57 percent of the variance in murder rates across states
 
+# get the model's results interpretation with package `report`
+states_lm2 |>
+     report::report()
 
 
 #######################################################################
@@ -212,6 +218,9 @@ education_lm2 <- lm(csat ~ expense + percent + income , data=education)
 glance(education_lm2)
 tidy(education_lm2, conf.int = TRUE)
 
+# get the model's results interpretation with package `report`
+education_lm2 |>
+     report::report()
 
 
 #######################################################################
@@ -253,6 +262,9 @@ prestige_lm2 <- lm(prestige ~ education + log2(income) + women, data=Prestige)
 glance(prestige_lm2)
 tidy(prestige_lm2, conf.int = TRUE)
 
+# get the model's results interpretation with package `report`
+prestige_lm2 |>
+     report::report()
 
 
 #######################################################################
@@ -300,6 +312,10 @@ tidy(gpa_lm1, conf.int = TRUE)
 
 # interpret the results!
 
+# get the model's results interpretation with package `report`
+gpa_lm1 |>
+     report::report()
+
 
 #######################################################################
 ### 	          IV.5 `tips` data set (package `reshape`)                ###
@@ -325,6 +341,9 @@ summary(tips_lm1)
 glance(tips_lm1)
 tidy(tips_lm1, conf.int = TRUE)
 
+# get the model's results interpretation with package `report`
+tips_lm1 |>
+     report::report()
 
 
 
@@ -357,6 +376,12 @@ summary(births2006_lm3)
 glance(births2006_lm3)
 tidy(births2006_lm3, conf.int = TRUE)
 
+# get the model's results interpretation with package `report`
+births2006_lm3 |>
+     report::report()
+
+
+
 # another categorical predictor - `DeliveryMethod`
 table(births2006$DeliveryMethod)
 births2006_lm4 <- lm(BabyWeight ~ Gestation_Weeks + Mother_WeightGain_Kg +
@@ -364,12 +389,20 @@ births2006_lm4 <- lm(BabyWeight ~ Gestation_Weeks + Mother_WeightGain_Kg +
 glance(births2006_lm4)
 tidy(births2006_lm4, conf.int = TRUE)
 
+# get the model's results interpretation with package `report`
+births2006_lm4 |>
+     report::report()
+
 
 # another categorical predictor - `BirthDay_WeekDay`
 births2006_lm5 <- lm(BabyWeight ~ Gestation_Weeks + Mother_WeightGain_Kg +
      BabyScore + BabySex + DeliveryMethod + factor(BirthDay_WeekDay), data=births2006)
 glance(births2006_lm5)
 tidy(births2006_lm5, conf.int = TRUE)
+
+# get the model's results interpretation with package `report`
+births2006_lm5 |>
+     report::report()
 
 
 ### discussions ...
@@ -417,6 +450,10 @@ corrgram::corrgram(prestige %>% select_if(is.numeric),
 prestige_lm3 <- lm(prestige ~ income + education, data=prestige)
 glance(prestige_lm3)
 tidy(prestige_lm3, conf.int = TRUE)
+
+# get the model's results interpretation with package `report`
+prestige_lm3 |>
+     report::report()
 
 
 # For each level of `type` (type of occupation), show the relation between

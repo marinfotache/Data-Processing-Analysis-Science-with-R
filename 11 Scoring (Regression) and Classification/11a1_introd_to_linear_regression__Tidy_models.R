@@ -40,6 +40,8 @@ library(broom)
 
 library(foreign)
 
+# this package helps interpreting the model results
+library(report)
 
 #######################################################################
 ###           Download the necessary data sets for this script       ###
