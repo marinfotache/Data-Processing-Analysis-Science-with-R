@@ -13,7 +13,7 @@
 ### See also the presentation:
 ### https://github.com/marinfotache/Data-Processing-Analysis-Science-with-R/blob/master/11%20Scoring%20(Regression)%20and%20Classification/11_scoring%20and%20clasisification.pptx
 #######################################################################
-## last update: 19.11.2019
+## last update: 08.03.2023
 
 library(tidyverse) 
 #library(readxl)
@@ -188,6 +188,11 @@ summary(eruption_lm1)
 #    increase of 0.076 seconds in eruption time ("eruptions") for 
 #    every one second increase of "waiting";
 #  
+
+# getting the model interpretation with `report` package
+eruption_lm1 |>
+     report::report()
+
 
 # sometimes STANDARDIZED regression coefficients ("beta"s) are more useful
 # - unstandardized regression coefficients is interpreted as the change in the 
@@ -383,6 +388,10 @@ glance(states_lm1)
 tidy(states_lm1, conf.int = TRUE)
 tidy(states_lm1, conf.int = TRUE, conf.level = .90)
 
+# getting the model interpretation with `report` package
+states_lm1 |>
+     report::report()
+
 
 # scatter plot with regression line for "csat" scores predicted from "expense"
 ggplot(states, aes( x = expense, y = csat)) +
@@ -424,6 +433,10 @@ ggplot(births2006,
 births2006_lm1 <- lm(BabyWeight ~ Mother_WeightGain_Kg, data=births2006)
 glance(births2006_lm1)
 tidy(births2006_lm1, conf.int = TRUE, conf.level = .05)
+
+# getting the model interpretation with `report` package
+births2006_lm1 |>
+     report::report()
 
 
 ###
@@ -491,6 +504,10 @@ ggplot(women,
 	     subtitle = "lm(weight ~ height + I(height^2), data=women)" ) +
 	theme (plot.title = element_text (colour="black", size="14", hjust = 0.5))+
      theme (plot.subtitle = element_text (colour="black", size="12", hjust = 0.5))
+
+# getting the model interpretation with `report` package
+weight_lm2 |>
+     report::report()
 
 
 # now (following Kabacoff's example) going further: 
