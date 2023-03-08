@@ -14,7 +14,7 @@
 ### See also the presentation:
 ### https://github.com/marinfotache/Data-Processing-Analysis-Science-with-R/blob/master/10%20Basic%20Inferential%20Statistics/10_basic_inferential_statistics.pptx
 ############################################################################
-## last update: 2022-12-02
+## last update: 2023-03-08
 
 library(vcd)
 library(tidyverse)
@@ -22,6 +22,13 @@ library(readxl)
 #install.packages('ggmosaic')
 #library(ggmosaic)
 library(scales)
+
+# package report is expremely useful for the test results interpretation 
+# install.packages('report')
+library(report)
+
+# install.packages('effectsize')
+library(effectsize)
 
 ############################################################################
 ###            Download the necessary data sets for this script
@@ -576,7 +583,7 @@ shapiro.test(Arthritis_new$Age)
 library(nortest) 
 
 ###     Anderson-Darling test of normality (ad.test)
-ad.test(Arthritis_new$Age)
+ad.test(Arthritis_new$Age) 
 
 
 ### 					Cramer-von Mises test for normality
@@ -612,7 +619,7 @@ sf.test(Arthritis_new$Age)
 # 
 #  H0: the variances of Age the two men and women are similar 
 #  H0: the variances of Age the two men and women are NOT similar 
-ansari.test(Age ~ Sex, Arthritis_new)
+ansari.test(Age ~ Sex, Arthritis_new) 
 # AB = 1291, p-value = 0.6629
 # There is not enough evidence to reject H0 (in other words, 
 #    the variance of Age for Women does not differ significantly from
@@ -700,6 +707,11 @@ t.test(normtemp$tempC, mu=37, alternative="two.sided")
 # p-value = 2.411e-07, so H0 is rejected! the human body average 
 #   temperature seems not to be 37 degree C
 
+# getting interpretation of the test results with `report` package
+t.test(normtemp$tempC, mu=37, alternative="two.sided")	%>%
+     report::report()
+
+
 ## (t-statistic is the ratio of the observed coefficient to the
 ##  standard error of that coefficient)
 ##
@@ -709,6 +721,11 @@ t.test(normtemp$tempC, mu=37, alternative="two.sided")
 # 	Ha: average temperature is less than 37 degrees	
 t.test(normtemp$tempC, mu=37, alternative="less")	
 # p-value = 1.205e-07, so H0 is rejected!
+
+# getting interpretation of the test results with `report` package
+t.test(normtemp$tempC, mu=37, alternative="less")	%>%
+     report::report()
+
 	
 # third t-test: one sample one-tail test	
 # 	H0: average temperature is less or equal to 37 degrees
@@ -832,11 +849,6 @@ shapiro.test(nonsmokers)
 
 
 
-
-
-
-	
-
 #########################################################################
 ### 	                      V.2  `tips` data set                       ###
 ###
@@ -876,6 +888,11 @@ t.test(tip ~ sex, data = tips)
 # p-value > 0.05, so we fail to reject H0
 # Men and Women seem similarly generous in giving tip (in the restaurant)
 
+# getting interpretation of the test results with `report` package
+t.test(tip ~ sex, data = tips) %>%
+     report::report()
+
+
 
 ###
 ### RQ2: Do smokers give significantly different amounts of tip than non-smokers ?
@@ -907,6 +924,10 @@ t.test(tip ~ smoker, data = tips)
 # t = -0.091844, df = 192.26, p-value = 0.9269
 # p-value > 0.05, so we fail to reject H0
 # Non-Smokers and Smokers seem similarly generous in giving tip 
+
+# getting interpretation of the test results with `report` package
+t.test(tip ~ smoker, data = tips) %>%
+     report::report()
 
 
 
@@ -950,6 +971,11 @@ t.test(latency ~ db_server, data = all_inserts)
 # The two data servers have significantly different performances for 
 #    INSERT operations
 
+# results' intepretation
+t.test(latency ~ db_server, data = all_inserts) %>%
+     report::report()
+
+
 
 ###
 # Two Sample One Tail t-test (1)
@@ -969,6 +995,7 @@ t.test(latency ~ db_server, data = all_inserts,  alternative="greater" )
 # Who is the first data server and who is the second in 
 # `t.test(latency ~ db_server, data = all_inserts,  alternative="greater" )`
 # MongoDB precedes (alphabetically) MySQL, so MongoDB is the first
+
 
 ###
 # Two Sample One Tail t-test (2)
@@ -1058,6 +1085,15 @@ t.test(paired_results$duration_Hive,
 # H0 is rejected: Hives perform differently than Pg in a single-node 
 # architecture
 
+# getting interpretation of the test results with `report` package
+t.test(paired_results$duration_Hive, 
+       paired_results$duration_Pg, 
+       paired=TRUE) %>%
+     report::report()
+
+effectsize::interpret_cohens_d(2.65, rules = "cohen1988")
+
+
 
 # One Tail t-test for Paired Data
 # H0: the mean query duration for Hive is less than or equal to 
@@ -1111,6 +1147,11 @@ t.test(nonsmokers, smokers, alternative="two.side")
 wilcox.test(score ~ smoking_status , data = smoke_mem)
 # W = 76.5, p-value = 0.04715, so H0 is rejected
 
+wilcox.test(smoke_mem$score ~ smoke_mem$smoking_status) |>
+     report::report()
+
+
+
 ### 
 # Two Sample One Tail t-test
 # H0: average performance of nonsmokers is less or equal to the
@@ -1123,6 +1164,7 @@ t.test(nonsmokers, smokers, alternative="greater")
 # results are similar with 
 wilcox.test(score ~ smoking_status , data = smoke_mem, alternative="greater")
 # W = 76.5, p-value = 0.02358
+
 
 	
 
@@ -1152,6 +1194,9 @@ wilcox.test(tip ~ sex , data = tips)
 # p-value > 0.05, so we faill to reject H0
 # Men and Women seem similarly generous in giving tip (in the restaurant)
 
+wilcox.test(tips$tip ~ tips$sex ) |>
+     report::report()
+
 
 
 ###
@@ -1173,6 +1218,8 @@ wilcox.test(tip ~ smoker , data = tips)
 # W = 6880, p-value = 0.7919
 # p-value > 0.05, so we faill to reject H0
 
+wilcox.test(tips$tip ~ tips$smoker) |>
+     report::report()
 
 
 #########################################################################
@@ -1248,6 +1295,7 @@ wilcox.test(latency ~ db_server, data = all_inserts,  alternative="less" )
 
 
 
+
 #########################################################################
 ###      VIII. Nonparametric tests of differences between two         ### 
 ###                   dependent (paired) groups                       ###
@@ -1290,6 +1338,10 @@ with(paired_results, wilcox.test(duration_Hive, duration_Pg, paired=TRUE))
 # H0 is rejected: Hives perform differently than Pg in a single-node 
 # architecture
 # So Mann–Whitney U test yields the same result as the t-test for paired data
+
+# get the interpretation
+wilcox.test(paired_results$duration_Hive, paired_results$duration_Pg, paired=TRUE) |>
+     report::report()
 
 
 # One Tail t-test for Paired Data
@@ -1398,6 +1450,10 @@ summary(anova1)
 # Consequently, there are no significant variations of tip
 #    among the days of the week
 
+# get the interpretation
+anova1 |>
+     report::report()
+
 
 ##
 ## Multiple Comparisons
@@ -1443,6 +1499,7 @@ kruskalmc(tip ~ day, tips)
 
 # The only slightly significant difference appears to be
 # between Sunday and Thursday
+
 
 
 #########################################################################
@@ -1538,21 +1595,18 @@ paired_results <- results_ih_2016 %>%
 # Ha: distributions of the query duration being compared 
 # are different (differences among all database servers are statistically 
 # significant)
+# 
 friedman.test(as.matrix(paired_results[,2:3]))
 # Friedman chi-squared = 1996, df = 1, p-value < 2.2e-16
 # H0 is rejected! The differences are significant
 
 ## Pairwise Comparisons
 # To find out which pairs are different, you will need to install 
-# the package ‘PMCMR’ and load the library after that:
-# install.packages('PMCMR')
-library(PMCMR)
 # install.packages('PMCMRplus')
 library(PMCMRplus)
 # You will then need to conduct the Nemenyi Post-hoc tests 
 # to compare all the pairs. They will be presented as a table.
-PMCMR::posthoc.friedman.nemenyi.test(as.matrix(paired_results[,2:3]))
-
+frdAllPairsNemenyiTest(duration ~ dbserver | queryId, data = results_ih_2016)
 
 
 
