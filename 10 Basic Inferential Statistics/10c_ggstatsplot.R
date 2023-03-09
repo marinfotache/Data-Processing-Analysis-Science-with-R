@@ -140,6 +140,9 @@ ggbarstats(
   Sex
 )
 
+mytable <- xtabs(~ AHD + Sex, data = heart)
+chisq.test(mytable) 
+
 
 #######################################################################
 ###             RQ2: Is the heart disease related to the chest pain?
@@ -229,6 +232,59 @@ ggscatterstats(
 #########################################################################
 ### 	                  C.I. Two independent groups                    ###
 #########################################################################
+
+# Heart Diseases data set 
+#######################################################################
+###             RQ3: Is the heart disease related to the age?
+#######################################################################
+glimpse(heart)
+
+# check the normality of `Age` distribution
+shapiro.test(heart$Age)
+# non-normal
+
+#just the text
+wilcox.test(heart$Age ~ heart$AHD) 
+
+# details about test results provided by `report` package
+wilcox.test(heart$Age ~ heart$AHD) |>
+     report::report()
+
+# now, the Man-Whitney test with `ggstatsplot`
+ggbetweenstats(
+  data = heart,
+  x = AHD,
+  y = Age,
+  plot.type = "boxviolin",
+  type = "np"
+)
+
+
+#######################################################################
+###      RQ4: Is the heart disease related to the Cholesterol level?
+#######################################################################
+glimpse(heart)
+
+# check the normality of `Chol` distribution
+shapiro.test(heart$Chol)
+# non-normal
+
+#just the text
+wilcox.test(heart$Chol ~ heart$AHD) 
+
+# details about test results provided by `report` package
+wilcox.test(heart$Chol ~ heart$AHD) |>
+     report::report()
+
+# now, the Man-Whitney test with `ggstatsplot`
+ggbetweenstats(
+  data = heart,
+  x = AHD,
+  y = Chol,
+  plot.type = "boxviolin",
+  type = "np"
+)
+
 
 #########################################################################
 ### 	          C.I.1 `tips` data set (package `reshape`)              ###
