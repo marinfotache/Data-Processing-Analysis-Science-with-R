@@ -1,0 +1,255 @@
+---
+title: "01a Introduction to R"
+description: About R/RStudio installation, working with packages, info about current R sesssion
+author:
+   name: Marin Fotache
+   url: https://github.com/marinfotache/Data-Processing-Analysis-Science-with-R
+   affiliation: Alexandru Ioan Cuza University of Iasi, Dept. of Business Information Systms
+   affiliation-url: https://www.feaa.uaic.ro/faculty/marin-fotache/
+format:
+   html:
+      theme: flatly
+      toc: true
+      toc-depth: 4
+      number-sections: true
+editor: visual
+execute: 
+  echo: true
+date: last-modified 
+title-block-banner: '#053F56'
+---
+
+## Before you start
+
+If you are an (ultra) beginner in R/RStudio, or if you managed to forget almost everything about R, here are some useful resources on basics (including installation on your laptop/desktop) of R and RStudio:
+
+-   R Studio Education (Beginners) by Posit (former RStudio) <https://education.rstudio.com/learn/beginner/>
+
+-   R resources (free courses, books, tutorials, & cheat sheets) by Paul van der Laken (a bit outdated, but still valuable) <https://paulvanderlaken.com/2017/08/10/r-resources-cheatsheets-tutorials-books/#introductory>
+
+-   Our main reference during the sections related to basics of R, data import, data processing and data exploration will be **Hadley Wickham, Mine Çetinkaya-Rundel, Garrett Grolemund (2023). R for Data Science. O'Reilly** available at <https://r4ds.hadley.nz>.
+
+-   To get an idea on what are we are trying to do in this section and subsequent ones, see <https://r4ds.hadley.nz/intro>.
+
+## Install R and RStudio. Basic operations in RStudio
+
+### Useful resources for R/RStudio installation and operations :
+
+-   Chapter 1 Getting Started with Data in R. <https://moderndive.netlify.app/1-getting-started.html>
+
+-   RStudio User Guide <https://docs.posit.co/ide/user/>.
+
+### Install, load and use packages
+
+Base R provides core features, but most of the R power and elegance resides in its packages (or libraries). A package must be installed just one (later, it can be updated, whenever necessary)
+
+```{r}
+#| label: install-lubridate
+# package "lubridate" provides many elegant features for dealing with variables of type date, timestamps, intervals, etc.
+# run only once, then comment it (with a hashtag)
+#install.packages('lubridate', repos = "http://cran.us.r-project.org") 
+```
+
+Once a package is installed, it must be loaded into memory for every R session.
+
+```{r}
+#| label: load-lubridate
+
+# now "install.packages" command is commented
+# install.packages('lubridate') 
+
+# before use it, be sure the package is loaded into memory 
+# (next command will be run only once per R session)
+library(lubridate) 
+
+```
+
+Next, we'll use a simple function provided by the ***lubridate*** package:
+
+```{r}
+#| label: use-lubridate
+
+# Function "Sys.Data()" is provided by the base R (it displays the current date)
+Sys.Date()
+
+# we'll use function "wday" to display the current day of the week
+lubridate::wday(Sys.Date(), label = TRUE) 
+
+```
+
+Note: Usually, it is not necessary to preceed the name of the function by its package, as in ***lubridate::wday***. Nevertheless, when two or more packages (loaded into the current sesssion memory) provide functions with identical names, in order to execute a specific version of the function, its name must be prefixed by its package name.
+
+### Some packages are actually mega-packages
+
+In all of the remaining sections, we'll use extensivery some packages included in the ***tidyverse*** ecosystem (***dplyr***, ***tidyr***, ***readr***, ***ggplot2***, etc.). Instead of installing them one by one, we will install all at once:
+
+```{r}
+#| label: install-and-load-tidyverse
+#| echo: false
+
+# next command will install all the packages included in the "tidyverse" (and will take a while)
+#install.packages('tidyverse', repos = "http://cran.us.r-project.org") 
+
+# "instal..." line must be commented after the installation is completed
+
+# once per session, prior to the first call to a function in a "tidyverse" package, the ecosystem must be loaded into memory:
+library(tidyverse)
+
+```
+
+### Install packages from other repositories
+
+When not available on \[http://cran.us.r-project.org\] <http://cran.us.r-project.org>, some packages can be installed from other repositories (e.g., github); this is also the case when the development version is to be installed (instead the stable, "cran"-compliant one).
+
+Next chunk will install the development version of ***ggstatsplot*** package:
+
+```{r}
+#install.packages('pak')
+library(pak)
+pak::pak("IndrajeetPatil/ggstatsplot")
+library(ggstatsplot)
+```
+
+Next chunk will install the ***tidystringdist*** package from github:
+
+```{r}
+# install.packages(remotes)
+remotes::install_github("ColinFay/tidystringdist")
+```
+
+
+### Avoiding package re-installation (when the package is already installed) 
+
+```{r}
+
+# specify package to be installed...
+packages_to_be_installed <- c('glue', 'scales')
+
+# install each of the two packages only if it is not yet installed
+installed_packages <- packages_to_be_installed %in% rownames(installed.packages())
+if (any(installed_packages == FALSE)) {
+     install.packages(packages[!installed_packages])
+}
+
+# ... a simple solution would be
+if (!require('glue')) install.packages('glue')
+
+
+
+```
+
+
+## Example of a chunk of R code which calls functions from multiple packages
+
+Task: import the exchange rates published (daily) by the National Bank of Romania (BNR) and plot a basic chart with RON-EUR exchange rates for the most recent days:
+
+```{r}
+#| label: get-EUR-RON-exhange-rates
+#| message: false
+
+# load the required packages ("tidyverse is already loaded")
+# library(tidyverse)
+#install.packages(htmltab, repos = "http://cran.us.r-project.org")
+library(htmltab)
+
+# we get data from here
+url <- 'http://www.bnr.ro/Exchange-rates-15192.aspx' 
+
+# get the html table with the exchange rates
+exchange_rates <- htmltab::htmltab(doc = url, 
+     which = 1, encoding = "UTF-8")  
+
+# take a look on the structure of the imported data
+glimpse(exchange_rates) 
+
+# look at the first five rows in the data
+head(exchange_rates,5) 
+
+```
+
+Now, generate the simple plot in @fig-eur-ron :
+
+```{r}
+#| label: fig-eur-ron
+#| fig-cap: RON-EUR exchange rates
+ggplot2::ggplot(
+     
+     # first we specify the data source
+     exchange_rates |> transmute(date = Data, EUR = as.numeric(EUR)), 
+     
+     #... then "aestetics", i.e. what to be displayed on the x and y axes
+     aes(x = date, y = EUR)) +  
+     
+     # this id chart type (of the exchange rates)
+     geom_point() + 
+     
+     # some features will increase lisibility
+     theme(axis.text.x = element_text(angle = 45, hjust = 1)
+     
+     # end of the plot command            
+     ) 
+
+```
+
+## Utilities: display all information about the current R session, installed packages, etc.:
+
+### To display all information about the current R session:
+
+```{r}
+#| label: session-info
+sessionInfo()
+
+```
+
+### To display all installed packages (not only those currently loaded into memory):
+
+```{r}
+#| code-fold: show
+
+# with head(5) we'll limit the display to the first five paclages
+installed.packages() |> head(5)
+```
+
+### Display directory where R is installed:
+
+```{r}
+.libPaths()
+```
+
+### Display the current (working) directory:
+
+```{r}
+getwd()
+```
+
+## How to continue from here? (Subsequent topics)
+
+-   Variable data types (strings, numbers, dates, ...)
+
+-   Data structures (vectors, data frames/tibbles, lists, ...)
+
+-   Import data into R (from text/csv/spreadsheet files stored locally or on the internet; from databases; from other statistical packages)
+
+-   Data processing with (mainly) tidyverse
+
+-   Basic programming in R
+
+-   Clean and process data, and deliver it for the analysis
+
+-   Visualize data
+
+-   Explore data (Exploratory Data Analysis) (requires also some statistical knowledge on statistical distributions, descriptive statistics, etc)
+
+-   Infer.... (require also some statistical knowledge on statistical hypothesis testing)
+
+-   Model data (require also some statistical knowledge on statistical modeling, such as linear regression, logistic regression, etc.)
+
+-   Machine Learning (with the `tidymodels` ecosystem)
+
+-   Work with Big Data tools
+
+Other sections of interest:
+
+-   XML and JSON file management
+
+-   Web scraping

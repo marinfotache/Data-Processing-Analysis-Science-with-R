@@ -13,7 +13,7 @@
 ### See also the presentation:
 ### https://github.com/marinfotache/Data-Processing-Analysis-Science-with-R/blob/master/01%20R_Introduction_Data%20Structures/01a_Introduction_to_R.pptx
 ############################################################################
-## last update: 01.10.2018
+## last update: 23.10.2023
 
 
 ############################################################################
@@ -27,7 +27,8 @@
 library()
 
 # another way to display packages which have been installed 
-installed.packages()
+installed.packages() |>
+     head(5)
 
 # verify and update all installed packages
 update.packages()
@@ -40,10 +41,10 @@ getwd()
 
 # Set/change the current working directory - examples 
 # on Mac OS
-setwd("/Users/marinfotache/Google Drive/R(Mac)/DataSets")
+setwd('/Users/marinfotache/Google Drive/R(Mac)-1 googledrive/DataSets')
 
 # on Windows (notice the `/` instead of `\`)
-setwd("C:/Users/Marin F/Google Drive/R(Mac)/DataSets")
+setwd("C:/Users/Marin F/Google Drive/R(Mac)-1 googledrive/DataSets")
 
 # check the new current working directory
 getwd() 
@@ -53,7 +54,7 @@ dir()
 # or
 list.files()
 
-# save.image('r_session_2018-10-01.RData')
+save.image('r_session_2023-10-23.RData')
 
 ###########################################################
 ###         Useful commands for managing objects        ###
@@ -63,7 +64,7 @@ list.files()
 rm(list=ls()) 
 
 # restore (load) a previously saved workspace (not run, just for illustration)
-load("r_session_2018-10-01.RData")
+load("r_session_2023-10-23.RData")
 
 # List the objects in the current workspace
 ls() 
@@ -102,7 +103,7 @@ ls(pattern = "var$")
 
 # save the current workspace (all variables) (not run, just for illustration)
 #  in a single .RData file
-save.image(file="session_2018-10-01.RData")
+save.image(file="session_2023-10-23.RData")
 
 # if you want to save the workspaces if a file containing the current date: 
 file_name <- paste('backup', as.Date(now()), sep = '_')
@@ -111,7 +112,7 @@ save.image(file=file_name)
 
 # save the command launched in current session as an R script
 #    (be careful, because there is a default limitation of number of saved commands)
-savehistory(file = "work2018-10-01.R")
+savehistory(file = "work2023-10-23.R")
 # after saving, the file can be opened as every R script
 
 
@@ -119,7 +120,7 @@ savehistory(file = "work2018-10-01.R")
 rm(list=ls()) 
 
 # restore (load) a previously saved workspace (not run, just for illustration)
-load("session_2018-10-01.RData")
+load("session_2023-10-23.RData")
 
 
 ############################################################################
@@ -181,4 +182,7 @@ update.packages(ask = FALSE, repos = 'http://cran.rstudio.org')
 install.packages("swirl")
 library(swirl)
 swirl()
+
+
+sessionInfo()
 

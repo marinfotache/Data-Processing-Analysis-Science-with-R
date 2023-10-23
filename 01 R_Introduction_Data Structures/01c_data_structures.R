@@ -473,7 +473,7 @@ a1 [c(1,2),c(1,2),c(1,2)]
 
 
 ############################################################################
-###       data frames in R (the most important data structure in R       ###
+###      Data frames in R (the most common data structure in R !!!)      ###
 ############################################################################
 
 ## data frames look like tables (or Excel worksheets)
@@ -512,6 +512,7 @@ student_gi <- data.frame(studentID, name, age,
 
 View(student_gi)
 str(student_gi)
+
 
 
 # compare with ....
