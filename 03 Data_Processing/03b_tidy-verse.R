@@ -13,7 +13,7 @@
 ### See also the presentation:
 ### https://github.com/marinfotache/Data-Processing-Analysis-Science-with-R/blob/master/03%20Data_Processing/03b_Tidy-verse.pptx
 ############################################################################
-## last update: 23.10.2019
+## last update: 23.10.2023
 
 library(tidyverse) 
 library(readxl)
@@ -28,7 +28,7 @@ library(readxl)
 # Please download the files in a local directory (such as 'DataSets') and  
 # set the directory where you dowloaded the data files as the 
 # default/working directory, ex:
-setwd('/Users/marinfotache/Google Drive/R(Mac)/DataSets')
+setwd('/Users/marinfotache/Google Drive/R(Mac)-1 googledrive/DataSets')
 
 # check if the current directory is ok
 getwd()

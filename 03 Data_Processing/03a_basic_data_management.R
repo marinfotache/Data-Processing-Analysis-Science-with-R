@@ -13,9 +13,12 @@
 ### See also the presentation:
 ### xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
 ############################################################################
-## last update: 09.10.2018
+## last update: 23.10.2023
 
 library(tidyverse) # for `glimpse` and `read_tsv`
+library(readxl)
+library(lubridate)
+
 
 ############################################################################
 ###            Download the necesary data sets for this script
@@ -27,7 +30,7 @@ library(tidyverse) # for `glimpse` and `read_tsv`
 # Please download the files in a local directory (such as 'DataSets') and  
 # set the directory where you dowloaded the data files as the 
 # default/working directory, ex:
-setwd('/Users/marinfotache/Google Drive/R(Mac)/DataSets')
+setwd('/Users/marinfotache/Google Drive/R(Mac)-1 googledrive/DataSets')
 
 # check if the current directory is ok
 getwd()
@@ -110,7 +113,7 @@ rm(list = ls())
 #              (Anonymized) FEAA students for 2014-2015academic year
 getwd()
 file <- "anonymized_students_FEAA_2014.xlsx"
-studs <- read_excel(file, sheet = 1, col_names = TRUE, skip = 0)
+studs <- readxl::read_excel(file, sheet = 1, col_names = TRUE, skip = 0)
 
 # display the data frame structure
 str(studs)
