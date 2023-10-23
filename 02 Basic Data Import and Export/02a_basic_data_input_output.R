@@ -13,7 +13,7 @@
 ### See also the presentation:
 ### https://github.com/marinfotache/Data-Processing-Analysis-Science-with-R/blob/master/02%20Basic%20Data%20Import%20and%20Export/02a_basic_data_input_output.pptx
 ############################################################################
-## last update: 2022-11-05
+## last update: 2023-10-23
 
 
 sessionInfo()
@@ -39,11 +39,8 @@ getwd()
 ############################################################################
 
 
-
-
 ## remove objects in the current session environment.
 rm(list = ls())
-
 
 
 ############################################################################
@@ -97,7 +94,7 @@ rm(df1)
 df3 <- edit(df3)
 
 
-## new (2020-08) - package `DataEditR`
+## from 2020 - package `DataEditR`
 ## https://github.com/DillonHammill/DataEditR
 #install.packages('devtools')
 #library(devtools)
