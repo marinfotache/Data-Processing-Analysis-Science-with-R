@@ -4,13 +4,14 @@
 ### for problem description see:
 ### https://github.com/marinfotache/Data-Processing-Analysis-Science-with-R/blob/master/04%20Basic%20Programming/04c1_CaseStudy1_R-Programming_1_Requirements.pdf                  
 ############################################################################
-### last update: 2021-11-15
-library(readxl)
+### last update: 2023-11-13
+#library(readxl)
 library(tidyverse)
+# install.packages('rio', dependencies = TRUE)
 library(rio)
 
 ############################################################################
-###              4c3b  Solution 2 - with user defined function           ###
+###              4c1c  Solution 2 - with user defined function           ###
 ############################################################################
 
 ############################################################################
@@ -52,6 +53,7 @@ abbrev_ <- 'DM'
 
 
 f_available <- function ( abbrev_ ) {
+     
      test <- master_progs %>%
           filter (prog_abbreviation == abbrev_ & 
                     n_of_positions > n_of_filled_positions)
@@ -62,9 +64,12 @@ f_available <- function ( abbrev_ ) {
           return (FALSE)
 }     
 
+
 # compile the function !
+
 # now, test the function
 f_available('DM')
+
 f_available('xyz')
 
 
@@ -96,14 +101,16 @@ for (i in 1:nrow(applicants)) {
            filter(!is.na(value))
 
      j <- 1
-     # now loop thrrough all applicant's options and try to assign it as 
+     # now loop through all applicant's options and try to assign it as 
      # early as possible 
      for (j in 1:nrow(options)) {
+          
           # store the current option
           current_option <- options$value[j]
           
           # check if there is still available positions at the current option
           if (f_available(current_option)) { 
+               
                # succes! applicant will be assigned to her/his current option
                results <- bind_rows(results, 
                     tibble(applicant_id = crt_id, 
@@ -122,6 +129,8 @@ for (i in 1:nrow(applicants)) {
      }     
 }     
 
+glimpse(master_progs)
+
 # 6 check the number of filled positions for each programme
 View(master_progs)
 
@@ -136,7 +145,8 @@ View(results_ok)
 
 # 8 export results in excel
 
-rio::export(results_ok2, file = '04c3b_CaseStudy1_Results.xlsx', 
+getwd()
+rio::export(results_ok2, file = '04c1d_CaseStudy1_Results.xlsx', 
        format = 'xlsx')
 
 

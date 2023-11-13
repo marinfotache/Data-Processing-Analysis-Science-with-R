@@ -13,7 +13,7 @@
 ### See also the presentation:
 ### https://github.com/marinfotache/Data-Processing-Analysis-Science-with-R/blob/master/04%20Basic%20Programming/04_Programming_UDFs_eval_tidyeval.pptx
 ############################################################################
-## last update: 15.11.2021
+## last update: 13.11.2023
 
 library(tidyverse)
 library(readxl)
@@ -87,6 +87,7 @@ file <- "anonymized_students_FEAA_2014.xlsx"
 studs_init <- readxl::read_excel(file, sheet = 1, col_names = TRUE, skip = 0)
 ## display the data frame structure
 glimpse(studs_init)
+glimpse(studs_init)
 
 ## display variabile `YEAR_OF_STUDY` values
 studs_init$YEAR_OF_STUDY
@@ -105,6 +106,18 @@ studs <- mutate(studs_init,
                ifelse(YEAR_OF_STUDY == 'II', 2,
                     ifelse(YEAR_OF_STUDY == 'III', 3,
                            as.integer(YEAR_OF_STUDY))))))
+
+studs <- studs_init %>%
+     mutate(YEAR_OF_STUDY = as.integer(
+          ifelse(YEAR_OF_STUDY == 'I', 1,
+               ifelse(YEAR_OF_STUDY == 'II', 2,
+                    ifelse(YEAR_OF_STUDY == 'III', 3,
+                           as.integer(YEAR_OF_STUDY))))))
+
+# 
+temp <- studs %>%
+     filter(is.na(YEAR_OF_STUDY))
+
 table(studs$YEAR_OF_STUDY)
 table(studs_init$YEAR_OF_STUDY)
 
@@ -188,7 +201,7 @@ fuel_economy_2018 <- fuel_economy_2018 %>%
 
 #########################################################################
 ##  Task:                                                             ###
-##  Given the fuel efficiency data set (see above) ...                ###
+##  Given the `fuel efficiency` data set (see above) ...              ###
 ##  Which is the numeric variable with the largest                    ###
 ##       standard deviation?                                          ###
 #########################################################################
@@ -243,17 +256,20 @@ print(max_sd)
 # sol. 3 - `for`
 variable <- ""
 max_sd <- 0
-for (i in 1:ncol(fuel_economy_2018)) {
-     if (is.numeric(fuel_economy_2018[[i]])) {
-          crt_sd <- sd(fuel_economy_2018[[i]], na.rm = TRUE)
+for (j in 1:ncol(fuel_economy_2018)) {
+     if (is.numeric(fuel_economy_2018[[j]])) {
+          crt_sd <- sd(fuel_economy_2018[[j]], na.rm = TRUE)
           if (crt_sd > max_sd ) {
-               variable = names(fuel_economy_2018) [i]
+               variable = names(fuel_economy_2018) [j]
                max_sd <- crt_sd
           }
+          # break()
      }
 }
 print(variable)
 print(max_sd)
+
+names(fuel_economy_2018)[12]
 
 
 
@@ -350,12 +366,12 @@ View(result_2)
 ##  Example:
 ## 1. Set `/Users/marinfotache/Google Drive/R(Mac)/DataSets/Students`
 ##       as default working directory (change this with your current directory)
-## 2. Check if in this directory there is a subdirectory called `Teams_FRM`
+## 2. Check if in this directory there is a subdirectory called `Teams_DM`
 ##       If not, created it
-## 3. Set `Teams_FRM` as current working directory
-## 4. Given that there for FRM master programme there are 10 teams of
+## 3. Set `Teams_DM` as current working directory
+## 4. Given that there DM FRM master programme there are 10 teams of
 ##       students, create a separate directory for each team called
-##       `FRM101`, `FRM102`, ... `FRM110`
+##       `DM101`, `DM102`, ... `DM115`
 #########################################################################
 
 ####                           Solution
@@ -366,28 +382,29 @@ initial_wd <- getwd()
 
 ### 2. Set `/Users/marinfotache/Google Drive/R(Mac)/DataSets/Students`
 ###       as default working directory
-main_dir <- '/Users/marinfotache/Google Drive/R(Mac)/DataSets/student'
+main_dir <- '/Users/marinfotache/Google Drive/R(Mac)-1 googledrive/DataSets/student'
+
 setwd(main_dir)
 getwd()
 
-### 3. Check if in this directory there is a subdirectory called `Teams_FRM`
+### 3. Check if in this directory there is a subdirectory called `Teams_DM`
 ###       If not, created it
-sub_dir <- 'Teams_FRM'
+sub_dir <- 'Teams_DM'
 if (!dir.exists( file.path(main_dir, sub_dir)))
      dir.create(file.path(main_dir, sub_dir))
 
 
-### 4. Set `Teams_FRM` as current working directory
+### 4. Set `Teams_DM` as current working directory
 new_wd <- paste(main_dir, sub_dir, sep = '/')
 setwd(new_wd)
 getwd()
 
 
-### 5. Given that there for FRM master programme there are 10 teams of
+### 5. Given that there for DM master programme there are 15 teams of
 ###       students, create a separate directory for each team called
-###       `FRM101`, `FRM102`, ... `FRM110`
-for (i in 101:110) {
-     team_directory <- paste('FRM', i, sep='')
+###       `DM101`, `DM102`, ... `DM115`
+for (i in 101:115) {
+     team_directory <- paste('DM', i, sep='')
      if (!dir.exists(file.path(new_wd, team_directory)))
           dir.create(file.path(new_wd, team_directory))
 }
@@ -407,7 +424,7 @@ setwd(initial_wd)
 ###  Copy the file `northwind.RData` which is in
 ###       `/Users/marinfotache/Google Drive/R(Mac)/DataSets/` directory
 ###       into ALL subdirectories of
-###  `/Users/marinfotache/Google Drive/R(Mac)/DataSets/students/Teams_FRM`
+###  `/Users/marinfotache/Google Drive/R(Mac)/DataSets/students/Teams_DM`
 ###       directory
 #########################################################################
 
@@ -418,15 +435,14 @@ setwd(initial_wd)
 initial_wd <- getwd()
 
 # 2. set the source file
-source_file <- '/Users/marinfotache/Google Drive/R(Mac)/DataSets/northwind.RData'
+source_file <- '/Users/marinfotache/Google Drive/R(Mac)-1 googledrive/DataSets/northwind.RData'
 
 # 3. get all the destionation subdirectories
-base_dir <- '/Users/marinfotache/Google Drive/R(Mac)/DataSets/students/Teams_FRM'
+base_dir <- '/Users/marinfotache/Google Drive/R(Mac)-1 googledrive/DataSets/student/Teams_DM'
 setwd(base_dir)
 destination_subdirs <- list.dirs(path = base_dir,
                                  full.names = FALSE, recursive = FALSE)
 print(destination_subdirs)
-
 
 # 4. copy the source file in all the destionation subdirectories
 for (crt_folder in destination_subdirs) {
@@ -464,13 +480,13 @@ setwd(initial_wd)
 initial_wd <- getwd()
 
 # 2. get the set all the source files
-source_directory <- '/Users/marinfotache/Google Drive/R(Mac)/DataSets/northwind_xlsx'
+source_directory <- '/Users/marinfotache/Google Drive/R(Mac)-1 googledrive/DataSet/northwind_xlsx'
 source_files_set <- list.files( path = source_directory,
           pattern = '.xlsx', full.names = TRUE, recursive = FALSE,
            ignore.case = FALSE, include.dirs = FALSE)
 
 # 3. get all the destination subdirectories
-base_dir <- '/Users/marinfotache/Google Drive/R(Mac)/DataSets/students/Teams_FRM'
+base_dir <- '/Users/marinfotache/Google Drive/R(Mac)-1 googledrive/DataSets/student/Teams_DM'
 setwd(base_dir)
 destination_subdirs <- list.dirs(path = base_dir, full.names = TRUE, recursive = FALSE)
 print(destination_subdirs)
@@ -524,13 +540,13 @@ setwd(initial_wd)
 initial_wd <- getwd()
 
 # 2. get the set all the source files
-source_dir1 <- '/Users/marinfotache/Google Drive/R(Mac)/DataSets/northwind_xlsx'
+source_dir1 <- '/Users/marinfotache/Google Drive/R(Mac)-1 googledrive/DataSets/northwind_xlsx'
 source_files_set1 <- list.files( path = source_dir1,
           full.names = TRUE, recursive = FALSE,
            ignore.case = FALSE, include.dirs = FALSE)
 print(source_files_set1)
 
-source_dir2 <- '/Users/marinfotache/Google Drive/R(Mac)/DataSets/DragosCogean'
+source_dir2 <- '/Users/marinfotache/Google Drive/R(Mac)-1 googledrive/DataSets/DragosCogean'
 source_files_set2 <- list.files( path = source_dir2,
           full.names = TRUE, recursive = FALSE,
            ignore.case = FALSE, include.dirs = FALSE)
@@ -546,7 +562,7 @@ if (length(source_files_set2) == 0)
 
 
 # 4. get all the destination subdirectories
-base_dir <- '/Users/marinfotache/Google Drive/R(Mac)/DataSets/students/Teams_FRM'
+base_dir <- '/Users/marinfotache/Google Drive/R(Mac)-1 googledrive/DataSets/students/Teams_DM'
 setwd(base_dir)
 destination_subdirs <- list.dirs(path = base_dir, full.names = TRUE, recursive = FALSE)
 print(destination_subdirs)

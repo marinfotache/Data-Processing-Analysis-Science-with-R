@@ -13,7 +13,7 @@
 ### See also the presentation:
 ### https://github.com/marinfotache/Data-Processing-Analysis-Science-with-R/blob/master/04%20Basic%20Programming/04_Programming_UDFs_eval_tidyeval.pptx
 ############################################################################
-## last update: 15.11.2021
+## last update: 13.11.2023
 
 # packages
 library(tidyverse)
@@ -203,17 +203,17 @@ descr_stats <- function(x, na.omit=FALSE) {
      if (na.omit)
           x <- x[!is.na(x)]
           min = min(x, na.rm=T)
-          q_25 = quantile(x, names =F, na.rm=T)[2]
+          p_25 = quantile(x, names =F, na.rm=T)[2]
           med = median(x, na.rm=T)
-          q_75 = quantile(x, names =F, na.rm=T)[4]
+          p_75 = quantile(x, names =F, na.rm=T)[4]
           max = max(x, na.rm=T)
           n = length(x)
           mean = mean(x, na.rm=T)
           st_dev = sd(x, na.rm=T)
           skew = PerformanceAnalytics::skewness(x)
           kurt = PerformanceAnalytics::kurtosis(x)
-     return(tibble(n=n, min=min, first_quartile=q_25, median=med,
-          third_quartile=q_75, max=max,
+     return(tibble(n=n, min=min, first_quartile=p_25, median=med,
+          third_quartile=p_75, max=max,
           mean=mean, st_dev=st_dev, skew=skew, kurtosis=kurt))
 }
 
@@ -285,7 +285,7 @@ equation_lm2(modelA)
 
 ## The parameters are:
 ## `dest_directory` is the directory where subdirectories will be created
-## `program` is the program abbreviationn (e.g. SAAS, FRM, SDBIS, SIA)
+## `program` is the program abbreviationn (e.g. DM, SDBIS, SIA)
 ## `year_of_study`
 ## `n_of_teams` (for each team a subdirectory will be creates)
 
@@ -302,7 +302,7 @@ f_create_teams_directories <- function (dest_directory, program,
 }
 
 # test the function
-f_create_teams_directories("/Users/marinfotache/Downloads/test", "SAAS", 1, 50)
+f_create_teams_directories("/Users/marinfotache/Downloads/test", "SDBIS", 1, 50)
 
 
 ##############################################################################

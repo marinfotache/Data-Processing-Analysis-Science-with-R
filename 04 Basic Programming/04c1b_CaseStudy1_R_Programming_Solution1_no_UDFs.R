@@ -6,7 +6,7 @@
 ############################################################################
 ###
 
-# last update: 2021-11-15
+# last update: 2023-11-13
 library(readxl)
 library(tidyverse)
 
@@ -37,7 +37,7 @@ glimpse(applicants)
 
 ## 1 order applicants by admission average points
 applicants <- applicants %>%
-     mutate (admiss_avg_points = grades_avg * .6 + dissertation_avg * .4 ) %>%
+     mutate (admiss_avg_points = grades_avg * 0.6 + dissertation_avg * 0.4 ) %>%
      mutate (prog_abbreviation_accepted = '') %>%        
      arrange(desc(admiss_avg_points))
 
@@ -47,8 +47,8 @@ master_progs <- master_progs %>%
 
 glimpse(applicants)
 
-# i <- 2
-for (i in 1:nrow(applicants)) {
+# i <- 1
+for (i in 1:nrow(applicants)) {    ## this loops through applicants
         
      # get as a data frame all the options for current applicant
      crt_options <- applicants[i,]  %>%
@@ -58,7 +58,7 @@ for (i in 1:nrow(applicants)) {
         arrange(attribute)
      
      # j <- 1
-     for (j in 1:nrow(crt_options)) {
+     for (j in 1:nrow(crt_options)) {   
              
              crt_prog <- master_progs %>%
                      filter (prog_abbreviation == crt_options$option[j])
@@ -83,7 +83,7 @@ for (i in 1:nrow(applicants)) {
              }
              
      }
-
+     #  
 }
 
 glimpse(applicants)
