@@ -55,8 +55,7 @@ abbrev_ <- 'DM'
 f_available <- function ( abbrev_ ) {
      
      test <- master_progs %>%
-          filter (prog_abbreviation == abbrev_ & 
-                    n_of_positions > n_of_filled_positions)
+          filter (prog_abbreviation == abbrev_ & n_of_positions > n_of_filled_positions)
 
      if (nrow(test) > 0) 
           return (TRUE)
@@ -88,12 +87,6 @@ for (i in 1:nrow(applicants)) {
      # store the current applicant's id
      crt_id <- applicants$applicant_id[i]
 
-     # build a tibble with current applicant's options
-     # options <- applicants %>%
-     #      filter(applicant_id == crt_id) %>%
-     #      gather(option_no, value, prog1_abbreviation:prog6_abbreviation) %>%
-     #      filter(!is.na(value))
-     
      options <- applicants  %>%
            filter(applicant_id == crt_id) %>%
            select (applicant_id, prog1_abbreviation:prog6_abbreviation) %>%

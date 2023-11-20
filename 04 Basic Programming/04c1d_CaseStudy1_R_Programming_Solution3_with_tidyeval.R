@@ -55,8 +55,7 @@ abbrev_ <- 'DM'
 f_available <- function ( abbrev_ ) {
      
      test <- master_progs %>%
-          filter (prog_abbreviation == abbrev_ & 
-                    n_of_positions > n_of_filled_positions)
+          filter (prog_abbreviation == abbrev_ & n_of_positions > n_of_filled_positions)
 
      if (nrow(test) > 0) 
           return (TRUE)
@@ -91,9 +90,6 @@ for (i in 1:nrow(applicants)) {
      
      j <- 1
      for (j in 1:6) {
-          
-          # store the current option
-          # 
           # 
           attribute_name <- paste0('prog', j, '_abbreviation')
           
@@ -130,7 +126,9 @@ View(master_progs)
 results_ok3 <- applicants %>%
      left_join (results) %>%
      mutate(prog_abbreviation_accepted = if_else(is.na(prog_abbreviation_accepted), 
-          'rejected', prog_abbreviation_accepted))
+          'rejected', prog_abbreviation_accepted)) |>
+     relocate(admin_avg_points, prog_abbreviation_accepted, prog1_abbreviation, prog2_abbreviation, 
+              prog3_abbreviation, prog4_abbreviation, prog5_abbreviation, prog6_abbreviation)
 
 View(results_ok3)
 
