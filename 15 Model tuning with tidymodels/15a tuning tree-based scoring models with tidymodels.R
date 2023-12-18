@@ -12,14 +12,16 @@
 ###           15.a. Building and Tuning Tree-Based Scoring Models        ###
 ###                           with `tidymodels`                          ###  
 ############################################################################
-## last update: 17.12.2022
+## last update: 18.12.2023
 # install.packages('ranger')
 library(ranger)   # for Random Forest models
 library(xgboost)  # for XGBoost models
 library(tidyverse)
-library(broom)
+#library(broom)
 library(tidymodels)
 library(vip)
+# install.packages('DALEXtra')
+library(DALEXtra)
 options(scipen = 999)
 
 
@@ -300,3 +302,90 @@ final_xgb_train %>%
     vip()
 
 
+
+#########################################################################
+###              Interpretable (Explainable) Models
+#########################################################################
+
+# Creating a pre-processed dataframe of the train dataset
+imp_data <- the_recipe |>
+     prep() |>
+     bake(new_data = NULL)
+
+
+# Final model with the best parameters
+set.seed(1234)
+df_spec_final_rf <- rf_spec |>
+     finalize_model(best_rf) |>
+     set_engine("ranger", importance = "permutation")
+
+#building the explainer-object
+explainer_rf <- DALEXtra::explain_tidymodels(
+     df_spec_final_rf |> 
+          fit(charges ~ ., data = imp_data),
+          data = imp_data %>% select(-charges), 
+          y = train_tbl$charges,
+     verbose = FALSE
+     )
+
+# Calculates the variable-importance measure
+set.seed(1234)
+vip_df <- model_parts( 
+     explainer = explainer_rf, 
+     loss_function = loss_root_mean_square, 
+     B = 100, #the number of permutations
+     type = "difference",
+     label =""
+  )
+
+# Plotting ranking of the importance of explanatory variables
+plot(vip_df) +
+     ggtitle("Mean variable-importance over 100 permutations", "\nRandom Forests")+
+     theme(plot.title = element_text(hjust = 0.5, size = 14),
+        axis.title.x = element_text(size=13),
+        axis.text = element_text(size=12)) 
+
+
+# Partial dependence profiles for smokers
+set.seed(1234)
+pdp_smoker <- model_profile(explainer_rf, variables = "smoker_yes")
+ 
+as_tibble(pdp_smoker$agr_profiles) |>
+     ggplot(aes(`_x_`, `_yhat_`)) +
+     geom_line(data = as_tibble(pdp_smoker$cp_profiles),
+            aes(x = smoker_yes, group = `_ids_`),
+            size = 0.5, alpha = 0.05, color = "gray50")+
+     geom_line(color = "midnightblue", linewidth = 1.2, alpha = 0.8)+
+     labs(title= "Charges vs. Smoker_yes")+
+     theme(plot.title = element_text(hjust = 0.5),
+        panel.grid.minor.x = element_line(color="grey"))
+
+
+# Partial dependence profiles for bmi
+set.seed(1234)
+pdp_bmi <- model_profile(explainer_rf, variables = "bmi")
+ 
+as_tibble(pdp_bmi$agr_profiles) |>
+     ggplot(aes(`_x_`, `_yhat_`)) +
+     geom_line(data = as_tibble(pdp_bmi$cp_profiles),
+            aes(x = bmi, group = `_ids_`),
+            size = 0.5, alpha = 0.05, color = "gray50")+
+     geom_line(color = "midnightblue", linewidth = 1.2, alpha = 0.8)+
+     labs(title= "Charges vs. bmi")+
+     theme(plot.title = element_text(hjust = 0.5),
+        panel.grid.minor.x = element_line(color="grey"))
+
+
+# Partial dependence profiles for age
+set.seed(1234)
+pdp_age <- model_profile(explainer_rf, variables = "age")
+ 
+as_tibble(pdp_age$agr_profiles) |>
+     ggplot(aes(`_x_`, `_yhat_`)) +
+     geom_line(data = as_tibble(pdp_age$cp_profiles),
+            aes(x = age, group = `_ids_`),
+            size = 0.5, alpha = 0.05, color = "gray50")+
+     geom_line(color = "midnightblue", linewidth = 1.2, alpha = 0.8)+
+     labs(title= "Charges vs. age")+
+     theme(plot.title = element_text(hjust = 0.5),
+        panel.grid.minor.x = element_line(color="grey"))
