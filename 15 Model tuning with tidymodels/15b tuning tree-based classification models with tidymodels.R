@@ -12,14 +12,14 @@
 ###       15.b. Building and Tuning Tree-Based Classification Models     ###
 ###                           with `tidymodels`                          ###  
 ############################################################################
-## last update: 17.12.2022
+## last update: 18.12.2023
 
 options(java.parameters = "-Xmx12g")
 options(scipen = 999)
 library(tidyverse)
 library(tidymodels)
 #install.packages('themis')  # for class imbalancies
-# library(themis)
+library(themis)
 library(ranger)
 library(xgboost)
 
@@ -116,7 +116,7 @@ set.seed(1234)
 rf_grid <- dials::grid_random(
     finalize(mtry(), train_tbl %>% select (-AHD)),
     min_n(),  
-    size = 10)  # the number should be larger, but nodel fitting would take longer
+    size = 20)  # the number should be larger, but nodel fitting would take longer
 
 rf_grid
 
@@ -131,7 +131,7 @@ xgb_grid <- dials::grid_random(
     sample_size = sample_prop(),
     finalize(mtry(), train_tbl %>% select (-AHD)),
     learn_rate(),
-    size = 30   # the number should be larger, but it would take longer
+    size = 60   # the number should be larger, but it would take longer
 )
 xgb_grid
 
@@ -207,7 +207,7 @@ rf_resamples %>%
   roc_curve(AHD, .pred_No) %>%
   ggplot(aes(1 - specificity, sensitivity, color = id)) +
   geom_abline(lty = 2, color = "gray80", linewidth = 1) +
-  geom_path(show.legend = FALSE, alpha = 0.5, size = 1) +
+  geom_path(show.legend = FALSE, alpha = 0.5, linewidth = 1) +
   coord_equal()
 
 
@@ -225,7 +225,7 @@ df_auc <- bind_rows(
   ) %>%
   ggplot(aes(1 - specificity, sensitivity, color = id)) +
   geom_abline(lty = 2, color = "gray80", linewidth = 1) +
-  geom_path(show.legend = FALSE, alpha = 0.5, size = 1) +
+  geom_path(show.legend = FALSE, alpha = 0.5, linewidth = 1) +
   coord_equal() +
   facet_wrap(~ model)
 
