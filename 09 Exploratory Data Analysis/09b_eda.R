@@ -16,9 +16,15 @@
 ## last update: 30.11.2022
 
 library(tidyverse) 
+
+#install.packages('corrr')
 library(corrr)
+
+# install.packages('tidymodels')
 library(tidymodels) 
+
 library(readxl)
+
 # giving up scientific notation (1.6e+07)
 options(scipen=999, digits=4)
 
@@ -35,6 +41,7 @@ options(scipen=999, digits=4)
 # set the directory where you dowloaded the data files as the 
 # default/working directory, ex:
 setwd('/Users/marinfotache/Google Drive/R(Mac)-1 googledrive/DataSets')
+
 
 ############################################################################
 
@@ -150,7 +157,7 @@ test <- eda_factors %>%
 eda_factors %>%
      group_by(variable) %>%
      summarise(n_of_values = n()) %>%
-     filter (n_of_values <= 20) %>%    
+     filter (n_of_values <= 20) %>%    ####### !!!!!!!
      ungroup() %>%
      select (variable) %>%
      inner_join(eda_factors) %>%
@@ -173,7 +180,6 @@ temp <- eda_factors %>%
 
 eda_factors %>%
      filter (variable == 'manufacturer') %>%    
-     distinct (variable) %>%
      inner_join(eda_factors) %>%
 ggplot(., aes(x = value, y = n_value, fill = value)) +
      geom_col() +
@@ -327,7 +333,7 @@ fuel_economy_2018 %>%
 if (!require(devtools)) 
     install.packages("devtools")
 #devtools::install_github("boxuancui/DataExplorer", force = TRUE)
-install.packages('DataExplorer')
+# install.packages('DataExplorer')
 library(DataExplorer)
 
 

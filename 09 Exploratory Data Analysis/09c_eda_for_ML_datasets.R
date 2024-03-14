@@ -13,7 +13,7 @@
 ###   further used in Inferential Statistics and Machine Learning        ###
 ###   (see next chapters/sections)                                       ###
 ############################################################################
-## last update: 30.09.2022
+## last update: 2024-03-14
 
 options(scipen = 999)
 library(tidyverse) 
@@ -89,7 +89,6 @@ missing_vals <- states %>%
      tibble(variable = names(.), n_missing = .) %>%
      mutate (percent_missing = round(n_missing * 100 / 
                nrow(states), 2))
-
 
 # now, the plot
 ggplot(missing_vals, 
@@ -262,7 +261,7 @@ ggplot(., aes(x = Value, y = Murder)) +
      geom_smooth(col = "darkgreen") +
      geom_smooth(method = "lm", col = "red") +
      theme_bw() +
-     theme(strip.text.x = element_text(size = 12)) +
+     theme(strip.text.x = element_text(size = 11)) +
      xlab("")  
 
 # save all the data sets in this script into single file for
@@ -358,9 +357,6 @@ ggplot(., aes(x = value, y = n_value, fill = value)) +
     theme(axis.text.x = element_text(size = 10, angle = 45, hjust = 1)) +
     theme(strip.text.x = element_text(size = 14)) +
     xlab("") + ylab("frequency") 
-
-
-
 
 
 #################################################################
@@ -514,7 +510,7 @@ corrplot.mixed(corr=cor(results_ih_2016 %>% select_if(., is.numeric),
 
 
 ##
-## to be continued dureing lectures with the removal of highly correlated predictors.
+## to be continued during lectures with the removal of highly correlated predictors.
 ##
 
 

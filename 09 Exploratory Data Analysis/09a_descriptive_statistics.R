@@ -67,7 +67,7 @@ library(corrplot) # # for correlation plots
 
 
 #######################################################################
-###	 I. Basic information about data (observations, variables)     ###                           ###
+###	 I. Basic information about data (observations, variables)     ###
 #######################################################################
 
 # nrow(), ncol()
