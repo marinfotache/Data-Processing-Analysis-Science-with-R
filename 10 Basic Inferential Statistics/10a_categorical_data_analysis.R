@@ -13,7 +13,7 @@
 ### See also the presentation:
 ### https://github.com/marinfotache/Data-Processing-Analysis-Science-with-R/blob/master/10%20Basic%20Inferential%20Statistics/10_basic_inferential_statistics.pptx
 ############################################################################
-## last update: 2022-12-01
+## last update: 2024-03-14
 
 # giving up scientific notation (1.6e+07)
 options(scipen = 999)
@@ -217,7 +217,7 @@ ggplot(Arthritis,
      theme (plot.subtitle = element_text (colour="black", size="12", hjust = 0.5))+
 	theme(text=element_text(size=12)) +	
    	ylab("Number of cases") + xlab("Result") +
-	guides(fill=FALSE)  # no legend
+     theme(legend.position = 'none')
 
 
 
@@ -239,7 +239,7 @@ ggplot(dat, aes(x = Var1, fill = Var1)) +
      theme (plot.subtitle = element_text (colour="black", size="12", hjust = 0.5))+
 	theme(text=element_text(size=12)) +	
    	ylab("Number of cases") + xlab("Result") +
-	guides(fill=FALSE)  # no legend
+     theme(legend.position = 'none')
 
 # we do not need text on axis y
 ggplot(dat, aes(x = Var1, fill = Var1)) +
@@ -258,7 +258,7 @@ ggplot(dat, aes(x = Var1, fill = Var1)) +
      theme(axis.text.y = element_blank(),    # here we remove the text in axis Y
 		text=element_text(size=12)) +      
    	ylab("Number of cases") + xlab("Result") +
-	guides(fill=FALSE)  # no legend
+     theme(legend.position = 'none')
     
      
 # visualize information about attribute `Treatment`
@@ -274,7 +274,7 @@ ggplot(Arthritis, aes(x = factor(Treatment), fill = "yellow2")) +
      theme (plot.subtitle = element_text (colour="black", size="12", hjust = 0.5))+
 	theme(text=element_text(size=12)) +	
    	ylab("Number of cases") + xlab("Treatement Groups") +
-	guides(fill=FALSE)  # no legend
+     theme(legend.position = 'none')
 
 
 # visualize information about attribute `Sex`
@@ -290,7 +290,7 @@ ggplot(Arthritis, aes(x = factor(Sex), fill = "yellow2")) +
      theme (plot.subtitle = element_text (colour="black", size="12", hjust = 0.5))+
 	theme(text=element_text(size=12)) +	
    	ylab("Number of cases") + xlab("Treatment Groups") +
-	guides(fill=FALSE)  # no legend
+     theme(legend.position = 'none')
 
 
 ##   visualize information about attribute `Age` (numeric)
@@ -320,7 +320,7 @@ ggplot(Arthritis %>% filter (!is.na(Age)),
 
 
 #######################################################################
-# Research Question
+# Research Question:
 #   Is the treatment effective in fighting with the disease?
 #######################################################################
 
@@ -411,7 +411,7 @@ qchisq(.95, df=2)
 ##  test of independence
 # Fisher’s exact test evaluates the null hypothesis of independence 
 #  of rows and columns in a contingency table with fixed marginals.
-mytable <- xtabs(~Treatment+Improved, data=Arthritis)
+mytable <- xtabs( ~ Treatment + Improved, data = Arthritis)
 # H0: Treatment and Improved are independent
 fisher.test(mytable)
 #  p-value = 0.001 so H0 is rejected
