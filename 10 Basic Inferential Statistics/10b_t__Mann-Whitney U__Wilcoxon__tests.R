@@ -14,7 +14,7 @@
 ### See also the presentation:
 ### https://github.com/marinfotache/Data-Processing-Analysis-Science-with-R/blob/master/10%20Basic%20Inferential%20Statistics/10_basic_inferential_statistics.pptx
 ############################################################################
-## last update: 2023-03-08
+## last update: 2024-03-14
 
 library(vcd)
 library(tidyverse)
@@ -66,6 +66,7 @@ setwd('/Users/marinfotache/Google Drive/R(Mac)-1 googledrive/DataSets')
 #    of whether the sample sizes are similar.
 # - The data used to carry out the test should be sampled independently
 #    from the two populations being compared. 
+
 
 
 #########################################################################
@@ -1128,6 +1129,7 @@ t.test(paired_results$duration_Hive, paired_results$duration_Pg,
 
 # Mann-Whitney U-Test
 # https://www.youtube.com/watch?v=nRAAAp1Bgnw
+
 
 #########################################################################
 ### 	                    VII.1  Drugs & Memory                        ###

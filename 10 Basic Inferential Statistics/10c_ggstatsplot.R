@@ -12,18 +12,22 @@
 ###        10c. The R package on inferential statistics: `ggstatplot`    ###
 ### See: https://indrajeetpatil.github.io/ggstatsplot/
 ############################################################################
-## last update: 2022-12-04
+## last update: 2023-03-14
 
-# install.packages("ggstatsplot")
+#install.packages("ggstatsplot")
 library(ggstatsplot)
+
+#install.packages("tidyverse")
 library(tidyverse)
 library(scales)
+library(report)
 
 # giving up scientific notation (1.6e+07)
 options(scipen = 999)
 
 
 #library(vcd)
+
 #library(vcdExtra)
 #install.packages('ggmosaic')
 #library(ggmosaic)
