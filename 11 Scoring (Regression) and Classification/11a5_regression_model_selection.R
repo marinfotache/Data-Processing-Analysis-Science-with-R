@@ -1,7 +1,7 @@
 ################################################################################
 #########                Regression Models Selection                ############
 ################################################################################
-####  last update: 21.11.2019
+####  last update: 21.12.2020
 
 library(tidyverse)
 library(ggrepel)
@@ -9,10 +9,10 @@ library(broom)
 #library(corrplot)
 #library(car)
 #library(QuantPsyc)
-
+library(janitor)
 
 ############################################################################
-###            Download the necesary data sets for this script
+###            Download the necessary data sets for this script
 ############################################################################
 
 # all the files needed o run this script are available at:
@@ -40,6 +40,7 @@ states$State <- row.names(states)
 names(states) <- str_replace_all(names(states), ' |\\.', '_')
 head(states)
 
+# janitor::clean_names()
 
 # 
 # for Exploratory Data Analysis, see script 09c...
@@ -53,6 +54,7 @@ head(states)
 
 states_lm1 <- lm(Murder ~ ., data=states %>% select (-State))
 summary(states_lm1)
+
 
 ####################################################
 ## with the `broom` package, we can collect simply
@@ -125,7 +127,7 @@ predictors <- setdiff(names(states), c('State', 'Murder'))
 ####################################################################
 ####      Task:                                                 ####
 ####      Find the best model (what `best` is ?) that explains  ####
-####      and/or predict the outcomene (Murder rate)            ####
+####      and/or predict the outcome (Murder rate)             ####
 ####################################################################
 
 
@@ -840,19 +842,5 @@ booteval.relimp(boot)
 # plot result
 plot(booteval.relimp(boot,sort=TRUE)) 
 
-
-
-####################################################################
-###           Predictor importance with `caret` package          ###
-library(caret)
-
-test <- varImp(states_lm1, scale = FALSE)
-test$Overall
-df <- as.data.frame(test)
-
-varImp(states_lm1, scale = FALSE) %>%
-     as.data.frame() %>%
-     tibble::rownames_to_column() %>%
-     arrange (desc(Overall))     
 
 
