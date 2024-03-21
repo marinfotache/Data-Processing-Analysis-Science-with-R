@@ -13,7 +13,7 @@
 ### See also the presentation:
 ### https://github.com/marinfotache/Data-Processing-Analysis-Science-with-R/blob/master/11%20Scoring%20(Regression)%20and%20Classification/11_scoring%20and%20clasisification.pptx
 #######################################################################
-## last update: 08.03.2023
+## last update: 2024-04-21
 
 library(tidyverse) 
 library(skimr)
@@ -423,7 +423,7 @@ births2006_lm5 |>
 
 data(Prestige, package = 'carData')
 prestige <- Prestige %>%
-     as.tibble() %>%
+     as_tibble() %>%
      na.omit()
 glimpse(prestige)
 skimr::skim(prestige)
