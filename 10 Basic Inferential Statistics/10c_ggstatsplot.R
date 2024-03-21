@@ -12,13 +12,12 @@
 ###        10c. The R package on inferential statistics: `ggstatplot`    ###
 ### See: https://indrajeetpatil.github.io/ggstatsplot/
 ############################################################################
-## last update: 2023-03-14
+## last update: 2024-03-21
 
-#install.packages("ggstatsplot")
-library(ggstatsplot)
 
 #install.packages("tidyverse")
 library(tidyverse)
+library(janitor)
 library(scales)
 library(report)
 
@@ -27,11 +26,11 @@ options(scipen = 999)
 
 
 #library(vcd)
-
 #library(vcdExtra)
-#install.packages('ggmosaic')
 #library(ggmosaic)
 # library(readxl)
+#install.packages("ggstatsplot")
+library(ggstatsplot)
 
 
 ############################################################################
@@ -116,17 +115,32 @@ ggbarstats(
 #######################################################################
 # for data set details, research questions and test results, 
 #         see script 09c, section II.1
-heart <- read_csv('Heart.csv') |>
-     select (-`...1`) %>%
+#   
+heart <- read_csv('Heart.csv')  |>
+     clean_names() |>
+     select(-x1) |>
      mutate(
-          Sex = recode (Sex, `0` = "Female", `1` = "Male"),
-          Fbs = recode (Fbs, `0` = "No", `1` = "Yes"),
-          RestECG = factor (RestECG, levels = c(0, 1, 2)),
-          ExAng = recode (ExAng, `0` = "No", `1` = "Yes"),
-          Slope = factor (Slope, levels = c(1, 2, 3))
-          ) %>%
+          sex = case_when(
+               sex == 0 ~ "Female",
+               sex == 1 ~ "Male",
+               is.na(sex) ~ 'unknown',
+               .default = 'other'),
+          fbs = case_when(
+               fbs == 0 ~ "No",
+               fbs == 1 ~ "Yes",
+               .default = 'ERROR!'),
+          rest_bp = factor (rest_bp, levels = c(0, 1, 2)),
+          ex_ang = case_when(
+               ex_ang == 0 ~ "No",
+               ex_ang == 1 ~ "Yes",
+               .default = 'ERROR!'),
+          slope = factor (slope, levels = c(1, 2, 3))
+          ) |>
      mutate_if(is.character, as.factor)
+
 glimpse(heart)
+names(heart)
+
 
 # Descriptive statistics
 heart %>%
@@ -140,11 +154,11 @@ heart %>%
 ###  H0: Variables `AHD` and `Sex` are independent
 ggbarstats(
   data = heart,
-  AHD,
-  Sex
+  ahd,
+  sex
 )
 
-mytable <- xtabs(~ AHD + Sex, data = heart)
+mytable <- xtabs(~ ahd + sex, data = heart)
 chisq.test(mytable) 
 
 
@@ -155,8 +169,8 @@ chisq.test(mytable)
 ###  H0: Variables `AHD` and `ChestPain` are independent
 ggbarstats(
   data = heart,
-  AHD,
-  ChestPain
+  ahd,
+  chest_pain
 )
 
 
@@ -243,22 +257,22 @@ ggscatterstats(
 #######################################################################
 glimpse(heart)
 
-# check the normality of `Age` distribution
-shapiro.test(heart$Age)
+# check the normality of `age` distribution
+shapiro.test(heart$age)
 # non-normal
 
 #just the text
-wilcox.test(heart$Age ~ heart$AHD) 
+wilcox.test(heart$age ~ heart$ahd) 
 
 # details about test results provided by `report` package
-wilcox.test(heart$Age ~ heart$AHD) |>
+wilcox.test(heart$age ~ heart$ahd) |>
      report::report()
 
 # now, the Man-Whitney test with `ggstatsplot`
 ggbetweenstats(
   data = heart,
-  x = AHD,
-  y = Age,
+  x = ahd,
+  y = age,
   plot.type = "boxviolin",
   type = "np"
 )
@@ -269,22 +283,22 @@ ggbetweenstats(
 #######################################################################
 glimpse(heart)
 
-# check the normality of `Chol` distribution
-shapiro.test(heart$Chol)
+# check the normality of `chol` distribution
+shapiro.test(heart$chol)
 # non-normal
 
 #just the text
-wilcox.test(heart$Chol ~ heart$AHD) 
+wilcox.test(heart$chol ~ heart$ahd) 
 
 # details about test results provided by `report` package
-wilcox.test(heart$Chol ~ heart$AHD) |>
+wilcox.test(heart$chol ~ heart$ahd) |>
      report::report()
 
 # now, the Man-Whitney test with `ggstatsplot`
 ggbetweenstats(
   data = heart,
-  x = AHD,
-  y = Chol,
+  x = ahd,
+  y = chol,
   plot.type = "boxviolin",
   type = "np"
 )
