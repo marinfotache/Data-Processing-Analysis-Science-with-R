@@ -13,7 +13,7 @@
 ### See also the presentation:
 ### https://github.com/marinfotache/Data-Processing-Analysis-Science-with-R/blob/master/09%20Exploratory%20Data%20Analysis/09%20Exploratory%20Data%20Analysis.pptx
 ############################################################################
-## last update: 30.11.2022
+## last update: 2024-03-26
 
 library(tidyverse) 
 
@@ -62,11 +62,11 @@ setwd('/Users/marinfotache/Google Drive/R(Mac)-1 googledrive/DataSets')
 #######################################################################
 
 ###                      Fuel Economy dataset(s) 
-fuel_economy_2018 <- read_tsv("all_alpha_18.txt") %>%
+fuel_economy_2018 <- read_tsv("all_alpha_18.txt") |>
      mutate (cty_l100km = round(235.214583333333 / as.numeric(`City MPG`),2),
           hwy_l100km = round(235.214583333333 / as.numeric(`Hwy MPG`),2),
-          combined_l100km = round(235.214583333333 / as.numeric(`Cmb MPG`),2)) %>%
-     mutate (manufacturer = word(Model)) %>%
+          combined_l100km = round(235.214583333333 / as.numeric(`Cmb MPG`),2)) |>
+     mutate (manufacturer = word(Model)) |>
      mutate(manufacturer = case_when(
           manufacturer == 'ACURA' ~ 'HONDA',
           manufacturer == 'ASTON' ~ 'ASTON MARTIN',
@@ -83,7 +83,7 @@ fuel_economy_2018 <- read_tsv("all_alpha_18.txt") %>%
           manufacturer == 'MINI' ~ 'BMW',
           manufacturer == 'SMART' ~ 'MERCEDES-BENZ',
           TRUE ~ manufacturer)
-     ) %>%
+     ) |>
      select (Model:Fuel, `Veh Class`, `Air Pollution Score`, 
              `Greenhouse Gas Score`, SmartWay, cty_l100km:manufacturer)
 
@@ -100,8 +100,7 @@ glimpse(fuel_economy_2018)
 missing_vals <- fuel_economy_2018 %>%
      map_int(., ~ sum(is.na(.) | . == 'N/A')) %>%
      tibble(variable = names(.), n_missing = .) %>%
-     mutate (percent_missing = round(n_missing * 100 / 
-               nrow(fuel_economy_2018), 2))
+     mutate (percent_missing = round(n_missing * 100 / nrow(fuel_economy_2018), 2))
 
 
 # or
@@ -111,16 +110,45 @@ missing_vals2 <- fuel_economy_2018 %>%
 
 
 # now, the plot
-ggplot(missing_vals, 
+g <- ggplot(missing_vals, 
      aes (x = variable, y = n_missing, fill = variable)) +
      geom_col() +
      coord_flip() +
      geom_text(aes(label = paste0(percent_missing, '%'), 
                hjust = if_else(percent_missing > 3, 1.02, -0.03), 
                vjust = 0.5), size = 4 ) +
+#     xlab("Number of Missing Values") + ylab("Variable") +
      theme(legend.position="none") + # this will remove the legend
      scale_y_continuous(limits = c(0,170), breaks = seq(0, 170, 20)) 
-     
+
+print(g)     
+
+# save the plot
+getwd()
+setwd('/Users/marinfotache/Google Drive/R(Mac)-1 googledrive/09 Exploratory Data Analysis/figures')
+
+# save a plot as a pdf file
+ggsave(g, file = 'Fig 1a missing_values.pdf', device = cairo_pdf())
+ggsave(g, file = 'Fig 1b missing_values.pdf', device = cairo_pdf(), dpi = 600)
+ggsave(g, file = 'Fig 1c missing_values.pdf', device = cairo_pdf(), dpi = 1200)
+
+# save a plot as a png file
+ggsave(g, file = 'Fig 1a missing_values.png', device = 'png')
+ggsave(g, file = 'Fig 1b missing_values.png', device = 'png', dpi = 600)
+ggsave(g, file = 'Fig 1c missing_values.png', device = 'png', dpi = 1200)
+
+# save a plot as a tiff file
+ggsave(g, file = 'Fig 1a missing_values.tiff', device = 'tiff')
+ggsave(g, file = 'Fig 1b missing_values.tiff', device = 'tiff', dpi = 600)
+ggsave(g, file = 'Fig 1c missing_values.tiff', device = 'tiff', dpi = 1200)
+
+
+# save a plot as a eps file
+ggsave(g, file = 'Fig 1a missing_values.eps', device = cairo_pdf())
+ggsave(g, file = 'Fig 1b missing_values.eps', device = cairo_pdf(), dpi = 600)
+ggsave(g, file = 'Fig 1c missing_values.eps', device = cairo_pdf(), dpi = 1200)
+
+
 
 
 
@@ -284,7 +312,7 @@ ggplot(., aes(x = value, fill = vehicle_class, color = vehicle_class)) +
 #################################################################
 
 
-# display correlations
+# compute correlations
 temp <- fuel_economy_2018 %>%
      select_if(is.numeric) %>%
      corrr::correlate()  # Create correlation data frame 
@@ -302,10 +330,6 @@ temp <- fuel_economy_2018 %>%
 View(temp)
      
 
-# display even better... 
-fashion(temp)
-
-
 # the correlation plot
 fuel_economy_2018 %>%
      select_if(is.numeric) %>%
@@ -313,11 +337,11 @@ fuel_economy_2018 %>%
      corrr::rplot()
 
 
-# the network plot
-fuel_economy_2018 %>%
-     select_if(is.numeric) %>%
-     corrr::correlate() %>%
-     network_plot(min_cor = .2)
+corrplot::corrplot(
+     cor(fuel_economy_2018 %>% select_if(is.numeric), 
+         use = "pairwise.complete.obs", method = "spearman"), 
+     method = "number", type = "upper",
+     tl.cex = 0.75, number.cex = .75)
 
 
 
