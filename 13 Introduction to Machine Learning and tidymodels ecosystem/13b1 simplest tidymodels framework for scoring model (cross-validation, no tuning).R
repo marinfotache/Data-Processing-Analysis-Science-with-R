@@ -17,7 +17,7 @@
 ### See also the presentation:
 ### https://github.com/marinfotache/Data-Processing-Analysis-Science-with-R/blob/master/13%20Introduction%20to%20Machine%20Learning/13_Introduction%20to%20Machine%20Learning.pptx
 ############################################################################
-## last update: 02.01.2022
+## last update: 2024-03-26
 
 #install.packages('ranger')
 library(ranger)
@@ -140,11 +140,17 @@ lm_resamples %>% collect_metrics()
 detailed_metrics_lm <- lm_resamples %>% collect_metrics(summarize = FALSE)
 View(detailed_metrics_lm)  
 
-ggplot(detailed_metrics_lm %>% mutate (id = row_number()), 
-       aes (x = id, y = `.estimate`)) +
+glimpse(detailed_metrics_lm)
+
+detailed_metrics_lm %>% 
+     ungroup() %>%
+     mutate (id_ = paste(id, id2, sep = '-')) |>
+ggplot(aes (x = id_, y = `.estimate`)) +
     geom_point() +
-    facet_wrap(~ `.metric`, scales = 'free')
- 
+    facet_wrap(~ `.metric`, scales = 'free') +
+     theme(axis.text.x = element_text(size = 9, angle = 45, hjust = 1))
+     
+
 
 # performance metrics (mean) across folds for each grid line
 rf_resamples %>% collect_metrics()
@@ -153,12 +159,13 @@ rf_resamples %>% collect_metrics()
 detailed_metrics_rf <- rf_resamples %>% collect_metrics(summarize = FALSE)
 View(detailed_metrics_rf)  
 
-ggplot(detailed_metrics_rf %>% mutate (id = row_number()), 
-       aes (x = id, y = `.estimate`)) +
+detailed_metrics_rf %>% 
+     ungroup() %>%
+     mutate (id_ = paste(id, id2, sep = '-')) |>
+ggplot(aes (x = id_, y = `.estimate`)) +
     geom_point() +
-    facet_wrap(~ `.metric`, scales = 'free')
-
-
+    facet_wrap(~ `.metric`, scales = 'free') +
+     theme(axis.text.x = element_text(size = 9, angle = 45, hjust = 1))
 
 
 #########################################################################

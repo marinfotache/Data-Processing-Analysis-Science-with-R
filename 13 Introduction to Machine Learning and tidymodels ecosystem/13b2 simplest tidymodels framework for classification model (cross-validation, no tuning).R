@@ -12,7 +12,7 @@
 ###    13.b.2 The simplest (and more recent) way to build  and compare   ###
 ### classification models with `tidymodels` (cross-validation, no tuning)### 
 ############################################################################
-## last update: 02.01.2022
+## last update: 2024-03-26
 
 library(ranger)
 library(tidyverse)
@@ -45,7 +45,7 @@ glimpse(heart)
 any(is.na(heart))
 # there are!!!
 
-table(heart$AHD)
+table(heart$ahd)
 
 139 / (164 + 139)
 
@@ -54,14 +54,14 @@ table(heart$AHD)
 ##########################################################################
 ###                             Main split of the data                 ###
 set.seed(1234)
-splits   <- initial_split(heart, prop = 0.75, strata = AHD)
+splits   <- initial_split(heart, prop = 0.75, strata = ahd)
 train_tbl <- training(splits)
 test_tbl  <- testing(splits)
 
 
 ## cross-validation folds
 set.seed(1234)
-cv_train <- vfold_cv(train_tbl, v = 5, repeats = 5, strata = AHD)
+cv_train <- vfold_cv(train_tbl, v = 5, repeats = 5, strata = ahd)
 cv_train
 
 
@@ -70,7 +70,7 @@ cv_train
 ###                        The recipe for data preparation             ###
 ### not all steps (in the following recipe) are really necessary 
 ### in this case, but in many other situations they are really useful
-the_recipe <- recipe(AHD ~ ., data = train_tbl) %>%
+the_recipe <- recipe(ahd ~ ., data = train_tbl) %>%
     step_impute_knn(all_predictors(), neighbors = 3) %>%   # .missing values impoutation
     step_dummy(all_nominal(), -all_outcomes()) %>% # dummification of the predictors
     step_zv(all_predictors()) # this removes predictors with zero variance
@@ -162,12 +162,12 @@ test__rf %>% collect_metrics()
 ### 
 test__lr %>%
     unnest(`.predictions`) %>%
-    roc_curve(truth = AHD, estimate = .pred_No) %>%
+    roc_curve(ahd, .pred_No) %>%
     autoplot()
 
 test__rf %>%
     unnest(`.predictions`) %>%
-    roc_curve(truth = AHD, estimate = .pred_No) %>%
+    roc_curve(ahd,.pred_No) %>%
     autoplot()
 
 
