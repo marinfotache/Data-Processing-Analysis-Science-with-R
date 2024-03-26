@@ -17,7 +17,7 @@
 ### See also the presentation:
 ### https://github.com/marinfotache/Data-Processing-Analysis-Science-with-R/blob/master/13%20Introduction%20to%20Machine%20Learning/13_Introduction%20to%20Machine%20Learning.pptx
 ############################################################################
-## last update: 12.12.2022
+## last update: 2024-03-26
 
 #install.packages('ranger')
 library(ranger)

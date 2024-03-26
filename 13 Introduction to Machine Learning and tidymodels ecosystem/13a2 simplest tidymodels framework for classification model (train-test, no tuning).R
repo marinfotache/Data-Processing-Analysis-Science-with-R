@@ -12,7 +12,7 @@
 ###     13.a.2 The simplest (and more recent) way to build and compare   ###
 ###   classification models with `tidymodels`  (train-test, no tuning)   ### 
 ############################################################################
-## last update: 02.01.2022
+## last update: 2024-03-26
 
 library(ranger)
 library(tidyverse)
@@ -40,7 +40,7 @@ glimpse(heart)
 any(is.na(heart))
 # there are!!!
 
-table(heart$AHD)
+table(heart$ahd)
 
 139 / (164 + 139)
 
