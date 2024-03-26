@@ -13,7 +13,7 @@
 ###   further used in Inferential Statistics and Machine Learning        ###
 ###   (see next chapters/sections)                                       ###
 ############################################################################
-## last update: 2024-03-14
+## last update: 2024-03-26
 
 options(scipen = 999)
 library(tidyverse) 
@@ -191,48 +191,17 @@ ggplot(., aes(y = value)) +
 ##    Display correlation  among all numeric variables         ##
 ## with package `corrr` (part of tidymodels)                   ##
 
-# display correlations
+# correlations
 temp <- states %>%
      select_if(is.numeric) %>%
      corrr::correlate()  # Create correlation data frame 
 View(temp)
 
-
-# ... a better look...
-temp <- states %>%
-     select_if(is.numeric) %>%
-     corrr::correlate() %>%
-     corrr::rearrange() %>%  # rearrange by correlations
-     corrr::shave() # Shave off the upper triangle for a clean result
-View(temp)
-     
-
-# display even better... 
-fashion(temp)
-
 # the correlation plot
-states %>%
-     select_if(is.numeric) %>%
-     corrr::correlate() %>%
-     corrr::rplot()
-
-
-# another series of correlation plot
-
-corrplot::corrplot(cor(states %>% dplyr::select (-State), 
+corrplot::corrplot(cor(states %>% dplyr::select (-State) %>% select_if(is.numeric), 
              method = "spearman"), method = "number", type = "upper",
              tl.cex = 0.75, number.cex = .75)
 
-corrgram::corrgram(states %>% dplyr::select (-State) %>% select_if(is.numeric),
-     lower.panel=panel.conf, upper.panel=panel.pts,
-     diag.panel=panel.density)
-
-
-# the network plot
-states %>%
-     select_if(is.numeric) %>%
-     corrr::correlate() %>%
-     network_plot(min_cor = .2)
 
 # Get a comprehensive report about variables distribution and correlation
 config <- configure_report(
@@ -566,29 +535,28 @@ corrplot.mixed(corr=cor(results_ih_2016 %>% select_if(., is.numeric),
 # EDA for this data set is also available at:
 # https://rileyking.netlify.com/post/heart-disease-prediction-from-patient-data-in-r/
 
-heart_init <- read_csv('Heart.csv')
-glimpse(heart_init)
-
-# prepare the data set, by removing the first column 
-# and recoding the factors (also converting the character
-# variables into factor)
-# 
-# 
-# to be updated....
-heart <- heart_init %>%
-     select (-`...1`) %>%
+heart <- read_csv('Heart.csv')  |>
+     janitor::clean_names() |>
+     select(-x1) |>
      mutate(
-          Sex = recode (Sex, `0` = "Female", `1` = "Male"),
-          Fbs = recode (Fbs, `0` = "No", `1` = "Yes"),
-          RestECG = factor (RestECG, levels = c(0, 1, 2)),
-          ExAng = recode (ExAng, `0` = "No", `1` = "Yes"),
-          Slope = factor (Slope, levels = c(1, 2, 3))
-          ) %>%
+          sex = case_when(
+               sex == 0 ~ "Female",
+               sex == 1 ~ "Male",
+               is.na(sex) ~ 'unknown',
+               .default = 'other'),
+          fbs = case_when(
+               fbs == 0 ~ "No",
+               fbs == 1 ~ "Yes",
+               .default = 'ERROR!'),
+          ex_ang = case_when(
+               ex_ang == 0 ~ "No",
+               ex_ang == 1 ~ "Yes",
+               .default = 'ERROR!'),
+          slope = factor (slope, levels = c(1, 2, 3))
+          ) |>
      mutate_if(is.character, as.factor)
 
-glimpse(heart_init)
 glimpse(heart)
-rm(heart_init)
 
 # Descriptive statistics
 heart %>%
@@ -715,7 +683,7 @@ ggplot(., aes(y = value)) +
 ##    Display correlation  among all numeric variables         ##
 ## with package `corrr` (part of tidymodels)                   ##
 
-# display correlations
+#  correlations
 temp <- heart %>%
      select_if(is.numeric) %>%
      corrr::correlate()  # Create correlation data frame 
@@ -731,18 +699,8 @@ temp <- heart %>%
 View(temp)
      
 
-# display even better... 
-fashion(temp)
 
 # the correlation plot
-heart %>%
-     select_if(is.numeric) %>%
-     corrr::correlate() %>%
-     corrr::rplot()
-
-
-# another series of correlation plot
-
 corrplot::corrplot(cor(heart %>% select_if (is.numeric) %>% na.omit(), 
              method = "spearman"), method = "number", type = "upper",
              tl.cex = 0.95, number.cex = .85)
@@ -782,8 +740,8 @@ DataExplorer::create_report(heart, config = config)
 missing_vals <- heart %>%
      mutate (id = row_number()) %>%
      mutate_all(as.factor) %>%
-     pivot_longer(c(-id,-AHD), names_to = "variable", values_to = "value")  %>%
-     group_by(variable, AHD) %>%
+     pivot_longer(c(-id,-ahd), names_to = "variable", values_to = "value")  %>%
+     group_by(variable, ahd) %>%
      summarise(n_missing = sum(is.na(value) | value == 'N/A'))  %>%
      mutate (percent_missing = round(n_missing * 100 / 
                nrow(heart), 2))
@@ -796,7 +754,7 @@ ggplot(missing_vals,
      geom_text(aes(label = paste0(percent_missing, '%'), size = 3.5, 
                hjust = if_else(percent_missing > 5, 1.02, -0.03), 
                vjust = 0.5))  +
-     facet_wrap(~ AHD, labeller = "label_both") +
+     facet_wrap(~ ahd, labeller = "label_both") +
      theme(strip.text.x = element_text(size = 12)) +
      theme(legend.position="none") + # this will remove the legend
      scale_y_continuous(limits = c(0,7), breaks = seq(0, 7, 1)) 
@@ -812,13 +770,13 @@ eda_factors <- heart %>%
      mutate_if(is.factor, as.character) %>%
      select_if(., is.character ) %>%
      mutate (id = row_number()) %>%
-     pivot_longer(c(-id,-AHD), names_to = "variable", values_to = "value" ) %>%
+     pivot_longer(c(-id,-ahd), names_to = "variable", values_to = "value" ) %>%
      mutate (value = coalesce(value, 'N/A')) %>%
-     group_by(variable, AHD, value) %>%
+     group_by(variable, ahd, value) %>%
      summarise (n_value = n()) %>%
      ungroup() %>%
      mutate (percent = round(n_value * 100 / nrow(heart),2)) %>%
-     arrange(variable, AHD, value)
+     arrange(variable, ahd, value)
 View(eda_factors)
 glimpse(eda_factors)
 
@@ -834,7 +792,7 @@ ggplot(., aes(x = value, y = n_value, fill = value)) +
      geom_col() +
      geom_text (aes(label = paste0(round(percent,0), '%'), 
                   vjust = if_else(n_value > 100, 1.5, -0.5))) +
-    facet_wrap(~ variable + AHD, scale = "free", labeller = 'label_both') +
+    facet_wrap(~ variable + ahd, scale = "free", labeller = 'label_both') +
      theme(legend.position="none") + # this will remove the legend
     theme(axis.text.x = element_text(size = 10, angle = 45, hjust = 1)) +
     theme(strip.text.x = element_text(size = 12)) +
@@ -853,7 +811,7 @@ ggplot(., aes(x = value, y = n_value, fill = value)) +
      geom_col() +
      geom_text (aes(label = paste0(round(percent,0), '%'), 
                   vjust = if_else(n_value > 100, 1.5, -0.5))) +
-     facet_grid(AHD ~ variable, scale = "free", labeller = 'label_both') +
+     facet_grid(ahd ~ variable, scale = "free", labeller = 'label_both') +
      theme(legend.position="none") + # this will remove the legend
      theme(axis.text.x = element_text(size = 10, angle = 45, hjust = 1)) +
      theme(strip.text = element_text(size = 12)) +
@@ -864,10 +822,10 @@ ggplot(., aes(x = value, y = n_value, fill = value)) +
 ##    Display the distribution (as histograms,                 ##
 ##   density plots and boxplots) of each numeric variable      ##
 num_variables <-      bind_cols(
-     heart %>% select (AHD), 
+     heart %>% select (ahd), 
      heart %>% select_if(., is.numeric)) %>%
      mutate (id = row_number()) %>%
-     pivot_longer(c(-id,-AHD), names_to = "variable", values_to = "value" ) 
+     pivot_longer(c(-id,-ahd), names_to = "variable", values_to = "value" ) 
 View(num_variables)
 
 
@@ -875,7 +833,7 @@ View(num_variables)
 num_variables %>%
 ggplot(., aes(x = value, fill = variable)) +
      geom_histogram() +
-     facet_grid(AHD ~ variable, scale = "free", labeller = 'label_both') +
+     facet_grid(ahd ~ variable, scale = "free", labeller = 'label_both') +
      theme(legend.position="none") + # this will remove the legend
      theme(axis.text.x = element_text(size = 9)) +
      theme(strip.text = element_text(size = 12)) +
@@ -888,7 +846,7 @@ glimpse(heart)
 # than 30 values ; free scale
 # 
 num_variables %>%
-     group_by(variable, AHD) %>%
+     group_by(variable, ahd) %>%
      summarise(n_distinct = n_distinct(value)) %>%
      ungroup()
 
@@ -903,7 +861,7 @@ num_variables %>%
              ) %>%  
 ggplot(., aes(x = value, fill = variable )) +
      geom_density(alpha = 0.5) +
-     facet_grid(AHD ~ variable, scale = "free", labeller = 'label_both') +
+     facet_grid(ahd ~ variable, scale = "free", labeller = 'label_both') +
      theme(axis.text.x = element_text(size = 9)) +
      theme(strip.text = element_text(size = 12)) +
      xlab("") + ylab("frequency") +
@@ -914,7 +872,7 @@ ggplot(., aes(x = value, fill = variable )) +
 num_variables %>%
 ggplot(., aes(y = value)) +
      geom_boxplot() +
-     facet_grid(variable ~ AHD, scale = "free") +
+     facet_grid(variable ~ ahd, scale = "free") +
      theme(legend.position="none") + # this will remove the legend
      xlab("") + ylab("value") +
      theme(axis.text.x = element_blank()) 
@@ -927,19 +885,19 @@ library(ggmosaic)
 names(heart)
 
 
-vars <- setdiff(names(heart %>% select_if (is.factor)), 'AHD')
+vars <- setdiff(names(heart %>% select_if (is.factor)), 'ahd')
 
 plots <- list()
 
 var <- vars[1]
 for (var in vars) {
      temp <- heart %>%
-          transmute (AHD, var1 = heart[[var]]) 
+          transmute (ahd, var1 = heart[[var]]) 
      glimpse(temp)
      
      plot <- ggplot(data = temp) + 
-     geom_mosaic (aes(weight = 1, x = product(AHD, var1), 
-                   fill=AHD)) +
+     geom_mosaic (aes(weight = 1, x = product(ahd, var1), 
+                   fill=ahd)) +
      theme(legend.position="none") + # this will remove the legend
      xlab(var) + ylab("AHD") +
      theme(axis.text.x=element_text(angle=45, hjust= 1, size = 10)) 
