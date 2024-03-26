@@ -49,7 +49,7 @@ table(heart$ahd)
 ##########################################################################
 ###                             Main split of the data                 ###
 set.seed(1234)
-splits   <- initial_split(heart, prop = 0.75, strata = AHD)
+splits   <- initial_split(heart, prop = 0.75, strata = ahd)
 train_tbl <- training(splits)
 test_tbl  <- testing(splits)
 
@@ -59,7 +59,7 @@ test_tbl  <- testing(splits)
 ###                        The recipe for data preparation             ###
 ### not all steps (in the following recipe) are really necessary 
 ### in this case, but in many other situations they are really useful
-the_recipe <- recipe(AHD ~ ., data = train_tbl) %>%
+the_recipe <- recipe(ahd ~ ., data = train_tbl) %>%
     step_impute_knn(all_predictors(), neighbors = 3) %>%   # .missing values impoutation
     step_dummy(all_nominal(), -all_outcomes()) %>% # dummification of the predictors
     step_zv(all_predictors()) # this removes predictors with zero variance
@@ -143,40 +143,40 @@ str(rf_fit_predictions)
 ###                        Explore the results 
 
 # Confusion matrix: 
-conf_mat(lr_fit_predictions, truth = AHD, estimate = `.pred_class`)
-conf_mat(rf_fit_predictions, truth = AHD, estimate = `.pred_class`)
+conf_mat(lr_fit_predictions, truth = ahd, estimate = `.pred_class`)
+conf_mat(rf_fit_predictions, truth = ahd, estimate = `.pred_class`)
 
 # Accuracy
-accuracy(lr_fit_predictions, truth = AHD, estimate = `.pred_class`)
-accuracy(rf_fit_predictions, truth = AHD, estimate = `.pred_class`)
+accuracy(lr_fit_predictions, truth = ahd, estimate = `.pred_class`)
+accuracy(rf_fit_predictions, truth = ahd, estimate = `.pred_class`)
 
 # Matthews correlation coefficient:
-mcc(lr_fit_predictions, truth = AHD, estimate = `.pred_class`)
-mcc(rf_fit_predictions, truth = AHD, estimate = `.pred_class`)
+mcc(lr_fit_predictions, truth = ahd, estimate = `.pred_class`)
+mcc(rf_fit_predictions, truth = ahd, estimate = `.pred_class`)
 
 # F1 metric:
-f_meas(lr_fit_predictions, truth = AHD, estimate = `.pred_class`)
-f_meas(rf_fit_predictions, truth = AHD, estimate = `.pred_class`)
+f_meas(lr_fit_predictions, truth = ahd, estimate = `.pred_class`)
+f_meas(rf_fit_predictions, truth = ahd, estimate = `.pred_class`)
 
 
 
 # ROC curve on the training set
 
 # logistic regression model
-lr_roc_curve <- roc_curve(lr_fit_predictions, truth = AHD, estimate = .pred_No)
-lr_roc_curve
+lr_roc_curve <- roc_curve(lr_fit_predictions, ahd, .pred_No)
+roc_curve(two_class_example, truth, Class1)
 autoplot(lr_roc_curve)
 
-lr_roc_auc <- roc_auc(lr_fit_predictions, truth = AHD, estimate = .pred_No)
+lr_roc_auc <- roc_auc(lr_fit_predictions, ahd, .pred_No)
 lr_roc_auc
 
 
 # random forest model
-rf_roc_curve <- roc_curve(rf_fit_predictions, truth = AHD, estimate = .pred_No)
+rf_roc_curve <- roc_curve(rf_fit_predictions, ahd, .pred_No)
 rf_roc_curve
 autoplot(rf_roc_curve)
 
-rf_roc_auc <- roc_auc(rf_fit_predictions, truth = AHD, estimate = .pred_No)
+rf_roc_auc <- roc_auc(rf_fit_predictions, ahd, .pred_No)
 rf_roc_auc
 
 
@@ -190,39 +190,39 @@ test_rf <- broom::augment (rf_fit, new_data = test_tbl)
 
 
 # Confusion matrix: 
-conf_mat(test_lr, truth = AHD, estimate = `.pred_class`)
-conf_mat(test_rf, truth = AHD, estimate = `.pred_class`)
+conf_mat(test_lr, truth = ahd, estimate = `.pred_class`)
+conf_mat(test_rf, truth = ahd, estimate = `.pred_class`)
 
 # Accuracy
-accuracy(test_lr, truth = AHD, estimate = `.pred_class`)
-accuracy(test_rf, truth = AHD, estimate = `.pred_class`)
+accuracy(test_lr, truth = ahd, estimate = `.pred_class`)
+accuracy(test_rf, truth = ahd, estimate = `.pred_class`)
 
 # Matthews correlation coefficient:
-mcc(test_lr, truth = AHD, estimate = `.pred_class`)
-mcc(test_rf, truth = AHD, estimate = `.pred_class`)
+mcc(test_lr, truth = ahd, estimate = `.pred_class`)
+mcc(test_rf, truth = ahd, estimate = `.pred_class`)
 
 # F1 metric:
-f_meas(test_lr, truth = AHD, estimate = `.pred_class`)
-f_meas(test_rf, truth = AHD, estimate = `.pred_class`)
+f_meas(test_lr, truth = ahd, estimate = `.pred_class`)
+f_meas(test_rf, truth = ahd, estimate = `.pred_class`)
 
 
 
 # ROC curve on the test data set
 
 # logistic regression model
-lr_roc_curve_test <- roc_curve(test_lr, truth = AHD, estimate = .pred_No)
+lr_roc_curve_test <- roc_curve(test_lr, ahd, .pred_No)
 lr_roc_curve_test
 autoplot(lr_roc_curve_test)
 
-lr_roc_auc_test <- roc_auc(test_lr, truth = AHD, estimate = .pred_No)
+lr_roc_auc_test <- roc_auc(test_lr, ahd, .pred_No)
 lr_roc_auc_test
 
 # random forest model
-rf_roc_curve_test <- roc_curve(test_rf, truth = AHD, estimate = .pred_No)
+rf_roc_curve_test <- roc_curve(test_rf, ahd,  .pred_No)
 rf_roc_curve_test
 autoplot(rf_roc_curve_test)
 
-rf_roc_auc_test <- roc_auc(test_rf, truth = AHD, estimate = .pred_No)
+rf_roc_auc_test <- roc_auc(test_rf, ahd, .pred_No)
 rf_roc_auc_test
 
 
