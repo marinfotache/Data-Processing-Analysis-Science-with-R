@@ -14,6 +14,7 @@
 ############################################################################
 ## last update: 2024-03-26
 
+#install.packages('ranges')
 library(ranger)
 library(tidyverse)
 #library(broom)
@@ -53,6 +54,11 @@ splits   <- initial_split(heart, prop = 0.75, strata = ahd)
 train_tbl <- training(splits)
 test_tbl  <- testing(splits)
 
+table(train_tbl$ahd)
+104 / (104+123)
+
+table(test_tbl$ahd)
+35 / (35+41)
 
 
 ##########################################################################

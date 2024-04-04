@@ -161,7 +161,7 @@ broom::augment(rf_fit, new_data = train_tbl) %>%
 
 
 #########################################################################
-###     The moment of truth: model performance on the test data set
+###     The moment of truth: model performance on the TEST data set
 
 scoring_metrics <- metric_set(rmse, rsq, mae, ccc)
 
