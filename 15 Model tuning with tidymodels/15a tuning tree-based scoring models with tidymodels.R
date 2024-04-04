@@ -12,7 +12,7 @@
 ###           15.a. Building and Tuning Tree-Based Scoring Models        ###
 ###                           with `tidymodels`                          ###  
 ############################################################################
-## last update: 18.12.2023
+## last update: 2024-04-04
 # install.packages('ranger')
 library(ranger)   # for Random Forest models
 library(xgboost)  # for XGBoost models
@@ -59,13 +59,6 @@ insurance <- readr::read_csv('insurance.csv')
 
 # are there any missing values ?
 any(is.na(insurance))
-
-table(insurance$region)
-
-# the liniear model, just as a baseline
-lm_insur <- lm(charges ~ ., data = insurance)
-summary(lm_insur)
-
 
 
 ##########################################################################
@@ -164,6 +157,7 @@ xgb_grid
 
 #########################################################################
 ###   Fit the models for all k-fold folders and hyper-parameters grid
+#install.packages('doParallel')
 doParallel::registerDoParallel()
 
 
@@ -216,10 +210,15 @@ xgb_resamples %>%
 
 
 # choose the best hyper-parameter combination
-best_rf <- rf_resamples %>% select_best("rmse")
+
+# this syntax does not work anymore...
+#best_rf <- rf_resamples %>% select_best("rmse")
+# ... being superseded by:
+best_rf <- rf_resamples %>% select_best(metric = "rmse")
 best_rf
 
-best_xgb <- xgb_resamples %>% select_best("rmse")
+
+best_xgb <- xgb_resamples %>% select_best(metric = "rmse")
 best_xgb
 
 
@@ -355,7 +354,7 @@ as_tibble(pdp_smoker$agr_profiles) |>
      geom_line(data = as_tibble(pdp_smoker$cp_profiles),
             aes(x = smoker_yes, group = `_ids_`),
             size = 0.5, alpha = 0.05, color = "gray50")+
-     geom_line(color = "midnightblue", linewidth = 1.2, alpha = 0.8)+
+     geom_line(color = "midnightblue", size = 1.2, alpha = 0.8)+
      labs(title= "Charges vs. Smoker_yes")+
      theme(plot.title = element_text(hjust = 0.5),
         panel.grid.minor.x = element_line(color="grey"))

@@ -12,7 +12,7 @@
 ###       15.b. Building and Tuning Tree-Based Classification Models     ###
 ###                           with `tidymodels`                          ###  
 ############################################################################
-## last update: 18.12.2023
+## last update: 2024-04-04
 
 options(java.parameters = "-Xmx12g")
 options(scipen = 999)
@@ -48,30 +48,26 @@ glimpse(heart)
 any(is.na(heart))
 # there are!!!
 
-table(heart$AHD)
-
-139 / (164 + 139)
-
 
 
 ##########################################################################
 ###                             Main split of the data                 ###
 set.seed(1234)
-splits   <- initial_split(heart, prop = 0.75, strata = AHD)
+splits   <- initial_split(heart, prop = 0.75, strata = ahd)
 train_tbl <- training(splits)
 test_tbl  <- testing(splits)
 
 
 ## cross-validation folds
 set.seed(1234)
-cv_train <- vfold_cv(train_tbl, v = 5, repeats = 1, strata = AHD)
+cv_train <- vfold_cv(train_tbl, v = 5, repeats = 1, strata = ahd)
 cv_train
 
 
 
 ##########################################################################
 ###                        The recipe for data preparation             ###
-the_recipe <- recipe(AHD ~ ., data = train_tbl) %>%
+the_recipe <- recipe(ahd ~ ., data = train_tbl) %>%
     step_impute_knn(all_predictors(), neighbors = 3) %>%   # missing values imputation
     step_dummy(all_nominal(), -all_outcomes()) %>% # dummification of the predictors
     step_zv(all_predictors()) # this removes predictors with zero variance
@@ -114,7 +110,7 @@ xgb_spec
 ## for Random Forest models
 set.seed(1234)
 rf_grid <- dials::grid_random(
-    finalize(mtry(), train_tbl %>% select (-AHD)),
+    finalize(mtry(), train_tbl %>% select (-ahd)),
     min_n(),  
     size = 20)  # the number should be larger, but nodel fitting would take longer
 
@@ -129,7 +125,7 @@ xgb_grid <- dials::grid_random(
     min_n(),
     loss_reduction(),
     sample_size = sample_prop(),
-    finalize(mtry(), train_tbl %>% select (-AHD)),
+    finalize(mtry(), train_tbl %>% select (-ahd)),
     learn_rate(),
     size = 60   # the number should be larger, but it would take longer
 )
@@ -204,7 +200,7 @@ rf_resamples %>%
 rf_resamples %>%
   collect_predictions() %>%
   group_by(id) %>%
-  roc_curve(AHD, .pred_No) %>%
+  roc_curve(ahd, .pred_No) %>%
   ggplot(aes(1 - specificity, sensitivity, color = id)) +
   geom_abline(lty = 2, color = "gray80", linewidth = 1) +
   geom_path(show.legend = FALSE, alpha = 0.5, linewidth = 1) +
@@ -215,12 +211,12 @@ df_auc <- bind_rows(
     rf_resamples %>%
         collect_predictions() %>%
         group_by(id) %>%
-        roc_curve(AHD, .pred_No)  %>%
+        roc_curve(ahd, .pred_No)  %>%
         mutate (model = 'random forest'),
     xgb_resamples %>%
         collect_predictions() %>%
         group_by(id) %>%
-        roc_curve(AHD, .pred_No)  %>%
+        roc_curve(ahd, .pred_No)  %>%
         mutate (model = 'xgboost')
   ) %>%
   ggplot(aes(1 - specificity, sensitivity, color = id)) +
@@ -238,12 +234,12 @@ df_auc
 #########################################################################
 
 best_rf <- rf_resamples %>%
-    select_best("roc_auc")
-#best_rf
+    select_best(metric = "roc_auc")
+best_rf
 
 
 best_xgb <- xgb_resamples %>%
-    select_best("roc_auc")
+    select_best(metric = "roc_auc")
 
 
 #########################################################################
