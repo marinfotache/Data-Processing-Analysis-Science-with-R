@@ -2,7 +2,7 @@
 ###                    (Simple) R Programming Case Study 1               ###
 ###                   Master Programmes Admission                   ###
 ### for problem description see:
-### https://github.com/marinfotache/Data-Processing-Analysis-Science-with-R/blob/master/04%20Basic%20Programming/04c1_CaseStudy1_R-Programming_1_Requirements.pdf                  
+### https://github.com/marinfotache/Data-Processing-Analysis-Science-with-R/blob/master/04%20Basic%20Programming/04c1a_CaseStudy1_R-Programming_1_Requirements.pdf                 
 ############################################################################
 ### last update: 2024-11-11
 #library(readxl)
