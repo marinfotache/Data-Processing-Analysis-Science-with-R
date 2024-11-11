@@ -4,7 +4,7 @@
 ### for problem description see:
 ### https://github.com/marinfotache/Data-Processing-Analysis-Science-with-R/blob/master/04%20Basic%20Programming/04c1_CaseStudy1_R-Programming_1_Requirements.pdf                  
 ############################################################################
-### last update: 2023-11-13
+### last update: 2024-11-11
 #library(readxl)
 library(tidyverse)
 # install.packages('rio', dependencies = TRUE)
@@ -115,8 +115,8 @@ for (i in 1:nrow(applicants)) {
                          if_else(prog_abbreviation == current_option, 1L, 0L)   
                                  )
                
-               # exit from the options loop, otherwise the applicant could
-               # be accepted to  her last option
+               # exit from the options loop, otherwise the applicant will
+               #      be accepted to her/his last option
                break()
           }     
      }     
