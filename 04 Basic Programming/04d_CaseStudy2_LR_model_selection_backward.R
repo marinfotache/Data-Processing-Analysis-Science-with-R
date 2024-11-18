@@ -9,12 +9,13 @@
 ############################################################################
 ###
 ############################################################################
-###                      4d. Regression Models Selection                ###
+###                      4d. Programming in R -                          ###
+###                      Case study: Regression Models Selection         ###
 ############################################################################
-####  last update: 15.11.2021
+####  last update: 18.11.2024
 
-### For a comprehensive discussion abour Regression, see
-### https://github.com/marinfotache/Data-Processing-Analysis-Science-with-R/tree/master/11%20Regression
+### For a comprehensive discussion about Regression, see
+### https://github.com/marinfotache/Data-Processing-Analysis-Science-with-R/tree/master/11%20Scoring%20(Regression)%20and%20Classification
 
 library(tidyverse)
 library(janitor)
@@ -68,9 +69,9 @@ states <- state.x77 %>%
 glimpse (states)
 
 
-
-
-# Get a comprehensive report about variables distribution and correlation
+# Get a comprehensive report about variables distribution and correlation 
+# for details, see section
+#  https://github.com/marinfotache/Data-Processing-Analysis-Science-with-R/tree/master/09%20Exploratory%20Data%20Analysis 
 config <- configure_report(
      add_introduce = TRUE,
      add_plot_intro = TRUE,
@@ -93,18 +94,6 @@ cor(states %>% select (-state))
 
 corrplot::corrplot(cor(states %>% select (-state),
              method = "spearman"), method = "number", type = "upper")
-
-
-corrgram::corrgram(states %>% select (-state) %>% select_if(is.numeric),
-                   lower.panel=panel.conf, upper.panel=panel.pts)
-
-corrgram::corrgram(states %>% select (-state) %>% select_if(is.numeric),
-     lower.panel=panel.pie, upper.panel=panel.pts,
-     diag.panel=panel.density)
-
-corrgram::corrgram(states %>% select (-state) %>% select_if(is.numeric),
-     lower.panel=panel.conf, upper.panel=panel.pts,
-     diag.panel=panel.density)
 
 
 
@@ -195,7 +184,6 @@ predictors <- setdiff(names(states), c('state', 'murder'))
 ###         c. Bidirectional elimination                         ###
 ###         d. Score comparison (for all possible models)        ###
 ####################################################################
-
 
 
 ####################################################################
