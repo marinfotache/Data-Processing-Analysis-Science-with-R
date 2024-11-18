@@ -13,7 +13,7 @@
 ### See also the presentation:
 ### https://github.com/marinfotache/Data-Processing-Analysis-Science-with-R/blob/master/04%20Basic%20Programming/04_Programming_UDFs_eval_tidyeval.pptx
 ############################################################################
-## last update: 29.11.2021
+## last update: 18.11.2024
 
 # required packages
 library(tidyverse)
@@ -40,7 +40,7 @@ setwd('/Users/marinfotache/Google Drive/R(Mac)-1 googledrive/DataSets')
 #########################################################################
 ###  I. `assign` function                                             ###
 ###  II. `get` function                                               ###
-###  III. Introduction to tidy evalualuation                          ###
+###  III. Introduction to tidy evaluation                             ###
 ###       III.a. dynamic groups in `dplyr`                            ###
 ###       III.b New(er) style (`curly-curly operator`) (2019)         ###
 ###       III.c. quosures                                             ###
@@ -86,7 +86,7 @@ con <- dbConnect(RPostgres::Postgres(), dbname="chinook", user="postgres",
 
 # On Mac OS
 ## your PostgreSQL settings might be different
-con <- dbConnect(RPostgres::Postgres(), host='localhost', port='5434',
+con <- dbConnect(RPostgres::Postgres(), host='localhost', port='5435',
                  dbname='chinook', user='postgres', password='postgres')
 
 # get the table names
@@ -122,7 +122,7 @@ file_name <- "northwind.xlsx"
 # display the worksheets names in a .xls(x) file
 ws <- readxl::excel_sheets(file_name)
 
-i <- 2
+i <- 1
 # now, loop through the worksheets
 for (i in 1:length(ws)) {
      # read the current worksheet
@@ -134,6 +134,7 @@ for (i in 1:length(ws)) {
 }
 
 
+
 #########################################################################
 ##  Example 3 - Import as data frames the first worksheet of all
 ##  Excel (`.xlsx`) files) in the current directory
@@ -143,9 +144,9 @@ rm(list = ls())
 
 
 # create a vector with the name and extension of all .xls or .xlsx files in current directory
-files <- list.files(pattern = "*.xls(|x)")
+files <- list.files(pattern = "\\.xls(|x)")
 # or
-files <- dir(pattern = "*.xls(|x)")
+files <- dir(pattern = "\\.xls(|x)")
 
 
 # i <- 1
@@ -186,7 +187,7 @@ rm(list = ls())
 
 # load the data frames
 load("chinook.RData")
-rm(i, drv, con, connection, temp)
+#rm(i, drv, con, connection, temp)
 
 # create a subdirectory in the current directory
 getwd()
@@ -198,7 +199,7 @@ if (!dir.exists( file.path(main_dir, 'to_be_deleted')))
 
 ### Export each data frame in the current environment as a separate .xlsx file
 tables <- ls()
-i <- 6
+i <- 1
 for (i in 1:length(tables)) {
      # here we used `get` for naming dynamically the data frame from which
      # the data is taken
@@ -236,7 +237,7 @@ glimpse(studs)
 
 
 ###################################################################
-##                       Task no. 1
+##                          Task no. 1
 # Print the frequency (of the values) for the following nominal
 #    variables: `LEVEL_OF_STUDY`, `ATTENDANCE`, `YEAR_OF_STUDY`,
 #    `PROGRAMME`, `LOCATION`, and `FINANCIAL_SUPPORT`
@@ -244,8 +245,8 @@ glimpse(studs)
 # Currently, with `dplyr` we know to work with static variables,
 # ... such as...
 result <- studs %>%
-               group_by(LEVEL_OF_STUDY) %>%
-               summarise (frequency = n())
+        group_by(LEVEL_OF_STUDY) %>%
+        summarise (frequency = n())
 print(result)
 
 studs %>%
@@ -265,7 +266,7 @@ studs %>%
 ##   which was introduced in `dplyr` 0.7.0
 variables <- c('LEVEL_OF_STUDY', 'ATTENDANCE', 'YEAR_OF_STUDY',
                'PROGRAMME', 'LOCATION', 'FINANCIAL_SUPPORT')
-# variable <- variables[1]
+# variable <- variables[2]
 
 for (variable in variables) {
      result <- studs %>%
@@ -281,6 +282,7 @@ for (variable in variables) {
 # as some values were lost (because the way tibbles are displayed),
 # we'll save the result as a tibble instead or printing
 final_result <- tibble()
+variable <- variables[4]
 for (variable in variables) {
      final_result <- bind_rows(final_result,
           tibble(variable = variable) %>%
@@ -307,7 +309,7 @@ View(final_result)
 # a simple functions for computing the frequency of a variable values
 count_groups <- function(df, groupvar){
      df %>%
-          group_by({{ groupvar }}) %>%
+          group_by( {{ groupvar }} ) %>%
           summarise(frequency = n()) %>%
           ungroup()
 }
@@ -380,7 +382,7 @@ final_result3 <- bind_rows(
 ###            evaluating it; it returns a quosure
 ###  -    `!!` operator unquotes an input so that it’s evaluated,
 ###            not quoted.
-###  -    `rlang::sym()` takes strings as input and turn them into symbols                                ###
+###  -    `rlang::sym()` takes strings as input and turn them into symbols     
 ###  -    `enquo()` examines the argument, see what the user typed,
 ###            and return that value as a quosure.
 ###  -    `quos()`` captures all the `...` as a list of arguments/formulas
@@ -735,7 +737,7 @@ View(result)
 
 
 #########################################################################
-###                 IV. `ggplot`and tidy evaluation                   ###
+###                 IV. `ggplot2`and tidy evaluation                   ###
 #########################################################################
 
 # for ggplot2  - see section `08` on GitHub:
@@ -772,6 +774,7 @@ f_barplot <- function(df, column) {
 
 # test the function
 f_barplot(studs, LEVEL_OF_STUDY)
+f_barplot(studs, PROGRAMME)
 
 # using a variable as a parameter requires `rlang::sym` function
 var <- 'LEVEL_OF_STUDY'
@@ -818,6 +821,8 @@ list_density <- list (
      'hwy_l100km',
      'combined_l100km'
      )
+
+
 
 # create the function for displaying the either the histogram of a
 #    density plot for a given variable
