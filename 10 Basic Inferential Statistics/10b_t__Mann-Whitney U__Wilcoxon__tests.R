@@ -14,7 +14,7 @@
 ### See also the presentation:
 ### https://github.com/marinfotache/Data-Processing-Analysis-Science-with-R/blob/master/10%20Basic%20Inferential%20Statistics/10_basic_inferential_statistics.pptx
 ############################################################################
-## last update: 2024-03-14
+## last update: 16-12-2024
 
 library(vcd)
 library(tidyverse)
@@ -23,12 +23,15 @@ library(readxl)
 #library(ggmosaic)
 library(scales)
 
+# install.packages('reshape2')
+
 # package report is expremely useful for the test results interpretation 
 # install.packages('report')
 library(report)
 
 # install.packages('effectsize')
 library(effectsize)
+
 
 ############################################################################
 ###            Download the necessary data sets for this script
@@ -316,7 +319,7 @@ all_inserts$latency
 #   Display overall distribution for variable `latency` with histogram 
 #   superimposed on a density plot (1)  
 ggplot(all_inserts, aes(x = latency)) + 
-	geom_histogram(aes(y = ..density..), colour="black", fill="yellow") + 
+	geom_histogram(aes(y = after_stat(density)), colour="black", fill="yellow") + 
 	geom_density(alpha=0.3, fill="green") +
      ggtitle("Overall Distribution of `latency` for INSERT", 
 	        subtitle = "(Single-Node Data Server)" ) +
@@ -619,7 +622,7 @@ sf.test(Arthritis_new$Age)
 ## 	Arthritis data set                
 # 
 #  H0: the variances of Age the two men and women are similar 
-#  H0: the variances of Age the two men and women are NOT similar 
+#  Ha: the variances of Age the two men and women are NOT similar 
 ansari.test(Age ~ Sex, Arthritis_new) 
 # AB = 1291, p-value = 0.6629
 # There is not enough evidence to reject H0 (in other words, 
@@ -757,7 +760,6 @@ tip.t.distribution <- rt(3000, df=nrow(tips)-1)
 tip.t.test <- t.test(tips$tip,  mu=2.5, alternative="two.sided")
 
 # the graphic
-library(ggplot2)
 ggplot(data.frame (x=tip.t.distribution)) +
 	geom_density( aes (x=x), fill="grey", color="grey" ) +
 	geom_vline( xintercept = tip.t.test$statistic ) +
