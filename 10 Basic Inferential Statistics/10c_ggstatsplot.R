@@ -12,7 +12,7 @@
 ###        10c. The R package on inferential statistics: `ggstatplot`    ###
 ### See: https://indrajeetpatil.github.io/ggstatsplot/
 ############################################################################
-## last update: 2024-03-21
+## last update: 16-12-2024
 
 
 #install.packages("tidyverse")
@@ -79,9 +79,9 @@ chisq.test(mytable)
 
 # Now, the same test with `ggstatsplot`:
 ggbarstats(
-  data = Arthritis,
-  Improved,
-  Treatment
+     data = Arthritis,
+     Improved,
+     Treatment
 )
 
 # ...or:
@@ -129,7 +129,6 @@ heart <- read_csv('Heart.csv')  |>
                fbs == 0 ~ "No",
                fbs == 1 ~ "Yes",
                .default = 'ERROR!'),
-          rest_bp = factor (rest_bp, levels = c(0, 1, 2)),
           ex_ang = case_when(
                ex_ang == 0 ~ "No",
                ex_ang == 1 ~ "Yes",
@@ -153,9 +152,9 @@ heart %>%
 
 ###  H0: Variables `AHD` and `Sex` are independent
 ggbarstats(
-  data = heart,
-  ahd,
-  sex
+     data = heart,
+     ahd,
+     sex
 )
 
 mytable <- xtabs(~ ahd + sex, data = heart)
@@ -205,17 +204,17 @@ insurance %>%
 ##
 # parametric correlation coefficient
 ggscatterstats(
-  data = insurance,
-  x = age,
-  y = charges
+     data = insurance,
+     x = age,
+     y = charges
 )
 
 # non-parametric correlation coefficient
 ggscatterstats(
-  data = insurance,
-  x = age,
-  y = charges,
-  type = "np"
+     data = insurance,
+     x = age,
+     y = charges,
+     type = "np"
 )
 
 
@@ -270,11 +269,11 @@ wilcox.test(heart$age ~ heart$ahd) |>
 
 # now, the Man-Whitney test with `ggstatsplot`
 ggbetweenstats(
-  data = heart,
-  x = ahd,
-  y = age,
-  plot.type = "boxviolin",
-  type = "np"
+     data = heart,
+     x = ahd,
+     y = age,
+#     plot.type = "boxviolin",
+     type = "np"
 )
 
 
@@ -296,11 +295,11 @@ wilcox.test(heart$chol ~ heart$ahd) |>
 
 # now, the Man-Whitney test with `ggstatsplot`
 ggbetweenstats(
-  data = heart,
-  x = ahd,
-  y = chol,
-  plot.type = "boxviolin",
-  type = "np"
+     data = heart,
+     x = ahd,
+     y = chol,
+     plot.type = "boxviolin",
+     type = "np"
 )
 
 
@@ -350,11 +349,11 @@ t.test(tip ~ sex, data = tips)
 
 # now, the same t-test, but this time with `ggstatsplot`
 ggbetweenstats(
-  data = tips,
-  x = sex,
-  y = tip,
-  plot.type = "boxviolin",
-  type = "parametric"
+     data = tips,
+     x = sex,
+     y = tip,
+     plot.type = "boxviolin",
+     type = "parametric"
 )
 
 
@@ -369,11 +368,11 @@ wilcox.test(tip ~ sex , data = tips)
 
 # now, the same test, but this time with `ggstatsplot`:
 ggbetweenstats(
-  data = tips,
-  x = sex,
-  y = tip,
-  plot.type = "boxviolin",
-  type = "np"
+     data = tips,
+     x = sex,
+     y = tip,
+     plot.type = "boxviolin",
+     type = "np"
 )
 
 
@@ -400,7 +399,7 @@ wilcox.test(tip ~ smoker , data = tips)
 
 # now, the same test, but this time with `ggstatsplot`:
 ggbetweenstats(
-  data = tips,
+     data = tips,
   x = smoker,
   y = tip,
   plot.type = "boxviolin",
@@ -504,9 +503,16 @@ TukeyHSD(anova1) # where fit comes from aov()
 
 # now, the same test, but this time with `ggstatsplot`:
 ggbetweenstats(
-  data = tips,
-  x = day,
-  y = tip,
+     data = tips |>
+          mutate(day = case_when(
+               day == 'Thur' ~ '4 Thur',
+               day == 'Fri' ~ '5 Fri',
+               day == 'Sat' ~ '6 Sat',
+               day == 'Sun' ~ '7 Sun',
+               .default = 'other day'
+          )),
+     x = day,
+     y = tip,
 )
 
 
@@ -529,10 +535,17 @@ kruskalmc(tip ~ day, tips)
 
 # now, the same test, but this time with `ggstatsplot`:
 ggbetweenstats(
-  data = tips,
-  x = day,
-  y = tip,
-  type = 'np'
+     data = tips |>
+          mutate(day = case_when(
+               day == 'Thur' ~ '4 Thur',
+               day == 'Fri' ~ '5 Fri',
+               day == 'Sat' ~ '6 Sat',
+               day == 'Sun' ~ '7 Sun',
+               .default = 'other day'
+          )),
+     x = day,
+     y = tip,
+     type = 'np'
 )
 
 
