@@ -13,7 +13,7 @@
 ###   further used in Inferential Statistics and Machine Learning        ###
 ###   (see next chapters/sections)                                       ###
 ############################################################################
-## last update: 2024-03-26
+## last update: 16-12-2024
 
 options(scipen = 999)
 library(tidyverse) 
@@ -44,9 +44,9 @@ setwd('/Users/marinfotache/Google Drive/R(Mac)-1 googledrive/DataSets')
 #####################################################################
 ###	I. EDA for datasets to be used for scoring (regression)      ###	
 ###	     I.1 States(USA)                                         ###	
-### 	 I.2 Insurance                                           ###
-###      I.3 House Prices (Ames, Iowa)                           ###
-### 	 I.4 Hrubaru2015                                         ###
+### 	     I.2 Insurance                                           ###
+###       I.3 House Prices (Ames, Iowa)                           ###
+### 	     I.4 Hrubaru2015                                         ###
 ###	II. EDA for datasets to be used for classification           ###	
 ###       II.1 Heart disease                                      ###
 ###       II.2 Credit scoring (G.Sanchez version)                 ###
@@ -390,13 +390,6 @@ corrplot::corrplot(cor(insurance %>%
           method = "spearman"), method = "number", type = "upper",
           tl.cex = 0.75, number.cex = .75)
 
-corrgram::corrgram(insurance %>% select_if(is.numeric),
-     lower.panel=panel.pie, upper.panel=panel.pts,
-     diag.panel=panel.density)
-
-corrgram::corrgram(insurance %>% select_if(is.numeric),
-     lower.panel=panel.conf, upper.panel=panel.pts,
-     diag.panel=panel.density)
 
 
 # scatter plots of the outcome vs. all other valiables
