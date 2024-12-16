@@ -13,7 +13,7 @@
 ### See also the presentation:
 ### https://github.com/marinfotache/Data-Processing-Analysis-Science-with-R/blob/master/09%20Exploratory%20Data%20Analysis/09%20Exploratory%20Data%20Analysis.pptx
 ############################################################################
-## last update: 30.11.2022
+## last update: 16.12.2024
 
 
 ############################################################################
@@ -106,7 +106,7 @@ str(invoice_detailed)
 glimpse(invoice_detailed)
 
 ## - first six values from each variable
-head(invoice_detailed)
+head(invoice_detailed,6)
 
 ## - first values from each variable
 glimpse(invoice_detailed)
@@ -377,6 +377,7 @@ temp <- invoice_detailed %>%
      )
 View(temp)          
 
+
 ## descriptive statistics using `skim` function provided by package `skimr`
 ##  some of the statistics are provided (the most popular) 
 ## - number of missing values
@@ -411,6 +412,7 @@ View(temp)
 ### option `na.rm = TRUE`
 glimpse(fuel_economy_2018)
 
+############################################################################
 ## Task:
 ## For variable: `combined_l100km`
 ## compute the following statistics:
@@ -436,7 +438,8 @@ fuel_economy_2018 %>%
           max = max(combined_l100km), 
           sd = sd(combined_l100km) # standard deviation
      )
-### ... does not work, since the variable `combined_l100km` has
+
+### !!!... does not work, since the variable `combined_l100km` has
 ### at least one NA value;
 ### we have to use `na.rm = TRUE`:
 fuel_economy_2018 %>%
@@ -461,6 +464,7 @@ fuel_economy_2018 %>%
      skim()
 
 
+############################################################################
 ## Task:
 ## For each of the variables: `cty_l100km`, `hwy_l100km`, `combined_l100km`
 ## compute the following statistics:
@@ -498,7 +502,7 @@ fuel_economy_2018 %>%
      skim()
 
 
-
+################################################################################
 ## Task:
 ## Compute the main descriptive statistics for all numeric 
 ## variables
@@ -557,6 +561,8 @@ fuel_economy_2018 %>%
 
 
 glimpse(fuel_economy_2018)
+
+############################################################################
 ## Task: 
 ## 1) Display the histograms of the following variables:
 ##        - `displacement`
@@ -699,7 +705,7 @@ invoice_detailed %>%
      table()
 
 
-
+############################################################################
 ## Task:
 ## Display, for each customer, the product frequency (number of 
 ##   occurences in customer's invoices)
@@ -913,6 +919,7 @@ corrplot(., order="hclust",
 ###  Similar example with the script `08c`, section `III.2`                     
 glimpse(fuel_economy_2018)
 
+############################################################################
 ## Task: 
 ## Compute correlations between all pairs of the 
 ##   following variables:
@@ -957,6 +964,8 @@ cor (fuel_economy_2018[c('n_of_cyl', 'air_pollution',
 library (vcd)
 glimpse(Arthritis)
 
+
+############################################################################
 ## Task:
 ## Estimate the strength of the association between `Treatment` and
 ##   `Improved`
