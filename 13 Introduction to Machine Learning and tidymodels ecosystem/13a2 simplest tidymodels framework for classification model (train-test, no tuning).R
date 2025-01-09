@@ -9,10 +9,10 @@
 ############################################################################
 ###
 ############################################################################
-###     13.a.2 The simplest (and more recent) way to build and compare   ###
+###            13.a.2 The simplest way to build and compare              ###
 ###   classification models with `tidymodels`  (train-test, no tuning)   ### 
 ############################################################################
-## last update: 2024-03-26
+## last update: 2025-01-09
 
 #install.packages('ranges')
 library(ranger)
