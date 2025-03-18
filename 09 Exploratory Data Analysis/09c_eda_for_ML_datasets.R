@@ -85,10 +85,10 @@ states %>%
 ##     Display the number missing values for each variable     ## 
 
 missing_vals <- states %>%
+     mutate(across(everything(), as.character))  %>%
      map_int(., ~ sum(is.na(.) | . == 'N/A')) %>%
      tibble(variable = names(.), n_missing = .) %>%
-     mutate (percent_missing = round(n_missing * 100 / 
-               nrow(states), 2))
+     mutate (percent_missing = round(n_missing * 100 / nrow(states), 2))
 
 # now, the plot
 ggplot(missing_vals, 
@@ -107,16 +107,17 @@ ggplot(missing_vals,
 ##           values for each character/factor variable         ##
 
 # first, compute the frequencies for each categorical variables and values
-eda_factors <- states %>%
-     mutate_if(is.factor, as.character) %>%
-     select_if(., is.character ) %>%
-     mutate (id = row_number()) %>%
-     pivot_longer(-id, names_to = "variable", values_to = "value" ) %>%
-     mutate (value = coalesce(value, 'N/A')) %>%
-     group_by(variable, value) %>%
-     summarise (n_value = n()) %>%
-     ungroup() %>%
-     mutate (percent = round(n_value * 100 / nrow(states),2)) %>%
+eda_factors <- states |>
+     naniar::replace_with_na_all(condition = ~.x %in% common_na_strings) |>
+     mutate_if(is.factor, as.character) |>
+     select_if(is.character ) |>
+     mutate (id = row_number()) |>
+     pivot_longer(-id, names_to = "variable", values_to = "value" ) |>
+     mutate (value = coalesce(value, 'N/A')) |>
+     group_by(variable, value) |>
+     summarise (n_value = n()) |>
+     ungroup() |>
+     mutate (percent = round(n_value * 100 / nrow(states),2)) |>
      arrange(variable, value)
 View(eda_factors)
 
@@ -784,7 +785,7 @@ eda_factors %>%
 ggplot(., aes(x = value, y = n_value, fill = value)) +
      geom_col() +
      geom_text (aes(label = paste0(round(percent,0), '%'), 
-                  vjust = if_else(n_value > 100, 1.5, -0.5))) +
+                  vjust = if_else(n_value > 50, 1.5, -0.5))) +
     facet_wrap(~ variable + ahd, scale = "free", labeller = 'label_both') +
      theme(legend.position="none") + # this will remove the legend
     theme(axis.text.x = element_text(size = 10, angle = 45, hjust = 1)) +

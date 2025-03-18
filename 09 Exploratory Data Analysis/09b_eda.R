@@ -199,7 +199,7 @@ ggplot(., aes(x = value, y = n_value, fill = value)) +
                   vjust = if_else(n_value > 300, 1.5, -0.5)), size = 3) +
     facet_wrap(~ variable, scale = "free") +
     theme(axis.text.x = element_text(size = 10, angle = 45, hjust = 1)) +
-    theme(strip.text.x = element_text(size = 13)) +
+    theme(strip.text.x = element_text(size = 12)) +
     xlab("") + ylab("frequency") +
     theme(legend.position = 'none')
 
