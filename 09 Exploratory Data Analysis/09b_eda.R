@@ -13,7 +13,7 @@
 ### See also the presentation:
 ### https://github.com/marinfotache/Data-Processing-Analysis-Science-with-R/blob/master/09%20Exploratory%20Data%20Analysis/09%20Exploratory%20Data%20Analysis.pptx
 ############################################################################
-## last update: 2024-03-26
+## last update: 16-12-2024
 
 library(tidyverse) 
 
@@ -27,7 +27,6 @@ library(readxl)
 
 # giving up scientific notation (1.6e+07)
 options(scipen=999, digits=4)
-
 
 
 ############################################################################
@@ -51,7 +50,7 @@ setwd('/Users/marinfotache/Google Drive/R(Mac)-1 googledrive/DataSets')
 #######################################################################
 ###	  I. EDA with the `tidyverse`                                  ###	
 ###	  II. EDA with `DataExplorer` package                          ###	
-###	  III. EDA with `inspectdf` package                          ###	
+###	  III. EDA with `inspectdf` package                            ###	
 #######################################################################
 
 
@@ -111,15 +110,15 @@ missing_vals2 <- fuel_economy_2018 %>%
 
 # now, the plot
 g <- ggplot(missing_vals, 
-     aes (x = variable, y = n_missing, fill = variable)) +
+          aes (x = variable, y = n_missing, fill = variable)) +
      geom_col() +
      coord_flip() +
      geom_text(aes(label = paste0(percent_missing, '%'), 
                hjust = if_else(percent_missing > 3, 1.02, -0.03), 
-               vjust = 0.5), size = 4 ) +
+               vjust = 0.5), size = 4.5 ) +
 #     xlab("Number of Missing Values") + ylab("Variable") +
      theme(legend.position="none") + # this will remove the legend
-     scale_y_continuous(limits = c(0,170), breaks = seq(0, 170, 20)) 
+     scale_y_continuous(limits = c(0,170), breaks = seq(0, 170, 10)) 
 
 print(g)     
 
@@ -148,6 +147,11 @@ ggsave(g, file = 'Fig 1a missing_values.eps', device = cairo_pdf())
 ggsave(g, file = 'Fig 1b missing_values.eps', device = cairo_pdf(), dpi = 600)
 ggsave(g, file = 'Fig 1c missing_values.eps', device = cairo_pdf(), dpi = 1200)
 
+
+# save a plot as a svg file
+ggsave(g, file = 'Fig 1a missing_values.svg', device = 'svg')
+ggsave(g, file = 'Fig 1b missing_values.svg', device = 'svg', dpi = 600)
+ggsave(g, file = 'Fig 1c missing_values.svg', device = 'svg', dpi = 1200)
 
 
 
@@ -195,7 +199,7 @@ ggplot(., aes(x = value, y = n_value, fill = value)) +
                   vjust = if_else(n_value > 300, 1.5, -0.5)), size = 3) +
     facet_wrap(~ variable, scale = "free") +
     theme(axis.text.x = element_text(size = 10, angle = 45, hjust = 1)) +
-    theme(strip.text.x = element_text(size = 13)) +
+    theme(strip.text.x = element_text(size = 12)) +
     xlab("") + ylab("frequency") +
     theme(legend.position = 'none')
 
@@ -219,9 +223,11 @@ ggplot(., aes(x = value, y = n_value, fill = value)) +
     coord_flip() +
     # facet_wrap(~ variable, scale = "free") +
     theme(axis.text.x = element_text(size = 10, angle = 45, hjust = 1)) +
-    theme(strip.text.x = element_text(size = 13)) +
+    #theme(strip.text.x = element_text(size = 13)) +
     xlab("") + ylab("frequency") +
-    theme(legend.position = 'none')
+    theme(legend.position = 'none') +
+    scale_y_continuous(limits = c(0,400), breaks = seq(0, 400, 20)) 
+     
 
 
 
@@ -246,7 +252,7 @@ ggplot(., aes(x = value, fill = variable)) +
      facet_wrap(~ variable, scale = "free") +
      theme(legend.position = 'none') +
      theme(axis.text.x = element_text(size = 9)) +
-     theme(strip.text.x = element_text(size = 12)) +
+     theme(strip.text.x = element_text(size = 14)) +
      xlab("") + ylab("frequency") 
 
 
@@ -298,7 +304,7 @@ ggplot(., aes(x = value, fill = variable)) +
 # plot superimposed density curves
 df %>%
 ggplot(., aes(x = value, fill = vehicle_class, color = vehicle_class)) +
-     geom_density(aes(alpha = 0.1)) +
+     geom_density(aes(alpha = .1)) +
      facet_wrap(. ~ variable, scales = "free") +
      theme(axis.text.x = element_text(size = 8)) +
      theme(strip.text.x = element_text(size = 12)) +
@@ -331,12 +337,6 @@ View(temp)
      
 
 # the correlation plot
-fuel_economy_2018 %>%
-     select_if(is.numeric) %>%
-     corrr::correlate() %>%
-     corrr::rplot()
-
-
 corrplot::corrplot(
      cor(fuel_economy_2018 %>% select_if(is.numeric), 
          use = "pairwise.complete.obs", method = "spearman"), 
@@ -347,7 +347,7 @@ corrplot::corrplot(
 
 
 #######################################################################
-###	               II. EDA with `DataExplorer` package              ###	
+###	               II. EDA with `DataExplorer` package             ###	
 #######################################################################
 
 # install.packages('DataExplorer') 
@@ -384,7 +384,6 @@ DataExplorer::plot_bar(fuel_economy_2018)
 fuel_economy_2018 %>%
     select (Displ, Cyl, Trans) %>%
     plot_bar()
-
 
 
 # Plot histogram for all numeric variables

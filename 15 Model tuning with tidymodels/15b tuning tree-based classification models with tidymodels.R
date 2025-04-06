@@ -12,7 +12,7 @@
 ###       15.b. Building and Tuning Tree-Based Classification Models     ###
 ###                           with `tidymodels`                          ###  
 ############################################################################
-## last update: 18.12.2023
+## last update: 2025-01-13
 
 options(java.parameters = "-Xmx12g")
 options(scipen = 999)
@@ -48,32 +48,28 @@ glimpse(heart)
 any(is.na(heart))
 # there are!!!
 
-table(heart$AHD)
-
-139 / (164 + 139)
-
 
 
 ##########################################################################
 ###                             Main split of the data                 ###
 set.seed(1234)
-splits   <- initial_split(heart, prop = 0.75, strata = AHD)
+splits   <- initial_split(heart, prop = 0.75, strata = ahd)
 train_tbl <- training(splits)
 test_tbl  <- testing(splits)
 
 
 ## cross-validation folds
 set.seed(1234)
-cv_train <- vfold_cv(train_tbl, v = 5, repeats = 1, strata = AHD)
+cv_train <- vfold_cv(train_tbl, v = 5, repeats = 1, strata = ahd)
 cv_train
 
 
 
 ##########################################################################
 ###                        The recipe for data preparation             ###
-the_recipe <- recipe(AHD ~ ., data = train_tbl) %>%
-    step_impute_knn(all_predictors(), neighbors = 3) %>%   # missing values imputation
-    step_dummy(all_nominal(), -all_outcomes()) %>% # dummification of the predictors
+the_recipe <- recipe(ahd ~ ., data = train_tbl) |>
+    step_impute_knn(all_predictors(), neighbors = 3) |>   # missing values imputation
+    step_dummy(all_nominal(), -all_outcomes()) |> # dummification of the predictors
     step_zv(all_predictors()) # this removes predictors with zero variance
 
 
@@ -87,8 +83,8 @@ rf_spec <- parsnip::rand_forest(
      mtry = tune(), 
      trees = 500,
      min_n = tune()     
-          ) %>%
-     set_engine("ranger", importance = "impurity") %>%
+          ) |>
+     set_engine("ranger", importance = "impurity") |>
      set_mode("classification")
 rf_spec
 
@@ -100,8 +96,8 @@ xgb_spec <- parsnip::boost_tree(
     loss_reduction = tune(),                     ## model complexity
     sample_size = tune(), mtry = tune(),         ## randomness
     learn_rate = tune()                         ## step size
-    ) %>% 
-    set_engine("xgboost") %>% 
+    ) |> 
+    set_engine("xgboost") |> 
     set_mode("classification")
 xgb_spec
 
@@ -114,7 +110,7 @@ xgb_spec
 ## for Random Forest models
 set.seed(1234)
 rf_grid <- dials::grid_random(
-    finalize(mtry(), train_tbl %>% select (-AHD)),
+    finalize(mtry(), train_tbl %>% select (-ahd)),
     min_n(),  
     size = 20)  # the number should be larger, but nodel fitting would take longer
 
@@ -129,7 +125,7 @@ xgb_grid <- dials::grid_random(
     min_n(),
     loss_reduction(),
     sample_size = sample_prop(),
-    finalize(mtry(), train_tbl %>% select (-AHD)),
+    finalize(mtry(), train_tbl %>% select (-ahd)),
     learn_rate(),
     size = 60   # the number should be larger, but it would take longer
 )
@@ -144,14 +140,14 @@ xgb_grid
 ## Two separate series of Workflows for Random Forest Models and XGB Boost Models
 
 # Random forest
-wf_rf <- workflow() %>%
-    add_recipe(the_recipe) %>%
+wf_rf <- workflow() |>
+    add_recipe(the_recipe) |>
     add_model(rf_spec) 
 
 
 # XGBoost
-wf_xgb <- workflow() %>%
-    add_recipe(the_recipe) %>%
+wf_xgb <- workflow() |>
+    add_recipe(the_recipe) |>
     add_model(xgb_spec) 
 
 
@@ -167,7 +163,7 @@ doParallel::registerDoParallel(cores = cores)
 
 # Random Forest model, `original` data set
 set.seed(1234)
-rf_resamples <- wf_rf %>% 
+rf_resamples <- wf_rf |> 
     tune_grid(
         resamples = cv_train,
         grid = rf_grid,
@@ -180,7 +176,7 @@ rf_resamples
 
 # XGBoost model, `original` data set
 set.seed(1234)
-xgb_resamples <- wf_xgb %>% 
+xgb_resamples <- wf_xgb |> 
     tune_grid(
         resamples = cv_train,
         grid = xgb_grid,
@@ -197,32 +193,32 @@ xgb_resamples
 #########################################################################
 
 # folder metrics
-rf_resamples %>% 
+rf_resamples |> 
     collect_metrics()
 
-# roc curves
-rf_resamples %>%
-  collect_predictions() %>%
-  group_by(id) %>%
-  roc_curve(AHD, .pred_No) %>%
-  ggplot(aes(1 - specificity, sensitivity, color = id)) +
-  geom_abline(lty = 2, color = "gray80", linewidth = 1) +
-  geom_path(show.legend = FALSE, alpha = 0.5, linewidth = 1) +
-  coord_equal()
+# roc curves for RF on the training data set
+rf_resamples |>
+     collect_predictions() |>
+     group_by(id) %>%
+     roc_curve(ahd, .pred_No) |>
+     ggplot(aes(1 - specificity, sensitivity, color = id)) +
+     geom_abline(lty = 2, color = "gray80", linewidth = 1) +
+     geom_path(show.legend = FALSE, alpha = 0.5, linewidth = 1) +
+     coord_equal()
 
 
+# roc curves for both RF and XGB on the training data set
 df_auc <- bind_rows(
-    rf_resamples %>%
-        collect_predictions() %>%
-        group_by(id) %>%
-        roc_curve(AHD, .pred_No)  %>%
-        mutate (model = 'random forest'),
-    xgb_resamples %>%
-        collect_predictions() %>%
-        group_by(id) %>%
-        roc_curve(AHD, .pred_No)  %>%
-        mutate (model = 'xgboost')
-  ) %>%
+     rf_resamples |>
+          collect_predictions() |>
+          group_by(id) %>%
+          roc_curve(ahd, .pred_No)  |>
+          mutate (model = 'random forest'),
+     xgb_resamples |>
+          collect_predictions() |>
+          group_by(id) |>
+          roc_curve(ahd, .pred_No)  |>
+          mutate (model = 'xgboost')) |>
   ggplot(aes(1 - specificity, sensitivity, color = id)) +
   geom_abline(lty = 2, color = "gray80", linewidth = 1) +
   geom_path(show.legend = FALSE, alpha = 0.5, linewidth = 1) +
@@ -237,13 +233,13 @@ df_auc
 ###         Choose the best combination of hyper-parameter values
 #########################################################################
 
-best_rf <- rf_resamples %>%
-    select_best("roc_auc")
-#best_rf
+best_rf <- rf_resamples |>
+    select_best(metric = "roc_auc")
+best_rf
 
 
-best_xgb <- xgb_resamples %>%
-    select_best("roc_auc")
+best_xgb <- xgb_resamples |>
+    select_best(metric = "roc_auc")
 
 
 #########################################################################
@@ -265,15 +261,15 @@ xgb_model_wflow_fit <- finalize_workflow(wf_xgb, best_xgb)
 library(vip)
 
 
-rf_model_wflow_fit %>% 
-    fit(data = train_tbl) %>%
-    extract_fit_parsnip() %>% 
+rf_model_wflow_fit |> 
+    fit(data = train_tbl) |>
+    extract_fit_parsnip() |> 
     vip::vip() 
 
 
-xgb_model_wflow_fit %>% 
-    fit(data = train_tbl) %>%
-    extract_fit_parsnip() %>% 
+xgb_model_wflow_fit |> 
+    fit(data = train_tbl) |>
+    extract_fit_parsnip() |> 
     vip::vip()
 
 
@@ -282,11 +278,11 @@ xgb_model_wflow_fit %>%
 ###               Model performance on the test set
 #########################################################################
 
-test__rf <- rf_model_wflow_fit %>% last_fit(splits) 
-test__rf %>% collect_metrics() 
+test__rf <- rf_model_wflow_fit |> last_fit(splits) 
+test__rf |> collect_metrics() 
 
-test__xgb <- xgb_model_wflow_fit %>% last_fit(splits) 
-test__xgb %>% collect_metrics() 
+test__xgb <- xgb_model_wflow_fit |> last_fit(splits) 
+test__xgb |> collect_metrics() 
 
 
 

@@ -16,7 +16,7 @@
 ### See also the presentation:
 ### https://github.com/marinfotache/Data-Processing-Analysis-Science-with-R/blob/master/13%20Introduction%20to%20Machine%20Learning/13_Introduction%20to%20Machine%20Learning.pptx
 ############################################################################
-## last update: 02.01.2022
+## last update: 09.01.2025
 
 options(scipen = 999)
 library(tidyverse)
@@ -71,13 +71,13 @@ test_tbl__heart_1  <- train_test_split__heart_1 %>% testing()
 ###                            2. Two simple recipes
 
 recipe1__heart_1 <- function(dataset) {
-     recipe(AHD ~ ., 
+     recipe(ahd ~ ., 
             data = dataset) %>%
      prep(data = dataset)
 }
      
 recipe2__heart_1 <- function(dataset) {
-     recipe(AHD ~ Age + Sex + Chol + RestECG + MaxHR, 
+     recipe(ahd ~ age + sex + chol + rest_ecg + max_hr, 
             data = dataset) %>%
      prep(data = dataset)
 }
@@ -99,12 +99,12 @@ test2_baked__heart_1  <- bake(recipe2_prepped__heart_1, new_data = test_tbl__hea
 ###                      3. Fit the models with `parsnip`  
 glm_model1__heart_1 <-   logistic_reg(mode = "classification") %>%
   set_engine("glm") %>%
-  fit(AHD ~ ., 
+  fit(ahd ~ ., 
       data = juice(recipe1_prepped__heart_1))
 
 glm_model2__heart_1 <-   logistic_reg(mode = "classification") %>%
   set_engine("glm") %>%
-  fit(AHD ~ Age + Sex + Chol + RestECG + MaxHR, 
+  fit(ahd ~ age + sex + chol + rest_ecg + max_hr,
       data = juice(recipe2_prepped__heart_1))
 
 
@@ -129,12 +129,12 @@ glm_model2__heart_1 <-   logistic_reg(mode = "classification") %>%
 #   kappa, f1 score, ...)
 predictions_glm1__heart_1__class <- glm_model1__heart_1 %>%
      predict(new_data = test1_baked__heart_1) %>%
-     bind_cols(test1_baked__heart_1 %>% select(AHD))
+     bind_cols(test1_baked__heart_1 %>% select(ahd))
 head(predictions_glm1__heart_1__class)
 
 predictions_glm2__heart_1__class <- glm_model2__heart_1 %>%
      predict(new_data = test2_baked__heart_1) %>%
-     bind_cols(test2_baked__heart_1 %>% select(AHD))
+     bind_cols(test2_baked__heart_1 %>% select(ahd))
 head(predictions_glm2__heart_1__class)
 
 
@@ -142,13 +142,13 @@ head(predictions_glm2__heart_1__class)
 #  Area Under Curve - ROC/AUC)
 predictions_glm1__heart_1__prob <- glm_model1__heart_1 %>%
      predict(new_data = test1_baked__heart_1, type = "prob") %>%
-     bind_cols(test1_baked__heart_1 %>% select(AHD))
+     bind_cols(test1_baked__heart_1 %>% select(ahd))
 head(predictions_glm1__heart_1__prob)
 
 
 predictions_glm2__heart_1__prob <- glm_model2__heart_1 %>%
      predict(new_data = test2_baked__heart_1, type = "prob") %>%
-     bind_cols(test2_baked__heart_1 %>% select(AHD))
+     bind_cols(test2_baked__heart_1 %>% select(ahd))
 head(predictions_glm2__heart_1__prob)
 
 
@@ -158,7 +158,7 @@ head(predictions_glm2__heart_1__prob)
 
 #  Confusion Matrix - logistic regression - model1
 predictions_glm1__heart_1__class %>%
-     conf_mat(AHD, .pred_class) %>%
+     conf_mat(ahd, .pred_class) %>%
      pluck(1) %>%
      as_tibble() %>%
      ggplot(aes(Prediction, Truth, alpha = n)) +
@@ -168,7 +168,7 @@ predictions_glm1__heart_1__class %>%
 
 #  Confusion Matrix - logistic regression - model2
 predictions_glm2__heart_1__class %>%
-     conf_mat(AHD, .pred_class) %>%
+     conf_mat(ahd, .pred_class) %>%
      pluck(1) %>%
      as_tibble() %>%
      ggplot(aes(Prediction, Truth, alpha = n)) +
@@ -182,22 +182,22 @@ predictions_glm2__heart_1__class %>%
 performance__heart_1 <- bind_rows(
     bind_rows(
         predictions_glm1__heart_1__class %>%
-            metrics(truth = AHD, estimate = .pred_class), 
-        precision(predictions_glm1__heart_1__class, AHD, .pred_class),
-        recall(predictions_glm1__heart_1__class, AHD, .pred_class),
-        f_meas(predictions_glm1__heart_1__class, AHD, .pred_class),
-        roc_auc(predictions_glm1__heart_1__prob, AHD, .pred_Yes)
+            metrics(truth = ahd, estimate = .pred_class), 
+        precision(predictions_glm1__heart_1__class, ahd, .pred_class),
+        recall(predictions_glm1__heart_1__class, ahd, .pred_class),
+        f_meas(predictions_glm1__heart_1__class, ahd, .pred_class),
+        roc_auc(predictions_glm1__heart_1__prob, ahd, .pred_No)
             ) %>%
-    mutate (model = 'AHD ~ .'), 
+    mutate (model = 'ahd ~ .'), 
     bind_rows(
         predictions_glm2__heart_1__class %>%
-            metrics(truth = AHD, estimate = .pred_class), 
-        precision(predictions_glm2__heart_1__class, AHD, .pred_class),
-        recall(predictions_glm2__heart_1__class, AHD, .pred_class),
-        f_meas(predictions_glm2__heart_1__class, AHD, .pred_class),
-        roc_auc(predictions_glm2__heart_1__prob, AHD, .pred_Yes)
+            metrics(truth = ahd, estimate = .pred_class), 
+        precision(predictions_glm2__heart_1__class, ahd, .pred_class),
+        recall(predictions_glm2__heart_1__class, ahd, .pred_class),
+        f_meas(predictions_glm2__heart_1__class, ahd, .pred_class),
+        roc_auc(predictions_glm2__heart_1__prob, ahd, .pred_No)
             ) %>%
-    mutate (model = 'AHD ~ Age + Sex + Chol + RestECG + MaxHR')
+    mutate (model = 'ahd ~ age + sex + vhol + rest_ecg + max_hr')
                 ) %>%
     select (model, everything()) %>%
     arrange(.metric, model)
@@ -208,10 +208,10 @@ gridExtra::grid.table(performance__heart_1)
 
 # Visualize the ROC curve using ggplot2 `manually`
 bind_rows(
-    roc_curve(predictions_glm1__heart_1__prob, AHD, .pred_Yes) %>%
-        mutate (model = 'AHD ~ .'), 
-    roc_curve(predictions_glm2__heart_1__prob, AHD, .pred_Yes) %>%
-        mutate (model = 'AHD ~ Age + Sex + Chol + RestECG + MaxHR')
+    roc_curve(predictions_glm1__heart_1__prob, ahd, .pred_No) %>%
+        mutate (model = 'ahd ~ .'), 
+    roc_curve(predictions_glm2__heart_1__prob, ahd, .pred_No) %>%
+        mutate (model = 'ahd ~ age + sex + vhol + rest_ecg + max_hr')
       ) %>%
 ggplot(aes(x = 1 - specificity, y = sensitivity, fill = model, color = model)) +
 geom_path() +
@@ -225,12 +225,12 @@ theme(legend.position = c(0.6, 0.15))
 # with autoplot
 bind_rows(
     predictions_glm1__heart_1__prob %>% 
-        mutate (model = 'AHD ~ .'), 
+        mutate (model = 'ahd ~ .'), 
     predictions_glm2__heart_1__prob %>% 
-        mutate (model = 'AHD ~ Age + Sex + Chol + RestECG + MaxHR')
+        mutate (model = 'ahd ~ age + sex + vhol + rest_ecg + max_hr')
      ) %>%
 group_by(model) %>%
-roc_curve(., truth = AHD, .pred_Yes) %>%
+roc_curve(., truth = ahd, .pred_No) %>%
 autoplot() +
 theme_bw() +
 theme(legend.position = c(0.6, 0.15))  

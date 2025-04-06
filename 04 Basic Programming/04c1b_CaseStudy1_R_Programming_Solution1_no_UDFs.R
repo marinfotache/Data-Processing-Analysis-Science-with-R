@@ -2,17 +2,16 @@
 ###                    (Simple) R Programming Case Study 1               ###
 ###                       Master Programmes Admission                   ###
 ### for problem description see:
-### https://github.com/marinfotache/Data-Processing-Analysis-Science-with-R/blob/master/04%20Basic%20Programming/04c1_CaseStudy1_R-Programming_1_Requirements.pdf                  
+### https://github.com/marinfotache/Data-Processing-Analysis-Science-with-R/blob/master/04%20Basic%20Programming/04c1a_CaseStudy1_R-Programming_1_Requirements.pdf               
 ############################################################################
-###
+# last update: 2024-11-11
 
-# last update: 2023-11-13
 library(readxl)
 library(tidyverse)
 
 
 ############################################################################
-###            4c3a  Solution without any user defined function          ###
+###            4c1b  Solution without any user defined function          ###
 ############################################################################
 
 ############################################################################
@@ -32,7 +31,7 @@ glimpse(master_progs)
 glimpse(applicants)
 
 
-#######################################################
+#####################################################################################
 ###             Solution written on 2020-11-10
 
 ## 1 order applicants by admission average points
@@ -169,6 +168,5 @@ View(results_ok)
 
 
 # export results in excel
-rio::export(results_ok, file = '04c3a_CaseStudy1_Results.xlsx', 
-       format = 'xlsx')
+rio::export(results_ok, file = '04c1b_CaseStudy1_Results.xlsx')
 

@@ -9,7 +9,7 @@
 ############################################################################
 ###
 ############################################################################
-###     13.a.1 The simplest (and more recent) way to build and compare   ###
+###              13.a.1 The simplest way to build and compare            ###
 ###         scoring models with `tidymodels`  (train-test, no tuning)    ### 
 ############################################################################
 
@@ -17,7 +17,7 @@
 ### See also the presentation:
 ### https://github.com/marinfotache/Data-Processing-Analysis-Science-with-R/blob/master/13%20Introduction%20to%20Machine%20Learning/13_Introduction%20to%20Machine%20Learning.pptx
 ############################################################################
-## last update: 2024-03-26
+## last update: 2025-01-09
 
 #install.packages('ranger')
 library(ranger)
@@ -161,7 +161,7 @@ broom::augment(rf_fit, new_data = train_tbl) %>%
 
 
 #########################################################################
-###     The moment of truth: model performance on the test data set
+###     The moment of truth: model performance on the TEST data set
 
 scoring_metrics <- metric_set(rmse, rsq, mae, ccc)
 

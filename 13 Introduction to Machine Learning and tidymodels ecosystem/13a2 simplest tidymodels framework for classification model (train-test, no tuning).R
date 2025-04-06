@@ -9,11 +9,12 @@
 ############################################################################
 ###
 ############################################################################
-###     13.a.2 The simplest (and more recent) way to build and compare   ###
+###            13.a.2 The simplest way to build and compare              ###
 ###   classification models with `tidymodels`  (train-test, no tuning)   ### 
 ############################################################################
-## last update: 2024-03-26
+## last update: 2025-01-09
 
+#install.packages('ranges')
 library(ranger)
 library(tidyverse)
 #library(broom)
@@ -53,6 +54,11 @@ splits   <- initial_split(heart, prop = 0.75, strata = ahd)
 train_tbl <- training(splits)
 test_tbl  <- testing(splits)
 
+table(train_tbl$ahd)
+104 / (104+123)
+
+table(test_tbl$ahd)
+35 / (35+41)
 
 
 ##########################################################################

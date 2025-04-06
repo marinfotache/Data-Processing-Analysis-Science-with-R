@@ -13,7 +13,7 @@
 ###   further used in Inferential Statistics and Machine Learning        ###
 ###   (see next chapters/sections)                                       ###
 ############################################################################
-## last update: 2024-03-26
+## last update: 16-12-2024
 
 options(scipen = 999)
 library(tidyverse) 
@@ -44,9 +44,9 @@ setwd('/Users/marinfotache/Google Drive/R(Mac)-1 googledrive/DataSets')
 #####################################################################
 ###	I. EDA for datasets to be used for scoring (regression)      ###	
 ###	     I.1 States(USA)                                         ###	
-### 	 I.2 Insurance                                           ###
-###      I.3 House Prices (Ames, Iowa)                           ###
-### 	 I.4 Hrubaru2015                                         ###
+### 	     I.2 Insurance                                           ###
+###       I.3 House Prices (Ames, Iowa)                           ###
+### 	     I.4 Hrubaru2015                                         ###
 ###	II. EDA for datasets to be used for classification           ###	
 ###       II.1 Heart disease                                      ###
 ###       II.2 Credit scoring (G.Sanchez version)                 ###
@@ -85,10 +85,10 @@ states %>%
 ##     Display the number missing values for each variable     ## 
 
 missing_vals <- states %>%
+     mutate(across(everything(), as.character))  %>%
      map_int(., ~ sum(is.na(.) | . == 'N/A')) %>%
      tibble(variable = names(.), n_missing = .) %>%
-     mutate (percent_missing = round(n_missing * 100 / 
-               nrow(states), 2))
+     mutate (percent_missing = round(n_missing * 100 / nrow(states), 2))
 
 # now, the plot
 ggplot(missing_vals, 
@@ -107,16 +107,17 @@ ggplot(missing_vals,
 ##           values for each character/factor variable         ##
 
 # first, compute the frequencies for each categorical variables and values
-eda_factors <- states %>%
-     mutate_if(is.factor, as.character) %>%
-     select_if(., is.character ) %>%
-     mutate (id = row_number()) %>%
-     pivot_longer(-id, names_to = "variable", values_to = "value" ) %>%
-     mutate (value = coalesce(value, 'N/A')) %>%
-     group_by(variable, value) %>%
-     summarise (n_value = n()) %>%
-     ungroup() %>%
-     mutate (percent = round(n_value * 100 / nrow(states),2)) %>%
+eda_factors <- states |>
+     naniar::replace_with_na_all(condition = ~.x %in% common_na_strings) |>
+     mutate_if(is.factor, as.character) |>
+     select_if(is.character ) |>
+     mutate (id = row_number()) |>
+     pivot_longer(-id, names_to = "variable", values_to = "value" ) |>
+     mutate (value = coalesce(value, 'N/A')) |>
+     group_by(variable, value) |>
+     summarise (n_value = n()) |>
+     ungroup() |>
+     mutate (percent = round(n_value * 100 / nrow(states),2)) |>
      arrange(variable, value)
 View(eda_factors)
 
@@ -390,13 +391,6 @@ corrplot::corrplot(cor(insurance %>%
           method = "spearman"), method = "number", type = "upper",
           tl.cex = 0.75, number.cex = .75)
 
-corrgram::corrgram(insurance %>% select_if(is.numeric),
-     lower.panel=panel.pie, upper.panel=panel.pts,
-     diag.panel=panel.density)
-
-corrgram::corrgram(insurance %>% select_if(is.numeric),
-     lower.panel=panel.conf, upper.panel=panel.pts,
-     diag.panel=panel.density)
 
 
 # scatter plots of the outcome vs. all other valiables
@@ -791,7 +785,7 @@ eda_factors %>%
 ggplot(., aes(x = value, y = n_value, fill = value)) +
      geom_col() +
      geom_text (aes(label = paste0(round(percent,0), '%'), 
-                  vjust = if_else(n_value > 100, 1.5, -0.5))) +
+                  vjust = if_else(n_value > 50, 1.5, -0.5))) +
     facet_wrap(~ variable + ahd, scale = "free", labeller = 'label_both') +
      theme(legend.position="none") + # this will remove the legend
     theme(axis.text.x = element_text(size = 10, angle = 45, hjust = 1)) +

@@ -13,7 +13,7 @@
 ### See also the presentation:
 ### https://github.com/marinfotache/Data-Processing-Analysis-Science-with-R/blob/master/10%20Basic%20Inferential%20Statistics/10_basic_inferential_statistics.pptx
 ############################################################################
-## last update: 2024-03-14
+## last update: 16-12-2024
 
 # giving up scientific notation (1.6e+07)
 options(scipen = 999)
@@ -181,6 +181,10 @@ View(Arthritis)
 
 table(Arthritis$Treatment)
 
+Arthritis |>
+     group_by(Treatment) |>
+     tally()
+     
 table(Arthritis$Improved)
 
 Arthritis %>%
@@ -198,9 +202,9 @@ Arthritis %>%
 #   "Sex" (Male, Female), and "Improved" (None, Some, Marked) 
 #     are all categorical factors.
 str(Arthritis)
+glimpse(Arthritis)
 # order the factor "Improved" 
-Arthritis$Improved <- ordered(Arthritis$Improved, 
-	levels=c("None", "Some", "Marked"))
+Arthritis$Improved <- ordered(Arthritis$Improved, levels=c("None", "Some", "Marked"))
 
 
 ### visualize information about attribute `Improved` - sol. 1
@@ -210,12 +214,12 @@ ggplot(Arthritis,
      aes(x = factor(Improved), fill = "yellow2")) + 
 	geom_bar(width = 1, color="white") +
 	geom_text(stat="count", color="black", hjust=.5, vjust=1.2, size=6,
-		aes(y=..count.., label=..count..)) + 
+		aes(y=after_stat(count), label=after_stat(count))) + 
 	ggtitle("Result of the Treatment", 
 	        subtitle = "(`Arthritis` dataset is included in the `vcd` package)" ) +
-	theme (plot.title = element_text (colour="black", size="16", hjust = 0.5))+
-     theme (plot.subtitle = element_text (colour="black", size="12", hjust = 0.5))+
-	theme(text=element_text(size=12)) +	
+	theme (plot.title = element_text (colour="black", size=17, hjust = 0.5))+
+     theme (plot.subtitle = element_text (colour="black", size=16, hjust = 0.5))+
+	theme(text=element_text(size=14)) +	
    	ylab("Number of cases") + xlab("Result") +
      theme(legend.position = 'none')
 
@@ -251,12 +255,12 @@ ggplot(dat, aes(x = Var1, fill = Var1)) +
           position = position_dodge(width=1), show.legend = F) +
   	scale_y_continuous(labels = waiver()) + 
      coord_flip() +
-     	ggtitle("Result of the Treatment", 
+     ggtitle("Result of the Treatment", 
 	        subtitle = "(`Arthritis` dataset is included in the `vcd` package)" ) +
-	theme (plot.title = element_text (colour="black", size="16", hjust = 0.5))+
-     theme (plot.subtitle = element_text (colour="black", size="12", hjust = 0.5))+
+	theme (plot.title = element_text (colour="black", size=18, hjust = 0.5))+
+     theme (plot.subtitle = element_text (colour="black", size=14, hjust = 0.5))+
      theme(axis.text.y = element_blank(),    # here we remove the text in axis Y
-		text=element_text(size=12)) +      
+		text=element_text(size=14)) +      
    	ylab("Number of cases") + xlab("Result") +
      theme(legend.position = 'none')
     
@@ -442,7 +446,7 @@ fisher.test(mytable)
 #    within each level `Sex`.
 #  The test assumes that there’s no three-way (`Treatment` x `Improved` x `Sex`)
 #   interaction.
-mytable <- xtabs(~Treatment+Improved+Sex, data=Arthritis)
+mytable <- xtabs(~ Treatment + Improved + Sex, data=Arthritis)
 mantelhaen.test(mytable)
 # p-value = 0.0006647, so H0 is rejected !
 
@@ -655,6 +659,8 @@ structable(Hair+Sex ~ Eye, HairEyeColor)
 
 
 # mosaic plot 1
+HairEyeColor_df <- data.frame(unlist(HairEyeColor))
+
 ggplot(data = HairEyeColor_df) +
      geom_mosaic(aes(weight = Freq, x = product(Eye, Hair), fill=Eye)) +    
      theme(axis.text.x=element_text(angle=45, hjust= 1, size = 12)) + 
@@ -917,7 +923,7 @@ chisq.test(st1.UCBA)
 #    departments (there are departments which reject 
 #    more applicants than others)
 
-# Fisher's exact test does not work in this case !
+# !!! Fisher's exact test does not work in this case !!!
 m.st1.UCBA <- as.matrix(st1.UCBA)
 fisher.test(m.st1.UCBA)
 

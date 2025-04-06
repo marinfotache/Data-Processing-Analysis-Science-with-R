@@ -9,10 +9,10 @@
 ############################################################################
 ###
 ############################################################################
-###    13.b.2 The simplest (and more recent) way to build  and compare   ###
+###              13.b.2 The simplest way to build  and compare           ###
 ### classification models with `tidymodels` (cross-validation, no tuning)### 
 ############################################################################
-## last update: 2024-03-26
+## last update: 2025-01-09
 
 library(ranger)
 library(tidyverse)

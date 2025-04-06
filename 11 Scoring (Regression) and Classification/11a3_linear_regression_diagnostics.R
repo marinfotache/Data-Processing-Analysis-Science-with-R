@@ -13,7 +13,7 @@
 ### See also the presentation:
 ### https://github.com/marinfotache/Data-Processing-Analysis-Science-with-R/blob/master/11%20Scoring%20(Regression)%20and%20Classification/11_scoring%20and%20clasisification.pptx
 #######################################################################
-## last update: 19.11.2019
+## last update: 2024-03-21
 
 library(tidyverse) 
 
